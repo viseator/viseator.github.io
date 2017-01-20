@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://yoursite.com">
+  <title>学习日志20161121 | viseator&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="今天跟唐艺峰聊了会天，听了些长者的人生经验。
+晚上去团队做项目，主要目标是实现表格的边缘提取。
+一开始想用OpenCV的角点识别来做，但是我之前的图像经过二值化以后所有的文字信息都可以看作是角点，所以这个方案并不可行。
+下面就是用直线检测再加上交点识别来做，结果按书上的方法出来的结果无论怎么调参数都只有一个数据。想看下源码但源码是C++的。
+调这个调了有几个小时，因为手机上跑这个算法也非常慢，直接">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习日志20161121">
+<meta property="og:url" content="http://yoursite.com/2016/11/22/e5-ad-a6-e4-b9-a0-e6-97-a5-e5-bf-9720161121/index.html">
+<meta property="og:site_name" content="viseator's blog">
+<meta property="og:description" content="今天跟唐艺峰聊了会天，听了些长者的人生经验。
+晚上去团队做项目，主要目标是实现表格的边缘提取。
+一开始想用OpenCV的角点识别来做，但是我之前的图像经过二值化以后所有的文字信息都可以看作是角点，所以这个方案并不可行。
+下面就是用直线检测再加上交点识别来做，结果按书上的方法出来的结果无论怎么调参数都只有一个数据。想看下源码但源码是C++的。
+调这个调了有几个小时，因为手机上跑这个算法也非常慢，直接">
+<meta property="og:image" content="https://mail.google.com/mail/u/1/?ui=2&ik=523865081a&view=fimg&th=158879d0207c0e9e&attid=0.1&disp=emb&realattid=ii_ivs9cu5j0_158879ca1ba1833a&attbid=ANGjdJ-g9OaIJI0dVoz7PEo7b8kPGw0XSZFGVgttVe-E9ccngXgzPOdllb2eKfEPlAC1_lIltmeuWMpUr9fvxwkQfSP5RF-oyrXubFRe8IGvBCsOx16M8obFSl2jchU&sz=w596-h964&ats=1479809515040&rm=158879d0207c0e9e&zw&atsh=1">
+<meta property="og:updated_time" content="2016-12-08T07:13:48.415Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习日志20161121">
+<meta name="twitter:description" content="今天跟唐艺峰聊了会天，听了些长者的人生经验。
+晚上去团队做项目，主要目标是实现表格的边缘提取。
+一开始想用OpenCV的角点识别来做，但是我之前的图像经过二值化以后所有的文字信息都可以看作是角点，所以这个方案并不可行。
+下面就是用直线检测再加上交点识别来做，结果按书上的方法出来的结果无论怎么调参数都只有一个数据。想看下源码但源码是C++的。
+调这个调了有几个小时，因为手机上跑这个算法也非常慢，直接">
+<meta name="twitter:image" content="https://mail.google.com/mail/u/1/?ui=2&ik=523865081a&view=fimg&th=158879d0207c0e9e&attid=0.1&disp=emb&realattid=ii_ivs9cu5j0_158879ca1ba1833a&attbid=ANGjdJ-g9OaIJI0dVoz7PEo7b8kPGw0XSZFGVgttVe-E9ccngXgzPOdllb2eKfEPlAC1_lIltmeuWMpUr9fvxwkQfSP5RF-oyrXubFRe8IGvBCsOx16M8obFSl2jchU&sz=w596-h964&ats=1479809515040&rm=158879d0207c0e9e&zw&atsh=1">
+  
+    <link rel="alternative" href="/atom.xml" title="viseator&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/main.css?v=4.0.0.css">
+  
+
+</head>
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/images/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">viseator</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">吴迪 @华中科技大学 计算机科学与技术学院</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a data-idx="0" q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a data-idx="1" q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+    			
+            
+    			
+    			<a data-idx="2" q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/viseator" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/viseator/activities" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
+					<a class="mail" target="_blank" href="Mailto:viseator@gmail.com" title="mail"><i class="icon-mail"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-sort"></i></div>
+  		<h1 class="header-author js-mobile-header hide">viseator</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/images/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">viseator</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">吴迪 @华中科技大学 计算机科学与技术学院</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+		        
+		        	<li><a href="/archives">所有文章</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/viseator" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/viseator/activities" title="zhihu"><i class="icon-zhihu"></i></a>
+			        
+						<a class="mail" target="_blank" href="Mailto:viseator@gmail.com" title="mail"><i class="icon-mail"></i></a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-e5-ad-a6-e4-b9-a0-e6-97-a5-e5-bf-9720161121" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      学习日志20161121
+    </h1>
+  
+
+        <a href="/2016/11/22/e5-ad-a6-e4-b9-a0-e6-97-a5-e5-bf-9720161121/" class="archive-article-date">
+  	<time datetime="2016-11-22T10:12:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-11-22</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>今天跟唐艺峰聊了会天，听了些长者的人生经验。</p>
+<p>晚上去团队做项目，主要目标是实现表格的边缘提取。</p>
+<p>一开始想用OpenCV的角点识别来做，<wbr>但是我之前的图像经过二值化以后所有的文字信息都可以看作是角点<wbr>，所以这个方案并不可行。</p>
+<p>下面就是用直线检测再加上交点识别来做，<wbr>结果按书上的方法出来的结果无论怎么调参数都只有一个数据。<wbr>想看下源码但源码是C++的。</p>
+<p>调这个调了有几个小时，因为手机上跑这个算法也非常慢，<wbr>直接上原图会处理将近一分钟，后来还研究了下怎么压缩图像。</p>
+<p>回来以后想着测试方便就在idea上配置了环境直接把java文<wbr>件复制过来用，意外地兼容。。。</p>
+<p>好吧本来就是一个东西。</p>
+<p>下面仔细分析了这个算法，也查了很多资料，<wbr>但可惜绝大部分都是C++的，有些困难。</p>
+<p>到最后从恒等于1入手，<wbr>想到这个算法出来的结果是保存在一个1乘X 的图像文件中的，然后提取的是X的信息，于是我把行列换了一下…<wbr>…然后就成功了…………………………！！！</p>
+<p>WTF 书上，所有找到的资料里都是这样写的竟然是反的！</p>
+<p>（当然也有可能是我用的最新版的库的问题，<wbr>但是更新库也不会随便换这种参数吧………………）</p>
+<p>所以这种填大坑的感觉还是很爽的，明天再试试参数，心满意足：</p>
+<p><img src="https://mail.google.com/mail/u/1/?ui=2&amp;ik=523865081a&amp;view=fimg&amp;th=158879d0207c0e9e&amp;attid=0.1&amp;disp=emb&amp;realattid=ii_ivs9cu5j0_158879ca1ba1833a&amp;attbid=ANGjdJ-g9OaIJI0dVoz7PEo7b8kPGw0XSZFGVgttVe-E9ccngXgzPOdllb2eKfEPlAC1_lIltmeuWMpUr9fvxwkQfSP5RF-oyrXubFRe8IGvBCsOx16M8obFSl2jchU&amp;sz=w596-h964&amp;ats=1479809515040&amp;rm=158879d0207c0e9e&amp;zw&amp;atsh=1" alt=""></p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+	<i class="icon-book icon"></i>
+	<a class="article-category-link" href="/categories/日志/">日志</a>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2016/11/22/e5-ad-a6-e4-b9-a0-e6-97-a5-e5-bf-9720161121/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2016/11/22/e5-ad-a6-e4-b9-a0-e6-97-a5-e5-bf-9720161122/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          学习日志20161122
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/11/20/e4-b8-80-e5-91-a8-e6-80-bb-e7-bb-9320161120/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">一周总结20161120</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 viseator
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js?v=4.0.0.js"></script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接4</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接5</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接6</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>

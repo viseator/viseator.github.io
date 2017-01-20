@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <link rel="dns-prefetch" href="http://yoursite.com">
+  <title>OpenCV in Android处理拍照表格（二） | viseator&#39;s blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="先来看看上次处理后的整张图片效果：
+
+这里发现我将图片的颜色已经反相了，这是考虑到下一步的直接检测必须以白色像素为内容。做法在上一篇提到过，交换两段的位置就可以了。
+可以看到噪点已经几乎没有了，文字的清晰度还是可以的。这里采用的kernel都是2x2的。
+（三）直线检测下面就是比较关键步骤——直线检测了。
+首先介绍一下openCV提供的直线检测算法：霍夫变换。
+霍夫变换是图像处理中一个著名的检测算">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OpenCV in Android处理拍照表格（二）">
+<meta property="og:url" content="http://yoursite.com/2016/12/02/opencv-in-android-e5-a4-84-e7-90-86-e6-8b-8d-e7-85-a7-e8-a1-a8-e6-a0-bc-ef-bc-88-e4-ba-8c-ef-bc-89/index.html">
+<meta property="og:site_name" content="viseator's blog">
+<meta property="og:description" content="先来看看上次处理后的整张图片效果：
+
+这里发现我将图片的颜色已经反相了，这是考虑到下一步的直接检测必须以白色像素为内容。做法在上一篇提到过，交换两段的位置就可以了。
+可以看到噪点已经几乎没有了，文字的清晰度还是可以的。这里采用的kernel都是2x2的。
+（三）直线检测下面就是比较关键步骤——直线检测了。
+首先介绍一下openCV提供的直线检测算法：霍夫变换。
+霍夫变换是图像处理中一个著名的检测算">
+<meta property="og:image" content="http://viseator.xyz/wp-content/uploads/2016/12/afterDilate.jpg">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201109/25/0_1316925577jVvv.gif">
+<meta property="og:image" content="http://hi.csdn.net/attachment/201109/25/0_1316925607206o.gif">
+<meta property="og:image" content="http://img.blog.csdn.net/20140301150643531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaG9seWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
+<meta property="og:image" content="http://viseator.xyz/wp-content/uploads/2016/12/redLines1.jpg">
+<meta property="og:updated_time" content="2016-12-08T07:13:48.419Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="OpenCV in Android处理拍照表格（二）">
+<meta name="twitter:description" content="先来看看上次处理后的整张图片效果：
+
+这里发现我将图片的颜色已经反相了，这是考虑到下一步的直接检测必须以白色像素为内容。做法在上一篇提到过，交换两段的位置就可以了。
+可以看到噪点已经几乎没有了，文字的清晰度还是可以的。这里采用的kernel都是2x2的。
+（三）直线检测下面就是比较关键步骤——直线检测了。
+首先介绍一下openCV提供的直线检测算法：霍夫变换。
+霍夫变换是图像处理中一个著名的检测算">
+<meta name="twitter:image" content="http://viseator.xyz/wp-content/uploads/2016/12/afterDilate.jpg">
+  
+    <link rel="alternative" href="/atom.xml" title="viseator&#39;s blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/main.css?v=4.0.0.css">
+  
+
+</head>
+
+<body>
+  <div id="container" q-class="show:isCtnShow">
+    <canvas id="anm-canvas" class="anm-canvas"></canvas>
+    <div class="left-col" q-class="show:isShow">
+      <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			<img src="/images/avatar.jpg" class="js-avatar">
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">viseator</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">吴迪 @华中科技大学 计算机科学与技术学院</p>
+		
+
+		<nav class="header-menu">
+			<ul>
+			
+				<li><a href="/">主页</a></li>
+	        
+			</ul>
+		</nav>
+		<nav class="header-smart-menu">
+	        
+    		
+    			
+    			<a data-idx="0" q-on="click: openSlider(e, 'innerArchive')" href="javascript:void(0)">所有文章</a>
+    			
+    			
+            
+    			
+    			<a data-idx="1" q-on="click: openSlider(e, 'friends')" href="javascript:void(0)">友链</a>
+    			
+    			
+            
+    			
+    			<a data-idx="2" q-on="click: openSlider(e, 'aboutme')" href="javascript:void(0)">关于我</a>
+    			
+    			
+            
+		</nav>
+		<nav class="header-nav">
+			<div class="social">
+				
+					<a class="github" target="_blank" href="https://github.com/viseator" title="github"><i class="icon-github"></i></a>
+		        
+					<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/viseator/activities" title="zhihu"><i class="icon-zhihu"></i></a>
+		        
+					<a class="mail" target="_blank" href="Mailto:viseator@gmail.com" title="mail"><i class="icon-mail"></i></a>
+		        
+			</div>
+		</nav>
+	</header>		
+</div>
+
+    </div>
+    <div class="mid-col" q-class="show:isShow,hide:isShow|isFalse">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"><i class="icon-sort"></i></div>
+  		<h1 class="header-author js-mobile-header hide">viseator</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+				<img src="/images/avatar.jpg" class="js-avatar">
+			</div>
+			<hgroup>
+			  <h1 class="header-author">viseator</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">吴迪 @华中科技大学 计算机科学与技术学院</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+		        
+		        	<li><a href="/archives">所有文章</a></li>
+		        
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="https://github.com/viseator" title="github"><i class="icon-github"></i></a>
+			        
+						<a class="zhihu" target="_blank" href="https://www.zhihu.com/people/viseator/activities" title="zhihu"><i class="icon-zhihu"></i></a>
+			        
+						<a class="mail" target="_blank" href="Mailto:viseator@gmail.com" title="mail"><i class="icon-mail"></i></a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div id="wrapper" class="body-wrap">
+        <div class="menu-l">
+          <div class="canvas-wrap">
+            <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
+          </div>
+          <div id="js-content" class="content-ll">
+            <article id="post-opencv-in-android-e5-a4-84-e7-90-86-e6-8b-8d-e7-85-a7-e8-a1-a8-e6-a0-bc-ef-bc-88-e4-ba-8c-ef-bc-89" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      OpenCV in Android处理拍照表格（二）
+    </h1>
+  
+
+        <a href="/2016/12/02/opencv-in-android-e5-a4-84-e7-90-86-e6-8b-8d-e7-85-a7-e8-a1-a8-e6-a0-bc-ef-bc-88-e4-ba-8c-ef-bc-89/" class="archive-article-date">
+  	<time datetime="2016-12-02T08:58:12.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2016-12-02</time>
+</a>
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>先来看看上次处理后的整张图片效果：</p>
+<p><img src="http://viseator.xyz/wp-content/uploads/2016/12/afterDilate.jpg" alt="afterdilate"></p>
+<p>这里发现我将图片的颜色已经反相了，这是考虑到下一步的直接检测必须以白色像素为内容。做法在上一篇提到过，交换两段的位置就可以了。</p>
+<p>可以看到噪点已经几乎没有了，文字的清晰度还是可以的。这里采用的kernel都是2x2的。</p>
+<h3 id="（三）直线检测"><a href="#（三）直线检测" class="headerlink" title="（三）直线检测"></a>（三）直线检测</h3><p>下面就是比较关键步骤——直线检测了。</p>
+<p>首先介绍一下openCV提供的直线检测算法：霍夫变换。</p>
+<p>霍夫变换是图像处理中一个著名的检测算法，用于对二值图片中特定的几何形状的检测，直线检测只是其中比较常见的一种用法。从<a href="http://blog.csdn.net/holybin/article/details/20214169" target="_blank" rel="external">holybin的专栏</a>中复制一段介绍基本理论的内容：</p>
+<blockquote>
+<p>Hough直线检测的基本理论是二值图像中的任何点都可能是一些候选直线集合的一部分，所选的参数方式是每一行代表极坐标中的一个点，并且隐含的直线是通过象征点的，垂直于原点到此点的半径，即：检测的过程可以看成从图像中的一个个像素点出发，寻找每个点成为直线一部分的可能，再把这条线上可能的点连起来形成直线。在实际检测中，当一条线出现凹陷或是弯曲度时，也会检测出直线，只是不是一条完整长度直线，而是断断续续重叠相近的很多直线。</p>
+<div>而对于图像中的一条直线而言，利用直角坐标系，可以表示为：<img src="http://hi.csdn.net/attachment/201109/25/0_1316925577jVvv.gif" alt="">的形式。那么，该直线上任意一点（x,y）变换到k-b参数空间将变成一个“点”。也就是说，将图像空间中所有的非零像素转换到k-b参数空间，那么它们将聚焦在一个点上。如此一来，参数空间中的一个局部峰值点就很有可能对应着原图像空间中的一条直线。不过，由于直线的斜率可能为无穷大，或者无穷小，那么，在k-b参数空间就不便于对直线进行刻画和描述。所以，研究人员提出采用极坐标参数空间进行直线检测。在极坐标系中，直线可以表述为以下形式：<img src="http://hi.csdn.net/attachment/201109/25/0_1316925607206o.gif" alt=""></div>
+
+<p><img src="http://img.blog.csdn.net/20140301150643531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaG9seWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""><br>更为详细的分析可以看<a href="http://blog.csdn.net/poem_qianmo/article/details/26977557" target="_blank" rel="external">浅墨的博客</a></p>
+</blockquote>
+<p>如果不能理解也没有关系，在openCV中已经为我们封装成了两个函数HoughLines( )与HoughLinesP( )，他们之间的区别在于算法的不同，而效果的差别不大，但HoughLinesP可以减少计算量，所以在这里我们采用了HoughLinesP来进行。</p>
+<p><pre class="lang:default decode:true">public static void HoughLinesP(Mat image,<br>               Mat lines,<br>               double rho,<br>               double theta,<br>               int threshold,<br>               double minLineLength,<br>               double maxLineGap)<br>Finds line segments in a binary image using the probabilistic Hough transform.</pre></p>
+<p>Parameters:<br>image - 8-bit, single-channel binary source image. The image may be modified by the function.<br>lines - Output vector of lines. Each line is represented by a 4-element vector (x_1, y_1, x_2, y_2), where (x_1,y_1) and (x_2, y_2) are the ending points of each detected line segment.<br>rho - Distance resolution of the accumulator in pixels.<br>theta - Angle resolution of the accumulator in radians.<br>threshold - Accumulator threshold parameter. Only those lines are returned that get enough votes (&gt;threshold).<br>minLineLength - Minimum line length. Line segments shorter than that are rejected.<br>maxLineGap - Maximum allowed gap between points on the same line to link them.<br>解释一下各个参数：</p>
+<p>image:源图像 Mat格式，8位单通道（Cv_8UC1）</p>
+<p>lines: 输出的“图像” 虽然是Mat格式，但是其中保存的内容已经不再是图像了，其中的每行（Rows！在这里手上买到的一本书中写成了列，大概是因为版本不同导致的，因为这个在这里卡了好几个小时……）中储存了一个double[]，下面会讲到如何使用里面的信息。</p>
+<p>rho：翻译过来是距离的解析度，以像素为单位，在后面这个参数起了大作用。</p>
+<p>theta：与rho相似地，是角度的解析度，以弧度为单位。</p>
+<p>threshold：阈值 这个值决定了霍夫变换后对于一对值投票所需达到的阈值才能被记录。换句话说，这个值越大，检测出直线的要求就越高（这个要求应该是对于直线上的点聚集程度的要求）。应为一个非负值。</p>
+<p>minLineLength： 字面意思，检测出的直线的最小长度，小于这个长度的直线将不会被记录。单位是像素。</p>
+<p>maxLineGap ： 字面意思，检测时可以接受的直线断开的距离（实际情况中很难达到一条直线上的点全部都有，通常是断断续续的，这时这个值就发挥了很大的作用）。单位是像素。</p>
+<p>&nbsp;</p>
+<p>可以看到这个函数的参数非常多，并且有个别参数并没有一个量化的标准（比如threshold在检测大图的时候取150左右的值比较好，但在后面检测小图时候设成0都不尽人意，rho与theta参数如果按照资料中普遍的1和2pi/180来设置小图的检测就会出现问题），更加悲惨的是这些参数之间存在相互影响，对实际的图片进行处理的过程中参数的差别可能很大，需要一些耐心和方法去慢慢调试（我写了嵌套的循环再输出所有的图用肉眼看效果再缩小范围……）</p>
+<p>最影响最终效果的部分在于最后两个值的设置，可以看到上面我们将要处理的图片，这步我的目的是检测出所有的横向的表格边线。下面先上最终的效果图：</p>
+<p><img src="http://viseator.xyz/wp-content/uploads/2016/12/redLines1.jpg" alt="redlines1"></p>
+<p>(红线为最终检测出的直线位置）</p>
+<p>具体的检测过程下一篇介绍。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+	<div class="article-category tagcloud">
+	<i class="icon-book icon"></i>
+	<a class="article-category-link" href="/categories/Android/">Android</a><a class="article-category-link" href="/categories/Android/OpenCV/">OpenCV</a>
+	</div>
+
+
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://yoursite.com/2016/12/02/opencv-in-android-e5-a4-84-e7-90-86-e6-8b-8d-e7-85-a7-e8-a1-a8-e6-a0-bc-ef-bc-88-e4-ba-8c-ef-bc-89/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+  
+<nav id="article-nav">
+  
+    <a href="/2016/12/04/e5-ad-a6-e4-b9-a0-e6-97-a5-e5-bf-9720161203/" id="article-nav-newer" class="article-nav-link-wrap">
+      <i class="icon-circle-left"></i>
+      <div class="article-nav-title">
+        
+          学习日志20161203
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/12/02/e5-ad-a6-e4-b9-a0-e6-97-a5-e5-bf-9720161201/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">学习日志20161201</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+
+
+
+          </div>
+        </div>
+      </div>
+      <footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2016 viseator
+    	</div>
+      	<div class="footer-right">
+      		<a href="http://hexo.io/" target="_blank">Hexo</a>  Theme <a href="https://github.com/litten/hexo-theme-yilia" target="_blank">Yilia</a> by Litten
+      	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    <script>
+	var yiliaConfig = {
+		mathjax: false,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false,
+		root: "/",
+		innerArchive: true
+	}
+</script>
+
+<script src="/./main.js?v=4.0.0.js"></script>
+
+
+    
+<div class="tools-col" q-class="show:isShow,hide:isShow|isFalse" q-on="click:stop(e)">
+  <div class="tools-wrap">
+    
+    	<section class="tools-section tools-section-all" q-show="innerArchive">
+        <div class="search-wrap">
+          <input class="search-ipt" q-model="search" type="text" placeholder="find something…">
+          <i class="icon-search icon" q-show="search|isEmptyStr"></i>
+          <i class="icon-close icon" q-show="search|isNotEmptyStr" q-on="click:clearChose(e)"></i>
+        </div>
+        <div class="widget tagcloud search-tag">
+          <p class="search-tag-wording">tag:</p>
+          <label class="search-switch">
+            <input type="checkbox" q-on="click:toggleTag(e)" q-attr="checked:showTags">
+          </label>
+          <ul class="article-tag-list" q-show="showTags">
+            
+            <div class="clearfix"></div>
+          </ul>
+        </div>
+        <ul class="search-ul">
+          <p q-show="jsonFail" style="padding: 20px; font-size: 12px;">
+            缺失模块。<br/>1、在博客根目录（注意不是yilia根目录）执行以下命令：<br/> npm i hexo-generator-json-content --save<br/><br/>
+            2、在根目录_config.yml里添加配置：
+<pre style="font-size: 12px;" q-show="jsonFail">
+  jsonContent:
+    meta: false
+    pages: false
+    posts:
+      title: true
+      date: true
+      path: true
+      text: true
+      raw: false
+      content: false
+      slug: false
+      updated: false
+      comments: false
+      link: false
+      permalink: false
+      excerpt: false
+      categories: false
+      tags: true
+</pre>
+          </p>
+          <li class="search-li" q-repeat="items" q-show="isShow">
+            <a q-attr="href:path|urlformat" class="search-title"><i class="icon-quo-left icon"></i><span q-text="title"></span></a>
+            <p class="search-time">
+              <i class="icon-calendar icon"></i>
+              <span q-text="date|dateformat"></span>
+            </p>
+            <p class="search-tag">
+              <i class="icon-price-tags icon"></i>
+              <span q-repeat="tags" q-on="click:choseTag(e, name)" q-text="name|tagformat"></span>
+            </p>
+          </li>
+        </ul>
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-friends" q-show="friends">
+  		
+        <ul class="search-ul">
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接1</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接2</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接3</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接4</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接5</a>
+            </li>
+          
+            <li class="search-li">
+              <a href="http://localhost:4000/" target="_blank" class="search-title"><i class="icon-quo-left icon"></i>友情链接6</a>
+            </li>
+          
+        </ul>
+  		
+    	</section>
+    
+
+    
+    	<section class="tools-section tools-section-me" q-show="aboutme">
+  	  	
+  	  		<div class="aboutme-wrap" id="js-aboutme">很惭愧&lt;br&gt;&lt;br&gt;只做了一点微小的工作&lt;br&gt;谢谢大家</div>
+  	  	
+    	</section>
+    
+  </div>
+  
+</div>
+    <!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                      <div class="pswp__preloader__cut">
+                        <div class="pswp__preloader__donut"></div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div> 
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+  </div>
+</body>
+</html>
