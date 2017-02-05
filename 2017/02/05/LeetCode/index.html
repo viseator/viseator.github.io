@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java,OpenCV," />
+  <meta name="keywords" content="Java,Algorithm,LeetCode," />
 
 
 
@@ -84,40 +84,19 @@
 
 
 
-<meta name="description" content="先来看看上次处理后的整张图片效果：
-
-这里发现我将图片的颜色已经反相了，这是考虑到下一步的直接检测必须以白色像素为内容。做法在上一篇提到过，交换两段的位置就可以了。
-可以看到噪点已经几乎没有了，文字的清晰度还是可以的。这里采用的kernel都是2x2的。
-直线检测下面就是比较关键步骤——直线检测了。
-首先介绍一下openCV提供的直线检测算法：霍夫变换。
-霍夫变换是图像处理中一个著名的检测算法，用">
+<meta name="description" content="写在前面寒假（假装）看完《数据结构与算法分析》之后决定是时候开始做LeetCode的题目了，在这里记录下一些LeetCode过程中遇到的坑，做LeetCode不仅是对算法的一种考验，也是对Java基础知识的一种考查，在Java基础并不是太好的现在做一定会漏洞百出，在这里统一做一个记录，也会写下对一些题目的想法。
+LeetCodeTwo Sum直观上的方法是遍历所有元素对找出答案，看了解答以后发现可">
 <meta property="og:type" content="article">
-<meta property="og:title" content="OpenCV处理拍照表格（二）">
-<meta property="og:url" content="http://www.viseator.xyz/2016/12/02/OpenCV处理拍照表格（二）/index.html">
+<meta property="og:title" content="LeetCode踩坑集锦">
+<meta property="og:url" content="http://www.viseator.xyz/2017/02/05/LeetCode/index.html">
 <meta property="og:site_name" content="viseator's blog">
-<meta property="og:description" content="先来看看上次处理后的整张图片效果：
-
-这里发现我将图片的颜色已经反相了，这是考虑到下一步的直接检测必须以白色像素为内容。做法在上一篇提到过，交换两段的位置就可以了。
-可以看到噪点已经几乎没有了，文字的清晰度还是可以的。这里采用的kernel都是2x2的。
-直线检测下面就是比较关键步骤——直线检测了。
-首先介绍一下openCV提供的直线检测算法：霍夫变换。
-霍夫变换是图像处理中一个著名的检测算法，用">
-<meta property="og:image" content="http://www.viseator.xyz/images/afterDilate.jpg">
-<meta property="og:image" content="http://hi.csdn.net/attachment/201109/25/0_1316925577jVvv.gif">
-<meta property="og:image" content="http://hi.csdn.net/attachment/201109/25/0_1316925607206o.gif">
-<meta property="og:image" content="http://img.blog.csdn.net/20140301150643531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaG9seWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
-<meta property="og:image" content="http://www.viseator.xyz/images/redLines1.jpg">
-<meta property="og:updated_time" content="2017-01-11T05:01:30.872Z">
+<meta property="og:description" content="写在前面寒假（假装）看完《数据结构与算法分析》之后决定是时候开始做LeetCode的题目了，在这里记录下一些LeetCode过程中遇到的坑，做LeetCode不仅是对算法的一种考验，也是对Java基础知识的一种考查，在Java基础并不是太好的现在做一定会漏洞百出，在这里统一做一个记录，也会写下对一些题目的想法。
+LeetCodeTwo Sum直观上的方法是遍历所有元素对找出答案，看了解答以后发现可">
+<meta property="og:updated_time" content="2017-02-05T07:40:01.323Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="OpenCV处理拍照表格（二）">
-<meta name="twitter:description" content="先来看看上次处理后的整张图片效果：
-
-这里发现我将图片的颜色已经反相了，这是考虑到下一步的直接检测必须以白色像素为内容。做法在上一篇提到过，交换两段的位置就可以了。
-可以看到噪点已经几乎没有了，文字的清晰度还是可以的。这里采用的kernel都是2x2的。
-直线检测下面就是比较关键步骤——直线检测了。
-首先介绍一下openCV提供的直线检测算法：霍夫变换。
-霍夫变换是图像处理中一个著名的检测算法，用">
-<meta name="twitter:image" content="http://www.viseator.xyz/images/afterDilate.jpg">
+<meta name="twitter:title" content="LeetCode踩坑集锦">
+<meta name="twitter:description" content="写在前面寒假（假装）看完《数据结构与算法分析》之后决定是时候开始做LeetCode的题目了，在这里记录下一些LeetCode过程中遇到的坑，做LeetCode不仅是对算法的一种考验，也是对Java基础知识的一种考查，在Java基础并不是太好的现在做一定会漏洞百出，在这里统一做一个记录，也会写下对一些题目的想法。
+LeetCodeTwo Sum直观上的方法是遍历所有元素对找出答案，看了解答以后发现可">
 
 
 
@@ -145,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://www.viseator.xyz/2016/12/02/OpenCV处理拍照表格（二）/"/>
+  <link rel="canonical" href="http://www.viseator.xyz/2017/02/05/LeetCode/"/>
 
 
 
 
 
-  <title> OpenCV处理拍照表格（二） | viseator's blog </title>
+  <title> LeetCode踩坑集锦 | viseator's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -282,7 +261,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="http://www.viseator.xyz/2016/12/02/OpenCV处理拍照表格（二）/">
+  <link itemprop="mainEntityOfPage" href="http://www.viseator.xyz/2017/02/05/LeetCode/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="viseator">
@@ -306,7 +285,7 @@
             
             
               
-                OpenCV处理拍照表格（二）
+                LeetCode踩坑集锦
               
             
           </h1>
@@ -319,8 +298,8 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-02T16:58:12+08:00">
-                2016-12-02
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-05T15:11:24+08:00">
+                2017-02-05
               </time>
             
 
@@ -338,8 +317,8 @@
               <span class="post-meta-item-text">分类于</span>
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index">
-                    <span itemprop="name">Java</span>
+                  <a href="/categories/Algorithm/" itemprop="url" rel="index">
+                    <span itemprop="name">Algorithm</span>
                   </a>
                 </span>
 
@@ -349,8 +328,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/OpenCV/" itemprop="url" rel="index">
-                    <span itemprop="name">OpenCV</span>
+                  <a href="/categories/Algorithm/LeetCode/" itemprop="url" rel="index">
+                    <span itemprop="name">LeetCode</span>
                   </a>
                 </span>
 
@@ -384,44 +363,11 @@
       
 
       
-        <p>先来看看上次处理后的整张图片效果：</p>
-<p><img src="/images/afterDilate.jpg" alt="afterdilate"></p>
-<p>这里发现我将图片的颜色已经反相了，这是考虑到下一步的直接检测必须以白色像素为内容。做法在上一篇提到过，交换两段的位置就可以了。</p>
-<p>可以看到噪点已经几乎没有了，文字的清晰度还是可以的。这里采用的kernel都是2x2的。</p>
-<h3 id="直线检测"><a href="#直线检测" class="headerlink" title="直线检测"></a>直线检测</h3><p>下面就是比较关键步骤——直线检测了。</p>
-<p>首先介绍一下openCV提供的直线检测算法：霍夫变换。</p>
-<p>霍夫变换是图像处理中一个著名的检测算法，用于对二值图片中特定的几何形状的检测，直线检测只是其中比较常见的一种用法。从<a href="http://blog.csdn.net/holybin/article/details/20214169" target="_blank" rel="external">holybin的专栏</a>中复制一段介绍基本理论的内容：</p>
-<blockquote>
-<p>Hough直线检测的基本理论是二值图像中的任何点都可能是一些候选直线集合的一部分，所选的参数方式是每一行代表极坐标中的一个点，并且隐含的直线是通过象征点的，垂直于原点到此点的半径，即：检测的过程可以看成从图像中的一个个像素点出发，寻找每个点成为直线一部分的可能，再把这条线上可能的点连起来形成直线。在实际检测中，当一条线出现凹陷或是弯曲度时，也会检测出直线，只是不是一条完整长度直线，而是断断续续重叠相近的很多直线。&gt;<br>而对于图像中的一条直线而言，利用直角坐标系，可以表示为：<img src="http://hi.csdn.net/attachment/201109/25/0_1316925577jVvv.gif" alt="">的形式。那么，该直线上任意一点（x,y）变换到k-b参数空间将变成一个“点”。也就是说，将图像空间中所有的非零像素转换到k-b参数空间，那么它们将聚焦在一个点上。如此一来，参数空间中的一个局部峰值点就很有可能对应着原图像空间中的一条直线。不过，由于直线的斜率可能为无穷大，或者无穷小，那么，在k-b参数空间就不便于对直线进行刻画和描述。所以，研究人员提出采用极坐标参数空间进行直线检测。在极坐标系中，直线可以表述为以下形式：<img src="http://hi.csdn.net/attachment/201109/25/0_1316925607206o.gif" alt="">&gt;<img src="http://img.blog.csdn.net/20140301150643531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaG9seWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
-</blockquote>
-<p>更为详细的分析可以看<a href="http://blog.csdn.net/poem_qianmo/article/details/26977557" target="_blank" rel="external">浅墨的博客</a></p>
-<p>如果不能理解也没有关系，在<code>openCV</code>中已经为我们封装成了两个函数<code>HoughLines( )</code>与<code>HoughLinesP( )</code>，他们之间的区别在于算法的不同，而效果的差别不大，但<code>HoughLinesP</code>可以减少计算量，所以在这里我们采用了<code>HoughLinesP</code>来进行。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">HoughLinesP</span><span class="params">(Mat image,Mat lines,<span class="keyword">double</span> rho,<span class="keyword">double</span> theta,<span class="keyword">int</span> threshold,<span class="keyword">double</span> minLineLength,<span class="keyword">double</span> maxLineGap)</span></span></div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>Finds line segments in a binary image using the probabilistic Hough transform.</p>
-<p>Parameters:<br><code>image</code> - 8-bit, single-channel binary source image. The image may be modified by the function.<br><code>lines</code> - Output vector of lines. Each line is represented by a 4-element vector (x_1, y_1, x_2, y_2), where (x_1,y_1) and (x_2, y_2) are the ending points of each detected line segment.<br><code>rho</code> - Distance resolution of the accumulator in pixels.<br><code>theta</code> - Angle resolution of the accumulator in radians.<br><code>threshold</code> - Accumulator threshold parameter. Only those lines are returned that get enough votes (&gt;threshold).<br><code>minLineLength</code> - Minimum line length. Line segments shorter than that are rejected.<br><code>maxLineGap</code> - Maximum allowed gap between points on the same line to link them.</p>
-</blockquote>
-<p>解释一下各个参数：</p>
-<ul>
-<li><p><code>image</code>:源图像 Mat格式，8位单通道（<code>Cv_8UC1</code>）</p>
-</li>
-<li><p><code>lines</code>: 输出的“图像” 虽然是Mat格式，但是其中保存的内容已经不再是图像了，其中的每行（<code>Rows</code>！在这里手上买到的一本书中写成了列，大概是因为版本不同导致的，因为这个在这里卡了好几个小时……）中储存了一个<code>double[]</code>，下面会讲到如何使用里面的信息。</p>
-</li>
-<li><p><code>rho</code>：翻译过来是距离的解析度，以像素为单位，在后面这个参数起了大作用。</p>
-</li>
-<li><p><code>theta</code>：与rho相似地，是角度的解析度，以弧度为单位。</p>
-</li>
-<li><p><code>threshold</code>：阈值 这个值决定了霍夫变换后对于一对值投票所需达到的阈值才能被记录。换句话说，这个值越大，检测出直线的要求就越高（这个要求应该是对于直线上的点聚集程度的要求）。应为一个非负值。</p>
-</li>
-<li><p><code>minLineLength</code>:字面意思，检测出的直线的最小长度，小于这个长度的直线将不会被记录。单位是像素。</p>
-</li>
-<li><p><code>maxLineGap</code>：字面意思，检测时可以接受的直线断开的距离（实际情况中很难达到一条直线上的点全部都有，通常是断断续续的，这时这个值就发挥了很大的作用）。单位是像素。</p>
-</li>
-</ul>
-<p>可以看到这个函数的参数非常多，并且有个别参数并没有一个量化的标准（比如<code>threshold</code>在检测大图的时候取150左右的值比较好，但在后面检测小图时候设成0都不尽人意，<code>rho</code>与<code>theta</code>参数如果按照资料中普遍的1和2pi/180来设置小图的检测就会出现问题），更加悲惨的是这些参数之间存在相互影响，对实际的图片进行处理的过程中参数的差别可能很大，需要一些耐心和方法去慢慢调试（我写了嵌套的循环再输出所有的图用肉眼看效果再缩小范围……）</p>
-<p>最影响最终效果的部分在于最后两个值的设置，可以看到上面我们将要处理的图片，这步我的目的是检测出所有的横向的表格边线。下面先上最终的效果图：</p>
-<p><img src="/images/redLines1.jpg" alt="redlines1"></p>
-<p>(红线为最终检测出的直线位置）</p>
-<p>具体的检测过程下一篇介绍。</p>
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>寒假（假装）看完《数据结构与算法分析》之后决定是时候开始做LeetCode的题目了，在这里记录下一些LeetCode过程中遇到的坑，做LeetCode不仅是对算法的一种考验，也是对Java基础知识的一种考查，在Java基础并不是太好的现在做一定会漏洞百出，在这里统一做一个记录，也会写下对一些题目的想法。</p>
+<h2 id="LeetCode"><a href="#LeetCode" class="headerlink" title="LeetCode"></a>LeetCode</h2><h3 id="Two-Sum"><a href="#Two-Sum" class="headerlink" title="Two Sum"></a>Two Sum</h3><p>直观上的方法是遍历所有元素对找出答案，看了解答以后发现可以用Hash表实现，Hash表可以进行对另一个元素的快速查找并返回对应的位置。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</div><div class="line">    Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</div><div class="line">        map.put(nums[i], i);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (Integer num : map.keySet()) &#123;</div><div class="line">        <span class="keyword">if</span> (map.containsKey(target - num) &amp;&amp; !Objects.equals(map.get(num), map.get(target - num))) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;map.get(num), map.get(target - num)&#125;;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>上面的代码在用例[3,3] 6的时候返回结果为null，原因是第7行中第二个判断条件不成立，由于构建hash表的时候后面一个[3,1]覆盖了前面的[3,0]导致无法同时找到两个位置。（提醒了hash表一对一的性质，后面加入的元素如果key相同会覆盖前面的元素）</p>
+<p>解决办法是不遍历key而是直接遍历nums数组，比较循环的索引和hash表的value，这样可以保证找到对应的那个位置不同的元素位置。</p>
 
       
     </div>
@@ -447,7 +393,9 @@
           
             <a href="/tags/Java/" rel="tag"># Java</a>
           
-            <a href="/tags/OpenCV/" rel="tag"># OpenCV</a>
+            <a href="/tags/Algorithm/" rel="tag"># Algorithm</a>
+          
+            <a href="/tags/LeetCode/" rel="tag"># LeetCode</a>
           
         </div>
       
@@ -456,8 +404,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/11/15/OpenCV处理拍照表格（一）/" rel="next" title="OpenCV处理拍照表格（一）">
-                <i class="fa fa-chevron-left"></i> OpenCV处理拍照表格（一）
+              <a href="/2017/01/20/2016年度总结/" rel="next" title="2016年度总结">
+                <i class="fa fa-chevron-left"></i> 2016年度总结
               </a>
             
           </div>
@@ -465,10 +413,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/09/OpenCV处理拍照表格（三）/" rel="prev" title="OpenCV处理拍照表格（三）">
-                OpenCV处理拍照表格（三） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -608,7 +552,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#直线检测"><span class="nav-number">1.</span> <span class="nav-text">直线检测</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#LeetCode"><span class="nav-number">2.</span> <span class="nav-text">LeetCode</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Two-Sum"><span class="nav-number">2.1.</span> <span class="nav-text">Two Sum</span></a></li></ol></li></ol></div>
             
 
           </div>
