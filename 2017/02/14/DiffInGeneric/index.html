@@ -1,0 +1,704 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Java," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="Java 1.5中引入了泛型的概念以增加代码的安全性与清晰度，同时为了提供对旧代码的兼容性，让旧代码不经过改动也可以在新版本中运行，Java提供了原生态类型（或称原始类型）。但是实际中在新的代码中已经不应该使用原生态类型。
+原生态类型的含义是不带任何实际参数的泛型名称，例如Java 1.5后改为泛型实现的List&amp;lt;E&amp;gt;，List就是它的原生态类型，与没有引入泛型之前的类型完全一致。
+而">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java泛型中List、List<Object>、List<?>的区别">
+<meta property="og:url" content="http://www.viseator.xyz/2017/02/14/DiffInGeneric/index.html">
+<meta property="og:site_name" content="viseator's blog">
+<meta property="og:description" content="Java 1.5中引入了泛型的概念以增加代码的安全性与清晰度，同时为了提供对旧代码的兼容性，让旧代码不经过改动也可以在新版本中运行，Java提供了原生态类型（或称原始类型）。但是实际中在新的代码中已经不应该使用原生态类型。
+原生态类型的含义是不带任何实际参数的泛型名称，例如Java 1.5后改为泛型实现的List&amp;lt;E&amp;gt;，List就是它的原生态类型，与没有引入泛型之前的类型完全一致。
+而">
+<meta property="og:updated_time" content="2017-02-14T13:38:33.259Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java泛型中List、List<Object>、List<?>的区别">
+<meta name="twitter:description" content="Java 1.5中引入了泛型的概念以增加代码的安全性与清晰度，同时为了提供对旧代码的兼容性，让旧代码不经过改动也可以在新版本中运行，Java提供了原生态类型（或称原始类型）。但是实际中在新的代码中已经不应该使用原生态类型。
+原生态类型的含义是不带任何实际参数的泛型名称，例如Java 1.5后改为泛型实现的List&amp;lt;E&amp;gt;，List就是它的原生态类型，与没有引入泛型之前的类型完全一致。
+而">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.viseator.xyz/2017/02/14/DiffInGeneric/"/>
+
+
+
+
+
+  <title> Java泛型中List、List<Object>、List<?>的区别 | viseator's blog </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">viseator's blog</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle">吴迪 @华中科技大学 计算机科学与技术学院</p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="http://www.viseator.xyz/2017/02/14/DiffInGeneric/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="viseator">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="/images/avatar.jpg">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="viseator's blog">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="viseator's blog" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java泛型中List、List<Object>、List<?>的区别
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-02-14T16:30:22+08:00">
+                2017-02-14
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Java/" itemprop="url" rel="index">
+                    <span itemprop="name">Java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+
+          
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>Java 1.5中引入了泛型的概念以增加代码的安全性与清晰度，同时为了提供对旧代码的兼容性，让旧代码不经过改动也可以在新版本中运行，Java提供了原生态类型（或称原始类型）。但是实际中在新的代码中已经不应该使用原生态类型。</p>
+<p>原生态类型的含义是不带任何实际参数的泛型名称，例如Java 1.5后改为泛型实现的<code>List&lt;E&gt;</code>，<code>List</code>就是它的原生态类型，与没有引入泛型之前的类型完全一致。</p>
+<p>而在虚拟机层面上，是没有泛型这一概念的——所有对象都属于普通类。在编译时，所有的泛型类都会被视为原生态类型。</p>
+<p>那么为什么不应该使用原生态类型呢？</p>
+<blockquote>
+<p>  如果使用原生态类型，就失掉了泛型在安全性和表述性方面的所有优势。——Effective Java</p>
+</blockquote>
+<p>泛型的目的简单地说就是可以让一些运行时才能发现的错误可以在编译期间就可以被编译器所检测出，运行时出问题的代价与编译期出现问题的代价的差别可想而知。换句话说，泛型是编译器的一种及时发现错误的机制，同时也给用户带来了代码的清晰与简洁的附加好处（不必再写一些复杂而危险并且不直观的强制类型转换）。</p>
+<p>下面就进入正题谈谈以<code>List</code>为例时<code>List</code>、<code>List&lt;Object&gt;</code>、<code>List&lt;?&gt;</code>的区别。</p>
+<p>先下定义：</p>
+<ul>
+<li><code>List</code>：<strong>原生态类型</strong></li>
+<li><code>List&lt;Object&gt;</code>：<strong>参数化的类型</strong>，表明<code>List</code>中可以<strong>容纳</strong>任意类型的对象</li>
+<li><code>List&lt;?&gt;</code>：<strong>无限定通配符类型</strong>，表示<strong>只能包含某一种未知对象类型</strong></li>
+</ul>
+<p>下面看一段代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiffInGeneric</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        List&lt;String&gt; strings = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        List list = strings;<span class="comment">//ok</span></div><div class="line">        List&lt;Object&gt; objects = strings;<span class="comment">//Error: java: incompatible types: java.util.List&lt;java.lang.String&gt; cannot be converted to java.util.List&lt;java.lang.Object&gt;</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>我们创建了一个<code>List&lt;String&gt;</code>类型的对象<code>strings</code>，再把它赋给原生态类型<code>List</code>，这是可以的。但是第5行中尝试把它传递给<code>List&lt;Object&gt;</code>时，出现了一个类型不相容错误，注意，这是一个编译期错误。</p>
+<p>这是因为泛型有子类型化的规则：</p>
+<p><code>List&lt;String&gt;</code>是原生态类型<code>List</code>的一个子类型。虽然<code>String</code>是<code>Object</code>的子类型，但是由于<strong>泛型是不可协变的</strong>，<code>List&lt;String&gt;</code>并不是<code>List&lt;Object&gt;</code>的子类型，所以这里的传递无法通过编译。</p>
+<p>如果像上面那样使用原生态类型会有什么隐患呢？看下面一段代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiffInGeneric</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        List&lt;String&gt; strings = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        unsafeAdd(strings, (Integer)<span class="number">1</span>);</div><div class="line">        System.out.println(strings.get(<span class="number">0</span>));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">unsafeAdd</span><span class="params">(List list, Object object)</span> </span>&#123;</div><div class="line">        list.add(object);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>编译器提示了两条警告：</p>
+<p>第8行：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">warning: [rawtypes] found raw type: List</div><div class="line">    private static void unsafeAdd(List list, Object object) &#123;</div><div class="line">                                  ^</div><div class="line">  missing type arguments for generic class List&lt;E&gt;</div><div class="line">  where E is a type-variable:</div><div class="line">    E extends Object declared in interface List</div></pre></td></tr></table></figure>
+<p>警告发现了原生态类型<code>List</code>，同时还贴心地指出了<code>List&lt;E&gt;</code>的形式以及<code>E</code>的来源。</p>
+<p>第9行：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">warning: [unchecked] <span class="function">unchecked call to <span class="title">add</span><span class="params">(E)</span> as a member of the raw type List</span></div><div class="line">        list.<span class="title">add</span><span class="params">(object)</span>;</div><div class="line">                ^</div><div class="line">  where E is a type-variable:</div><div class="line">    E extends Object declared in <span class="class"><span class="keyword">interface</span> <span class="title">List</span></span></div></pre></td></tr></table></figure>
+<p>同样指出了我们正在把一个对象添加到<code>List</code>中，而这个添加过程由于我们使用了原生态类型而无法被检验。</p>
+<p>如果忽略这两条警告并运行这个程序，显然会出现一条错误：</p>
+<p>第5行： </p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Exception in thread <span class="string">"main"</span> java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.String</div></pre></td></tr></table></figure>
+<p>我们试图把一个自动装箱后的<code>Integer</code>对象插入到了一个被声明为<code>List&lt;String&gt;</code>的<code>List</code>中，由于我们在<code>unsafeAdd</code>方法中使用了原生态类型，从而使得编译器无法在编译期间检查<code>add</code>参数的合法性，从而没有产生编译错误而是产生了一条警告，运行后当试图把这个错误的<code>Integer</code>对象作为<code>String</code>取出时就会出现<code>ClassCaseException</code>异常，这是个运行时的异常，导致了程序中断。</p>
+<p>如果我们把<code>unsafeAdd</code>方法的参数从<code>List</code>改为<code>List&lt;Object&gt;</code>会发生什么呢？正如之前所说的那样，由于<code>List&lt;String&gt;</code>并不是<code>List&lt;Object&gt;</code>的子类型，所以在传递参数的时候就会出现第一段代码中出现的<strong>编译期错误</strong>。这体现了泛型所带来的安全性。</p>
+<p>可以这么说，<code>List&lt;Object&gt;</code>唯一特殊的地方只是<code>Object</code>是所有类型的超类，由于泛型的不可协变性，<strong>它只能表示<code>List</code>中可以容纳所有类型的对象，却不能表示任何参数类型的<code>List&lt;E&gt;</code>。</strong></p>
+<p>而<code>List&lt;?&gt;</code>则是通配符类型中的一种特例，它并没有<code>extend</code>或<code>super</code>这样的限制，从而可以做到引用任意参数类型的<code>List&lt;E&gt;</code>。但由于没有表示类型的符号（<code>E</code>），在方法中无法引用这个类型，所以它只用于无需使用具体类型的方法之中，如果不是这个情况，则需要使用泛型方法（只用<code>List&lt;?&gt;</code>的<strong>不是</strong>一个泛型方法，它具有<code>List&lt;?&gt;</code>这个固定的参数`）。</p>
+<p>但是<code>List&lt;?&gt;</code>还是不能用作上面的<code>unsafeAdd</code>的参数，修改后会出现一条奇怪的编译错误：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">error: no suitable method found for add(Object)</div><div class="line">        list.add(object);</div><div class="line">            ^</div><div class="line">    method Collection.add(CAP#1) is not applicable</div><div class="line">      (argument mismatch; Object cannot be converted to CAP#1)</div><div class="line">    method List.add(CAP#1) is not applicable</div><div class="line">      (argument mismatch; Object cannot be converted to CAP#1)</div><div class="line">  where CAP#1 is a fresh type-variable:</div><div class="line">    CAP#1 extends Object from capture of ?</div></pre></td></tr></table></figure>
+<p>这是因为无法将任何元素（<code>null</code>除外）放入<code>List&lt;?&gt;</code>中。这又是为什么呢？先来看一个有限定通配符的例子：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiffInGeneric</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        List&lt;? extends Number&gt; numbers = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        numbers= <span class="keyword">new</span> ArrayList&lt;Double&gt;();</div><div class="line">        numbers= <span class="keyword">new</span> ArrayList&lt;Float&gt;();</div><div class="line">        numbers = <span class="keyword">new</span> ArrayList&lt;Number&gt;();</div><div class="line">        numbers.add(<span class="keyword">new</span> Integer(<span class="number">1</span>));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第7行报出了与之前相似的编译错误：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">error: no suitable method found for add(Integer)</div><div class="line">        numbers.add(new Integer(1));</div><div class="line">               ^</div><div class="line">    method Collection.add(CAP#1) is not applicable</div><div class="line">      (argument mismatch; Integer cannot be converted to CAP#1)</div><div class="line">    method List.add(CAP#1) is not applicable</div><div class="line">      (argument mismatch; Integer cannot be converted to CAP#1)</div><div class="line">  where CAP#1 is a fresh type-variable:</div><div class="line">    CAP#1 extends Number from capture of ? extends Number</div></pre></td></tr></table></figure>
+<p>这次我们可以看出错误的原因：可以将一个<code>List&lt;Integer&gt;</code>传递给<code>List&lt;? extends Number&gt;</code>，因为<code>Integer</code>是<code>Number</code>的子类，符合限定符的条件。同理，也可以将类似的对象传递给它，当然也可以把<code>List&lt;Number&gt;</code>传递给它。</p>
+<p>如果允许这个对象的<code>add</code>操作，我们无法知道这个参数是否与对象的泛型参数相同，因为我们只知道它是<code>Number</code>的一个子类。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">List&lt;? extends Parent&gt; list = <span class="keyword">new</span> ArrayList&lt;Child&gt;();</div><div class="line">List&lt;? extends Parent&gt; parents = list;</div><div class="line">list.add(<span class="keyword">new</span> Parent());</div></pre></td></tr></table></figure>
+<p>上面的1,2两行是完全合法的，如果允许第3行的<code>add</code>操作，那么会把一个<code>Parent</code>对象加入到一个实际类型是<code>Child</code>的<code>List</code>中，而<code>Parent</code>is-not-a <code>Child</code>，这破坏了Java的类型安全，是绝对不允许的。</p>
+<p>上面是有限制通配符的情况，那么针对<code>List&lt;?&gt;</code>这样的无限制通配符更是如此。因此，为了保证类型安全，不允许对<code>List&lt;?&gt;</code>或<code>List&lt;? extends E&gt;</code>这样的通配符类型进行类似<code>add</code>的操作。</p>
+<p>使用泛型方法可以避免这个问题（重申通配符类型并不是泛型方法），使用无限制通配符类型可以取代其他需要表示<strong>包含某一种对象类型的泛型类型</strong>的情况而不是使用原生态类型<code>List</code>。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/02/05/LeetCode/" rel="next" title="LeetCode踩坑集锦">
+                <i class="fa fa-chevron-left"></i> LeetCode踩坑集锦
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+
+      <section class="site-overview sidebar-panel sidebar-panel-active">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="viseator" />
+          <p class="site-author-name" itemprop="name">viseator</p>
+          <p class="site-description motion-element" itemprop="description">永远欣赏那些可以行我所不能行之事的人。</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-name">文章</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">6</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">5</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/viseator" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:viseator@gmail.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-mail-forward"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">viseator</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+	
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+
+</body>
+</html>
