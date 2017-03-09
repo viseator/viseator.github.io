@@ -6,17 +6,32 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://www.viseator.xyz">
-  <title>Archives: 2017/1 | viseator&#39;s blog</title>
+  <title>Android View绘制生命周期总览 | viseator&#39;s blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="永远欣赏那些可以行我所不能行之事的人。">
-<meta property="og:type" content="website">
-<meta property="og:title" content="viseator's blog">
-<meta property="og:url" content="http://www.viseator.xyz/archives/2017/01/index.html">
+  <meta name="description" content="为了直观表示整个过程，我制作了一张流程图。注意以下只是整个生命周期中比较常用的方法，并不代表所有的过程。
+
+当一个Activity收到焦点即将要处于激活状态时，将会被要求绘制它的布局，绘制布局之前的过程在这里不涉及，我们从绘制View开始分析。
+每个Activity被要求提供一个ViewGroup作为View树的根，也就是我们熟悉的setContentView方法。
+123456789101112">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android View绘制生命周期总览">
+<meta property="og:url" content="http://www.viseator.xyz/2017/03/09/android_view_lifeCycle/index.html">
 <meta property="og:site_name" content="viseator's blog">
-<meta property="og:description" content="永远欣赏那些可以行我所不能行之事的人。">
+<meta property="og:description" content="为了直观表示整个过程，我制作了一张流程图。注意以下只是整个生命周期中比较常用的方法，并不代表所有的过程。
+
+当一个Activity收到焦点即将要处于激活状态时，将会被要求绘制它的布局，绘制布局之前的过程在这里不涉及，我们从绘制View开始分析。
+每个Activity被要求提供一个ViewGroup作为View树的根，也就是我们熟悉的setContentView方法。
+123456789101112">
+<meta property="og:image" content="http://www.viseator.xyz/../images/viewLifeCircle.png">
+<meta property="og:updated_time" content="2017-03-09T14:31:16.571Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="viseator's blog">
-<meta name="twitter:description" content="永远欣赏那些可以行我所不能行之事的人。">
+<meta name="twitter:title" content="Android View绘制生命周期总览">
+<meta name="twitter:description" content="为了直观表示整个过程，我制作了一张流程图。注意以下只是整个生命周期中比较常用的方法，并不代表所有的过程。
+
+当一个Activity收到焦点即将要处于激活状态时，将会被要求绘制它的布局，绘制布局之前的过程在这里不涉及，我们从绘制View开始分析。
+每个Activity被要求提供一个ViewGroup作为View树的根，也就是我们熟悉的setContentView方法。
+123456789101112">
+<meta name="twitter:image" content="http://www.viseator.xyz/../images/viewLifeCircle.png">
   
     <link rel="alternative" href="/atom.xml" title="viseator&#39;s blog" type="application/atom+xml">
   
@@ -148,71 +163,176 @@
             <canvas data-colors="#eaeaea" data-sectionHeight="100" data-contentId="js-content" id="myCanvas1" class="anm-canvas"></canvas>
           </div>
           <div id="js-content" class="content-ll">
-            
-  
-  
+            <article id="post-android_view_lifeCycle" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2017" class="archive-year">2017</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2017/01/20/2016年度总结/" class="archive-article-date">
-  	<time datetime="2017-01-20T03:48:14.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-01-20</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2017/01/20/2016年度总结/">2016年度总结</a>
+    <h1 class="article-title" itemprop="name">
+      Android View绘制生命周期总览
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2017/03/09/android_view_lifeCycle/" class="archive-article-date">
+  	<time datetime="2017-03-09T09:22:41.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2017-03-09</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>为了直观表示整个过程，我制作了一张流程图。注意以下只是整个生命周期中比较常用的方法，并不代表所有的过程。</p>
+<p><img src="../images/viewLifeCircle.png" alt="viewLifeCircle"></p>
+<p>当一个<code>Activity</code>收到焦点即将要处于激活状态时，将会被要求绘制它的布局，绘制布局之前的过程在这里不涉及，我们从绘制<code>View</code>开始分析。</p>
+<p>每个<code>Activity</code>被要求提供一个<code>ViewGroup</code>作为View树的根，也就是我们熟悉的<code>setContentView</code>方法。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(@LayoutRes <span class="keyword">int</span> layoutResID)</span> </span>&#123;</div><div class="line">    getDelegate().setContentView(layoutResID);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">    getDelegate().setContentView(view);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(View view, ViewGroup.LayoutParams params)</span> </span>&#123;</div><div class="line">    getDelegate().setContentView(view, params);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到<code>setContentView</code>拥有三种形式，可以直接传入<code>View</code>、传入一个<code>layout</code>资源文件，或传入一个<code>View</code>文件和一个用于提供参数的<code>LayoutParams</code>对象。</p>
+<p>整个过程将从这个根<code>View</code>开始，并遍历它的子<code>View</code>来逐一绘制，每个<code>ViewGroup</code>承担了要求它的子<code>View</code>进行绘制的责任，每个<code>View</code>承担了绘制自身的责任。并且父<code>View</code>会在子<code>View</code>完成绘制之后进行绘制，同级的<code>View</code>将以它们出现在树中的顺序进行绘制。</p>
+<hr>
+<p>首先调用的当然是<code>View</code>的构造函数，构造函数分为两种，一种供代码创建的<code>View</code>使用，另一种是由<code>layout</code>文件生成的<code>View</code>使用，区别在于后者会从<code>layout</code>文件中读入所有的属性，前者的属性则需要在代码中设置。</p>
+<p>另外后者在所有的子<code>View</code>都生成完毕之后会回调<code>onFinishInflate</code>方法。</p>
+<hr>
+<p>在正式绘制之前要进行两个过程（布局机制[layout mechanism]）：</p>
+<p>首先是<code>measure</code>过程。这是一个自顶向下的过程，父<code>View</code>将期望尺寸传递给子<code>View</code>，子<code>View</code>需要根据这一信息确定自己的尺寸，并且保证这一尺寸满足父<code>View</code>对其的要求，在子<code>View</code>确定自己尺寸的过程中也要向它的子<code>View</code>传递信息，就这样递归地确定自己的尺寸信息并储存在自身中，保证在<code>measure</code>方法返回时，自身的尺寸信息已经确定。所以在根<code>View</code>的<code>measure</code>方法返回时，所有子<code>View</code>的尺寸信息已经全部确定了。</p>
+<p>这个过程需要注意一个<code>View</code>可能不止一次地调用<code>measure</code>方法来对子<code>View</code>进行测量。比如，可能要先传递一个无限制的信息来获取子<code>View</code>想要的尺寸，当子<code>View</code>希望的尺寸过大或过小时，父<code>View</code>需要再次调用<code>measure</code>方法来给予子<code>View</code>一些限制。</p>
+<p>第二个是<code>layout</code>过程，这也是一个自顶向下的遍历过程，在这个过程中父<code>View</code>负责按照上一个过程中计算并储存在<code>View</code>中的尺寸信息来正确地放置子<code>View</code>。</p>
+<p>同时这个过程可以通过调用<code>requestLayout()</code>来重新进行，并且会引起后面步骤的执行，相当于对以这个<code>View</code>为根的<code>View</code>树进行重新布局。</p>
+<hr>
+<p>下面就是真正的绘制过程了，也就是<code>View</code>的<code>draw()</code>方法，在<code>draw()</code>方法中，（如果需要）会<strong>依次</strong>调用如下方法：</p>
+<ol>
+<li><code>drawBackground()</code>：在画布上绘制特定的背景</li>
+<li><code>onDraw()</code>：重写<code>View</code>几乎必重写的一个方法，用于绘制图形</li>
+<li><code>dispatchDraw()</code>：<code>ViewGroup</code>会重写这个方法，用于对所有的子<code>View</code>调用<code>draw()</code>方法进行绘制</li>
+<li><code>onDrawForeground()</code>：用于绘制前景（如果需要）</li>
+</ol>
+<p>可以看到如果需要调用上述的方法必定会按照这个顺序进行，也就是说，子<code>View</code>的绘制是在父<code>View</code>绘制之后进行的，而同级<code>View</code>的绘制是根据<code>View</code>在父<code>View</code>中的顺序进行绘制的。</p>
+<p>同时这个过程可以通过调用<code>invalidate()</code>来重新进行，相当于进行某个<code>View</code>的重绘。</p>
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">总结</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">Android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">View</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">LifeCycle</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 	<div class="article-category tagcloud">
 		<i class="icon-book icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="/categories/总结/" class="article-tag-list-link color3">总结</a>
+        			<a href="/categories/Android/" class="article-tag-list-link color3">Android</a>
+        		</li>
+      		 
+        		<li class="article-tag-list-item">
+        			<a href="/categories/View/" class="article-tag-list-link color5">View</a>
         		</li>
       		
 		</ul>
 	</div>
 
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="http://s.jiathis.com/qrcode.php?url=http://www.viseator.xyz/2017/03/09/android_view_lifeCycle/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
   
   
-    </div></section>
+    <a href="/2017/02/14/DiffInGeneric/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">Java泛型中List、List&lt;Object&gt;、List&lt;?&gt;的区别</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+
+
+
+
+  
+    <div class="duoshuo"></div>
   
 
-    
+
 
 
           </div>
@@ -235,8 +355,8 @@
 	var yiliaConfig = {
 		mathjax: false,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
