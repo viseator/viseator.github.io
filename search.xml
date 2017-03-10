@@ -3,6 +3,13 @@
   
     
     <entry>
+      <title><![CDATA[android_view_onMeasure]]></title>
+      <url>%2F2017%2F03%2F10%2Fandroid_view_onMeasure%2F</url>
+      <content type="text"></content>
+    </entry>
+
+    
+    <entry>
       <title><![CDATA[Android View绘制生命周期总览]]></title>
       <url>%2F2017%2F03%2F09%2Fandroid_view_lifeCycle%2F</url>
       <content type="text"><![CDATA[为了直观表示整个过程，我制作了一张流程图。注意以下只是整个生命周期中比较常用的方法，并不代表所有的过程。 当一个Activity收到焦点即将要处于激活状态时，将会被要求绘制它的布局，绘制布局之前的过程在这里不涉及，我们从绘制View开始分析。 每个Activity被要求提供一个ViewGroup作为View树的根，也就是我们熟悉的setContentView方法。 1234567891011121314@Overridepublic void setContentView(@LayoutRes int layoutResID) &#123; getDelegate().setContentView(layoutResID);&#125;@Overridepublic void setContentView(View view) &#123; getDelegate().setContentView(view);&#125;@Overridepublic void setContentView(View view, ViewGroup.LayoutParams params) &#123; getDelegate().setContentView(view, params);&#125; 可以看到setContentView拥有三种形式，可以直接传入View、传入一个layout资源文件，或传入一个View文件和一个用于提供参数的LayoutParams对象。 整个过程将从这个根View开始，并遍历它的子View来逐一绘制，每个ViewGroup承担了要求它的子View进行绘制的责任，每个View承担了绘制自身的责任。并且父View会在子View完成绘制之前进行绘制，同级的View将以它们出现在树中的顺序进行绘制。 首先调用的当然是View的构造函数，构造函数分为两种，一种供代码创建的View使用，另一种是由layout文件生成的View使用，区别在于后者会从layout文件中读入所有的属性，前者的属性则需要在代码中设置。 另外后者在所有的子View都生成完毕之后会回调onFinishInflate方法。 在正式绘制之前要进行两个过程（布局机制[layout mechanism]）： 首先是measure过程。这是一个自顶向下的过程，父View将期望尺寸传递给子View，子View需要根据这一信息确定自己的尺寸，并且保证这一尺寸满足父View对其的要求，在子View确定自己尺寸的过程中也要向它的子View传递信息，就这样递归地确定自己的尺寸信息并储存在自身中，保证在measure方法返回时，自身的尺寸信息已经确定。所以在根View的measure方法返回时，所有子View的尺寸信息已经全部确定了。 这个过程需要注意一个View可能不止一次地调用measure方法来对子View进行测量。比如，可能要先传递一个无限制的信息来获取子View想要的尺寸，当子View希望的尺寸过大或过小时，父View需要再次调用measure方法来给予子View一些限制。 第二个是layout过程，这也是一个自顶向下的遍历过程，在这个过程中父View负责按照上一个过程中计算并储存在View中的尺寸信息来正确地放置子View。 同时这个过程可以通过调用requestLayout()来重新进行，并且会引起后面步骤的执行，相当于对以这个View为根的View树进行重新布局。 下面就是真正的绘制过程了，也就是View的draw()方法，在draw()方法中，（如果需要）会依次调用如下方法： drawBackground()：在画布上绘制特定的背景 onDraw()：重写View几乎必重写的一个方法，用于绘制图形 dispatchDraw()：ViewGroup会重写这个方法，用于对所有的子View调用draw()方法进行绘制 onDrawForeground()：用于绘制前景（如果需要） 可以看到如果需要调用上述的方法必定会按照这个顺序进行，也就是说，子View的绘制是在父View绘制之后进行的，而同级View的绘制是根据View在父View中的顺序进行绘制的。 同时这个过程可以通过调用invalidate()来重新进行，相当于进行某个View的重绘。]]></content>
