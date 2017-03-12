@@ -87,21 +87,16 @@
 
 
 
-<meta name="description" content="上一篇博客简单地介绍了View绘制的生命周期， 从这篇博客开始将会对这个周期中一些有用的过程进行一个详细一些的介绍。这篇的主角就是在构造方法之后调用的measure过程。
-为了演示，继承了TextView来实现一个自定义的View。注意这里继承的应该是android.support.v7.widget.AppCompatTextView这个类。同时为了xml文件的正常解析，我们需要实现View的三">
+<meta name="description" content="经过上一篇介绍的measure过程之后，各个View的尺寸信息已经存储在了每个View中，下面是layout过程，layout过程的目的是根据上一步中计算出的尺寸来正确设置各个View及其后代的位置。这个过程首先被调用的是View的layout()方法，layout()的方法签名是public void layout(int l, int t, int r, int b)，四个参数分别为左边界距父">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android View绘制之measure过程">
-<meta property="og:url" content="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/index.html">
+<meta property="og:title" content="Android View绘制之layout过程">
+<meta property="og:url" content="http://www.viseator.xyz/2017/03/12/android_view_onLayout/index.html">
 <meta property="og:site_name" content="viseator's blog">
-<meta property="og:description" content="上一篇博客简单地介绍了View绘制的生命周期， 从这篇博客开始将会对这个周期中一些有用的过程进行一个详细一些的介绍。这篇的主角就是在构造方法之后调用的measure过程。
-为了演示，继承了TextView来实现一个自定义的View。注意这里继承的应该是android.support.v7.widget.AppCompatTextView这个类。同时为了xml文件的正常解析，我们需要实现View的三">
-<meta property="og:image" content="http://www.viseator.xyz/images/onMeasureOutput1.png">
-<meta property="og:updated_time" content="2017-03-10T15:58:54.100Z">
+<meta property="og:description" content="经过上一篇介绍的measure过程之后，各个View的尺寸信息已经存储在了每个View中，下面是layout过程，layout过程的目的是根据上一步中计算出的尺寸来正确设置各个View及其后代的位置。这个过程首先被调用的是View的layout()方法，layout()的方法签名是public void layout(int l, int t, int r, int b)，四个参数分别为左边界距父">
+<meta property="og:updated_time" content="2017-03-12T08:05:40.282Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android View绘制之measure过程">
-<meta name="twitter:description" content="上一篇博客简单地介绍了View绘制的生命周期， 从这篇博客开始将会对这个周期中一些有用的过程进行一个详细一些的介绍。这篇的主角就是在构造方法之后调用的measure过程。
-为了演示，继承了TextView来实现一个自定义的View。注意这里继承的应该是android.support.v7.widget.AppCompatTextView这个类。同时为了xml文件的正常解析，我们需要实现View的三">
-<meta name="twitter:image" content="http://www.viseator.xyz/images/onMeasureOutput1.png">
+<meta name="twitter:title" content="Android View绘制之layout过程">
+<meta name="twitter:description" content="经过上一篇介绍的measure过程之后，各个View的尺寸信息已经存储在了每个View中，下面是layout过程，layout过程的目的是根据上一步中计算出的尺寸来正确设置各个View及其后代的位置。这个过程首先被调用的是View的layout()方法，layout()的方法签名是public void layout(int l, int t, int r, int b)，四个参数分别为左边界距父">
 
 
 
@@ -129,13 +124,13 @@
 
 
 
-  <link rel="canonical" href="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/"/>
+  <link rel="canonical" href="http://www.viseator.xyz/2017/03/12/android_view_onLayout/"/>
 
 
 
 
 
-  <title> Android View绘制之measure过程 | viseator's blog </title>
+  <title> Android View绘制之layout过程 | viseator's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -317,7 +312,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/">
+    <link itemprop="mainEntityOfPage" href="http://www.viseator.xyz/2017/03/12/android_view_onLayout/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="viseator">
@@ -338,7 +333,7 @@
             
             
               
-                Android View绘制之measure过程
+                Android View绘制之layout过程
               
             
           </h1>
@@ -353,8 +348,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-10T18:30:16+08:00">
-                2017-03-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-12T14:02:47+08:00">
+                2017-03-12
               </time>
             
 
@@ -405,8 +400,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/03/10/android_view_onMeasure/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/10/android_view_onMeasure/" itemprop="commentCount"></span>
+                <a href="/2017/03/12/android_view_onLayout/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/12/android_view_onLayout/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -432,45 +427,25 @@
       
 
       
-        <p><a href="http://www.viseator.xyz/2017/03/09/android_view_lifeCycle/">上一篇博客</a>简单地介绍了<code>View</code>绘制的生命周期， 从这篇博客开始将会对这个周期中一些有用的过程进行一个详细一些的介绍。这篇的主角就是在构造方法之后调用的<code>measure</code>过程。</p>
-<p>为了演示，继承了<code>TextView</code>来实现一个自定义的<code>View</code>。注意这里继承的应该是<code>android.support.v7.widget.AppCompatTextView</code>这个类。同时为了<code>xml</code>文件的正常解析，我们需要实现<code>View</code>的三个构造方法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">VView</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">VView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">VView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>再通过完整包名的方法在<code>xml</code>布局文件中创建我们的<code>View</code>就可以直接显示了。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">com.viseator.viewtest.VView</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"@color/Gray"</span></div><div class="line">    /&gt;</div></pre></td></tr></table></figure>
-<p>这里给了<code>TextView</code>一个背景颜色便于后面的观察。</p>
-<hr>
-<p>下面就开始分析<code>measure</code>过程。</p>
-<p><code>measure</code>是一个自顶向下的过程，即父<code>View</code>会依次调用它的子<code>View</code>的<code>measure()</code>方法来对它的子<code>View</code>进行测量。</p>
-<p><code>View</code>的<code>measure()</code>方法最终会调用<code>onMeasure()</code>，真正的尺寸信息就是在<code>onMeasure()</code>方法中最终确定的。所以我们需要做的就是在自定义<code>View</code>中重写<code>onMeasure()</code>方法。</p>
-<p>那么子<code>View</code>根据什么来确定自己应该具有的尺寸呢？当然不可能让子<code>View</code>自由地决定自己的大小，父<code>View</code>必然需要向子<code>View</code>传递信息来帮助子<code>View</code>来确定尺寸，而子<code>View</code>则必须满足父<code>View</code>的要求。查看<code>measure()</code>的方法签名：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">measure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span></span></div></pre></td></tr></table></figure>
-<p>这里的<code>widthMeasureSpec</code>与<code>heightMeasureSpec</code>就是存储这一信息的参数。它们的类型是<code>int</code>，内部以高两位来存储测量的模式，低三十位为测量的大小，计算中使用了位运算来提高并优化效率。当然我们不必使用位运算来获得对应的数值，<code>View.MeasureSpec</code>为我们提供了对应的方法。</p>
-<p>测量模式有三种：</p>
+        <p>经过<a href="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/">上一篇</a>介绍的<code>measure</code>过程之后，各个<code>View</code>的尺寸信息已经存储在了每个<code>View</code>中，下面是<code>layout</code>过程，<code>layout</code>过程的目的是根据上一步中计算出的尺寸来正确设置各个<code>View</code>及其后代的位置。这个过程首先被调用的是<code>View</code>的<code>layout()</code>方法，<code>layout()</code>的方法签名是<code>public void layout(int l, int t, int r, int b)</code>，四个参数分别为左边界距父<code>View</code>左边界的距离，上边界距父<code>View</code>上边界的距离，右边界距父<code>View</code>左边界的距离，下边界距父<code>View</code>上边界的距离。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">boolean</span> changed = isLayoutModeOptical(mParent) ?</div><div class="line">        setOpticalFrame(l, t, r, b) : setFrame(l, t, r, b);</div></pre></td></tr></table></figure>
+<p><code>changed</code>是用于传递给<code>onLayout()</code>方法的参数，它指示了布局是否被改变。</p>
+<p>后面的表达式查看了父<code>View</code>的布局模式是否需要显示边框，如需要，调用的是<code>setOpticalFrame()</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">setOpticalFrame</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> top, <span class="keyword">int</span> right, <span class="keyword">int</span> bottom)</span> </span>&#123;</div><div class="line">    Insets parentInsets = mParent <span class="keyword">instanceof</span> View ?</div><div class="line">            ((View) mParent).getOpticalInsets() : Insets.NONE;</div><div class="line">    Insets childInsets = getOpticalInsets();</div><div class="line">    <span class="keyword">return</span> setFrame(</div><div class="line">            left   + parentInsets.left - childInsets.left,</div><div class="line">            top    + parentInsets.top  - childInsets.top,</div><div class="line">            right  + parentInsets.left + childInsets.right,</div><div class="line">            bottom + parentInsets.top  + childInsets.bottom);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p> 可以看到这个方法读取了设置的边框值， 把原值加上边框值后还是调用了<code>setFrame()</code>方法。</p>
+<p><code>setFrame()</code>方法通过传入的参数确定了该<code>View</code>最终的位置以及尺寸。</p>
+<p>可以看到，一个<code>View</code>最终显示在什么位置以及它的尺寸是由<code>layout()</code>方法决定的，<code>onMeasure()</code>方法只是将测量出的<code>View</code>期望具有的大小储存在<code>View</code>中。一般情况下，我们会根据储存的这个尺寸来作为设定的依据。</p>
+<p>接下来<code>layout()</code>方法会调用<code>onLayout()</code>方法，（如果需要的话）我们需要重写这个方法来调用子<code>View</code>的<code>layout()</code>方法。所以决定子<code>View</code>如何显示的关键步骤就在这里，他们的位置和尺寸完全取决于这里调用它们的<code>layout()</code>方法时传入的参数。当然一般情况下我们会根据子<code>View</code>中的测量结果来设置这个值。这里拿<code>FrameLayout</code>这个需要处理子<code>View</code>的<code>ViewGroup</code>实例来举例：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onLayout</span><span class="params">(<span class="keyword">boolean</span> changed, <span class="keyword">int</span> left, <span class="keyword">int</span> top, <span class="keyword">int</span> right, <span class="keyword">int</span> bottom)</span> </span>&#123;</div><div class="line">    layoutChildren(left, top, right, bottom, <span class="keyword">false</span> <span class="comment">/* no force left gravity */</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>直接调用了<code>layoutChildren()</code>：（省略部分行）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">layoutChildren</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> top, <span class="keyword">int</span> right, <span class="keyword">int</span> bottom, <span class="keyword">boolean</span> forceLeftGravity)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> count = getChildCount();</div><div class="line"></div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> parentLeft = getPaddingLeftWithForeground();</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> parentRight = right - left - getPaddingRightWithForeground();</div><div class="line"></div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> parentTop = getPaddingTopWithForeground();</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> parentBottom = bottom - top - getPaddingBottomWithForeground();</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">        <span class="keyword">final</span> View child = getChildAt(i);</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> width = child.getMeasuredWidth();</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> height = child.getMeasuredHeight();</div><div class="line"></div><div class="line">            <span class="keyword">int</span> childLeft;</div><div class="line">            <span class="keyword">int</span> childTop;</div><div class="line">      </div><div class="line">            <span class="keyword">switch</span> (verticalGravity) &#123;</div><div class="line">                <span class="keyword">case</span> Gravity.TOP:</div><div class="line">                    childTop = parentTop + lp.topMargin;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> Gravity.CENTER_VERTICAL:</div><div class="line">                    childTop = parentTop + (parentBottom - parentTop - height) / <span class="number">2</span> +</div><div class="line">                    lp.topMargin - lp.bottomMargin;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> Gravity.BOTTOM:</div><div class="line">                    childTop = parentBottom - height - lp.bottomMargin;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">default</span>:</div><div class="line">                    childTop = parentTop + lp.topMargin;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            child.layout(childLeft, childTop, childLeft + width, childTop + height);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>省略了与获取布局属性相关的代码，可以看到：</p>
 <ul>
-<li><code>EXACTLY</code>：精确值模式，即子<code>View</code>必须使用这一尺寸，并且保证它们的所有后代都在这个范围之内。当我们将控件的<code>layout_width</code>、<code>layout_height</code>属性指定为具体数值或<code>match_parent</code>时，系统使用这一模式。</li>
-<li><code>UNSPECIFIED</code>：无限制模式，不对子<code>View</code>施加任何限制，完全由子<code>View</code>决定自己的大小。可以用于查看子<code>View</code>想要的尺寸，比如可以把子<code>View</code>的长度使用<code>EXACTLY</code>模式限制在100，不限制宽度来查看子<code>View</code>在长度为100情况想要的宽度。</li>
-<li><code>AT_MOST</code>：最大值模式，只限制子<code>View</code>能具有的最大尺寸，子<code>View</code>必须保证它和它的后代们都在这一范围之内。</li>
+<li>4-8行获取了父<code>View</code>的位置数据并在18-31行用于确定最终的位置数据</li>
+<li>10-11行遍历了所有的子<code>View</code></li>
+<li>12-13行获取了子<code>View</code>中在上一步骤的测量过程中储存的宽和高，并用于第33行中设置最终的右边界与下边界</li>
+<li>第33行调用子<code>View</code>的<code>layout()</code>方法</li>
 </ul>
-<p>了解这些，我们就可以通过重写<code>onMeasure()</code>来确定一个<code>View</code>的尺寸。</p>
-<p>但在重写方法时要注意：必须调用<code>setMeasuredDimension()</code> 来将最终尺寸存储在<code>View</code>中，否则会抛出一个<code>IllegalStateException</code>。</p>
-<p><code>xml</code>:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">com.viseator.viewtest.VView</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"@color/Gray"</span></div><div class="line">    /&gt;</div></pre></td></tr></table></figure>
-<p><code>VView</code>:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> widthMode = MeasureSpec.getMode(widthMeasureSpec);</div><div class="line">    <span class="keyword">int</span> heightMode = MeasureSpec.getMode(heightMeasureSpec);</div><div class="line">    <span class="keyword">int</span> width = MeasureSpec.getSize(widthMeasureSpec);</div><div class="line">    <span class="keyword">int</span> height = MeasureSpec.getSize(heightMeasureSpec);</div><div class="line">    Log.d(TAG, <span class="string">"widthMode: "</span> + widthMode);</div><div class="line">    Log.d(TAG, <span class="string">"heightMode: "</span> + heightMode);</div><div class="line">    Log.d(TAG, <span class="string">"width :"</span> + width);</div><div class="line">    Log.d(TAG, <span class="string">"height :"</span> + height);</div><div class="line">    <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</div></pre></td></tr></table></figure>
-<p>log:</p>
-<p><img src="/images/onMeasureOutput1.png" alt="output"></p>
-<p>这段简单的代码验证了之前的说法，分别对宽高设置了<code>wrap_content</code>和固定值，可以发现模式分别为<code>AT_MOST</code>与<code>EXACTLY</code>（以数值表示）。</p>
-<p>这里输出的宽高值是以像素为单位的，可以看到高度的期望值就是设置的大小，但<code>wrap_content</code>期望的宽度值为1080（屏幕宽度），默认即为屏幕宽度，但最终计算得出的宽度值由于里面没有文字所以为0。</p>
-<p>同样地，<code>UNSPECIFIED</code>模式给出的默认尺寸也是屏幕的宽/高。</p>
-<p>所以我们可以看到如果想要实现<code>wrap_content</code>的效果，我们必须在<code>onMeasure</code>中对<code>AT_MOST</code>模式计算其内容宽/高并作为最终的宽/高，否则将以屏幕的宽/高进行填充。以<code>LinearLayout</code>的源码为例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (useLargestChild &amp;&amp;</div><div class="line">        (heightMode == MeasureSpec.AT_MOST || heightMode == MeasureSpec.UNSPECIFIED)) &#123;</div><div class="line">    mTotalLength = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; ++i) &#123;</div><div class="line">        <span class="keyword">final</span> View child = getVirtualChildAt(i);</div><div class="line">        <span class="keyword">if</span> (child == <span class="keyword">null</span>) &#123;</div><div class="line">            mTotalLength += measureNullChild(i);</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (child.getVisibility() == GONE) &#123;</div><div class="line">            i += getChildrenSkipCount(child, i);</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">final</span> LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)</div><div class="line">                child.getLayoutParams();</div><div class="line">        <span class="comment">// Account for negative margins</span></div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> totalLength = mTotalLength;</div><div class="line">        mTotalLength = Math.max(totalLength, totalLength + largestChildHeight +</div><div class="line">                lp.topMargin + lp.bottomMargin + getNextLocationOffset(child));</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Add in our padding</span></div><div class="line">mTotalLength += mPaddingTop + mPaddingBottom;</div><div class="line"></div><div class="line"><span class="keyword">int</span> heightSize = mTotalLength;</div></pre></td></tr></table></figure>
-<p>这部分代码向我们展示了<code>LinearLayout</code>处理子<code>View</code>并计算所有的高度的情况。</p>
-<p>知道了这个调用过程，我们就可以真正地进行<code>onMeasure()</code>的重写了。</p>
-<p>例如可以暴力指定<code>View</code>尺寸：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">    setMeasuredDimension(<span class="number">100</span>,<span class="number">600</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以为<code>AT_MOST</code>与<code>UNSPECIFIED</code>模式指定一个默认大小：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">    setMeasuredDimension(measureSize(widthMeasureSpec), measureSize(heightMeasureSpec));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">measureSize</span><span class="params">(<span class="keyword">int</span> measureSpec)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> mode = MeasureSpec.getMode(measureSpec);</div><div class="line">    <span class="keyword">int</span> size = MeasureSpec.getSize(measureSpec);</div><div class="line">    <span class="keyword">if</span> (mode == MeasureSpec.EXACTLY) &#123;</div><div class="line">        <span class="keyword">return</span> size;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        size = <span class="number">300</span>; <span class="comment">//Default size</span></div><div class="line">        <span class="keyword">return</span> Math.min(size,MeasureSpec.getSize(measureSpec));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>至于更复杂的计算逻辑由于本人能力有限就不写demo了，如果以后实际中遇到需要的时候再作补充。</p>
 
       
     </div>
@@ -509,8 +484,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/09/android_view_lifeCycle/" rel="next" title="Android View绘制生命周期总览">
-                <i class="fa fa-chevron-left"></i> Android View绘制生命周期总览
+              <a href="/2017/03/10/android_view_onMeasure/" rel="next" title="Android View绘制之measure过程">
+                <i class="fa fa-chevron-left"></i> Android View绘制之measure过程
               </a>
             
           </div>
@@ -518,10 +493,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/12/android_view_onLayout/" rel="prev" title="Android View绘制之layout过程">
-                Android View绘制之layout过程 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -547,8 +518,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/03/10/android_view_onMeasure/"
-           data-title="Android View绘制之measure过程" data-url="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/">
+      <div class="ds-thread" data-thread-key="2017/03/12/android_view_onLayout/"
+           data-title="Android View绘制之layout过程" data-url="http://www.viseator.xyz/2017/03/12/android_view_onLayout/">
       </div>
     
   </div>
