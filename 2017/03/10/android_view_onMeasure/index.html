@@ -91,17 +91,17 @@
 为了演示，继承了TextView来实现一个自定义的View。注意这里继承的应该是android.support.v7.widget.AppCompatTextView这个类。同时为了xml文件的正常解析，我们需要实现View的三">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android View绘制之measure过程">
-<meta property="og:url" content="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/index.html">
+<meta property="og:url" content="http://www.viseator.com/2017/03/10/android_view_onMeasure/index.html">
 <meta property="og:site_name" content="viseator's blog">
 <meta property="og:description" content="上一篇博客简单地介绍了View绘制的生命周期， 从这篇博客开始将会对这个周期中一些有用的过程进行一个详细一些的介绍。这篇的主角就是在构造方法之后调用的measure过程。
 为了演示，继承了TextView来实现一个自定义的View。注意这里继承的应该是android.support.v7.widget.AppCompatTextView这个类。同时为了xml文件的正常解析，我们需要实现View的三">
-<meta property="og:image" content="http://www.viseator.xyz/images/onMeasureOutput1.png">
+<meta property="og:image" content="http://www.viseator.com/images/onMeasureOutput1.png">
 <meta property="og:updated_time" content="2017-03-10T15:58:54.100Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android View绘制之measure过程">
 <meta name="twitter:description" content="上一篇博客简单地介绍了View绘制的生命周期， 从这篇博客开始将会对这个周期中一些有用的过程进行一个详细一些的介绍。这篇的主角就是在构造方法之后调用的measure过程。
 为了演示，继承了TextView来实现一个自定义的View。注意这里继承的应该是android.support.v7.widget.AppCompatTextView这个类。同时为了xml文件的正常解析，我们需要实现View的三">
-<meta name="twitter:image" content="http://www.viseator.xyz/images/onMeasureOutput1.png">
+<meta name="twitter:image" content="http://www.viseator.com/images/onMeasureOutput1.png">
 
 
 
@@ -129,7 +129,7 @@
 
 
 
-  <link rel="canonical" href="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/"/>
+  <link rel="canonical" href="http://www.viseator.com/2017/03/10/android_view_onMeasure/"/>
 
 
 
@@ -317,7 +317,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/">
+    <link itemprop="mainEntityOfPage" href="http://www.viseator.com/2017/03/10/android_view_onMeasure/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="viseator">
@@ -432,7 +432,7 @@
       
 
       
-        <p><a href="http://www.viseator.xyz/2017/03/09/android_view_lifeCycle/">上一篇博客</a>简单地介绍了<code>View</code>绘制的生命周期， 从这篇博客开始将会对这个周期中一些有用的过程进行一个详细一些的介绍。这篇的主角就是在构造方法之后调用的<code>measure</code>过程。</p>
+        <p><a href="http://www.viseator.xyz/2017/03/09/android_view_lifeCycle/" target="_blank" rel="external">上一篇博客</a>简单地介绍了<code>View</code>绘制的生命周期， 从这篇博客开始将会对这个周期中一些有用的过程进行一个详细一些的介绍。这篇的主角就是在构造方法之后调用的<code>measure</code>过程。</p>
 <p>为了演示，继承了<code>TextView</code>来实现一个自定义的<code>View</code>。注意这里继承的应该是<code>android.support.v7.widget.AppCompatTextView</code>这个类。同时为了<code>xml</code>文件的正常解析，我们需要实现<code>View</code>的三个构造方法。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">VView</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">VView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">VView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>再通过完整包名的方法在<code>xml</code>布局文件中创建我们的<code>View</code>就可以直接显示了。</p>
@@ -548,7 +548,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2017/03/10/android_view_onMeasure/"
-           data-title="Android View绘制之measure过程" data-url="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/">
+           data-title="Android View绘制之measure过程" data-url="http://www.viseator.com/2017/03/10/android_view_onMeasure/">
       </div>
     
   </div>
