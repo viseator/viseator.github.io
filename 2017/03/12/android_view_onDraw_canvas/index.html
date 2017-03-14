@@ -95,13 +95,13 @@
 <meta property="og:site_name" content="viseator's blog">
 <meta property="og:description" content="经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（跳过了两个过程）
 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647public void draw(Canvas canvas) &amp;#123;    fin">
-<meta property="og:image" content="http://www.viseator.com/../images/canvas_bitmap.jpg">
-<meta property="og:updated_time" content="2017-03-14T12:23:45.156Z">
+<meta property="og:image" content="http://www.viseator.com/images/canvas_bitmap.jpg">
+<meta property="og:updated_time" content="2017-03-14T14:04:29.831Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android View绘制之onDraw过程与Canvas、Bitmap">
 <meta name="twitter:description" content="经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（跳过了两个过程）
 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647public void draw(Canvas canvas) &amp;#123;    fin">
-<meta name="twitter:image" content="http://www.viseator.com/../images/canvas_bitmap.jpg">
+<meta name="twitter:image" content="http://www.viseator.com/images/canvas_bitmap.jpg">
 
 
 
@@ -452,7 +452,8 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Bitmap b = Bitmap.createBitmap(<span class="number">100</span>, <span class="number">100</span>, Bitmap.Config.ARGB_8888);</div><div class="line">Canvas c = <span class="keyword">new</span> Canvas(b);</div></pre></td></tr></table></figure>
 <p>这样这个<code>Canvas</code>就会在指定的<code>Bitmap</code>上进行绘制，我们也可以通过<code>Canvas</code>的<code>drawBitmap()</code>方法来在指定的<code>Bitmap</code>上绘制。</p>
 <p>那么问题来了，<code>onDraw()</code>方法给我们提供的这个<code>Canvas</code>是从哪里来的，为什么我们对它的操作可以反映到屏幕上？下面这张图便于我们去了解这个过程：</p>
-<p><img src="../images/canvas_bitmap.jpg" alt="canvas_bitmap"></p>
+<p><img src="/images/canvas_bitmap.jpg" alt="canvas_bitmap"></p>
+<p>可以看到，我们的屏幕被分为了几个<code>window</code>，每一个<code>window</code>都有着自己的</p>
 
       
     </div>

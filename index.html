@@ -453,7 +453,8 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Bitmap b = Bitmap.createBitmap(<span class="number">100</span>, <span class="number">100</span>, Bitmap.Config.ARGB_8888);</div><div class="line">Canvas c = <span class="keyword">new</span> Canvas(b);</div></pre></td></tr></table></figure>
 <p>这样这个<code>Canvas</code>就会在指定的<code>Bitmap</code>上进行绘制，我们也可以通过<code>Canvas</code>的<code>drawBitmap()</code>方法来在指定的<code>Bitmap</code>上绘制。</p>
 <p>那么问题来了，<code>onDraw()</code>方法给我们提供的这个<code>Canvas</code>是从哪里来的，为什么我们对它的操作可以反映到屏幕上？下面这张图便于我们去了解这个过程：</p>
-<p><img src="../images/canvas_bitmap.jpg" alt="canvas_bitmap"></p>
+<p><img src="/images/canvas_bitmap.jpg" alt="canvas_bitmap"></p>
+<p>可以看到，我们的屏幕被分为了几个<code>window</code>，每一个<code>window</code>都有着自己的</p>
 
           
         
