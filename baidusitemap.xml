@@ -4,122 +4,74 @@
 
     
   <url>
-    <loc>http://www.viseator.com/2017/03/12/android_view_onDraw_canvas/</loc>
-    <lastmod>2017-03-15T05:53:30.770Z</lastmod>
+    <loc>http://www.viseator.com/2016/12/02/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%BA%8C%EF%BC%89/</loc>
+    <lastmod>2017-03-15T05:59:38.283Z</lastmod>
     <data>
         <display>
-        <title>Android View绘制之onDraw过程与Canvas、Bitmap</title>
-        <pubTime>2017-03-12T08:29:40.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
-          
-             
-              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-    
-  <url>
-    <loc>http://www.viseator.com/2017/03/12/android_view_onLayout/</loc>
-    <lastmod>2017-03-12T08:05:40.282Z</lastmod>
-    <data>
-        <display>
-        <title>Android View绘制之layout过程</title>
-        <pubTime>2017-03-12T06:02:47.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
-          
-             
-              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/03/10/android_view_onMeasure/</loc>
-    <lastmod>2017-03-10T15:58:54.100Z</lastmod>
-    <data>
-        <display>
-        <title>Android View绘制之measure过程</title>
-        <pubTime>2017-03-10T10:30:16.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
-          
-             
-              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/02/14/DiffInGeneric/</loc>
-    <lastmod>2017-03-10T04:20:40.046Z</lastmod>
-    <data>
-        <display>
-        <title>Java泛型中List、List&lt;Object&gt;、List&lt;?&gt;的区别</title>
-        <pubTime>2017-02-14T08:30:22.000Z</pubTime>
+        <title>OpenCV处理拍照表格（二）</title>
+        <pubTime>2016-12-02T08:58:12.000Z</pubTime>
         
         <tag>Java</tag>
+         
+        <tag>OpenCV</tag>
          
          
            
              
               <breadCrumb title="Java" url="http://www.viseator.com/categories/Java/"/>
           
+             
+              <breadCrumb title="OpenCV" url="http://www.viseator.com/categories/Java/OpenCV/"/>
+          
         </display>
     </data>
     </url>
 
     
   <url>
-    <loc>http://www.viseator.com/2017/03/09/android_view_lifeCycle/</loc>
-    <lastmod>2017-03-10T04:19:05.919Z</lastmod>
+    <loc>http://www.viseator.com/2016/12/09/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%89%EF%BC%89/</loc>
+    <lastmod>2017-03-15T05:59:20.870Z</lastmod>
     <data>
         <display>
-        <title>Android View绘制生命周期总览</title>
-        <pubTime>2017-03-09T09:22:41.000Z</pubTime>
+        <title>OpenCV处理拍照表格（三）</title>
+        <pubTime>2016-12-09T08:12:51.000Z</pubTime>
         
-        <tag>Android</tag>
+        <tag>Java</tag>
          
-        <tag>View</tag>
-         
-        <tag>LifeCycle</tag>
+        <tag>OpenCV</tag>
          
          
            
              
-              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+              <breadCrumb title="Java" url="http://www.viseator.com/categories/Java/"/>
           
              
-              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
+              <breadCrumb title="OpenCV" url="http://www.viseator.com/categories/Java/OpenCV/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.viseator.com/2016/11/15/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
+    <lastmod>2017-03-15T05:59:10.043Z</lastmod>
+    <data>
+        <display>
+        <title>OpenCV处理拍照表格（一）</title>
+        <pubTime>2016-11-15T13:09:28.000Z</pubTime>
+        
+        <tag>Java</tag>
+         
+        <tag>OpenCV</tag>
+         
+         
+           
+             
+              <breadCrumb title="Java" url="http://www.viseator.com/categories/Java/"/>
+          
+             
+              <breadCrumb title="OpenCV" url="http://www.viseator.com/categories/Java/OpenCV/"/>
           
         </display>
     </data>
@@ -128,7 +80,7 @@
     
   <url>
     <loc>http://www.viseator.com/2017/02/05/LeetCode/</loc>
-    <lastmod>2017-02-05T07:48:48.583Z</lastmod>
+    <lastmod>2017-03-15T05:58:57.906Z</lastmod>
     <data>
         <display>
         <title>LeetCode踩坑集锦</title>
@@ -154,24 +106,96 @@
 
     
   <url>
-    <loc>http://www.viseator.com/2016/11/15/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
-    <lastmod>2017-02-05T07:14:20.937Z</lastmod>
+    <loc>http://www.viseator.com/2017/02/14/DiffInGeneric/</loc>
+    <lastmod>2017-03-15T05:56:54.845Z</lastmod>
     <data>
         <display>
-        <title>OpenCV处理拍照表格（一）</title>
-        <pubTime>2016-11-15T13:09:28.000Z</pubTime>
+        <title>Java泛型中List、List&lt;Object&gt;、List&lt;?&gt;的区别</title>
+        <pubTime>2017-02-14T08:30:22.000Z</pubTime>
         
         <tag>Java</tag>
-         
-        <tag>OpenCV</tag>
          
          
            
              
               <breadCrumb title="Java" url="http://www.viseator.com/categories/Java/"/>
           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.viseator.com/2017/03/10/android_view_onMeasure/</loc>
+    <lastmod>2017-03-15T05:56:48.558Z</lastmod>
+    <data>
+        <display>
+        <title>Android View绘制之measure过程</title>
+        <pubTime>2017-03-10T10:30:16.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
              
-              <breadCrumb title="OpenCV" url="http://www.viseator.com/categories/Java/OpenCV/"/>
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.viseator.com/2017/03/12/android_view_onLayout/</loc>
+    <lastmod>2017-03-15T05:56:29.688Z</lastmod>
+    <data>
+        <display>
+        <title>Android View绘制之layout过程</title>
+        <pubTime>2017-03-12T06:02:47.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.viseator.com/2017/03/09/android_view_lifeCycle/</loc>
+    <lastmod>2017-03-15T05:56:07.091Z</lastmod>
+    <data>
+        <display>
+        <title>Android View绘制生命周期总览</title>
+        <pubTime>2017-03-09T09:22:41.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+        <tag>LifeCycle</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
           
         </display>
     </data>
@@ -180,7 +204,7 @@
     
   <url>
     <loc>http://www.viseator.com/2017/01/20/2016%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</loc>
-    <lastmod>2017-01-20T04:41:06.504Z</lastmod>
+    <lastmod>2017-03-15T05:55:36.041Z</lastmod>
     <data>
         <display>
         <title>2016年度总结</title>
@@ -199,54 +223,30 @@
 
     
   <url>
-    <loc>http://www.viseator.com/2016/12/02/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%BA%8C%EF%BC%89/</loc>
-    <lastmod>2017-01-11T05:01:30.872Z</lastmod>
+    <loc>http://www.viseator.com/2017/03/12/android_view_onDraw_canvas/</loc>
+    <lastmod>2017-03-15T05:55:07.941Z</lastmod>
     <data>
         <display>
-        <title>OpenCV处理拍照表格（二）</title>
-        <pubTime>2016-12-02T08:58:12.000Z</pubTime>
+        <title>Android View绘制之onDraw过程与Canvas、Bitmap</title>
+        <pubTime>2017-03-12T08:29:40.000Z</pubTime>
         
-        <tag>Java</tag>
+        <tag>Android</tag>
          
-        <tag>OpenCV</tag>
+        <tag>View</tag>
          
          
            
              
-              <breadCrumb title="Java" url="http://www.viseator.com/categories/Java/"/>
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
           
              
-              <breadCrumb title="OpenCV" url="http://www.viseator.com/categories/Java/OpenCV/"/>
+              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
           
         </display>
     </data>
     </url>
 
     
-  <url>
-    <loc>http://www.viseator.com/2016/12/09/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%89%EF%BC%89/</loc>
-    <lastmod>2017-01-11T05:01:30.869Z</lastmod>
-    <data>
-        <display>
-        <title>OpenCV处理拍照表格（三）</title>
-        <pubTime>2016-12-09T08:12:51.000Z</pubTime>
-        
-        <tag>Java</tag>
-         
-        <tag>OpenCV</tag>
-         
-         
-           
-             
-              <breadCrumb title="Java" url="http://www.viseator.com/categories/Java/"/>
-          
-             
-              <breadCrumb title="OpenCV" url="http://www.viseator.com/categories/Java/OpenCV/"/>
-          
-        </display>
-    </data>
-    </url>
-
     
     
 </urlset>

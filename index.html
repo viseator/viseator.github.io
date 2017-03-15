@@ -438,7 +438,7 @@
 
       
         
-          <p>经过对<code>View</code>的<a href="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/">测量</a>与<a href="http://www.viseator.xyz/2017/03/12/android_view_onLayout/">布局</a>过程后，下面就到了真正的<code>View</code>绘制的过程了。这个过程从调用根<code>View</code>的<code>draw()</code>方法开始：（跳过了两个过程）</p>
+          <p>经过对<code>View</code>的<a href="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/">测量</a>与<a href="http://www.viseator.xyz/2017/03/12/android_view_onLayout/">布局</a>过程后，下面就到了真正的<code>View</code>绘制的过程了。这个过程从调用根<code>View</code>的<code>draw()</code>方法开始：（省略部分代码）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> privateFlags = mPrivateFlags;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">boolean</span> dirtyOpaque = (privateFlags &amp; PFLAG_DIRTY_MASK) == PFLAG_DIRTY_OPAQUE &amp;&amp;</div><div class="line">            (mAttachInfo == <span class="keyword">null</span> || !mAttachInfo.mIgnoreDirtyState);</div><div class="line">    mPrivateFlags = (privateFlags &amp; ~PFLAG_DIRTY_MASK) | PFLAG_DRAWN;</div><div class="line"></div><div class="line">    <span class="comment">/*</div><div class="line">     * Draw traversal performs several drawing steps which must be executed</div><div class="line">     * in the appropriate order:</div><div class="line">     *</div><div class="line">     *      1. Draw the background</div><div class="line">     *      2. If necessary, save the canvas' layers to prepare for fading</div><div class="line">     *      3. Draw view's content</div><div class="line">     *      4. Draw children</div><div class="line">     *      5. If necessary, draw the fading edges and restore layers</div><div class="line">     *      6. Draw decorations (scrollbars for instance)</div><div class="line">     */</span></div><div class="line"></div><div class="line">    <span class="comment">// Step 1, draw the background, if needed</span></div><div class="line">    <span class="keyword">int</span> saveCount;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!dirtyOpaque) &#123;</div><div class="line">        drawBackground(canvas);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// skip step 2 &amp; 5 if possible (common case)</span></div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> viewFlags = mViewFlags;</div><div class="line">    <span class="keyword">boolean</span> horizontalEdges = (viewFlags &amp; FADING_EDGE_HORIZONTAL) != <span class="number">0</span>;</div><div class="line">    <span class="keyword">boolean</span> verticalEdges = (viewFlags &amp; FADING_EDGE_VERTICAL) != <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span> (!verticalEdges &amp;&amp; !horizontalEdges) &#123;</div><div class="line">        <span class="comment">// Step 3, draw the content</span></div><div class="line">        <span class="keyword">if</span> (!dirtyOpaque) onDraw(canvas);</div><div class="line"></div><div class="line">        <span class="comment">// Step 4, draw the children</span></div><div class="line">        dispatchDraw(canvas);</div><div class="line"></div><div class="line">        <span class="comment">// Overlay is part of the content and draws beneath Foreground</span></div><div class="line">        <span class="keyword">if</span> (mOverlay != <span class="keyword">null</span> &amp;&amp; !mOverlay.isEmpty()) &#123;</div><div class="line">            mOverlay.getOverlayView().dispatchDraw(canvas);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// Step 6, draw decorations (foreground, scrollbars)</span></div><div class="line">        onDrawForeground(canvas);</div><div class="line"></div><div class="line">        <span class="comment">// we're done...</span></div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <p>这段源码来自于<code>View</code>，过程非常清晰，执行了以下的步骤（如果需要）：</p>
 <ol>
@@ -612,28 +612,20 @@
 
       
         
-          
-            <p>经过<a href="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/" target="_blank" rel="external">上一篇</a>介绍的<code>measure</code>过程之后，各个<code>View</code>的尺寸信息已经存储在了每个<code>View</code>中，下面是<code>layout</code>过程，<code>layout</code>过程的目的是根据上一步中计算出的尺寸来正确设置各个<code>View</code>及其后代的位置。这个过程首先被调用的是<code>View</code>的<code>layout()</code>方法，<code>layout()</code>的方法签名是<code>public void layout(int l, int t, int r, int b)</code>，四个参数分别为左边界距父<code>View</code>左边界的距离，上边界距父<code>View</code>上边界的距离，右边界距父<code>View</code>左边界的距离，下边界距父<code>View</code>上边界的距离。</p>
+          <p>经过<a href="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/">上一篇</a>介绍的<code>measure</code>过程之后，各个<code>View</code>的尺寸信息已经存储在了每个<code>View</code>中，下面是<code>layout</code>过程，<code>layout</code>过程的目的是根据上一步中计算出的尺寸来正确设置各个<code>View</code>及其后代的位置。这个过程首先被调用的是<code>View</code>的<code>layout()</code>方法，<code>layout()</code>的方法签名是<code>public void layout(int l, int t, int r, int b)</code>，四个参数分别为左边界距父<code>View</code>左边界的距离，上边界距父<code>View</code>上边界的距离，右边界距父<code>View</code>左边界的距离，下边界距父<code>View</code>上边界的距离。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">boolean</span> changed = isLayoutModeOptical(mParent) ?</div><div class="line">        setOpticalFrame(l, t, r, b) : setFrame(l, t, r, b);</div></pre></td></tr></table></figure>
 <p><code>changed</code>是用于传递给<code>onLayout()</code>方法的参数，它指示了布局是否被改变。</p>
 <p>后面的表达式查看了父<code>View</code>的布局模式是否需要显示边框，如需要，调用的是<code>setOpticalFrame()</code>方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">setOpticalFrame</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> top, <span class="keyword">int</span> right, <span class="keyword">int</span> bottom)</span> </span>&#123;</div><div class="line">    Insets parentInsets = mParent <span class="keyword">instanceof</span> View ?</div><div class="line">            ((View) mParent).getOpticalInsets() : Insets.NONE;</div><div class="line">    Insets childInsets = getOpticalInsets();</div><div class="line">    <span class="keyword">return</span> setFrame(</div><div class="line">            left   + parentInsets.left - childInsets.left,</div><div class="line">            top    + parentInsets.top  - childInsets.top,</div><div class="line">            right  + parentInsets.left + childInsets.right,</div><div class="line">            bottom + parentInsets.top  + childInsets.bottom);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p> 可以看到这个方法读取了设置的边框值， 把原值加上边框值后还是调用了<code>setFrame()</code>方法。</p>
-<p><code>setFrame()</code>方法通过传入的参数确定了该<code>View</code>最终的位置以及尺寸。</p>
-<p>可以看到，一个<code>View</code>最终显示在什么位置以及它的尺寸是由<code>layout()</code>方法决定的，<code>onMeasure()</code>方法只是将测量出的<code>View</code>期望具有的大小储存在<code>View</code>中。一般情况下，我们会根据储存的这个尺寸来作为设定的依据。</p>
-<p>接下来<code>layout()</code>方法会调用<code>onLayout()</code>方法，（如果需要的话）我们需要重写这个方法来调用子<code>View</code>的<code>layout()</code>方法。所以决定子<code>View</code>如何显示的关键步骤就在这里，他们的位置和尺寸完全取决于这里调用它们的<code>layout()</code>方法时传入的参数。当然一般情况下我们会根据子<code>View</code>中的测量结果来设置这个值。这里拿<code>FrameLayout</code>这个需要处理子<code>View</code>的<code>ViewGroup</code>实例来举例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onLayout</span><span class="params">(<span class="keyword">boolean</span> changed, <span class="keyword">int</span> left, <span class="keyword">int</span> top, <span class="keyword">int</span> right, <span class="keyword">int</span> bottom)</span> </span>&#123;</div><div class="line">    layoutChildren(left, top, right, bottom, <span class="keyword">false</span> <span class="comment">/* no force left gravity */</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>直接调用了<code>layoutChildren()</code>：（省略部分行）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">layoutChildren</span><span class="params">(<span class="keyword">int</span> left, <span class="keyword">int</span> top, <span class="keyword">int</span> right, <span class="keyword">int</span> bottom, <span class="keyword">boolean</span> forceLeftGravity)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> count = getChildCount();</div><div class="line"></div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> parentLeft = getPaddingLeftWithForeground();</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> parentRight = right - left - getPaddingRightWithForeground();</div><div class="line"></div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> parentTop = getPaddingTopWithForeground();</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> parentBottom = bottom - top - getPaddingBottomWithForeground();</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</div><div class="line">        <span class="keyword">final</span> View child = getChildAt(i);</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> width = child.getMeasuredWidth();</div><div class="line">            <span class="keyword">final</span> <span class="keyword">int</span> height = child.getMeasuredHeight();</div><div class="line"></div><div class="line">            <span class="keyword">int</span> childLeft;</div><div class="line">            <span class="keyword">int</span> childTop;</div><div class="line">      </div><div class="line">            <span class="keyword">switch</span> (verticalGravity) &#123;</div><div class="line">                <span class="keyword">case</span> Gravity.TOP:</div><div class="line">                    childTop = parentTop + lp.topMargin;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> Gravity.CENTER_VERTICAL:</div><div class="line">                    childTop = parentTop + (parentBottom - parentTop - height) / <span class="number">2</span> +</div><div class="line">                    lp.topMargin - lp.bottomMargin;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> Gravity.BOTTOM:</div><div class="line">                    childTop = parentBottom - height - lp.bottomMargin;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">default</span>:</div><div class="line">                    childTop = parentTop + lp.topMargin;</div><div class="line">            &#125;</div><div class="line"></div><div class="line">            child.layout(childLeft, childTop, childLeft + width, childTop + height);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>省略了与获取布局属性相关的代码，可以看到：</p>
-<ul>
-<li>4-8行获取了父<code>View</code>的位置数据并在18-31行用于确定最终的位置数据</li>
-<li>10-11行遍历了所有的子<code>View</code></li>
-<li>12-13行获取了子<code>View</code>中在上一步骤的测量过程中储存的宽和高，并用于第33行中设置最终的右边界与下边界</li>
-<li>第33行调用子<code>View</code>的<code>layout()</code>方法</li>
-</ul>
-
-          
+<p><code>setFrame()</code>方法通过传入的参数确定了该<code>View</code>最终的位置以及尺寸。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/12/android_view_onLayout/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -791,12 +783,11 @@
 
       
         
-          
-            <p><a href="http://www.viseator.xyz/2017/03/09/android_view_lifeCycle/" target="_blank" rel="external">上一篇博客</a>简单地介绍了<code>View</code>绘制的生命周期， 从这篇博客开始将会对这个周期中一些有用的过程进行一个详细一些的介绍。这篇的主角就是在构造方法之后调用的<code>measure</code>过程。</p>
+          <p><a href="http://www.viseator.xyz/2017/03/09/android_view_lifeCycle/">上一篇博客</a>简单地介绍了<code>View</code>绘制的生命周期， 从这篇博客开始将会对这个周期中一些有用的过程进行一个详细一些的介绍。这篇的主角就是在构造方法之后调用的<code>measure</code>过程。</p>
 <p>为了演示，继承了<code>TextView</code>来实现一个自定义的<code>View</code>。注意这里继承的应该是<code>android.support.v7.widget.AppCompatTextView</code>这个类。同时为了<code>xml</code>文件的正常解析，我们需要实现<code>View</code>的三个构造方法。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">VView</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">VView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">VView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>再通过完整包名的方法在<code>xml</code>布局文件中创建我们的<code>View</code>就可以直接显示了。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">com.viseator.viewtest.VView</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"@color/Gray"</span></div><div class="line">    /&gt;</div></pre></td></tr></table></figure>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">com.viseator.viewtest.VView</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"@color/Gray"</span></div><div class="line">    /&gt;</span></div></pre></td></tr></table></figure>
 <p>这里给了<code>TextView</code>一个背景颜色便于后面的观察。</p>
 <hr>
 <p>下面就开始分析<code>measure</code>过程。</p>
@@ -804,35 +795,14 @@
 <p><code>View</code>的<code>measure()</code>方法最终会调用<code>onMeasure()</code>，真正的尺寸信息就是在<code>onMeasure()</code>方法中最终确定的。所以我们需要做的就是在自定义<code>View</code>中重写<code>onMeasure()</code>方法。</p>
 <p>那么子<code>View</code>根据什么来确定自己应该具有的尺寸呢？当然不可能让子<code>View</code>自由地决定自己的大小，父<code>View</code>必然需要向子<code>View</code>传递信息来帮助子<code>View</code>来确定尺寸，而子<code>View</code>则必须满足父<code>View</code>的要求。查看<code>measure()</code>的方法签名：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">measure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span></span></div></pre></td></tr></table></figure>
-<p>这里的<code>widthMeasureSpec</code>与<code>heightMeasureSpec</code>就是存储这一信息的参数。它们的类型是<code>int</code>，内部以高两位来存储测量的模式，低三十位为测量的大小，计算中使用了位运算来提高并优化效率。当然我们不必使用位运算来获得对应的数值，<code>View.MeasureSpec</code>为我们提供了对应的方法。</p>
-<p>测量模式有三种：</p>
-<ul>
-<li><code>EXACTLY</code>：精确值模式，即子<code>View</code>必须使用这一尺寸，并且保证它们的所有后代都在这个范围之内。当我们将控件的<code>layout_width</code>、<code>layout_height</code>属性指定为具体数值或<code>match_parent</code>时，系统使用这一模式。</li>
-<li><code>UNSPECIFIED</code>：无限制模式，不对子<code>View</code>施加任何限制，完全由子<code>View</code>决定自己的大小。可以用于查看子<code>View</code>想要的尺寸，比如可以把子<code>View</code>的长度使用<code>EXACTLY</code>模式限制在100，不限制宽度来查看子<code>View</code>在长度为100情况想要的宽度。</li>
-<li><code>AT_MOST</code>：最大值模式，只限制子<code>View</code>能具有的最大尺寸，子<code>View</code>必须保证它和它的后代们都在这一范围之内。</li>
-</ul>
-<p>了解这些，我们就可以通过重写<code>onMeasure()</code>来确定一个<code>View</code>的尺寸。</p>
-<p>但在重写方法时要注意：必须调用<code>setMeasuredDimension()</code> 来将最终尺寸存储在<code>View</code>中，否则会抛出一个<code>IllegalStateException</code>。</p>
-<p><code>xml</code>:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">com.viseator.viewtest.VView</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"@color/Gray"</span></div><div class="line">    /&gt;</div></pre></td></tr></table></figure>
-<p><code>VView</code>:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> widthMode = MeasureSpec.getMode(widthMeasureSpec);</div><div class="line">    <span class="keyword">int</span> heightMode = MeasureSpec.getMode(heightMeasureSpec);</div><div class="line">    <span class="keyword">int</span> width = MeasureSpec.getSize(widthMeasureSpec);</div><div class="line">    <span class="keyword">int</span> height = MeasureSpec.getSize(heightMeasureSpec);</div><div class="line">    Log.d(TAG, <span class="string">"widthMode: "</span> + widthMode);</div><div class="line">    Log.d(TAG, <span class="string">"heightMode: "</span> + heightMode);</div><div class="line">    Log.d(TAG, <span class="string">"width :"</span> + width);</div><div class="line">    Log.d(TAG, <span class="string">"height :"</span> + height);</div><div class="line">    <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</div></pre></td></tr></table></figure>
-<p>log:</p>
-<p><img src="/images/onMeasureOutput1.png" alt="output"></p>
-<p>这段简单的代码验证了之前的说法，分别对宽高设置了<code>wrap_content</code>和固定值，可以发现模式分别为<code>AT_MOST</code>与<code>EXACTLY</code>（以数值表示）。</p>
-<p>这里输出的宽高值是以像素为单位的，可以看到高度的期望值就是设置的大小，但<code>wrap_content</code>期望的宽度值为1080（屏幕宽度），默认即为屏幕宽度，但最终计算得出的宽度值由于里面没有文字所以为0。</p>
-<p>同样地，<code>UNSPECIFIED</code>模式给出的默认尺寸也是屏幕的宽/高。</p>
-<p>所以我们可以看到如果想要实现<code>wrap_content</code>的效果，我们必须在<code>onMeasure</code>中对<code>AT_MOST</code>模式计算其内容宽/高并作为最终的宽/高，否则将以屏幕的宽/高进行填充。以<code>LinearLayout</code>的源码为例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (useLargestChild &amp;&amp;</div><div class="line">        (heightMode == MeasureSpec.AT_MOST || heightMode == MeasureSpec.UNSPECIFIED)) &#123;</div><div class="line">    mTotalLength = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; ++i) &#123;</div><div class="line">        <span class="keyword">final</span> View child = getVirtualChildAt(i);</div><div class="line">        <span class="keyword">if</span> (child == <span class="keyword">null</span>) &#123;</div><div class="line">            mTotalLength += measureNullChild(i);</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (child.getVisibility() == GONE) &#123;</div><div class="line">            i += getChildrenSkipCount(child, i);</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">final</span> LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)</div><div class="line">                child.getLayoutParams();</div><div class="line">        <span class="comment">// Account for negative margins</span></div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> totalLength = mTotalLength;</div><div class="line">        mTotalLength = Math.max(totalLength, totalLength + largestChildHeight +</div><div class="line">                lp.topMargin + lp.bottomMargin + getNextLocationOffset(child));</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Add in our padding</span></div><div class="line">mTotalLength += mPaddingTop + mPaddingBottom;</div><div class="line"></div><div class="line"><span class="keyword">int</span> heightSize = mTotalLength;</div></pre></td></tr></table></figure>
-<p>这部分代码向我们展示了<code>LinearLayout</code>处理子<code>View</code>并计算所有的高度的情况。</p>
-<p>知道了这个调用过程，我们就可以真正地进行<code>onMeasure()</code>的重写了。</p>
-<p>例如可以暴力指定<code>View</code>尺寸：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">    setMeasuredDimension(<span class="number">100</span>,<span class="number">600</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以为<code>AT_MOST</code>与<code>UNSPECIFIED</code>模式指定一个默认大小：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">    setMeasuredDimension(measureSize(widthMeasureSpec), measureSize(heightMeasureSpec));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">measureSize</span><span class="params">(<span class="keyword">int</span> measureSpec)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> mode = MeasureSpec.getMode(measureSpec);</div><div class="line">    <span class="keyword">int</span> size = MeasureSpec.getSize(measureSpec);</div><div class="line">    <span class="keyword">if</span> (mode == MeasureSpec.EXACTLY) &#123;</div><div class="line">        <span class="keyword">return</span> size;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        size = <span class="number">300</span>; <span class="comment">//Default size</span></div><div class="line">        <span class="keyword">return</span> Math.min(size,MeasureSpec.getSize(measureSpec));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>至于更复杂的计算逻辑由于本人能力有限就不写demo了，如果以后实际中遇到需要的时候再作补充。</p>
-
-          
+<p>这里的<code>widthMeasureSpec</code>与<code>heightMeasureSpec</code>就是存储这一信息的参数。它们的类型是<code>int</code>，内部以高两位来存储测量的模式，低三十位为测量的大小，计算中使用了位运算来提高并优化效率。当然我们不必使用位运算来获得对应的数值，<code>View.MeasureSpec</code>为我们提供了对应的方法。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/10/android_view_onMeasure/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -990,35 +960,21 @@
 
       
         
-          
-            <p>为了直观表示整个过程，我制作了一张流程图。注意以下只是整个生命周期中比较常用的方法，并不代表所有的过程。</p>
+          <p>为了直观表示整个过程，我制作了一张流程图。注意以下只是整个生命周期中比较常用的方法，并不代表所有的过程。</p>
 <p><img src="/images/viewLifeCircle.png" alt="viewLifeCircle"></p>
 <p>当一个<code>Activity</code>收到焦点即将要处于激活状态时，将会被要求绘制它的布局，绘制布局之前的过程在这里不涉及，我们从绘制<code>View</code>开始分析。</p>
 <p>每个<code>Activity</code>被要求提供一个<code>ViewGroup</code>作为View树的根，也就是我们熟悉的<code>setContentView</code>方法。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(@LayoutRes <span class="keyword">int</span> layoutResID)</span> </span>&#123;</div><div class="line">    getDelegate().setContentView(layoutResID);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">    getDelegate().setContentView(view);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(View view, ViewGroup.LayoutParams params)</span> </span>&#123;</div><div class="line">    getDelegate().setContentView(view, params);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>可以看到<code>setContentView</code>拥有三种形式，可以直接传入<code>View</code>、传入一个<code>layout</code>资源文件，或传入一个<code>View</code>文件和一个用于提供参数的<code>LayoutParams</code>对象。</p>
 <p>整个过程将从这个根<code>View</code>开始，并遍历它的子<code>View</code>来逐一绘制，每个<code>ViewGroup</code>承担了要求它的子<code>View</code>进行绘制的责任，每个<code>View</code>承担了绘制自身的责任。并且父<code>View</code>会在子<code>View</code>完成绘制之前进行绘制，同级的<code>View</code>将以它们出现在树中的顺序进行绘制。</p>
-<hr>
-<p>首先调用的当然是<code>View</code>的构造函数，构造函数分为两种，一种供代码创建的<code>View</code>使用，另一种是由<code>layout</code>文件生成的<code>View</code>使用，区别在于后者会从<code>layout</code>文件中读入所有的属性，前者的属性则需要在代码中设置。</p>
-<p>另外后者在所有的子<code>View</code>都生成完毕之后会回调<code>onFinishInflate</code>方法。</p>
-<hr>
-<p>在正式绘制之前要进行两个过程（布局机制[layout mechanism]）：</p>
-<p>首先是<code>measure</code>过程。这是一个自顶向下的过程，父<code>View</code>将期望尺寸传递给子<code>View</code>，子<code>View</code>需要根据这一信息确定自己的尺寸，并且保证这一尺寸满足父<code>View</code>对其的要求，在子<code>View</code>确定自己尺寸的过程中也要向它的子<code>View</code>传递信息，就这样递归地确定自己的尺寸信息并储存在自身中，保证在<code>measure</code>方法返回时，自身的尺寸信息已经确定。所以在根<code>View</code>的<code>measure</code>方法返回时，所有子<code>View</code>的尺寸信息已经全部确定了。</p>
-<p>这个过程需要注意一个<code>View</code>可能不止一次地调用<code>measure</code>方法来对子<code>View</code>进行测量。比如，可能要先传递一个无限制的信息来获取子<code>View</code>想要的尺寸，当子<code>View</code>希望的尺寸过大或过小时，父<code>View</code>需要再次调用<code>measure</code>方法来给予子<code>View</code>一些限制。</p>
-<p>第二个是<code>layout</code>过程，这也是一个自顶向下的遍历过程，在这个过程中父<code>View</code>负责按照上一个过程中计算并储存在<code>View</code>中的尺寸信息来正确地放置子<code>View</code>。</p>
-<p>同时这个过程可以通过调用<code>requestLayout()</code>来重新进行，并且会引起后面步骤的执行，相当于对以这个<code>View</code>为根的<code>View</code>树进行重新布局。</p>
-<hr>
-<p>下面就是真正的绘制过程了，也就是<code>View</code>的<code>draw()</code>方法，在<code>draw()</code>方法中，（如果需要）会<strong>依次</strong>调用如下方法：</p>
-<ol>
-<li><code>drawBackground()</code>：在画布上绘制特定的背景</li>
-<li><code>onDraw()</code>：重写<code>View</code>几乎必重写的一个方法，用于绘制图形</li>
-<li><code>dispatchDraw()</code>：<code>ViewGroup</code>会重写这个方法，用于对所有的子<code>View</code>调用<code>draw()</code>方法进行绘制</li>
-<li><code>onDrawForeground()</code>：用于绘制前景（如果需要）</li>
-</ol>
-<p>可以看到如果需要调用上述的方法必定会按照这个顺序进行，也就是说，子<code>View</code>的绘制是在父<code>View</code>绘制之后进行的，而同级<code>View</code>的绘制是根据<code>View</code>在父<code>View</code>中的顺序进行绘制的。</p>
-<p>同时这个过程可以通过调用<code>invalidate()</code>来重新进行，相当于进行某个<code>View</code>的重绘。</p>
-
-          
+<h2 id=""><a href="#" class="headerlink" title=""></a>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/09/android_view_lifeCycle/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1165,8 +1121,7 @@
 
       
         
-          
-            <p>Java 1.5中引入了泛型的概念以增加代码的安全性与清晰度，同时为了提供对旧代码的兼容性，让旧代码不经过改动也可以在新版本中运行，Java提供了原生态类型（或称原始类型）。但是实际中在新的代码中已经不应该使用原生态类型。</p>
+          <p>Java 1.5中引入了泛型的概念以增加代码的安全性与清晰度，同时为了提供对旧代码的兼容性，让旧代码不经过改动也可以在新版本中运行，Java提供了原生态类型（或称原始类型）。但是实际中在新的代码中已经不应该使用原生态类型。</p>
 <p>原生态类型的含义是不带任何实际参数的泛型名称，例如Java 1.5后改为泛型实现的<code>List&lt;E&gt;</code>，<code>List</code>就是它的原生态类型，与没有引入泛型之前的类型完全一致。</p>
 <p>而在虚拟机层面上，是没有泛型这一概念的——所有对象都属于普通类。在编译时，所有的泛型类都会被视为原生态类型。</p>
 <p>那么为什么不应该使用原生态类型呢？</p>
@@ -1185,37 +1140,14 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiffInGeneric</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        List&lt;String&gt; strings = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        List list = strings;<span class="comment">//ok</span></div><div class="line">        List&lt;Object&gt; objects = strings;<span class="comment">//Error: java: incompatible types: java.util.List&lt;java.lang.String&gt; cannot be converted to java.util.List&lt;java.lang.Object&gt;</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>我们创建了一个<code>List&lt;String&gt;</code>类型的对象<code>strings</code>，再把它赋给原生态类型<code>List</code>，这是可以的。但是第5行中尝试把它传递给<code>List&lt;Object&gt;</code>时，出现了一个类型不相容错误，注意，这是一个编译期错误。</p>
 <p>这是因为泛型有子类型化的规则：</p>
-<p><code>List&lt;String&gt;</code>是原生态类型<code>List</code>的一个子类型。虽然<code>String</code>是<code>Object</code>的子类型，但是由于<strong>泛型是不可协变的</strong>，<code>List&lt;String&gt;</code>并不是<code>List&lt;Object&gt;</code>的子类型，所以这里的传递无法通过编译。</p>
-<p>如果像上面那样使用原生态类型会有什么隐患呢？看下面一段代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiffInGeneric</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        List&lt;String&gt; strings = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        unsafeAdd(strings, (Integer)<span class="number">1</span>);</div><div class="line">        System.out.println(strings.get(<span class="number">0</span>));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">unsafeAdd</span><span class="params">(List list, Object object)</span> </span>&#123;</div><div class="line">        list.add(object);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>编译器提示了两条警告：</p>
-<p>第8行：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">warning: [rawtypes] found raw type: List</div><div class="line">    private static void unsafeAdd(List list, Object object) &#123;</div><div class="line">                                  ^</div><div class="line">  missing type arguments for generic class List&lt;E&gt;</div><div class="line">  where E is a type-variable:</div><div class="line">    E extends Object declared in interface List</div></pre></td></tr></table></figure>
-<p>警告发现了原生态类型<code>List</code>，同时还贴心地指出了<code>List&lt;E&gt;</code>的形式以及<code>E</code>的来源。</p>
-<p>第9行：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">warning: [unchecked] <span class="function">unchecked call to <span class="title">add</span><span class="params">(E)</span> as a member of the raw type List</span></div><div class="line">        list.<span class="title">add</span><span class="params">(object)</span>;</div><div class="line">                ^</div><div class="line">  where E is a type-variable:</div><div class="line">    E extends Object declared in <span class="class"><span class="keyword">interface</span> <span class="title">List</span></span></div></pre></td></tr></table></figure>
-<p>同样指出了我们正在把一个对象添加到<code>List</code>中，而这个添加过程由于我们使用了原生态类型而无法被检验。</p>
-<p>如果忽略这两条警告并运行这个程序，显然会出现一条错误：</p>
-<p>第5行： </p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Exception in thread <span class="string">"main"</span> java.lang.ClassCastException: java.lang.Integer cannot be cast to java.lang.String</div></pre></td></tr></table></figure>
-<p>我们试图把一个自动装箱后的<code>Integer</code>对象插入到了一个被声明为<code>List&lt;String&gt;</code>的<code>List</code>中，由于我们在<code>unsafeAdd</code>方法中使用了原生态类型，从而使得编译器无法在编译期间检查<code>add</code>参数的合法性，从而没有产生编译错误而是产生了一条警告，运行后当试图把这个错误的<code>Integer</code>对象作为<code>String</code>取出时就会出现<code>ClassCaseException</code>异常，这是个运行时的异常，导致了程序中断。</p>
-<p>如果我们把<code>unsafeAdd</code>方法的参数从<code>List</code>改为<code>List&lt;Object&gt;</code>会发生什么呢？正如之前所说的那样，由于<code>List&lt;String&gt;</code>并不是<code>List&lt;Object&gt;</code>的子类型，所以在传递参数的时候就会出现第一段代码中出现的<strong>编译期错误</strong>。这体现了泛型所带来的安全性。</p>
-<p>可以这么说，<code>List&lt;Object&gt;</code>唯一特殊的地方只是<code>Object</code>是所有类型的超类，由于泛型的不可协变性，<strong>它只能表示<code>List</code>中可以容纳所有类型的对象，却不能表示任何参数类型的<code>List&lt;E&gt;</code>。</strong></p>
-<p>而<code>List&lt;?&gt;</code>则是通配符类型中的一种特例，它并没有<code>extend</code>或<code>super</code>这样的限制，从而可以做到引用任意参数类型的<code>List&lt;E&gt;</code>。但由于没有表示类型的符号（<code>E</code>），在方法中无法引用这个类型，所以它只用于无需使用具体类型的方法之中，如果不是这个情况，则需要使用泛型方法（只用<code>List&lt;?&gt;</code>的<strong>不是</strong>一个泛型方法，它具有<code>List&lt;?&gt;</code>这个固定的参数`）。</p>
-<p>但是<code>List&lt;?&gt;</code>还是不能用作上面的<code>unsafeAdd</code>的参数，修改后会出现一条奇怪的编译错误：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">error: no suitable method found for add(Object)</div><div class="line">        list.add(object);</div><div class="line">            ^</div><div class="line">    method Collection.add(CAP#1) is not applicable</div><div class="line">      (argument mismatch; Object cannot be converted to CAP#1)</div><div class="line">    method List.add(CAP#1) is not applicable</div><div class="line">      (argument mismatch; Object cannot be converted to CAP#1)</div><div class="line">  where CAP#1 is a fresh type-variable:</div><div class="line">    CAP#1 extends Object from capture of ?</div></pre></td></tr></table></figure>
-<p>这是因为无法将任何元素（<code>null</code>除外）放入<code>List&lt;?&gt;</code>中。这又是为什么呢？先来看一个有限定通配符的例子：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiffInGeneric</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        List&lt;? extends Number&gt; numbers = <span class="keyword">new</span> ArrayList&lt;Integer&gt;();</div><div class="line">        numbers= <span class="keyword">new</span> ArrayList&lt;Double&gt;();</div><div class="line">        numbers= <span class="keyword">new</span> ArrayList&lt;Float&gt;();</div><div class="line">        numbers = <span class="keyword">new</span> ArrayList&lt;Number&gt;();</div><div class="line">        numbers.add(<span class="keyword">new</span> Integer(<span class="number">1</span>));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>第7行报出了与之前相似的编译错误：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">error: no suitable method found for add(Integer)</div><div class="line">        numbers.add(new Integer(1));</div><div class="line">               ^</div><div class="line">    method Collection.add(CAP#1) is not applicable</div><div class="line">      (argument mismatch; Integer cannot be converted to CAP#1)</div><div class="line">    method List.add(CAP#1) is not applicable</div><div class="line">      (argument mismatch; Integer cannot be converted to CAP#1)</div><div class="line">  where CAP#1 is a fresh type-variable:</div><div class="line">    CAP#1 extends Number from capture of ? extends Number</div></pre></td></tr></table></figure>
-<p>这次我们可以看出错误的原因：可以将一个<code>List&lt;Integer&gt;</code>传递给<code>List&lt;? extends Number&gt;</code>，因为<code>Integer</code>是<code>Number</code>的子类，符合限定符的条件。同理，也可以将类似的对象传递给它，当然也可以把<code>List&lt;Number&gt;</code>传递给它。</p>
-<p>如果允许这个对象的<code>add</code>操作，我们无法知道这个参数是否与对象的泛型参数相同，因为我们只知道它是<code>Number</code>的一个子类。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">List&lt;? extends Parent&gt; list = <span class="keyword">new</span> ArrayList&lt;Child&gt;();</div><div class="line">List&lt;? extends Parent&gt; parents = list;</div><div class="line">list.add(<span class="keyword">new</span> Parent());</div></pre></td></tr></table></figure>
-<p>上面的1,2两行是完全合法的，如果允许第3行的<code>add</code>操作，那么会把一个<code>Parent</code>对象加入到一个实际类型是<code>Child</code>的<code>List</code>中，而<code>Parent</code>is-not-a <code>Child</code>，这破坏了Java的类型安全，是绝对不允许的。</p>
-<p>上面是有限制通配符的情况，那么针对<code>List&lt;?&gt;</code>这样的无限制通配符更是如此。因此，为了保证类型安全，不允许对<code>List&lt;?&gt;</code>或<code>List&lt;? extends E&gt;</code>这样的通配符类型进行类似<code>add</code>的操作。</p>
-<p>使用泛型方法可以避免这个问题（重申通配符类型并不是泛型方法），使用无限制通配符类型可以取代其他需要表示<strong>包含某一种对象类型的泛型类型</strong>的情况而不是使用原生态类型<code>List</code>。</p>
-
-          
+<p><code>List&lt;String&gt;</code>是原生态类型<code>List</code>的一个子类型。虽然<code>String</code>是<code>Object</code>的子类型，但是由于<strong>泛型是不可协变的</strong>，<code>List&lt;String&gt;</code>并不是<code>List&lt;Object&gt;</code>的子类型，所以这里的传递无法通过编译。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/02/14/DiffInGeneric/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1373,17 +1305,14 @@
 
       
         
-          
-            <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>寒假（假装）看完《数据结构与算法分析》之后决定是时候开始做LeetCode的题目了，在这里记录下一些LeetCode过程中遇到的坑，做LeetCode不仅是对算法的一种考验，也是对Java基础知识的一种考查，在Java基础并不是太好的现在做一定会漏洞百出，在这里统一做一个记录，也会写下对一些题目的想法。</p>
-<h2 id="LeetCode"><a href="#LeetCode" class="headerlink" title="LeetCode"></a>LeetCode</h2><h3 id="Two-Sum"><a href="#Two-Sum" class="headerlink" title="Two Sum"></a>Two Sum</h3><p>直观上的方法是遍历所有元素对找出答案，看了解答以后发现可以用Hash表实现，Hash表可以进行对另一个元素的快速查找并返回对应的位置。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">int</span>[] twoSum(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> target) &#123;</div><div class="line">    Map&lt;Integer, Integer&gt; map = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; nums.length; i++) &#123;</div><div class="line">        map.put(nums[i], i);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">for</span> (Integer num : map.keySet()) &#123;</div><div class="line">        <span class="keyword">if</span> (map.containsKey(target - num) &amp;&amp; !Objects.equals(map.get(num), map.get(target - num))) &#123;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">new</span> <span class="keyword">int</span>[]&#123;map.get(num), map.get(target - num)&#125;;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>上面的代码在用例[3,3] 6的时候返回结果为null，原因是第7行中第二个判断条件不成立，由于构建hash表的时候后面一个[3,1]覆盖了前面的[3,0]导致无法同时找到两个位置。（提醒了hash表一对一的性质，后面加入的元素如果key相同会覆盖前面的元素）</p>
-<p>解决办法是不遍历key而是直接遍历nums数组，比较循环的索引和hash表的value，这样可以保证找到对应的那个位置不同的元素位置。</p>
-<h3 id="Rotate-Array"><a href="#Rotate-Array" class="headerlink" title="Rotate Array"></a>Rotate Array</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">rotate</span><span class="params">(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> k)</span> </span>&#123;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; k; i++) &#123;</div><div class="line">        <span class="keyword">int</span>[] temp = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length];</div><div class="line">        temp[<span class="number">0</span>] = nums[nums.length - <span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; nums.length-<span class="number">1</span>; j++) &#123;</div><div class="line">            temp[j + <span class="number">1</span>] = nums[j];</div><div class="line">        &#125;</div><div class="line">        nums = temp;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>错误的原因是没有理解数组元素传递的本质是对数组对象引用的值传递，刚开始看到这题目觉得怎么可以用java做，java都是值传递无法改变原来数组。上面的做法的结果是把一个新的数组对象的引用赋给了nums的一个拷贝，但是原来的nums并没有引用到新的地址，所以原nums还是保持不变。</p>
-<p>查了相关资料了解到数组元素的传递与对象一样（数组也可以看成new int[]产生的对象），传递的是数组的引用的拷贝，可以通过这个引用来修改原数组的数据。</p>
-
-          
+          <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>寒假（假装）看完《数据结构与算法分析》之后决定是时候开始做LeetCode的题目了，在这里记录下一些LeetCode过程中遇到的坑，做LeetCode不仅是对算法的一种考验，也是对Java基础知识的一种考查，在Java基础并不是太好的现在做一定会漏洞百出，在这里统一做一个记录，也会写下对一些题目的想法。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/02/05/LeetCode/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1530,54 +1459,17 @@
 
       
         
-          
-            <h1 id="2016年度总结"><a href="#2016年度总结" class="headerlink" title="2016年度总结"></a>2016年度总结</h1><h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>许多人在跟我聊天的时候感慨，时间怎么过得这么快，不知不觉自己就是二十多的人了，过几年就要奔三了。相反地，我却觉得时间过得却不是那么快，因为自己确实在随着时间而改变，而且这样的改变是自己实实在在可以感受到的。从初中开始过来的这几年，可以说是一年一个样子，每次翻看自己一年前写的东西都会看到当时的幼稚与无知，自己也有着许许多多的习惯、看法、认识在随着时间推移在改变着。</p>
+          <h1 id="2016年度总结"><a href="#2016年度总结" class="headerlink" title="2016年度总结"></a>2016年度总结</h1><h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>许多人在跟我聊天的时候感慨，时间怎么过得这么快，不知不觉自己就是二十多的人了，过几年就要奔三了。相反地，我却觉得时间过得却不是那么快，因为自己确实在随着时间而改变，而且这样的改变是自己实实在在可以感受到的。从初中开始过来的这几年，可以说是一年一个样子，每次翻看自己一年前写的东西都会看到当时的幼稚与无知，自己也有着许许多多的习惯、看法、认识在随着时间推移在改变着。</p>
 <p>而2016年是对身边每一个像我一样的新生都十分关键的一年，经历了身份、时空的转变，带来的是各种观念的迅速变化，但感到庆幸的是我并不惧怕改变。</p>
 <p>这大概就是这段时间的必然，我们在快速成长着，不断地丢下之前的想法，不断获取新的东西与认知，不知道这样的改变还会持续多久，但是可以确定的是我确实是在朝着对的方向成长着。</p>
-<p>之前的习惯是在每年生日的时候写下一些东西作为记录，但是今年因为忙碌而落下了，在学期结束的时候正好自己所在的两个团队都要求有一篇总结，虽然分别是年度的和学期的，我还是一并写成年度的，大概高中时期的那些种种在现在看来毕竟是过去了，所以这篇总结会分成两部分，先是来华科前的时期，主要内容在来华科后的时期。作为一篇写给别人看的总结就不包含那些生活上的东西了。</p>
-<h2 id="高中"><a href="#高中" class="headerlink" title="高中"></a>高中</h2><p>似乎身边每一个人说起自己的高三时光，都是无尽的考试和补课，和最终那一次高考的种种经历。在这个明确的人生分水岭之前，每个人都不得不正视自己的成绩。</p>
-<p>但奇怪（或许不）的是，我对高中的印象却完完全全没有上面说的那些东西，因为它们都随着高考的结束而截止了。我能记住的只有高中生活中那些无关于学习的那些，那些在高三的忙碌中偷得的闲暇，那些三年来朝夕相处的珍贵。</p>
-<p>而成绩与最后的结果，现在看来都是一种必然，无论最终的结果如何，都会有一种方式让我好好珍视现在，像高中语文老师寄言的那样：人生的每个阶段都会有每个阶段的痛苦与快乐。</p>
-<p>我不曾为自己之前做过的任何一个决定后悔过，它们的结果或已变成好的那方面，或已不再重要。性格如此，我只关注现在的事情，过去的事情会很快放下，从而尽快找到一种适合的方式好好面对当下的那些或好或坏的事情。</p>
-<p>在高中时期没有想过自己一定会去哪一个学校，但直觉告诉我一定会有一条路在那里等着我，我没有计划过高考要考多少分，也没有拼命地为了所谓的不浪费去各种揣度志愿应该怎么填，在高中的最后阶段，支持着我的是再也不以分数高低论断一个人的成败的未来和学习真正愿意为之付出精力的东西。</p>
-<p>最令我感到幸运的是我在很早的时候我就知道愿意去为什么付出自己的热血，这讲起来又是另一个故事了，但是从我有大学专业这个概念以来，我从来没有考虑过除计算机相关以外的任何一个专业。所以在暑假高考成绩出来的那一刻起华科就成了我最好且是唯一的选择。我的志愿在系统开放十分钟以内就填好了，我想这就是我前面所说的那种必然。</p>
-<h2 id="华科"><a href="#华科" class="headerlink" title="华科"></a>华科</h2><p>来华科以后的生活似乎就成变多线程的了，加入了很多的学生组织，一度让我在时间安排上感到非常爆炸，但是不管怎么样接下的锅我都会好好背到底的。对来华科以后这段时间的总结就按身份不同分成几个方面吧。</p>
-<h3 id="联创团队"><a href="#联创团队" class="headerlink" title="联创团队"></a>联创团队</h3><p>关于华科的一切就是从那时开始了解的，而对于华科的三大团队网上很高的评价和咨询群中表现出来的态度就足够令人向往，而令一方面也让我对自己的水平心生怀疑，虽然早就有学计算机的打算但之前却没有条件让我在这条路上更深一步，这样的心态甚至让我一度在联创招新的时候不敢去投出一份所谓的简历。正如那时所说的那样，我深知自己的水平还不足以加入联创，但是我却有了去提升自己的欲望和前进的动力。</p>
-<p>当时在招新快要结束的时候正好班主任（大四学长）来我寝室，闲聊中我说起报名这事，他表示：报个名又不会有什么损失，为什么不试一试呢？现在看来那时候我的心态确实很奇怪，想去追求的东西因为担心自己的能力连第一步都不敢踏出，大概是太过于担心自己会失败吧。    </p>
-<p>所以在离报名截止还有两天的时候我同时报了联创和冰岩的名，第一次面试是冰岩的一面，因为太过紧张以至于语无论次，讲起来也没有什么逻辑。面试以后就觉得自己跪了。之后是联创的笔试，只知道Android会考Java，所以提前一天买了本Java书看，本来也没有对笔试抱多大的希望，题目里面关于面向对象的内容还是根据之前看过的C++的那套东西答的。所以在后面收到二面通知的时候还是觉得十分惊喜的。</p>
-<p>面试我的是朱一百和王启萌，记得那天我们聊的挺开心的，也是我第一次看到808，那时候第一次感觉到自己离这样一个团队这么近。之后给了三个礼拜的时间准备熬测，正好国庆放假，把买的Java和Android的书带回去用最快的速度看，感觉那样这么用心地为了一个目标努力的时候真是非常难得。</p>
-<p>再之后的事情似乎又在意料之内了，越到后面越感到自己能实现这件事，所以这件事也就这样实现了。</p>
-<p>联创的一切也如同我想的那样，有一群志同道合的伙伴和各种方面都非常强的聚聚学长。加入联创的第一个收获就是让我能看到更大的世界是什么样子，知道同龄的人可以做到什么样子，更重要的是，他们就在我身边。这样的氛围我想在其他的任何地方都很难找到。</p>
-<p>实习三个多月，从第一个礼拜没有安卓基础写出第一个APP，接到第一个Java项目，到组队一起写出一个游戏打比赛，再到自己去实现自己的一些想法，其中的成长不言而喻。</p>
-<p>做APP的过程其实在DR里面已经有记录，在这里就不一一细数。总的看来，有一些收获对我以后的学习有着很大的帮助：</p>
-<ul>
-<li>学会使用Google，习惯在英文环境下解决问题，从一开始对满屏的英文不知所措到后面可以筛选出自己想要的信息，对我的英语能力也是一种提升。（感谢Mentor顺手改的搜索结果显示语言）</li>
-<li>看文档写代码而不是看Demo跟着写，一开始遇到不会实现的东西都是先找别人的实现再套用到自己的情境中，后来明白官方提供的文档就是最好的参考资料，虽然有些时候看Demo写可以更快的实现，但是回过头来看看文档总能发现一些新东西从而加强自己的理解。毕竟只有自己写出来的东西才是自己的。</li>
-<li>讲究代码的规范性问题。这一点Mentor在对我代码的Review中反复强调了很多次，希望我从一开始就养成好的习惯。</li>
-<li>熟悉自己的操作环境，提高效率。花了非常多的时间来折腾Linux，目的就是为了给自己一个可以排除其他干扰高效率地工作的环境。熟悉各种快捷键和插件也是锻炼的一部分。</li>
-<li>重视基础。有很多前辈告诉我基础内容非常重要，尤其是像数据结构、算法这样的内容看似平常用不到，但是关键时候看的往往就是这样的基本功。所以我开始想去花一些时间认真地静下心来补一补这些基础内容。</li>
-<li>开始写博客来记录一些东西。建了自己的博客，虽然现在只有手头项目相关的三篇博文，很大一部分原因是我认为博文内容一定要是自己理解比较深刻的一些东西才值得写。目前自己水平不高的情况下瞎写一些东西也没有什么价值，应该在之后某个时候觉得自己对某个东西有自己的理解的时候才会好好地把这些分享给别人吧。</li>
-<li>Git与团队合作，目前合作的两个项目都是通过git完成的，一开始用git出现了很多问题但是到后面熟悉以后就可以好好利用git的功能了。</li>
-</ul>
-<p>其实学到的东西远不止上面总结的这些，很多东西都是从与其他人的接触中慢慢学会的，总之很荣幸可以接触到这个学校最优秀的一群人。</p>
-<h3 id="班长"><a href="#班长" class="headerlink" title="班长"></a>班长</h3><p>大学接下班长职务是想发挥一下自己搞事的天赋，希望能够通过自己的一些行动去为大家做一些事情。平时给同学、班委开会也是对自己的锻炼。感谢在最忙的那些时候有其他的班委主动帮我分担。班上有一群可爱的同学们，虽然说大学同学不似高中那样朝夕相处，但是我希望大家可以一起留下一些美好的回忆。</p>
-<h3 id="美团点评技术俱乐部"><a href="#美团点评技术俱乐部" class="headerlink" title="美团点评技术俱乐部"></a>美团点评技术俱乐部</h3><p>一开始自己对学生组织的打算是一个技术团队和学生组织。因为暑假水群的时候就跟安祺和负责科创的大叔聊过，开学俱乐部招新的时候也跟安祺大叔简单聊了一下，于是就来了刚成立的美团。</p>
-<p>因为美团刚成立成员也特别少，所以大家很快就熟悉了， 美团的群也成了我们日常闲扯的地方。而学院今年为科创的各个俱乐部新装修的场地也就在我寝室的顶楼，对于我们来说是一个大福利了。</p>
-<p>后来通过学院接到的自己和唐艺峰合作的第一个项目，做一个表格内容识别的东西。在那个时候我才刚有一些Java基础，在想接不接的时候又想起了自己考虑报不报联创一样的情景。这次我没有太多犹豫，一是大一就有可能接到项目做很难得，二是项目对自己的锻炼也是非常大的，不给自己一些压力就不会做成一些事情。</p>
-<p>这个项目中间虽然经历了很多日常的绝望，像前辈说的那样踩过了很多的坑，例如PM改需求，但是到最后总算是把第一期完成了，过程中也有了自己三篇博文。</p>
-<p>后面学院又跟企业合作拿到了一批新的项目，估计下学期会开始做。在科创这边的活动有学院的支持以后在项目方面就有了保证。希望俱乐部这边能在学院的支持下可以好好发展。</p>
-<h3 id="学生会宣传部"><a href="#学生会宣传部" class="headerlink" title="学生会宣传部"></a>学生会宣传部</h3><p>正如招新的时候所说的，学生会是一个大家庭，在宣传部认识了很多非常可爱的学姐和学长，也结识了一些跟我同届的部员们。</p>
-<p>宣传部做出来的东西是实实在在可以被大家看到和关注的，看到自己做出来的海报被贴出来的感觉真的非常好。尝试了第一次用比较长的一段时间用心做一张真正意义上的海报，第一次用AE撸出第一个视频被大家转发。</p>
-<p>宣传部的大家都很有爱（虽然群里总是gaygay的），但是每次问一些问题总会有人回答。例会的零食、部长的宅舞、圣诞的贺卡……这一切回忆起来总是那么温馨。</p>
-<p>这个学期接的锅其实就一张海报，视频的活还没有开始接，自己也因为联创的事情鸽了一些活动。下学期会好好弥补的。</p>
-<h2 id="关于未来"><a href="#关于未来" class="headerlink" title="关于未来"></a>关于未来</h2><p>总结下来这一年的我似乎没有遇到什么太大的困难（或者说那些困难到现在看已经算不上了），一切都在向着充满希望的方向发展着。班主任曾对我们说过一句话：“大家都希望成为自己想要的样子，但是到最后大部分都成了自己愿意成为的样子。”计划总是赶不上变化的，我也是一个不善于计划的人，我对于自己未来的走向的改变总是在平时的一个个决定中促成的，好在现在看来还是走在应该走的路上。</p>
-<p>从加入联创的那一刻起我已经决定不读研，知乎上看过一句话是：“大学把一件事做到牛逼才谈得上成功的大学生活。”那么我想这件事对于我一定是技术，有这样的氛围和条件让我去好好做这件事必然不会让我失望。我也希望自己能真正地专注在一件事情上。</p>
-<p>虽然我不是一个理想主义者，但是现在的我是充满着希望的，因为我看到了我可以成为怎样的人，看到了未来的那些可能，知道了那样一部分自己的未来会是怎么一个样子。</p>
-<p>但是不管自己的打算多么好，条件多么优越，始终不能变的是自己的努力，在这里也要告诫自己要Stay Hungry, Stay Foolish.时刻保持清醒，保持自知。</p>
-<p><strong>“你要克服的是你的虚荣心，是你的炫耀欲，你要对付的是你时刻想要出风头的小聪明。”——蔡千嬅</strong></p>
-<p>共勉。</p>
-
-          
+<p>之前的习惯是在每年生日的时候写下一些东西作为记录，但是今年因为忙碌而落下了，在学期结束的时候正好自己所在的两个团队都要求有一篇总结，虽然分别是年度的和学期的，我还是一并写成年度的，大概高中时期的那些种种在现在看来毕竟是过去了，所以这篇总结会分成两部分，先是来华科前的时期，主要内容在来华科后的时期。作为一篇写给别人看的总结就不包含那些生活上的东西了。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/01/20/2016年度总结/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1735,43 +1627,15 @@
 
       
         
-          
-            <h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><p>在开始说明直线检测过程前先作个说明，由于直线检测的算法需要遍历每个像素，所以总的耗时比较长，在安卓上跑的时候直线检测的时间可能会长达两分钟，这是在测试过程中不能接受的，所以我将安卓上的代码整个迁移到了Idea中，关于Idea中<code>OpenCV</code>的配置，可以参见这个<a href="https://medium.com/@aadimator/how-to-set-up-opencv-in-intellij-idea-6eb103c1d45c" target="_blank" rel="external">教程</a>。</p>
-<p>这个步骤的目的：这步中我们会检测出整张图片中满足条件的所有直线，再通过筛选选出横的表格框线，再利用检测出的表格框线来提取两个框线之间的内容即为表格中的一行。</p>
-<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">cutImagesToRows</span><span class="params">()</span> </span>&#123;</div><div class="line">    ArrayList&lt;Double&gt; lineYs = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    ArrayList&lt;Double&gt; uniqueLineYs = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="comment">//lines:a special mat for find lines</span></div><div class="line">    Mat lines = <span class="keyword">new</span> Mat();</div><div class="line">    <span class="comment">//find lines and store in lines</span></div><div class="line">    Imgproc.HoughLinesP(dilateMuchPic, lines, <span class="number">1</span>, Math.PI / <span class="number">180</span>, Y_THRESHOLD,</div><div class="line">            Y_MINLINELENGTH, Y_MAXLINEGAP);</div><div class="line"></div><div class="line">    <span class="comment">//get the lines information from lines and store in lineYs</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lines.rows(); i++) &#123;</div><div class="line">        <span class="keyword">double</span>[] points = lines.get(i, <span class="number">0</span>);</div><div class="line">        <span class="keyword">double</span> y1, y2;</div><div class="line"></div><div class="line">        <span class="comment">//just need the horizontal lines</span></div><div class="line">        y1 = points[<span class="number">1</span>];</div><div class="line">        y2 = points[<span class="number">3</span>];</div><div class="line"></div><div class="line">        <span class="comment">// if it slopes, get the average of them, store the y-coordinate</span></div><div class="line">        <span class="keyword">if</span> (Math.abs(y1 - y2) &lt; <span class="number">30</span>) &#123;</div><div class="line">            lineYs.add((y1 + y2) / <span class="number">2</span>);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    getUniqueLines(lineYs, uniqueLineYs, <span class="number">10</span>);</div></pre></td></tr></table></figure>
-<p>上面的注释里面讲得比较清楚，另外有一些解释：</p>
-<ul>
-<li><p>前面提到过<code>HoughLinesP</code>这个函数的第二个参数是一个特殊的<code>Mat</code>，也就是代码中的<code>lines</code>，它的<code>col</code>（列）的值为1，<code>row</code>（行）的值为检测出的所有直线 <strong>（这里要注意一下，我手上的书的这两个值正好相反，可能是标准不同，我这里用的是<code>OpenCV 3.1</code>）</strong>。每个<code>row</code>为一个<code>double[4]</code>，四个值分别对应着起始点的x,y坐标，终点的x,y坐标<strong>（图片的左上角为原点）</strong>。两个点连起来就是检测出的直线。可以看到这里我只取了1,3，对应的是起点和终点的y坐标。</p>
-</li>
-<li><p><code>if (Math.abs(y1 - y2) &lt; 30)</code>这句判断的目的是过滤掉竖直的直线（起始点y坐标之差显然大于30），并且允许横线有一定的倾斜（起始点可以有30像素的差距）。找到这样的一对点后，把它们的y坐标取平均值存入一个数组中。</p>
-<p>​</p>
-</li>
-</ul>
-<p>由于图片中一条直线的宽度不可能正好是一个像素，所以必然会出现一条直线检测出很多个y坐标的问题，下面这个方法就是为了找到这些多余的y坐标并取它们的平均值作为最终的y坐标。</p>
-<p><code>getUniqueLines(lineYs, uniqueLineYs, 10);</code>代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line"> * filter the source coordinates, if some values are too close ,get the average of them</div><div class="line"> *</div><div class="line"> * <span class="doctag">@param</span> src    source coordinates list</div><div class="line"> * <span class="doctag">@param</span> dst    destination coordinate list</div><div class="line"> * <span class="doctag">@param</span> minGap the minimum gap between coordinates</div><div class="line"> */</div><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">getUniqueLines</span><span class="params">(ArrayList&lt;Double&gt; src, ArrayList&lt;Double&gt; dst, <span class="keyword">int</span> minGap)</span> </span>&#123;</div><div class="line">    Collections.sort(src); <span class="comment">//sort the source coordinates list</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; src.size(); i++) &#123;</div><div class="line">        <span class="keyword">double</span> sum = src.get(i);</div><div class="line">        <span class="keyword">double</span> num = <span class="number">1</span>;</div><div class="line">        <span class="comment">//when the distance between lines less than minGap, get the average of thema</span></div><div class="line">        <span class="keyword">while</span> (i != src.size() - <span class="number">1</span> &amp;&amp; src.get(i + <span class="number">1</span>) - src.get(i) &lt; minGap) &#123;</div><div class="line">            num++;</div><div class="line">            sum = sum + src.get(i + <span class="number">1</span>);</div><div class="line">            i++;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">if</span> (num == <span class="number">1</span>) &#123;</div><div class="line">            dst.add(src.get(i));</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            dst.add(((sum / num)));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p><code>minGap</code>：直线间距阈值，间距小于这个值的直线被处理。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">blockImages = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; uniqueLineYs.size(); i++) &#123;</div><div class="line">    Rect rect;</div><div class="line">    <span class="keyword">double</span> y = uniqueLineYs.get(i);</div><div class="line">    <span class="comment">//if not the last line</span></div><div class="line">    <span class="keyword">if</span> (i != uniqueLineYs.size() - <span class="number">1</span>) &#123;</div><div class="line">        rect = <span class="keyword">new</span> Rect((<span class="keyword">int</span>) (srcPic.width() * PADDING_LEFT_RIGHT),</div><div class="line">                (<span class="keyword">int</span>) (y + (uniqueLineYs.get(i + <span class="number">1</span>) - y) * PADDING_TOP_BOTTOM),</div><div class="line">                (<span class="keyword">int</span>) (srcPic.width() * (<span class="number">1</span> - PADDING_LEFT_RIGHT * <span class="number">2</span>)),</div><div class="line">                (<span class="keyword">int</span>) ((uniqueLineYs.get(i + <span class="number">1</span>) - y) * (<span class="number">1</span> - PADDING_TOP_BOTTOM * <span class="number">2</span>)));</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">//the last line</span></div><div class="line">        rect = <span class="keyword">new</span> Rect((<span class="keyword">int</span>) (srcPic.width() * PADDING_LEFT_RIGHT),</div><div class="line">                (<span class="keyword">int</span>) (y + (srcPic.height() - y) * PADDING_TOP_BOTTOM),</div><div class="line">                (<span class="keyword">int</span>) (srcPic.width() * (<span class="number">1</span> - PADDING_LEFT_RIGHT * <span class="number">2</span>)),</div><div class="line">                (<span class="keyword">int</span>) ((srcPic.height() - y) * (<span class="number">1</span> - PADDING_TOP_BOTTOM * <span class="number">2</span>)));</div><div class="line">    &#125;</div><div class="line">    <span class="comment">//cut the source picture to cutMat</span></div><div class="line">    Mat cutMat = <span class="keyword">new</span> Mat(srcPic, rect);</div><div class="line">    blockImages.add(cutMat);</div></pre></td></tr></table></figure>
-<p>这步就是切割了，<code>blockImages</code>就是存放切割后的行图像的<code>ArrayList</code>。</p>
-<p>关于<code>Rect</code>：<code>Rect</code>对象表示一个区域，可以作为<code>Mat</code>的构造参数传入来为目标区域创造一个<code>Mat</code>副本。四个参数分别代表了区域起始点的x,y坐标，区域长度和区域高度。</p>
-<p>可以看到这里我使用了一个<code>PADDING</code>参数，来规定切割时距规定边缘的距离来避免把一些表格的边线切到图像中影响OCR的识别。</p>
-<p>至于上面一篇博客中最后的红线是测试时用</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showMarkedLines</span><span class="params">(Mat src, ArrayList&lt;Double&gt; lines)</span> </span>&#123;</div><div class="line">    Mat showLines = <span class="keyword">new</span> Mat();</div><div class="line">    Imgproc.cvtColor(src, showLines, COLOR_GRAY2BGR);</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">double</span> y : lines) &#123;</div><div class="line"></div><div class="line">        Point pt1 = <span class="keyword">new</span> Point(<span class="number">0</span>, y);</div><div class="line">        Point pt2 = <span class="keyword">new</span> Point(src.width(), y);</div><div class="line">        Imgproc.line(showLines, pt1, pt2, <span class="keyword">new</span> Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">3</span>);</div><div class="line">    &#125;</div><div class="line">    Imgcodecs.imwrite(<span class="string">"C:/Users/visea/Desktop/test/java/cut/"</span> +</div><div class="line">            String.valueOf(colNum) +</div><div class="line">            <span class="string">".jpg"</span>, showLines);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>打印出来的，这里新建了一个<code>showLines</code>并且把原图像通过<code>Imgproc.cvtColor</code>方法转换成BGR图像并复制到<code>showLines</code>（不转化成彩色格式只能显示灰度图像）。</p>
-<p>打印一条直线也比较简单，只要新建两个<code>Point</code>对象代表起始点和终点，这里我把x坐标设置为图像的起始x坐标，y坐标为之前得到的唯一的y值，所以可以看到画出来的线就是水平并且从开头一直到结束的。</p>
-<p>画直线使用<code>Imgproc.line</code>方法，最后两个参数依次是BGR三个通道的值组成的<code>Scalar</code>对象，代表直线的颜色，以及画出的直线的宽度（以像素为单位）。</p>
-<h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p>最后用<code>Imgcodecs.imwrite</code>将<code>Mat</code>写入文件就可以看到最终的效果了，在测试的时候尤其有用。</p>
-<p><img src="/images/redLines1.jpg" alt="redlines1"></p>
-<p>也可以把<code>blockImages</code>中的图输出出来看结果，因为做的时候没存档，所以只能用之后的图来说明一下了：</p>
-<p><img src="/images/rows1.jpg" alt=""><img src="/images/rows2.jpg" alt=""></p>
-<p>请忽略图中的红线，为之后的步骤绘制出来的，左右不完整是因为我设置了百分之二十的左右的<code>PADDING</code>，为了方便后面的找线与切割。</p>
-<p>当然在找直线的过程中也可以把找到的图片打印出来感觉一下效果，下面分别是调试前出的图和最终参数调试后出来的图：</p>
-<p>调试前：</p>
-<p><img src="/images/blackLines1.jpg" alt=""></p>
-<p>调试后：</p>
-<p><img src="/images/blackLines2.jpg" alt=""></p>
-
-          
+          <h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><p>在开始说明直线检测过程前先作个说明，由于直线检测的算法需要遍历每个像素，所以总的耗时比较长，在安卓上跑的时候直线检测的时间可能会长达两分钟，这是在测试过程中不能接受的，所以我将安卓上的代码整个迁移到了Idea中，关于Idea中<code>OpenCV</code>的配置，可以参见这个<a href="https://medium.com/@aadimator/how-to-set-up-opencv-in-intellij-idea-6eb103c1d45c">教程</a>。</p>
+<p>这个步骤的目的：这步中我们会检测出整张图片中满足条件的所有直线，再通过筛选选出横的表格框线，再利用检测出的表格框线来提取两个框线之间的内容即为表格中的一行。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/09/OpenCV处理拍照表格（三）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -1929,47 +1793,19 @@
 
       
         
-          
-            <p>先来看看上次处理后的整张图片效果：</p>
+          <p>先来看看上次处理后的整张图片效果：</p>
 <p><img src="/images/afterDilate.jpg" alt="afterdilate"></p>
 <p>这里发现我将图片的颜色已经反相了，这是考虑到下一步的直接检测必须以白色像素为内容。做法在上一篇提到过，交换两段的位置就可以了。</p>
 <p>可以看到噪点已经几乎没有了，文字的清晰度还是可以的。这里采用的kernel都是2x2的。</p>
 <h3 id="直线检测"><a href="#直线检测" class="headerlink" title="直线检测"></a>直线检测</h3><p>下面就是比较关键步骤——直线检测了。</p>
-<p>首先介绍一下openCV提供的直线检测算法：霍夫变换。</p>
-<p>霍夫变换是图像处理中一个著名的检测算法，用于对二值图片中特定的几何形状的检测，直线检测只是其中比较常见的一种用法。从<a href="http://blog.csdn.net/holybin/article/details/20214169" target="_blank" rel="external">holybin的专栏</a>中复制一段介绍基本理论的内容：</p>
-<blockquote>
-<p>Hough直线检测的基本理论是二值图像中的任何点都可能是一些候选直线集合的一部分，所选的参数方式是每一行代表极坐标中的一个点，并且隐含的直线是通过象征点的，垂直于原点到此点的半径，即：检测的过程可以看成从图像中的一个个像素点出发，寻找每个点成为直线一部分的可能，再把这条线上可能的点连起来形成直线。在实际检测中，当一条线出现凹陷或是弯曲度时，也会检测出直线，只是不是一条完整长度直线，而是断断续续重叠相近的很多直线。&gt;<br>而对于图像中的一条直线而言，利用直角坐标系，可以表示为：<img src="http://hi.csdn.net/attachment/201109/25/0_1316925577jVvv.gif" alt="">的形式。那么，该直线上任意一点（x,y）变换到k-b参数空间将变成一个“点”。也就是说，将图像空间中所有的非零像素转换到k-b参数空间，那么它们将聚焦在一个点上。如此一来，参数空间中的一个局部峰值点就很有可能对应着原图像空间中的一条直线。不过，由于直线的斜率可能为无穷大，或者无穷小，那么，在k-b参数空间就不便于对直线进行刻画和描述。所以，研究人员提出采用极坐标参数空间进行直线检测。在极坐标系中，直线可以表述为以下形式：<img src="http://hi.csdn.net/attachment/201109/25/0_1316925607206o.gif" alt="">&gt;<img src="http://img.blog.csdn.net/20140301150643531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaG9seWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
-</blockquote>
-<p>更为详细的分析可以看<a href="http://blog.csdn.net/poem_qianmo/article/details/26977557" target="_blank" rel="external">浅墨的博客</a></p>
-<p>如果不能理解也没有关系，在<code>openCV</code>中已经为我们封装成了两个函数<code>HoughLines( )</code>与<code>HoughLinesP( )</code>，他们之间的区别在于算法的不同，而效果的差别不大，但<code>HoughLinesP</code>可以减少计算量，所以在这里我们采用了<code>HoughLinesP</code>来进行。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">HoughLinesP</span><span class="params">(Mat image,Mat lines,<span class="keyword">double</span> rho,<span class="keyword">double</span> theta,<span class="keyword">int</span> threshold,<span class="keyword">double</span> minLineLength,<span class="keyword">double</span> maxLineGap)</span></span></div></pre></td></tr></table></figure></p>
-<blockquote>
-<p>Finds line segments in a binary image using the probabilistic Hough transform.</p>
-<p>Parameters:<br><code>image</code> - 8-bit, single-channel binary source image. The image may be modified by the function.<br><code>lines</code> - Output vector of lines. Each line is represented by a 4-element vector (x_1, y_1, x_2, y_2), where (x_1,y_1) and (x_2, y_2) are the ending points of each detected line segment.<br><code>rho</code> - Distance resolution of the accumulator in pixels.<br><code>theta</code> - Angle resolution of the accumulator in radians.<br><code>threshold</code> - Accumulator threshold parameter. Only those lines are returned that get enough votes (&gt;threshold).<br><code>minLineLength</code> - Minimum line length. Line segments shorter than that are rejected.<br><code>maxLineGap</code> - Maximum allowed gap between points on the same line to link them.</p>
-</blockquote>
-<p>解释一下各个参数：</p>
-<ul>
-<li><p><code>image</code>:源图像 Mat格式，8位单通道（<code>Cv_8UC1</code>）</p>
-</li>
-<li><p><code>lines</code>: 输出的“图像” 虽然是Mat格式，但是其中保存的内容已经不再是图像了，其中的每行（<code>Rows</code>！在这里手上买到的一本书中写成了列，大概是因为版本不同导致的，因为这个在这里卡了好几个小时……）中储存了一个<code>double[]</code>，下面会讲到如何使用里面的信息。</p>
-</li>
-<li><p><code>rho</code>：翻译过来是距离的解析度，以像素为单位，在后面这个参数起了大作用。</p>
-</li>
-<li><p><code>theta</code>：与rho相似地，是角度的解析度，以弧度为单位。</p>
-</li>
-<li><p><code>threshold</code>：阈值 这个值决定了霍夫变换后对于一对值投票所需达到的阈值才能被记录。换句话说，这个值越大，检测出直线的要求就越高（这个要求应该是对于直线上的点聚集程度的要求）。应为一个非负值。</p>
-</li>
-<li><p><code>minLineLength</code>:字面意思，检测出的直线的最小长度，小于这个长度的直线将不会被记录。单位是像素。</p>
-</li>
-<li><p><code>maxLineGap</code>：字面意思，检测时可以接受的直线断开的距离（实际情况中很难达到一条直线上的点全部都有，通常是断断续续的，这时这个值就发挥了很大的作用）。单位是像素。</p>
-</li>
-</ul>
-<p>可以看到这个函数的参数非常多，并且有个别参数并没有一个量化的标准（比如<code>threshold</code>在检测大图的时候取150左右的值比较好，但在后面检测小图时候设成0都不尽人意，<code>rho</code>与<code>theta</code>参数如果按照资料中普遍的1和2pi/180来设置小图的检测就会出现问题），更加悲惨的是这些参数之间存在相互影响，对实际的图片进行处理的过程中参数的差别可能很大，需要一些耐心和方法去慢慢调试（我写了嵌套的循环再输出所有的图用肉眼看效果再缩小范围……）</p>
-<p>最影响最终效果的部分在于最后两个值的设置，可以看到上面我们将要处理的图片，这步我的目的是检测出所有的横向的表格边线。下面先上最终的效果图：</p>
-<p><img src="/images/redLines1.jpg" alt="redlines1"></p>
-<p>(红线为最终检测出的直线位置）</p>
-<p>具体的检测过程下一篇介绍。</p>
-
-          
+<p>首先介绍一下openCV提供的直线检测算法：霍夫变换。<br>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/12/02/OpenCV处理拍照表格（二）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
@@ -2127,66 +1963,17 @@
 
       
         
-          
-            <h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p><a href="https://www.learn2crack.com/2016/03/setup-opencv-sdk-android-studio.html" target="_blank" rel="external">https://www.learn2crack.com/2016/03/setup-opencv-sdk-android-studio.html</a></p>
+          <h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p><a href="https://www.learn2crack.com/2016/03/setup-opencv-sdk-android-studio.html">https://www.learn2crack.com/2016/03/setup-opencv-sdk-android-studio.html</a></p>
 <p>非常新的一篇在AS中安装<code>OpenCV</code>的教程，按教程装好了环境并测试通过。</p>
 <p>注意教程中没有讲到的是想要使用<code>OpenCV</code>的相关功能，需要安装下载包中apk目录下的对应处理器的<code>OpenCV manager</code>。并在使用<code>OpenCV</code>的活动中加入以下内容：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> BaseLoaderCallback mLoaderCallback = <span class="keyword">new</span> BaseLoaderCallback(<span class="keyword">this</span>) &#123;</div><div class="line"></div><div class="line">    <span class="comment">//Connect to OpenCV manager service and initialize</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onManagerConnected</span><span class="params">(<span class="keyword">int</span> status)</span> </span>&#123;</div><div class="line">        <span class="keyword">switch</span> (status)&#123;</div><div class="line">            <span class="keyword">case</span> BaseLoaderCallback.SUCCESS:</div><div class="line">                Log.i(TAG, <span class="string">"OpenCV Success"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                <span class="keyword">super</span>.onManagerConnected(status);</div><div class="line">                Log.i(TAG, <span class="string">"OpenCV Fail"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Initialize at every resume</span></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onResume();</div><div class="line">    OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, getApplicationContext(), mLoaderCallback);</div><div class="line">    Log.d(TAG, <span class="string">"On Resume OK"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<blockquote>
-<p><a href="http://docs.opencv.org/java/3.1.0/" target="_blank" rel="external">http://docs.opencv.org/java/3.1.0/</a>&gt;<br>opencv的官方文档。<br><strong>更正：上面的3.1版的文档并没有详细的方法解释！</strong></p>
-</blockquote>
-<p><strong>所以只能看</strong></p>
-<p><strong><a href="http://docs.opencv.org/java/2.4.11/" target="_blank" rel="external">http://docs.opencv.org/java/2.4.11/</a></strong></p>
-<p><strong>2.4.11的。</strong></p>
-<h2 id="处理的大致思路"><a href="#处理的大致思路" class="headerlink" title="处理的大致思路"></a>处理的大致思路</h2><h3 id="目前想到的思路是："><a href="#目前想到的思路是：" class="headerlink" title="目前想到的思路是："></a>目前想到的思路是：</h3><ol>
-<li>图像彩色转灰度</li>
-<li>灰度图像设置阈值后二值化即变成完全黑白</li>
-<li>去除多余的噪点</li>
-<li>边缘识别</li>
-<li>透视变形</li>
-<li>矩形识别</li>
-<li>分割识别出的矩形</li>
-<li>OCR对矩形进行识别，读取数据。</li>
-</ol>
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="灰度与二值化"><a href="#灰度与二值化" class="headerlink" title="灰度与二值化"></a>灰度与二值化</h3><p>开始采用OpenCV中<code>BitmapToMat</code>方法，将文件以<code>Bitmap</code>的形式读取，再转换为<code>Mat</code>格式再进行处理。</p>
-<p>后面发现了OpenCV自带的<code>imread</code>方法，传入文件路径和<code>Mat</code>的格式后就可以方便地获得一个<code>Mat</code>对象。</p>
-<p>另外如果在这里采用<code>Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE</code>标签，就可以直接以灰度的形式读取图像，省去了颜色转化的步骤。并且这个<code>Mat</code>的格式就是下面一步二值化要求传入的<code>8UC1</code>（8位单通道）格式。</p>
-<p>下面就是二值化步骤，<code>OpenCV</code>提供了两个函数，第一个是普通的<code>Threshold</code>函数：</p>
-<blockquote>
-<h4 id="threshold"><a href="#threshold" class="headerlink" title="threshold"></a>threshold</h4><p>public static double threshold(<a href="http://docs.opencv.org/java/2.4.11/org/opencv/core/Mat.html" target="_blank" rel="external">Mat</a> src,<br><a href="http://docs.opencv.org/java/2.4.11/org/opencv/core/Mat.html" target="_blank" rel="external">Mat</a> dst,double thresh,double maxval,int type)<br>     Parameters:<br>     <code>src</code> - input array (single-channel, 8-bit or 32-bit floating point).<br>     <code>dst</code> - output array of the same size and type as <code>src</code>.<br>     <code>thresh</code> - threshold value.<br>     <code>maxval</code> - maximum value to use with the <code>THRESH_BINARY</code> and <code>THRESH_BINARY_INV</code> thresholding types.<br>     <code>type</code> - thresholding type (see the details below).</p>
-</blockquote>
-<p>传入图像，传出图像，阈值，填充的最深颜色，填充方法（达到阈值就填充最深颜色或相反），就可以根据每个像素的灰度值与阈值进行比较来决定填充的值为0或是最深。</p>
-<p>定阈值的方法虽然可以对一张图像通过调整达到最优的效果，但是对于不同光照条件下拍摄出来的照片，因为整体亮度的不同，定阈值显然无法适应所有的情况。</p>
-<p>所以就有了第二种函数，<code>adaptiveThreshold</code>，除了传入上面的这些参数外，增加了三个重要的参数</p>
-<blockquote>
-<h4 id="adaptiveThreshold"><a href="#adaptiveThreshold" class="headerlink" title="adaptiveThreshold"></a>adaptiveThreshold</h4><p>public static void adaptiveThreshold(<a href="http://docs.opencv.org/java/2.4.11/org/opencv/core/Mat.html" title="class in org.opencv.core" target="_blank" rel="external">Mat</a> src,<a href="http://docs.opencv.org/java/2.4.11/org/opencv/core/Mat.html" title="class in org.opencv.core" target="_blank" rel="external">Mat</a> dst,double maxValue,int adaptiveMethod,int thresholdType,int blockSize,double C)<br>Parameters:<br><code>src</code> - Source 8-bit single-channel image.<br><code>dst</code> - Destination image of the same size and the same type as <code>src</code>.<br><code>maxValue</code> - Non-zero value assigned to the pixels for which the condition is satisfied. See the details below.<br><code>adaptiveMethod</code> - Adaptive thresholding algorithm to use, <code>ADAPTIVE_THRESH_MEAN_C</code> or <code>ADAPTIVE_THRESH_GAUSSIAN_C</code>. See the details below.<br><code>thresholdType</code> - Thresholding type that must be either <code>THRESH_BINARY</code> or <code>THRESH_BINARY_INV</code>.<br><code>blockSize</code> - Size of a pixel neighborhood that is used to calculate a threshold value for the pixel: 3, 5, 7, and so on.<br><code>C</code> - Constant subtracted from the mean or weighted mean (see the details below). Normally, it is positive but may be zero or negative as well.</p>
-</blockquote>
-<p><code>blockSize</code>：对某个像素周围进行采样的范围。<br><code>adaptiveMethod</code>：根据上面的范围求阈值的方法，有两种：</p>
-<ol>
-<li>mean平均，简单地取采样范围内的平均值作为阈值。</li>
-<li>gaussian高斯，以高斯函数为基础，简单地说就是近的地方权重更高、远的地方权重低，来求阈值。</li>
-</ol>
-<p><code>C</code>：求出来的阈值减去的常量。</p>
-<p>这三个参数就是决定二值化效果的关键，我找最优值的方法比较暴力，写了一个嵌套的循环设置这两个值，再输出到文件导出到电脑上用肉眼比较。最后确定的值为17-10。</p>
-<p><code>adaptiveMethod</code>我用的是<code>mean</code>，因为表格相对来说黑白比较明显，并不需要去根据距离的远近来决定阈值。</p>
-<p>17这个值在我的手机拍摄出来的效果里面是最好的，但由于不同拍摄设备的分辨率不同，就造成了笔画所占据的像素的数量的不同，可以想到的是在高分辨率的情况下这个值应该要相应地增大，打个比方说我一个笔画的粗细就有17个像素，那么这个范围内检测出的阈值就会非常高从而导致笔画的残缺不全。</p>
-<p><code>C</code>这个值还是需要经过测试来得出的，设置的不同对最后效果的影响是最大的，直接会决定最后出来的图片是笔画过粗或是笔画残缺。</p>
-<p>下面是处理前后的效果：</p>
-<p><img src="/images/QQ截图20161115205902-300x179.png" alt="qq%e6%88%aa%e5%9b%be20161115205902"><img src="/images/QQ截图20161115205922-300x188.png" alt="qq%e6%88%aa%e5%9b%be20161115205922"></p>
-<p>可以看到二值化以后的图像只有黑白两色，但是明显有许多的噪点。</p>
-<h3 id="去噪"><a href="#去噪" class="headerlink" title="去噪"></a>去噪</h3><p>二值化之后就是去噪了，去噪的目的是把图像中的独立的点去掉。</p>
-<p>去噪的方法是腐蚀，跟字面意思一样，就是缩小图案的范围，当图像的范围本身就很小时（噪点就是一个个这样的独立点），缩小后自然就不见了。</p>
-<p>可以想到，在去噪后，部分笔画也随之缩小甚至细的地方会直接消失，所以腐蚀之后要再进行一步膨胀，即把图案的边缘扩大。</p>
-<p>因为噪点已经消失，所以也不会因扩大而回来，但笔画依然存在，就会膨胀而得到弥补，也顺便可以补一下残缺的地方。</p>
-<p>原理大概就是这样，<strong>但是由于OpenCV的这两个操作针对的是图像中的亮点（白色的地方被认为是亮点），而我们的表格又是白底黑字的，实际上黑色的部分是我们想要处理的部分，所以我将这两步交换了，相当于是对黑色的地方先腐蚀后膨胀。</strong></p>
-<p>下面是代码实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Mat kernelDilate = Imgproc.getStructuringElement(Imgproc.MORPH_DILATE, <span class="keyword">new</span> Size(<span class="number">2</span>, <span class="number">2</span>));</div><div class="line">Imgproc.dilate(srcPic, srcPic, kernelDilate);</div><div class="line">Imgcodecs.imwrite(<span class="string">"/storage/sdcard/pic/test/afterErode.jpg"</span>, srcPic);</div><div class="line">Mat kernelErode = Imgproc.getStructuringElement(Imgproc.MORPH_ERODE, <span class="keyword">new</span> Size(<span class="number">2</span>, <span class="number">2</span>));</div><div class="line">Imgproc.erode(srcPic, srcPic, kernelErode);</div><div class="line">Imgcodecs.imwrite(<span class="string">"/storage/sdcard/pic/test/afterDilate.jpg"</span>, srcPic);</div></pre></td></tr></table></figure></p>
-<p>参数中有一个<code>Kernel</code>，这个就是处理图像的核，具体的内容不展开，我们利用<code>getStructuringElement</code>函数可以构建特定的处理核，这个函数第一个参数是构建的核的类型，除了用于代码中用到的膨胀和腐蚀的类型，还有<code>ract</code>、<code>cross</code>、<code>ellipse</code>等不同的形状，后面的<code>size</code>就是我们设置的重点了，指的是核的大小，可以理解成检测的范围，对于大的噪点自然需要大的范围，但是也意味着笔画细节丢失也更加严重。对于膨胀操作，则可以理解成膨胀的像素数，这个数值越大，最后的结果中的笔画也就越粗。</p>
-<p>下面是上述代码的结果对比：</p>
-<p><img src="/images/QQ截图20161115205922-300x188.png" alt="qq%e6%88%aa%e5%9b%be20161115205922">之前</p>
-<p><img src="/images/QQ截图20161115202014-300x207.png" alt="qq%e6%88%aa%e5%9b%be20161115202014"> <img src="/images/QQ截图20161115202029-300x212.png" alt="qq%e6%88%aa%e5%9b%be20161115202029"> <img src="/images/QQ截图20161115202050-300x205.png" alt="qq%e6%88%aa%e5%9b%be20161115202050"> <img src="/images/QQ截图20161115202107-300x196.png" alt="qq%e6%88%aa%e5%9b%be20161115202107"></p>
-<p>设置了四种不同的参数，可以看到噪点基本都被去除，最后的细节不尽相同。</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2016/11/15/OpenCV处理拍照表格（一）/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>

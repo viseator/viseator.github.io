@@ -102,7 +102,7 @@
 每个Activity被要求提供一个ViewGroup作为View树的根，也就是我们熟悉的setContentView方法。
 123456789101112">
 <meta property="og:image" content="http://www.viseator.com/images/viewLifeCircle.png">
-<meta property="og:updated_time" content="2017-03-10T04:19:05.919Z">
+<meta property="og:updated_time" content="2017-03-15T05:56:07.091Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android View绘制生命周期总览">
 <meta name="twitter:description" content="为了直观表示整个过程，我制作了一张流程图。注意以下只是整个生命周期中比较常用的方法，并不代表所有的过程。
@@ -454,8 +454,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(@LayoutRes <span class="keyword">int</span> layoutResID)</span> </span>&#123;</div><div class="line">    getDelegate().setContentView(layoutResID);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(View view)</span> </span>&#123;</div><div class="line">    getDelegate().setContentView(view);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(View view, ViewGroup.LayoutParams params)</span> </span>&#123;</div><div class="line">    getDelegate().setContentView(view, params);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>可以看到<code>setContentView</code>拥有三种形式，可以直接传入<code>View</code>、传入一个<code>layout</code>资源文件，或传入一个<code>View</code>文件和一个用于提供参数的<code>LayoutParams</code>对象。</p>
 <p>整个过程将从这个根<code>View</code>开始，并遍历它的子<code>View</code>来逐一绘制，每个<code>ViewGroup</code>承担了要求它的子<code>View</code>进行绘制的责任，每个<code>View</code>承担了绘制自身的责任。并且父<code>View</code>会在子<code>View</code>完成绘制之前进行绘制，同级的<code>View</code>将以它们出现在树中的顺序进行绘制。</p>
-<hr>
-<p>首先调用的当然是<code>View</code>的构造函数，构造函数分为两种，一种供代码创建的<code>View</code>使用，另一种是由<code>layout</code>文件生成的<code>View</code>使用，区别在于后者会从<code>layout</code>文件中读入所有的属性，前者的属性则需要在代码中设置。</p>
+<h2 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h2><p>首先调用的当然是<code>View</code>的构造函数，构造函数分为两种，一种供代码创建的<code>View</code>使用，另一种是由<code>layout</code>文件生成的<code>View</code>使用，区别在于后者会从<code>layout</code>文件中读入所有的属性，前者的属性则需要在代码中设置。</p>
 <p>另外后者在所有的子<code>View</code>都生成完毕之后会回调<code>onFinishInflate</code>方法。</p>
 <hr>
 <p>在正式绘制之前要进行两个过程（布局机制[layout mechanism]）：</p>
@@ -576,8 +575,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -650,6 +658,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       

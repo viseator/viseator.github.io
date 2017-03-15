@@ -96,7 +96,7 @@
 <meta property="og:description" content="上一篇博客简单地介绍了View绘制的生命周期， 从这篇博客开始将会对这个周期中一些有用的过程进行一个详细一些的介绍。这篇的主角就是在构造方法之后调用的measure过程。
 为了演示，继承了TextView来实现一个自定义的View。注意这里继承的应该是android.support.v7.widget.AppCompatTextView这个类。同时为了xml文件的正常解析，我们需要实现View的三">
 <meta property="og:image" content="http://www.viseator.com/images/onMeasureOutput1.png">
-<meta property="og:updated_time" content="2017-03-10T15:58:54.100Z">
+<meta property="og:updated_time" content="2017-03-15T05:56:48.558Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android View绘制之measure过程">
 <meta name="twitter:description" content="上一篇博客简单地介绍了View绘制的生命周期， 从这篇博客开始将会对这个周期中一些有用的过程进行一个详细一些的介绍。这篇的主角就是在构造方法之后调用的measure过程。
@@ -450,7 +450,7 @@
 <p><code>View</code>的<code>measure()</code>方法最终会调用<code>onMeasure()</code>，真正的尺寸信息就是在<code>onMeasure()</code>方法中最终确定的。所以我们需要做的就是在自定义<code>View</code>中重写<code>onMeasure()</code>方法。</p>
 <p>那么子<code>View</code>根据什么来确定自己应该具有的尺寸呢？当然不可能让子<code>View</code>自由地决定自己的大小，父<code>View</code>必然需要向子<code>View</code>传递信息来帮助子<code>View</code>来确定尺寸，而子<code>View</code>则必须满足父<code>View</code>的要求。查看<code>measure()</code>的方法签名：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">measure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span></span></div></pre></td></tr></table></figure>
-<p>这里的<code>widthMeasureSpec</code>与<code>heightMeasureSpec</code>就是存储这一信息的参数。它们的类型是<code>int</code>，内部以高两位来存储测量的模式，低三十位为测量的大小，计算中使用了位运算来提高并优化效率。当然我们不必使用位运算来获得对应的数值，<code>View.MeasureSpec</code>为我们提供了对应的方法。</p>
+<p>这里的<code>widthMeasureSpec</code>与<code>heightMeasureSpec</code>就是存储这一信息的参数。它们的类型是<code>int</code>，内部以高两位来存储测量的模式，低三十位为测量的大小，计算中使用了位运算来提高并优化效率。当然我们不必使用位运算来获得对应的数值，<code>View.MeasureSpec</code>为我们提供了对应的方法。<br><a id="more"></a></p>
 <p>测量模式有三种：</p>
 <ul>
 <li><code>EXACTLY</code>：精确值模式，即子<code>View</code>必须使用这一尺寸，并且保证它们的所有后代都在这个范围之内。当我们将控件的<code>layout_width</code>、<code>layout_height</code>属性指定为具体数值或<code>match_parent</code>时，系统使用这一模式。</li>

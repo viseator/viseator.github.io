@@ -92,8 +92,7 @@
 这里发现我将图片的颜色已经反相了，这是考虑到下一步的直接检测必须以白色像素为内容。做法在上一篇提到过，交换两段的位置就可以了。
 可以看到噪点已经几乎没有了，文字的清晰度还是可以的。这里采用的kernel都是2x2的。
 直线检测下面就是比较关键步骤——直线检测了。
-首先介绍一下openCV提供的直线检测算法：霍夫变换。
-霍夫变换是图像处理中一个著名的检测算法，用">
+首先介绍一下openCV提供的直线检测算法：霍夫变换。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenCV处理拍照表格（二）">
 <meta property="og:url" content="http://www.viseator.com/2016/12/02/OpenCV处理拍照表格（二）/index.html">
@@ -103,14 +102,13 @@
 这里发现我将图片的颜色已经反相了，这是考虑到下一步的直接检测必须以白色像素为内容。做法在上一篇提到过，交换两段的位置就可以了。
 可以看到噪点已经几乎没有了，文字的清晰度还是可以的。这里采用的kernel都是2x2的。
 直线检测下面就是比较关键步骤——直线检测了。
-首先介绍一下openCV提供的直线检测算法：霍夫变换。
-霍夫变换是图像处理中一个著名的检测算法，用">
+首先介绍一下openCV提供的直线检测算法：霍夫变换。">
 <meta property="og:image" content="http://www.viseator.com/images/afterDilate.jpg">
 <meta property="og:image" content="http://hi.csdn.net/attachment/201109/25/0_1316925577jVvv.gif">
 <meta property="og:image" content="http://hi.csdn.net/attachment/201109/25/0_1316925607206o.gif">
 <meta property="og:image" content="http://img.blog.csdn.net/20140301150643531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaG9seWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast">
 <meta property="og:image" content="http://www.viseator.com/images/redLines1.jpg">
-<meta property="og:updated_time" content="2017-01-11T05:01:30.872Z">
+<meta property="og:updated_time" content="2017-03-15T05:59:38.283Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="OpenCV处理拍照表格（二）">
 <meta name="twitter:description" content="先来看看上次处理后的整张图片效果：
@@ -118,8 +116,7 @@
 这里发现我将图片的颜色已经反相了，这是考虑到下一步的直接检测必须以白色像素为内容。做法在上一篇提到过，交换两段的位置就可以了。
 可以看到噪点已经几乎没有了，文字的清晰度还是可以的。这里采用的kernel都是2x2的。
 直线检测下面就是比较关键步骤——直线检测了。
-首先介绍一下openCV提供的直线检测算法：霍夫变换。
-霍夫变换是图像处理中一个著名的检测算法，用">
+首先介绍一下openCV提供的直线检测算法：霍夫变换。">
 <meta name="twitter:image" content="http://www.viseator.com/images/afterDilate.jpg">
 
 
@@ -462,7 +459,7 @@
 <p>这里发现我将图片的颜色已经反相了，这是考虑到下一步的直接检测必须以白色像素为内容。做法在上一篇提到过，交换两段的位置就可以了。</p>
 <p>可以看到噪点已经几乎没有了，文字的清晰度还是可以的。这里采用的kernel都是2x2的。</p>
 <h3 id="直线检测"><a href="#直线检测" class="headerlink" title="直线检测"></a>直线检测</h3><p>下面就是比较关键步骤——直线检测了。</p>
-<p>首先介绍一下openCV提供的直线检测算法：霍夫变换。</p>
+<p>首先介绍一下openCV提供的直线检测算法：霍夫变换。<br><a id="more"></a></p>
 <p>霍夫变换是图像处理中一个著名的检测算法，用于对二值图片中特定的几何形状的检测，直线检测只是其中比较常见的一种用法。从<a href="http://blog.csdn.net/holybin/article/details/20214169" target="_blank" rel="external">holybin的专栏</a>中复制一段介绍基本理论的内容：</p>
 <blockquote>
 <p>Hough直线检测的基本理论是二值图像中的任何点都可能是一些候选直线集合的一部分，所选的参数方式是每一行代表极坐标中的一个点，并且隐含的直线是通过象征点的，垂直于原点到此点的半径，即：检测的过程可以看成从图像中的一个个像素点出发，寻找每个点成为直线一部分的可能，再把这条线上可能的点连起来形成直线。在实际检测中，当一条线出现凹陷或是弯曲度时，也会检测出直线，只是不是一条完整长度直线，而是断断续续重叠相近的很多直线。&gt;<br>而对于图像中的一条直线而言，利用直角坐标系，可以表示为：<img src="http://hi.csdn.net/attachment/201109/25/0_1316925577jVvv.gif" alt="">的形式。那么，该直线上任意一点（x,y）变换到k-b参数空间将变成一个“点”。也就是说，将图像空间中所有的非零像素转换到k-b参数空间，那么它们将聚焦在一个点上。如此一来，参数空间中的一个局部峰值点就很有可能对应着原图像空间中的一条直线。不过，由于直线的斜率可能为无穷大，或者无穷小，那么，在k-b参数空间就不便于对直线进行刻画和描述。所以，研究人员提出采用极坐标参数空间进行直线检测。在极坐标系中，直线可以表述为以下形式：<img src="http://hi.csdn.net/attachment/201109/25/0_1316925607206o.gif" alt="">&gt;<img src="http://img.blog.csdn.net/20140301150643531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaG9seWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
