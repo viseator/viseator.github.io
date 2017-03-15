@@ -97,7 +97,7 @@
 <meta property="og:description" content="Java 1.5中引入了泛型的概念以增加代码的安全性与清晰度，同时为了提供对旧代码的兼容性，让旧代码不经过改动也可以在新版本中运行，Java提供了原生态类型（或称原始类型）。但是实际中在新的代码中已经不应该使用原生态类型。
 原生态类型的含义是不带任何实际参数的泛型名称，例如Java 1.5后改为泛型实现的List&amp;lt;E&amp;gt;，List就是它的原生态类型，与没有引入泛型之前的类型完全一致。
 而">
-<meta property="og:updated_time" content="2017-03-15T05:56:54.845Z">
+<meta property="og:updated_time" content="2017-03-15T06:02:05.248Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java泛型中List、List&lt;Object&gt;、List&lt;?&gt;的区别">
 <meta name="twitter:description" content="Java 1.5中引入了泛型的概念以增加代码的安全性与清晰度，同时为了提供对旧代码的兼容性，让旧代码不经过改动也可以在新版本中运行，Java提供了原生态类型（或称原始类型）。但是实际中在新的代码中已经不应该使用原生态类型。
@@ -441,13 +441,15 @@
 <ul>
 <li><code>List</code>：<strong>原生态类型</strong></li>
 <li><code>List&lt;Object&gt;</code>：<strong>参数化的类型</strong>，表明<code>List</code>中可以<strong>容纳</strong>任意类型的对象</li>
-<li><code>List&lt;?&gt;</code>：<strong>无限定通配符类型</strong>，表示<strong>只能包含某一种未知对象类型</strong></li>
+<li><code>List&lt;?&gt;</code>：<strong>无限定通配符类型</strong>，表示<strong>只能包含某一种未知对象类型</strong><a id="more"></a>
+</li>
 </ul>
 <p>下面看一段代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiffInGeneric</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        List&lt;String&gt; strings = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        List list = strings;<span class="comment">//ok</span></div><div class="line">        List&lt;Object&gt; objects = strings;<span class="comment">//Error: java: incompatible types: java.util.List&lt;java.lang.String&gt; cannot be converted to java.util.List&lt;java.lang.Object&gt;</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>我们创建了一个<code>List&lt;String&gt;</code>类型的对象<code>strings</code>，再把它赋给原生态类型<code>List</code>，这是可以的。但是第5行中尝试把它传递给<code>List&lt;Object&gt;</code>时，出现了一个类型不相容错误，注意，这是一个编译期错误。</p>
 <p>这是因为泛型有子类型化的规则：</p>
-<p><code>List&lt;String&gt;</code>是原生态类型<code>List</code>的一个子类型。虽然<code>String</code>是<code>Object</code>的子类型，但是由于<strong>泛型是不可协变的</strong>，<code>List&lt;String&gt;</code>并不是<code>List&lt;Object&gt;</code>的子类型，所以这里的传递无法通过编译。<br><a id="more"></a><br>如果像上面那样使用原生态类型会有什么隐患呢？看下面一段代码：</p>
+<p><code>List&lt;String&gt;</code>是原生态类型<code>List</code>的一个子类型。虽然<code>String</code>是<code>Object</code>的子类型，但是由于<strong>泛型是不可协变的</strong>，<code>List&lt;String&gt;</code>并不是<code>List&lt;Object&gt;</code>的子类型，所以这里的传递无法通过编译。</p>
+<p>如果像上面那样使用原生态类型会有什么隐患呢？看下面一段代码：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiffInGeneric</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        List&lt;String&gt; strings = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        unsafeAdd(strings, (Integer)<span class="number">1</span>);</div><div class="line">        System.out.println(strings.get(<span class="number">0</span>));</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">unsafeAdd</span><span class="params">(List list, Object object)</span> </span>&#123;</div><div class="line">        list.add(object);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>编译器提示了两条警告：</p>
 <p>第8行：</p>

@@ -789,13 +789,7 @@
 <p>再通过完整包名的方法在<code>xml</code>布局文件中创建我们的<code>View</code>就可以直接显示了。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">com.viseator.viewtest.VView</span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"@color/Gray"</span></div><div class="line">    /&gt;</span></div></pre></td></tr></table></figure>
 <p>这里给了<code>TextView</code>一个背景颜色便于后面的观察。</p>
-<hr>
-<p>下面就开始分析<code>measure</code>过程。</p>
-<p><code>measure</code>是一个自顶向下的过程，即父<code>View</code>会依次调用它的子<code>View</code>的<code>measure()</code>方法来对它的子<code>View</code>进行测量。</p>
-<p><code>View</code>的<code>measure()</code>方法最终会调用<code>onMeasure()</code>，真正的尺寸信息就是在<code>onMeasure()</code>方法中最终确定的。所以我们需要做的就是在自定义<code>View</code>中重写<code>onMeasure()</code>方法。</p>
-<p>那么子<code>View</code>根据什么来确定自己应该具有的尺寸呢？当然不可能让子<code>View</code>自由地决定自己的大小，父<code>View</code>必然需要向子<code>View</code>传递信息来帮助子<code>View</code>来确定尺寸，而子<code>View</code>则必须满足父<code>View</code>的要求。查看<code>measure()</code>的方法签名：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">measure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span></span></div></pre></td></tr></table></figure>
-<p>这里的<code>widthMeasureSpec</code>与<code>heightMeasureSpec</code>就是存储这一信息的参数。它们的类型是<code>int</code>，内部以高两位来存储测量的模式，低三十位为测量的大小，计算中使用了位运算来提高并优化效率。当然我们不必使用位运算来获得对应的数值，<code>View.MeasureSpec</code>为我们提供了对应的方法。<br>
+<h2 id=""><a href="#" class="headerlink" title=""></a>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/03/10/android_view_onMeasure/#more" rel="contents">
@@ -1134,13 +1128,7 @@
 <ul>
 <li><code>List</code>：<strong>原生态类型</strong></li>
 <li><code>List&lt;Object&gt;</code>：<strong>参数化的类型</strong>，表明<code>List</code>中可以<strong>容纳</strong>任意类型的对象</li>
-<li><code>List&lt;?&gt;</code>：<strong>无限定通配符类型</strong>，表示<strong>只能包含某一种未知对象类型</strong></li>
-</ul>
-<p>下面看一段代码：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">DiffInGeneric</span> </span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        List&lt;String&gt; strings = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        List list = strings;<span class="comment">//ok</span></div><div class="line">        List&lt;Object&gt; objects = strings;<span class="comment">//Error: java: incompatible types: java.util.List&lt;java.lang.String&gt; cannot be converted to java.util.List&lt;java.lang.Object&gt;</span></div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>我们创建了一个<code>List&lt;String&gt;</code>类型的对象<code>strings</code>，再把它赋给原生态类型<code>List</code>，这是可以的。但是第5行中尝试把它传递给<code>List&lt;Object&gt;</code>时，出现了一个类型不相容错误，注意，这是一个编译期错误。</p>
-<p>这是因为泛型有子类型化的规则：</p>
-<p><code>List&lt;String&gt;</code>是原生态类型<code>List</code>的一个子类型。虽然<code>String</code>是<code>Object</code>的子类型，但是由于<strong>泛型是不可协变的</strong>，<code>List&lt;String&gt;</code>并不是<code>List&lt;Object&gt;</code>的子类型，所以这里的传递无法通过编译。<br>
+<li><code>List&lt;?&gt;</code>：<strong>无限定通配符类型</strong>，表示<strong>只能包含某一种未知对象类型</strong>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/02/14/DiffInGeneric/#more" rel="contents">
