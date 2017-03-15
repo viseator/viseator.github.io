@@ -96,7 +96,7 @@
 <meta property="og:description" content="draw()方法经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（省略部分代码）
 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647public void draw(Canvas canvas) &amp;#123;">
 <meta property="og:image" content="http://www.viseator.com/images/canvas_bitmap.jpg">
-<meta property="og:updated_time" content="2017-03-15T06:52:00.209Z">
+<meta property="og:updated_time" content="2017-03-15T07:14:33.694Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android View绘制之onDraw过程与Canvas Bitmap">
 <meta name="twitter:description" content="draw()方法经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（省略部分代码）
@@ -464,6 +464,8 @@
 <p><code>onDraw()</code>方法中的<code>canvas</code>就是在一个<code>Surface</code>显示完毕，将这个<code>Surface</code>锁定时由它返回的，在这个<code>canvas</code>上进行的操作就可以在下一次刷新屏幕时显示，但是实际上并不是由<code>canvas</code>直接写数据到它的<code>Surface</code>缓存中，这中间还有一个对象就是我们之前提到的<code>Bitmap</code>，<code>Bitmap</code>储存着的正是像素信息，而<code>Surface</code>返回的<code>canvas</code>中含有的就是一个指向<code>Surface</code>缓存的<code>Bitmap</code>。</p>
 <p>梳理一下整个过程，我们需要做的是操作这个封装了一系列绘图方法的<code>canvas</code>，<code>canvas</code>将操作反映到内含的<code>Bitmap</code>上，<code>Bitmap</code>将数据反映给<code>Surface</code>的缓存，<code>Surface</code>在下一次刷新时读取缓存中的内容并显示到屏幕上。</p>
 <p>这里还应注意的是每个<code>Window</code>有且仅有一个单继承（即只有一个根）的<code>View</code>树，<code>View</code>将会将<code>Surface</code>返回的<code>canvas</code>向下传递来让子<code>View</code>依次完成部分区域的绘制。</p>
+<p>弄清楚这个<code>canvas</code>的来源之后，我们就可以放心地在用它来“作画”了。</p>
+<h2 id="onDraw-方法"><a href="#onDraw-方法" class="headerlink" title="onDraw()方法"></a>onDraw()方法</h2><p>在<code>onDraw()</code>方法中我们可以对方法参数提供的<code>canvas</code>进行操作，绘制各种自定义的图形。</p>
 
       
     </div>
@@ -638,6 +640,20 @@
 
         
         
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              友情链接
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.duskdragon.com/" title="BlackDragon" target="_blank">BlackDragon</a>
+                </li>
+              
+            </ul>
+          </div>
+        
 
         
 
@@ -654,7 +670,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#draw-方法"><span class="nav-number">1.</span> <span class="nav-text">draw()方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dispatchDraw-方法"><span class="nav-number">2.</span> <span class="nav-text">dispatchDraw()方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Canvas-Bitmap-Surface间的联系"><span class="nav-number">3.</span> <span class="nav-text">Canvas Bitmap Surface间的联系</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#draw-方法"><span class="nav-number">1.</span> <span class="nav-text">draw()方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dispatchDraw-方法"><span class="nav-number">2.</span> <span class="nav-text">dispatchDraw()方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Canvas-Bitmap-Surface间的联系"><span class="nav-number">3.</span> <span class="nav-text">Canvas Bitmap Surface间的联系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onDraw-方法"><span class="nav-number">4.</span> <span class="nav-text">onDraw()方法</span></a></li></ol></div>
             
 
           </div>
