@@ -4,6 +4,31 @@
 
     
   <url>
+    <loc>http://www.viseator.com/2017/03/12/android_view_onDraw_canvas/</loc>
+    <lastmod>2017-03-15T06:52:00.209Z</lastmod>
+    <data>
+        <display>
+        <title>Android View绘制之onDraw过程与Canvas Bitmap</title>
+        <pubTime>2017-03-12T08:29:40.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.viseator.com/2017/02/14/DiffInGeneric/</loc>
     <lastmod>2017-03-15T06:02:05.248Z</lastmod>
     <data>
@@ -216,31 +241,6 @@
            
              
               <breadCrumb title="总结" url="http://www.viseator.com/categories/%E6%80%BB%E7%BB%93/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/03/12/android_view_onDraw_canvas/</loc>
-    <lastmod>2017-03-15T05:55:07.941Z</lastmod>
-    <data>
-        <display>
-        <title>Android View绘制之onDraw过程与Canvas、Bitmap</title>
-        <pubTime>2017-03-12T08:29:40.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
-          
-             
-              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
           
         </display>
     </data>

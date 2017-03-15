@@ -87,20 +87,20 @@
 
 
 
-<meta name="description" content="经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（省略部分代码）
-1234567891011121314151617181920212223242526272829303132333435363738394041424344454647public void draw(Canvas canvas) &amp;#123;    fina">
+<meta name="description" content="draw()方法经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（省略部分代码）
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647public void draw(Canvas canvas) &amp;#123;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android View绘制之onDraw过程与Canvas、Bitmap">
+<meta property="og:title" content="Android View绘制之onDraw过程与Canvas Bitmap">
 <meta property="og:url" content="http://www.viseator.com/2017/03/12/android_view_onDraw_canvas/index.html">
 <meta property="og:site_name" content="viseator's blog">
-<meta property="og:description" content="经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（省略部分代码）
-1234567891011121314151617181920212223242526272829303132333435363738394041424344454647public void draw(Canvas canvas) &amp;#123;    fina">
+<meta property="og:description" content="draw()方法经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（省略部分代码）
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647public void draw(Canvas canvas) &amp;#123;">
 <meta property="og:image" content="http://www.viseator.com/images/canvas_bitmap.jpg">
-<meta property="og:updated_time" content="2017-03-15T05:55:07.941Z">
+<meta property="og:updated_time" content="2017-03-15T06:52:00.209Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android View绘制之onDraw过程与Canvas、Bitmap">
-<meta name="twitter:description" content="经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（省略部分代码）
-1234567891011121314151617181920212223242526272829303132333435363738394041424344454647public void draw(Canvas canvas) &amp;#123;    fina">
+<meta name="twitter:title" content="Android View绘制之onDraw过程与Canvas Bitmap">
+<meta name="twitter:description" content="draw()方法经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（省略部分代码）
+1234567891011121314151617181920212223242526272829303132333435363738394041424344454647public void draw(Canvas canvas) &amp;#123;">
 <meta name="twitter:image" content="http://www.viseator.com/images/canvas_bitmap.jpg">
 
 
@@ -135,7 +135,7 @@
 
 
 
-  <title> Android View绘制之onDraw过程与Canvas、Bitmap | viseator's blog </title>
+  <title> Android View绘制之onDraw过程与Canvas Bitmap | viseator's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -344,7 +344,7 @@
             
             
               
-                Android View绘制之onDraw过程与Canvas、Bitmap
+                Android View绘制之onDraw过程与Canvas Bitmap
               
             
           </h1>
@@ -438,7 +438,7 @@
       
 
       
-        <p>经过对<code>View</code>的<a href="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/" target="_blank" rel="external">测量</a>与<a href="http://www.viseator.xyz/2017/03/12/android_view_onLayout/" target="_blank" rel="external">布局</a>过程后，下面就到了真正的<code>View</code>绘制的过程了。这个过程从调用根<code>View</code>的<code>draw()</code>方法开始：（省略部分代码）</p>
+        <h2 id="draw-方法"><a href="#draw-方法" class="headerlink" title="draw()方法"></a>draw()方法</h2><p>经过对<code>View</code>的<a href="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/" target="_blank" rel="external">测量</a>与<a href="http://www.viseator.xyz/2017/03/12/android_view_onLayout/" target="_blank" rel="external">布局</a>过程后，下面就到了真正的<code>View</code>绘制的过程了。这个过程从调用根<code>View</code>的<code>draw()</code>方法开始：（省略部分代码）</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> privateFlags = mPrivateFlags;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">boolean</span> dirtyOpaque = (privateFlags &amp; PFLAG_DIRTY_MASK) == PFLAG_DIRTY_OPAQUE &amp;&amp;</div><div class="line">            (mAttachInfo == <span class="keyword">null</span> || !mAttachInfo.mIgnoreDirtyState);</div><div class="line">    mPrivateFlags = (privateFlags &amp; ~PFLAG_DIRTY_MASK) | PFLAG_DRAWN;</div><div class="line"></div><div class="line">    <span class="comment">/*</span></div><div class="line">     * Draw traversal performs several drawing steps which must be executed</div><div class="line">     * in the appropriate order:</div><div class="line">     *</div><div class="line">     *      1. Draw the background</div><div class="line">     *      2. If necessary, save the canvas' layers to prepare for fading</div><div class="line">     *      3. Draw view's content</div><div class="line">     *      4. Draw children</div><div class="line">     *      5. If necessary, draw the fading edges and restore layers</div><div class="line">     *      6. Draw decorations (scrollbars for instance)</div><div class="line">     */</div><div class="line"></div><div class="line">    <span class="comment">// Step 1, draw the background, if needed</span></div><div class="line">    <span class="keyword">int</span> saveCount;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (!dirtyOpaque) &#123;</div><div class="line">        drawBackground(canvas);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// skip step 2 &amp; 5 if possible (common case)</span></div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> viewFlags = mViewFlags;</div><div class="line">    <span class="keyword">boolean</span> horizontalEdges = (viewFlags &amp; FADING_EDGE_HORIZONTAL) != <span class="number">0</span>;</div><div class="line">    <span class="keyword">boolean</span> verticalEdges = (viewFlags &amp; FADING_EDGE_VERTICAL) != <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span> (!verticalEdges &amp;&amp; !horizontalEdges) &#123;</div><div class="line">        <span class="comment">// Step 3, draw the content</span></div><div class="line">        <span class="keyword">if</span> (!dirtyOpaque) onDraw(canvas);</div><div class="line"></div><div class="line">        <span class="comment">// Step 4, draw the children</span></div><div class="line">        dispatchDraw(canvas);</div><div class="line"></div><div class="line">        <span class="comment">// Overlay is part of the content and draws beneath Foreground</span></div><div class="line">        <span class="keyword">if</span> (mOverlay != <span class="keyword">null</span> &amp;&amp; !mOverlay.isEmpty()) &#123;</div><div class="line">            mOverlay.getOverlayView().dispatchDraw(canvas);</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="comment">// Step 6, draw decorations (foreground, scrollbars)</span></div><div class="line">        onDrawForeground(canvas);</div><div class="line"></div><div class="line">        <span class="comment">// we're done...</span></div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
 <p>这段源码来自于<code>View</code>，过程非常清晰，执行了以下的步骤（如果需要）：</p>
 <ol>
@@ -449,10 +449,10 @@
 <li>43行，进行前景的绘制，一般为装饰组件，如滚动条等</li>
 </ol>
 <a id="more"></a>
-<p><code>onDraw()</code>方法先不谈，看看<code>dispatchDraw()</code>方法做了什么，以<code>ViewGroup</code>为例：(省略部分代码)</p>
+<h2 id="dispatchDraw-方法"><a href="#dispatchDraw-方法" class="headerlink" title="dispatchDraw()方法"></a>dispatchDraw()方法</h2><p><code>onDraw()</code>方法先不谈，看看<code>dispatchDraw()</code>方法做了什么，以<code>ViewGroup</code>为例：(省略部分代码)</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">dispatchDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childrenCount; i++) &#123;</div><div class="line">    <span class="keyword">if</span> ((transientChild.mViewFlags &amp; VISIBILITY_MASK) == VISIBLE ||</div><div class="line">        transientChild.getAnimation() != <span class="keyword">null</span>) &#123;</div><div class="line">      more |= drawChild(canvas, transientChild, drawingTime);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">drawChild</span><span class="params">(Canvas canvas, View child, <span class="keyword">long</span> drawingTime)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> child.draw(canvas, <span class="keyword">this</span>, drawingTime);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>简单来看，依次调用了子<code>View</code>的<code>draw()</code>方法。所以对于有子<code>View</code>的<code>ViewGroup</code>， 我们需要重写这个方法来决定子<code>View</code>绘制的顺序。</p>
-<p>背景与前景绘制的过程一般不由我们控制，自定义<code>View</code>时关键的内容就在<code>onDraw()</code>方法中。</p>
+<h2 id="Canvas-Bitmap-Surface间的联系"><a href="#Canvas-Bitmap-Surface间的联系" class="headerlink" title="Canvas Bitmap Surface间的联系"></a>Canvas Bitmap Surface间的联系</h2><p>背景与前景绘制的过程一般不由我们控制，自定义<code>View</code>时关键的内容就在<code>onDraw()</code>方法中。</p>
 <p>你可能已经发现，在这些<code>View</code>绘制过程中的函数都具有一个参数<code>Canvas</code>，这个<code>Canvas</code>字面意义上为画布，那它实际上是什么，又在绘制过程中起着什么样的重要作用呢？</p>
 <p>我们可以把<code>Canvas</code>看作是系统给予我们的一个虚拟的对象，或者说是我们绘制图形的一个中介，<code>Canvas</code>具有一系列的方法可以供我们调用来直观地绘制图形，我们对于<code>Canvas</code>的所有操作都会被系统处理从而反映在屏幕上而不用我们去手动地决定哪一个像素应该显示什么颜色。</p>
 <p>在<code>Canvas</code>背后则是一个<code>Bitmap</code>对象，我们的绘制实际上会反映在这个<code>Bitmap</code>上再交由系统来显示。如果我们需要自己创建一个<code>Canvas</code>，我们必须创建一个<code>Bitmap</code>对象作为<code>Canvas</code>的构造参数。例如：</p>
@@ -460,8 +460,10 @@
 <p>这样这个<code>Canvas</code>就会在指定的<code>Bitmap</code>上进行绘制，我们也可以通过<code>Canvas</code>的<code>drawBitmap()</code>方法来在指定的<code>Bitmap</code>上绘制。</p>
 <p>那么问题来了，<code>onDraw()</code>方法给我们提供的这个<code>Canvas</code>是从哪里来的，为什么我们对它的操作可以反映到屏幕上？下面这张图便于我们去了解这个过程：</p>
 <p><img src="/images/canvas_bitmap.jpg" alt="canvas_bitmap"></p>
-<p>可以看到，我们的屏幕被分为了几个<code>window</code>，每一个<code>window</code>都有着自己的</p>
-<p>待续</p>
+<p>可以看到，我们的屏幕被分为了几个<code>Window</code>，每一个<code>Window</code>都有着自己的<code>Surface</code>，<code>Surface</code>具有两级缓存，每个缓存中存放着将要显示在屏幕上的像素数据，而当我们想要刷新屏幕显示新的内容时，对应的<code>Surface</code>将会读取缓存中的数据来进行更新。</p>
+<p><code>onDraw()</code>方法中的<code>canvas</code>就是在一个<code>Surface</code>显示完毕，将这个<code>Surface</code>锁定时由它返回的，在这个<code>canvas</code>上进行的操作就可以在下一次刷新屏幕时显示，但是实际上并不是由<code>canvas</code>直接写数据到它的<code>Surface</code>缓存中，这中间还有一个对象就是我们之前提到的<code>Bitmap</code>，<code>Bitmap</code>储存着的正是像素信息，而<code>Surface</code>返回的<code>canvas</code>中含有的就是一个指向<code>Surface</code>缓存的<code>Bitmap</code>。</p>
+<p>梳理一下整个过程，我们需要做的是操作这个封装了一系列绘图方法的<code>canvas</code>，<code>canvas</code>将操作反映到内含的<code>Bitmap</code>上，<code>Bitmap</code>将数据反映给<code>Surface</code>的缓存，<code>Surface</code>在下一次刷新时读取缓存中的内容并显示到屏幕上。</p>
+<p>这里还应注意的是每个<code>Window</code>有且仅有一个单继承（即只有一个根）的<code>View</code>树，<code>View</code>将会将<code>Surface</code>返回的<code>canvas</code>向下传递来让子<code>View</code>依次完成部分区域的绘制。</p>
 
       
     </div>
@@ -535,7 +537,7 @@
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2017/03/12/android_view_onDraw_canvas/"
-           data-title="Android View绘制之onDraw过程与Canvas、Bitmap" data-url="http://www.viseator.com/2017/03/12/android_view_onDraw_canvas/">
+           data-title="Android View绘制之onDraw过程与Canvas Bitmap" data-url="http://www.viseator.com/2017/03/12/android_view_onDraw_canvas/">
       </div>
     
   </div>
@@ -559,8 +561,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -633,6 +644,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#draw-方法"><span class="nav-number">1.</span> <span class="nav-text">draw()方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dispatchDraw-方法"><span class="nav-number">2.</span> <span class="nav-text">dispatchDraw()方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Canvas-Bitmap-Surface间的联系"><span class="nav-number">3.</span> <span class="nav-text">Canvas Bitmap Surface间的联系</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
