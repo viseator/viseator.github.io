@@ -96,7 +96,7 @@
 <meta property="og:description" content="经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（跳过了两个过程）
 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647public void draw(Canvas canvas) &amp;#123;    fin">
 <meta property="og:image" content="http://www.viseator.com/images/canvas_bitmap.jpg">
-<meta property="og:updated_time" content="2017-03-14T15:32:25.894Z">
+<meta property="og:updated_time" content="2017-03-15T05:53:30.770Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android View绘制之onDraw过程与Canvas、Bitmap">
 <meta name="twitter:description" content="经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（跳过了两个过程）
@@ -448,6 +448,7 @@
 <li>35行，调用<code>dispatchDraw()</code>方法，进行子<code>View</code>的绘制（调用子<code>View</code>的<code>draw()</code>方法），同时也表明了子<code>View</code>的绘制在自身之后这一顺序</li>
 <li>43行，进行前景的绘制，一般为装饰组件，如滚动条等</li>
 </ol>
+<a id="more"></a>
 <p><code>onDraw()</code>方法先不谈，看看<code>dispatchDraw()</code>方法做了什么，以<code>ViewGroup</code>为例：(省略部分代码)</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">dispatchDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childrenCount; i++) &#123;</div><div class="line">    <span class="keyword">if</span> ((transientChild.mViewFlags &amp; VISIBILITY_MASK) == VISIBLE ||</div><div class="line">        transientChild.getAnimation() != <span class="keyword">null</span>) &#123;</div><div class="line">      more |= drawChild(canvas, transientChild, drawingTime);</div><div class="line">    &#125;</div><div class="line">  &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">drawChild</span><span class="params">(Canvas canvas, View child, <span class="keyword">long</span> drawingTime)</span> </span>&#123;</div><div class="line">  <span class="keyword">return</span> child.draw(canvas, <span class="keyword">this</span>, drawingTime);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>简单来看，依次调用了子<code>View</code>的<code>draw()</code>方法。所以对于有子<code>View</code>的<code>ViewGroup</code>， 我们需要重写这个方法来决定子<code>View</code>绘制的顺序。</p>
