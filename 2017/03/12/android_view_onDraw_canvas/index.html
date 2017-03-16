@@ -96,7 +96,7 @@
 <meta property="og:description" content="draw()方法经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（省略部分代码）
 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647public void draw(Canvas canvas) &amp;#123;">
 <meta property="og:image" content="http://www.viseator.com/images/canvas_bitmap.jpg">
-<meta property="og:updated_time" content="2017-03-15T07:14:33.694Z">
+<meta property="og:updated_time" content="2017-03-16T06:43:56.980Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android View绘制之onDraw过程与Canvas Bitmap">
 <meta name="twitter:description" content="draw()方法经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（省略部分代码）
@@ -466,6 +466,7 @@
 <p>这里还应注意的是每个<code>Window</code>有且仅有一个单继承（即只有一个根）的<code>View</code>树，<code>View</code>将会将<code>Surface</code>返回的<code>canvas</code>向下传递来让子<code>View</code>依次完成部分区域的绘制。</p>
 <p>弄清楚这个<code>canvas</code>的来源之后，我们就可以放心地在用它来“作画”了。</p>
 <h2 id="onDraw-方法"><a href="#onDraw-方法" class="headerlink" title="onDraw()方法"></a>onDraw()方法</h2><p>在<code>onDraw()</code>方法中我们可以对方法参数提供的<code>canvas</code>进行操作，绘制各种自定义的图形。</p>
+<p>我们可以选择一人现有的<code>View</code>作为自定义<code>View</code>的父类，在它的<code>onDraw()</code>方法中一定要调用<code>super.onDraw()</code>，</p>
 
       
     </div>
@@ -661,6 +662,10 @@
               
                 <li class="links-of-blogroll-item">
                   <a href="https://Alexanderinhust.github.io/" title="Alexander" target="_blank">Alexander</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://qzwlecr.github.io/" title="qzwlecr" target="_blank">qzwlecr</a>
                 </li>
               
             </ul>
