@@ -96,7 +96,7 @@
 <meta property="og:description" content="draw()方法经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（省略部分代码）
 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647public void draw(Canvas canvas) &amp;#123;">
 <meta property="og:image" content="http://www.viseator.com/images/canvas_bitmap.jpg">
-<meta property="og:updated_time" content="2017-03-16T06:43:56.980Z">
+<meta property="og:updated_time" content="2017-03-16T07:45:27.161Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android View绘制之onDraw过程与Canvas Bitmap">
 <meta name="twitter:description" content="draw()方法经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（省略部分代码）
@@ -466,7 +466,25 @@
 <p>这里还应注意的是每个<code>Window</code>有且仅有一个单继承（即只有一个根）的<code>View</code>树，<code>View</code>将会将<code>Surface</code>返回的<code>canvas</code>向下传递来让子<code>View</code>依次完成部分区域的绘制。</p>
 <p>弄清楚这个<code>canvas</code>的来源之后，我们就可以放心地在用它来“作画”了。</p>
 <h2 id="onDraw-方法"><a href="#onDraw-方法" class="headerlink" title="onDraw()方法"></a>onDraw()方法</h2><p>在<code>onDraw()</code>方法中我们可以对方法参数提供的<code>canvas</code>进行操作，绘制各种自定义的图形。</p>
-<p>我们可以选择一人现有的<code>View</code>作为自定义<code>View</code>的父类，在它的<code>onDraw()</code>方法中一定要调用<code>super.onDraw()</code>，</p>
+<p>我们可以选择一个现有的<code>View</code>作为自定义<code>View</code>的父类，在它的<code>onDraw()</code>方法中一定要调用<code>super.onDraw()</code>来令它绘制本来的组件，我们可以在调用<code>super.onDraw()</code>之前或之后插入我们自己的代码，这取决你对绘制顺序的需要。</p>
+<p><strong>注意有些<code>View</code>如<code>Linearlayout</code>默认是不绘制自己的，也就是说它们并不会调用<code>onDraw()</code>方法，当我们需要继承这类<code>View</code>来进行自定义并进行绘制的话需要调用<code>setWillNotDraw(false);</code>。可以在<code>onMeasure()</code>方法中调用。</strong></p>
+<p>另一种方式是继承于<code>View</code>，可以更为自由地订制各种行为。</p>
+<p><code>Canvas</code>中封装了非常多的方法，下面列举一部分：</p>
+<ul>
+<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawArc(float, float, float, float, float, float, boolean, android.graphics.Paint" target="_blank" rel="external">drawArc</a>)(float left, float top, float right, float bottom, float startAngle, float sweepAngle, boolean useCenter, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="external">Paint</a> paint)：绘制椭圆</li>
+<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawCircle(float, float, float, android.graphics.Paint" target="_blank" rel="external">drawCircle</a>)(float cx, float cy, float radius, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="external">Paint</a> paint)：绘制圆形</li>
+<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawColor(int" target="_blank" rel="external">drawColor</a>)(int color)：对整个<code>Canvas</code>填充颜色</li>
+<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawLine(float, float, float, float, android.graphics.Paint" target="_blank" rel="external">drawLine</a>)(float startX, float startY, float stopX, float stopY, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="external">Paint</a> paint)：绘制直线</li>
+<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawLines(float[], int, int, android.graphics.Paint" target="_blank" rel="external">drawLines</a>)(float[] pts, int offset, int count, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="external">Paint</a> paint)：绘制一系列直线</li>
+<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawPicture(android.graphics.Picture, android.graphics.Rect" target="_blank" rel="external">drawPicture</a>)(<a href="https://developer.android.com/reference/android/graphics/Picture.html" target="_blank" rel="external">Picture</a> picture, <a href="https://developer.android.com/reference/android/graphics/Rect.html" target="_blank" rel="external">Rect</a> dst)：绘制一张图片</li>
+<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawPoint(float, float, android.graphics.Paint" target="_blank" rel="external">drawPoint</a>)(float x, float y, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="external">Paint</a> paint)：绘制一个点</li>
+<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawPoints(float[], int, int, android.graphics.Paint" target="_blank" rel="external">drawPoints</a>)(float[] pts, int offset, int count, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="external">Paint</a> paint)：绘制一系列点</li>
+<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawRect(float, float, float, float, android.graphics.Paint" target="_blank" rel="external">drawRect</a>)(float left, float top, float right, float bottom, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="external">Paint</a> paint)：绘制矩形</li>
+<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawRoundRect(android.graphics.RectF, float, float, android.graphics.Paint" target="_blank" rel="external">drawRoundRect</a>)(<a href="https://developer.android.com/reference/android/graphics/RectF.html" target="_blank" rel="external">RectF</a> rect, float rx, float ry, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="external">Paint</a> paint)：绘制圆角矩形</li>
+<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawText(java.lang.CharSequence, int, int, float, float, android.graphics.Paint" target="_blank" rel="external">drawText</a>)(<a href="https://developer.android.com/reference/java/lang/CharSequence.html" target="_blank" rel="external">CharSequence</a> text, int start, int end, float x, float y, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="external">Paint</a> paint)：绘制文字</li>
+<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawTextOnPath(java.lang.String, android.graphics.Path, float, float, android.graphics.Paint" target="_blank" rel="external">drawTextOnPath</a>)(<a href="https://developer.android.com/reference/java/lang/String.html" target="_blank" rel="external">String</a> text, <a href="https://developer.android.com/reference/android/graphics/Path.html" target="_blank" rel="external">Path</a> path, float hOffset, float vOffset, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="external">Paint</a> paint)：沿路径绘制文字</li>
+</ul>
+<p>方法的详细信息在<a href="https://developer.android.com/reference/android/graphics/Canvas.html" target="_blank" rel="external">官方文档</a>中。</p>
 
       
     </div>
