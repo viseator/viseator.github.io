@@ -96,7 +96,7 @@
 <meta property="og:description" content="draw()方法经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（省略部分代码）
 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647public void draw(Canvas canvas) &amp;#123;">
 <meta property="og:image" content="http://www.viseator.com/images/canvas_bitmap.jpg">
-<meta property="og:updated_time" content="2017-03-16T07:47:12.245Z">
+<meta property="og:updated_time" content="2017-03-16T08:42:35.854Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android View绘制之onDraw过程与Canvas Bitmap">
 <meta name="twitter:description" content="draw()方法经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（省略部分代码）
@@ -485,6 +485,7 @@
 <li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawTextOnPath(java.lang.String, android.graphics.Path, float, float, android.graphics.Paint" target="_blank" rel="external">drawTextOnPath</a>)(<a href="https://developer.android.com/reference/java/lang/String.html" target="_blank" rel="external">String</a> text, <a href="https://developer.android.com/reference/android/graphics/Path.html" target="_blank" rel="external">Path</a> path, float hOffset, float vOffset, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="external">Paint</a> paint)：沿路径绘制文字</li>
 </ul>
 <p>方法的详细信息在<a href="https://developer.android.com/reference/android/graphics/Canvas.html" target="_blank" rel="external">官方文档</a>中。</p>
+<p>我们注意到，许多绘制方法都需要一个<code>Paint</code>参数， 这个<code>Paint</code>可以理解为系统为我们抽象出的一支画笔，我们所绘制的图形都是用这支画笔绘制出来的，当然因此我们就可以对画笔设置颜色、粗细等属性，我们甚至可以用<code>setShader()</code>方法为这个<code>Paint</code>设置一个<code>Shader</code>，来实现各种特殊的动态效果，<code>Shader</code>的使用需要另起一篇博客来讲。</p>
 
       
     </div>
