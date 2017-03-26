@@ -97,7 +97,7 @@ Animator概览">
 <meta property="og:description" content="前言相对于静态的页面，动画往往能更直观地表达所需的信息，在UI开发过程中起着相当大的作用。
 Android为我们提供了一系列实现动画效果的方法，PropertyAnimaiton是最常见也是最实用的一种，如同它的名字一样，它的实现方式是通过改变对象的一系列属性值来改变对象的状态， 例如动态地改变绘制的位置就可以实现绘制物体的移动效果，动态地改变对象的显示状态可以实现闪烁效果。
 Animator概览">
-<meta property="og:updated_time" content="2017-03-26T08:19:43.296Z">
+<meta property="og:updated_time" content="2017-03-26T08:21:04.536Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android PropertyAnimation 属性动画">
 <meta name="twitter:description" content="前言相对于静态的页面，动画往往能更直观地表达所需的信息，在UI开发过程中起着相当大的作用。
@@ -442,6 +442,7 @@ Animator概览">
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>相对于静态的页面，动画往往能更直观地表达所需的信息，在UI开发过程中起着相当大的作用。</p>
 <p>Android为我们提供了一系列实现动画效果的方法，<code>PropertyAnimaiton</code>是最常见也是最实用的一种，如同它的名字一样，它的实现方式是通过改变对象的一系列属性值来改变对象的状态， 例如动态地改变绘制的位置就可以实现绘制物体的移动效果，动态地改变对象的显示状态可以实现闪烁效果。</p>
 <h2 id="Animator概览"><a href="#Animator概览" class="headerlink" title="Animator概览"></a>Animator概览</h2><p>Android提供的实现属性动画的工具是<code>android.animation.Animator</code>这个类，它的使用需要配合<code>animation</code>包下的其他工具类，这个类的功能是什么，我们要如何使用它来实现属性动画呢？</p>
+<a id="more"></a>
 <p>我们可以将<code>Animator</code>理解为<code>Android</code>为我们提供的一个按我们的需要在一定时间段内<strong>连续地</strong>计算并返回值的工具，这个值可以是通用的整型、浮点型，也可以是我们自定义的类型。</p>
 <p>我们可以设置返回值的范围，并可以控制值变化的快慢，例如实现自由落体下落的物体时我们需要让高度值以一个越来越快的速度降低。</p>
 <p>这里的连续需要注意，实际上是不可能产生真正意义上的连续值的，但是如果<strong>在绘制过程中计算这个值的速度小于绘制一帧所需要的时间</strong>，那么我们就可以在视觉上认为这个值是在连续改变的。这一点也是理解其作用的关键：我们很难去写出一个可以随时获取连续值的工具，而<code>Animator</code>正是一个满足我们这个需求的一个通用工具。</p>

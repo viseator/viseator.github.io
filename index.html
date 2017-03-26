@@ -438,33 +438,16 @@
 
       
         
-          
-            <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>相对于静态的页面，动画往往能更直观地表达所需的信息，在UI开发过程中起着相当大的作用。</p>
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>相对于静态的页面，动画往往能更直观地表达所需的信息，在UI开发过程中起着相当大的作用。</p>
 <p>Android为我们提供了一系列实现动画效果的方法，<code>PropertyAnimaiton</code>是最常见也是最实用的一种，如同它的名字一样，它的实现方式是通过改变对象的一系列属性值来改变对象的状态， 例如动态地改变绘制的位置就可以实现绘制物体的移动效果，动态地改变对象的显示状态可以实现闪烁效果。</p>
 <h2 id="Animator概览"><a href="#Animator概览" class="headerlink" title="Animator概览"></a>Animator概览</h2><p>Android提供的实现属性动画的工具是<code>android.animation.Animator</code>这个类，它的使用需要配合<code>animation</code>包下的其他工具类，这个类的功能是什么，我们要如何使用它来实现属性动画呢？</p>
-<p>我们可以将<code>Animator</code>理解为<code>Android</code>为我们提供的一个按我们的需要在一定时间段内<strong>连续地</strong>计算并返回值的工具，这个值可以是通用的整型、浮点型，也可以是我们自定义的类型。</p>
-<p>我们可以设置返回值的范围，并可以控制值变化的快慢，例如实现自由落体下落的物体时我们需要让高度值以一个越来越快的速度降低。</p>
-<p>这里的连续需要注意，实际上是不可能产生真正意义上的连续值的，但是如果<strong>在绘制过程中计算这个值的速度小于绘制一帧所需要的时间</strong>，那么我们就可以在视觉上认为这个值是在连续改变的。这一点也是理解其作用的关键：我们很难去写出一个可以随时获取连续值的工具，而<code>Animator</code>正是一个满足我们这个需求的一个通用工具。</p>
-<p>通过将<code>Animator</code>与<code>View</code>的绘制过程结合，就可以实现绝大多数的动画效果， 但是<code>Animator</code>也不只局限在使用在绘制动画，只要是有相似需求的地方都可以使用它来实现， 同时由于属性动画只针对属性进行修改，与被修改对象之前几乎没有耦合，不需要对被修改对象作出改变，可以设置方式也多种多样，这些都是动画的另一种实现方法<code>ViewAnimator</code>所无法做到的，所以我属性动画是现在实现动画效果的普遍做法。</p>
-<h2 id="使用Animator"><a href="#使用Animator" class="headerlink" title="使用Animator"></a>使用Animator</h2><h3 id="Animator子类"><a href="#Animator子类" class="headerlink" title="Animator子类"></a>Animator子类</h3><p>下面就来看看如何使用<code>Animator</code>满足我们的需求。</p>
-<p>我们使用<code>Animator</code>可以分为两个步骤，一是进行数值的计算，二是将计算出的数值设置到对应的对象上。而<code>Animator</code>有着三个子类：<code>ValueAnimator</code> <code>ObjectAnimator</code> <code>AnimatorSet</code>。</p>
-<ul>
-<li><code>ValueAnimator</code>实现了上述过程的第一个步骤：进行数值的计算。第二个步骤则需要我们重写它的回调在值发生改变时候手动地为对象更新属性值。</li>
-<li><code>ObjectAnimator</code>则在其基础上进行了进一步的封装，加入了一些方法使得它可以绑定一个对象，在数值改变的同时对对象的属性进行更新。</li>
-<li><code>AnimatorSet</code>可以对<code>Animator</code>进行组合，让它们之间进行联动，例如可以设置一个动画根据另一个动画的状态来决定是否开始、暂停或停止。</li>
-</ul>
-<p>可以看到，<code>ValueAnimator</code>提供了一个<code>Animator</code>最核心的内容，也是使用中最为灵活的一个。<code>ObjectAnimator</code>由于绑定了相应的对象，在使用上会受一些限制。<code>AnimatorSet</code>专用于需要组合动画的场景。</p>
-<h3 id="ValueAnimator"><a href="#ValueAnimator" class="headerlink" title="ValueAnimator"></a>ValueAnimator</h3><p>在这篇博客中，我们关注最为核心的<code>ValueAnimator</code>。</p>
-<h4 id="关键属性"><a href="#关键属性" class="headerlink" title="关键属性"></a>关键属性</h4><p><code>ValueAnimator</code>对象内部维护了一系列属性来保存所需的各种信息。</p>
-<ul>
-<li><code>Duration</code>：动画的持续时间，通过<code>setDuration()</code>方法设置</li>
-<li><code>Repeat count and behavior</code>：重复计数与重复模式，我们可以通过设置这两个属性来控制动画是否重复以及重复的次数，通过<code>setRepeatCount()</code>与<code>setRepeatMode()</code>方法设置</li>
-<li><code>Frame refresh delay</code>：帧刷新延迟，也就是计算两帧动画之间的间隔时间，但这个时间只是<code>Animator</code>尽力去保持的值，具体的间隔时间会由于系统负载与性能的不同而不同，同时设置它的方法为一个静态方法：<code>ValueAnimator.setFrameDelay()</code>，会被设置到所有的<code>Animator</code>上，这是因为这些<code>Animator</code>都在同一个时间循环中。这个属性也有可能会被忽略如果动画系统采用了内部的计时来源，例如<code>vsync</code>来计算属性。同时这个方法需要在与<code>start()</code>方法相同的进程中调用</li>
-<li><code>Time interpolation</code>：时间插值器</li>
-</ul>
-<p>待续</p>
-
-          
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2017/03/26/android_property_animation/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
         
       
     </div>
