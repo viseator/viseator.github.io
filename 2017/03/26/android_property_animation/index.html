@@ -97,7 +97,7 @@ Animator概览">
 <meta property="og:description" content="前言相对于静态的页面，动画往往能更直观地表达所需的信息，在UI开发过程中起着相当大的作用。
 Android为我们提供了一系列实现动画效果的方法，PropertyAnimaiton是最常见也是最实用的一种，如同它的名字一样，它的实现方式是通过改变对象的一系列属性值来改变对象的状态， 例如动态地改变绘制的位置就可以实现绘制物体的移动效果，动态地改变对象的显示状态可以实现闪烁效果。
 Animator概览">
-<meta property="og:updated_time" content="2017-03-26T08:18:50.454Z">
+<meta property="og:updated_time" content="2017-03-26T08:19:43.296Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android PropertyAnimation 属性动画">
 <meta name="twitter:description" content="前言相对于静态的页面，动画往往能更直观地表达所需的信息，在UI开发过程中起着相当大的作用。
@@ -462,6 +462,7 @@ Animator概览">
 <li><code>Frame refresh delay</code>：帧刷新延迟，也就是计算两帧动画之间的间隔时间，但这个时间只是<code>Animator</code>尽力去保持的值，具体的间隔时间会由于系统负载与性能的不同而不同，同时设置它的方法为一个静态方法：<code>ValueAnimator.setFrameDelay()</code>，会被设置到所有的<code>Animator</code>上，这是因为这些<code>Animator</code>都在同一个时间循环中。这个属性也有可能会被忽略如果动画系统采用了内部的计时来源，例如<code>vsync</code>来计算属性。同时这个方法需要在与<code>start()</code>方法相同的进程中调用</li>
 <li><code>Time interpolation</code>：时间插值器</li>
 </ul>
+<p>待续</p>
 
       
     </div>
