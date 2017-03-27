@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Android,View," />
+  <meta name="keywords" content="Android,UI,Animation," />
 
 
 
@@ -91,15 +91,15 @@
 Android为我们提供了一系列实现动画效果的方法，PropertyAnimaiton是最常见也是最实用的一种，如同它的名字一样，它的实现方式是通过改变对象的一系列属性值来改变对象的状态， 例如动态地改变绘制的位置就可以实现绘制物体的移动效果，动态地改变对象的显示状态可以实现闪烁效果。
 Animator概览">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android PropertyAnimation 属性动画">
+<meta property="og:title" content="Android PropertyAnimation 属性动画（一）初探">
 <meta property="og:url" content="http://www.viseator.com/2017/03/26/android_property_animation/index.html">
 <meta property="og:site_name" content="viseator's blog">
 <meta property="og:description" content="前言相对于静态的页面，动画往往能更直观地表达所需的信息，在UI开发过程中起着相当大的作用。
 Android为我们提供了一系列实现动画效果的方法，PropertyAnimaiton是最常见也是最实用的一种，如同它的名字一样，它的实现方式是通过改变对象的一系列属性值来改变对象的状态， 例如动态地改变绘制的位置就可以实现绘制物体的移动效果，动态地改变对象的显示状态可以实现闪烁效果。
 Animator概览">
-<meta property="og:updated_time" content="2017-03-26T08:21:04.536Z">
+<meta property="og:updated_time" content="2017-03-27T15:39:52.424Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android PropertyAnimation 属性动画">
+<meta name="twitter:title" content="Android PropertyAnimation 属性动画（一）初探">
 <meta name="twitter:description" content="前言相对于静态的页面，动画往往能更直观地表达所需的信息，在UI开发过程中起着相当大的作用。
 Android为我们提供了一系列实现动画效果的方法，PropertyAnimaiton是最常见也是最实用的一种，如同它的名字一样，它的实现方式是通过改变对象的一系列属性值来改变对象的状态， 例如动态地改变绘制的位置就可以实现绘制物体的移动效果，动态地改变对象的显示状态可以实现闪烁效果。
 Animator概览">
@@ -136,7 +136,7 @@ Animator概览">
 
 
 
-  <title> Android PropertyAnimation 属性动画 | viseator's blog </title>
+  <title> Android PropertyAnimation 属性动画（一）初探 | viseator's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -345,7 +345,7 @@ Animator概览">
             
             
               
-                Android PropertyAnimation 属性动画
+                Android PropertyAnimation 属性动画（一）初探
               
             
           </h2>
@@ -394,8 +394,8 @@ Animator概览">
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/View/" itemprop="url" rel="index">
-                    <span itemprop="name">View</span>
+                  <a href="/categories/Android/UI/" itemprop="url" rel="index">
+                    <span itemprop="name">UI</span>
                   </a>
                 </span>
 
@@ -461,9 +461,30 @@ Animator概览">
 <li><code>Duration</code>：动画的持续时间，通过<code>setDuration()</code>方法设置</li>
 <li><code>Repeat count and behavior</code>：重复计数与重复模式，我们可以通过设置这两个属性来控制动画是否重复以及重复的次数，通过<code>setRepeatCount()</code>与<code>setRepeatMode()</code>方法设置</li>
 <li><code>Frame refresh delay</code>：帧刷新延迟，也就是计算两帧动画之间的间隔时间，但这个时间只是<code>Animator</code>尽力去保持的值，具体的间隔时间会由于系统负载与性能的不同而不同，同时设置它的方法为一个静态方法：<code>ValueAnimator.setFrameDelay()</code>，会被设置到所有的<code>Animator</code>上，这是因为这些<code>Animator</code>都在同一个时间循环中。这个属性也有可能会被忽略如果动画系统采用了内部的计时来源，例如<code>vsync</code>来计算属性。同时这个方法需要在与<code>start()</code>方法相同的进程中调用</li>
-<li><code>Time interpolation</code>：时间插值器</li>
+<li><code>Time interpolation</code>：时间插值器，是我们实现不同动画效果的关键，每一时刻所返回的数值由它决定，后文会详细讲</li>
 </ul>
-<p>待续</p>
+<h4 id="初始化与TypeEvaluator"><a href="#初始化与TypeEvaluator" class="headerlink" title="初始化与TypeEvaluator"></a>初始化与TypeEvaluator</h4><p><code>ValueAnimator</code>对象的构造函数只由内部使用，获取<code>ValueAnimator</code>对象的方法是调用它的工厂方法：</p>
+<p><code>ValueAnimator.ofArgb()</code></p>
+<p><code>ValueAnimator.ofInt()</code></p>
+<p><code>ValueAnimator.ofFloat()</code></p>
+<p><code>ValueAnimator.ofObject()</code></p>
+<p><code>ValueAnimator.ofPropertyValuesHolder()</code> //本篇未涉及，下一篇进行讲解</p>
+<p>前三个可以看作是<code>ValueAnimator</code>为我们提供的初始化方式，它们的参数都是对应类型的长度可变参数:<code>(Type ...values)</code>，我们需要提供一个以上的参数，<code>ValueAnimator</code>最终提供的值会在这些值之前变动。</p>
+<p>一般情况下这里提供的<code>Argb</code>（用于颜色值的变化）和整型、浮点值基本可以满足我们的需求，但是某些时候我们需要结果是我们自定义的一些对象，这个时候就需要用到<code>TypeEvaluator&lt;&gt;</code>接口了，与这个接口对应的工厂方法是<code>ValueAnimator.ofObject()</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function">ValueAnimator <span class="title">ofObject</span> <span class="params">(TypeEvaluator evaluator, </span></span></div><div class="line">                Object... values)</div></pre></td></tr></table></figure>
+<p>这里的可变参数类型变为了<code>Object</code>，同时还需要我们提供一个<code>TypeEvaluator&lt;&gt;</code>，用于“告诉”<code>Animator</code>如何返回这个<code>Object</code>值。</p>
+<hr>
+<p><code>TypeEvaluator&lt;&gt;</code>接口并不复杂，只有一个方法需要我们重写：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function">T <span class="title">evaluate</span> <span class="params">(<span class="keyword">float</span> fraction, </span></span></div><div class="line">                T startValue, </div><div class="line">                T endValue)</div></pre></td></tr></table></figure>
+<p><code>startValue</code>与<code>endValue</code>非常好理解，就是我们在获取<code>Animator</code>时指定的值的起始值和结束值。类型与返回类型一致，当然都是我们自定义的类型。</p>
+<p>这里的<code>fraction</code>就是决定我们最终返回值的关键参数。我们可以把这个<code>fraction</code>理解为<code>animator</code>提供给我们的最终的数值改变的比例，值在0-1之间，我们要做的就是把这个值转换为在起始和结果范围之间的合适的对象值。</p>
+<p>例如，对于基本的浮点类型，默认的<code>FloatEvaluator</code>是这样的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Float <span class="title">evaluate</span><span class="params">(<span class="keyword">float</span> fraction, Number startValue, Number endValue)</span> </span>&#123;</div><div class="line">    <span class="keyword">float</span> startFloat = startValue.floatValue();</div><div class="line">    <span class="keyword">return</span> startFloat + fraction * (endValue.floatValue() - startFloat);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>可以看到，就是相当于把<code>fraction</code>所表示的比例“投射”到了我们所需要的数据对象上，这里是浮点类型。如果使用我们的自定义类型，我们必须为自己的类型定义这样的操作。</p>
+<p><strong>注意：</strong>这里要求我们必须将<code>fraction</code><strong>线性</strong>地反应到对应的类型上，因为<code>fraction</code>反映的是最终的动画进度，我们必须如实地按照这个进度改变我们的属性</p>
+<p>自定义了<code>TypeEvaluator</code>以后就可以作为参数使用在上面的<code>obObject()</code>工厂方法中了。</p>
+<h4 id="插补细分器"><a href="#插补细分器" class="headerlink" title="插补细分器"></a>插补细分器</h4><p>下面介绍使用<code>ValueAnimator</code>控制值变化过程中最为重要的一个概念：插补细分器(<code>Interpolators</code>)。</p>
+<p>它实际上是一个关于时间的函数， 根据时刻的不同来返回不同的值，进而来控制最后的输出的值。那么它是如何表示的呢？</p>
 
       
     </div>
@@ -489,7 +510,9 @@ Animator概览">
           
             <a href="/tags/Android/" rel="tag"># Android</a>
           
-            <a href="/tags/View/" rel="tag"># View</a>
+            <a href="/tags/UI/" rel="tag"># UI</a>
+          
+            <a href="/tags/Animation/" rel="tag"># Animation</a>
           
         </div>
       
@@ -537,7 +560,7 @@ Animator概览">
   <div class="comments" id="comments">
     
       <div class="ds-thread" data-thread-key="2017/03/26/android_property_animation/"
-           data-title="Android PropertyAnimation 属性动画" data-url="http://www.viseator.com/2017/03/26/android_property_animation/">
+           data-title="Android PropertyAnimation 属性动画（一）初探" data-url="http://www.viseator.com/2017/03/26/android_property_animation/">
       </div>
     
   </div>
@@ -597,7 +620,7 @@ Animator概览">
             
             <div class="site-state-item site-state-categories">
               <a href="/categories/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">9</span>
                 <span class="site-state-item-name">分类</span>
               </a>
             </div>
@@ -608,7 +631,7 @@ Animator概览">
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-count">10</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
@@ -697,7 +720,7 @@ Animator概览">
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Animator概览"><span class="nav-number">2.</span> <span class="nav-text">Animator概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Animator"><span class="nav-number">3.</span> <span class="nav-text">使用Animator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Animator子类"><span class="nav-number">3.1.</span> <span class="nav-text">Animator子类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ValueAnimator"><span class="nav-number">3.2.</span> <span class="nav-text">ValueAnimator</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键属性"><span class="nav-number">3.2.1.</span> <span class="nav-text">关键属性</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Animator概览"><span class="nav-number">2.</span> <span class="nav-text">Animator概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Animator"><span class="nav-number">3.</span> <span class="nav-text">使用Animator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Animator子类"><span class="nav-number">3.1.</span> <span class="nav-text">Animator子类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ValueAnimator"><span class="nav-number">3.2.</span> <span class="nav-text">ValueAnimator</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键属性"><span class="nav-number">3.2.1.</span> <span class="nav-text">关键属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化与TypeEvaluator"><span class="nav-number">3.2.2.</span> <span class="nav-text">初始化与TypeEvaluator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插补细分器"><span class="nav-number">3.2.3.</span> <span class="nav-text">插补细分器</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>

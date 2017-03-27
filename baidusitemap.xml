@@ -5,15 +5,17 @@
     
   <url>
     <loc>http://www.viseator.com/2017/03/26/android_property_animation/</loc>
-    <lastmod>2017-03-26T08:21:04.536Z</lastmod>
+    <lastmod>2017-03-27T15:39:52.424Z</lastmod>
     <data>
         <display>
-        <title>Android PropertyAnimation 属性动画</title>
+        <title>Android PropertyAnimation 属性动画（一）初探</title>
         <pubTime>2017-03-26T06:14:45.000Z</pubTime>
         
         <tag>Android</tag>
          
-        <tag>View</tag>
+        <tag>UI</tag>
+         
+        <tag>Animation</tag>
          
          
            
@@ -21,7 +23,7 @@
               <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
           
              
-              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
+              <breadCrumb title="UI" url="http://www.viseator.com/categories/Android/UI/"/>
           
         </display>
     </data>
