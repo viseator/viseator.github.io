@@ -87,19 +87,19 @@
 
 
 
-<meta name="description" content="上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。
+<meta name="description" content="前言上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。
 目标是自定义一个View，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android PropertyAnimation 属性动画（二）弹跳小球实例">
 <meta property="og:url" content="http://www.viseator.com/2017/04/02/android_property_animation_2/index.html">
 <meta property="og:site_name" content="viseator's blog">
-<meta property="og:description" content="上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。
+<meta property="og:description" content="前言上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。
 目标是自定义一个View，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：">
 <meta property="og:image" content="http://www.viseator.com/images/android_animator.gif">
-<meta property="og:updated_time" content="2017-04-02T03:14:37.186Z">
+<meta property="og:updated_time" content="2017-04-02T04:03:46.676Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android PropertyAnimation 属性动画（二）弹跳小球实例">
-<meta name="twitter:description" content="上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。
+<meta name="twitter:description" content="前言上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。
 目标是自定义一个View，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：">
 <meta name="twitter:image" content="http://www.viseator.com/images/android_animator.gif">
 
@@ -438,9 +438,21 @@
       
 
       
-        <p><a href="http://www.viseator.com/2017/03/26/android_property_animation_1/">上篇博客</a>简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对<code>Animator</code>的几个回调方法进行讲解。</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="http://www.viseator.com/2017/03/26/android_property_animation_1/">上篇博客</a>简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对<code>Animator</code>的几个回调方法进行讲解。</p>
 <p>目标是自定义一个<code>View</code>，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：</p>
 <p><img src="/images/android_animator.gif" alt=""></p>
+<a id="more"></a>
+<h2 id="创建自定义View"><a href="#创建自定义View" class="headerlink" title="创建自定义View"></a>创建自定义View</h2><p>首先我们要创建一个自定义<code>View</code>，这里我就采用继承<code>LinearLayout</code>的方式来创建这个<code>View</code>，但要注意<code>LinearLayout</code>默认是不绘制自身的，需要在<code>onDraw()</code>方法之前适当的时候调用<code>setWillNotDraw(false);</code>令其进行绘制。</p>
+<p>在继承<code>LinearLayout</code>的同时我们要实现全部三个构造方法，否则xml文件的预览解析会出现问题：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">VView</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">VView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">VView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>创建好自定义<code>View</code>后，我们就可以在对应的layout xml布局文件中用完整包名+类名的方式使用我们的自定义<code>View</code>：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">com.viseator.viewtest.VView</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"match_parent"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"match_parent"</span></div><div class="line">    /&gt;</div></pre></td></tr></table></figure>
+<p>同时，我们在绘制之前的<code>onMeasure()</code>方法中调用<code>setWillNotDraw(false);</code>使自定义<code>View</code>可以绘制：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">    setWillNotDraw(<span class="keyword">false</span>);</div><div class="line">    setOnClickListener(<span class="keyword">this</span>);</div><div class="line">    <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里也调用了<code>setOnClickListener()</code>注册之后的点击事件。</p>
+<h2 id="绘制"><a href="#绘制" class="headerlink" title="绘制"></a>绘制</h2><h3 id="小球的绘制"><a href="#小球的绘制" class="headerlink" title="小球的绘制"></a>小球的绘制</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> ValueAnimator animator;</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> radius = <span class="number">50</span>;</div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> xPos = radius;</div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> yPos = radius;</div><div class="line"><span class="keyword">private</span> Paint paint = <span class="keyword">new</span> Paint();</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onDraw(canvas);</div><div class="line">	<span class="keyword">if</span> (animator == <span class="keyword">null</span>) &#123;</div><div class="line">		canvasHeight = canvas.getHeight() - radius;    			paint.setColor(getResources().getColor(R.color.Gray));</div><div class="line">		paint.setAntiAlias(<span class="keyword">true</span>);</div><div class="line">	&#125;</div><div class="line">    drawCircle(canvas);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">drawCircle</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">	canvas.drawCircle(xPos, yPos, radius, paint);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里第10行对是否是第一次绘制进行判断并将画布大小保存到<code>canvasHeight</code>供之后的绘制使用（之后的绘制的坐标需要相对于画布的坐标）并设置<code>paint</code>的属性。</p>
+<p><code>drawCircle()</code>方法也非常简单，只是调用<code>canvas</code>提供的<code>drawCircle()</code>方法指定位置与半径和之前设置的<code>paint</code>。</p>
 
       
     </div>
@@ -540,8 +552,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -657,6 +678,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建自定义View"><span class="nav-number">2.</span> <span class="nav-text">创建自定义View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制"><span class="nav-number">3.</span> <span class="nav-text">绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#小球的绘制"><span class="nav-number">3.1.</span> <span class="nav-text">小球的绘制</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
