@@ -4,28 +4,8 @@
 
     
   <url>
-    <loc>http://www.viseator.com/2017/04/01/resource_general/</loc>
-    <lastmod>2017-04-02T15:11:04.386Z</lastmod>
-    <data>
-        <display>
-        <title>学习资源收集</title>
-        <pubTime>2017-04-01T15:43:06.000Z</pubTime>
-        
-        <tag>Resource</tag>
-         
-         
-           
-             
-              <breadCrumb title="Resource" url="http://www.viseator.com/categories/Resource/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.viseator.com/2017/04/02/android_property_animation_2/</loc>
-    <lastmod>2017-04-02T04:03:46.676Z</lastmod>
+    <lastmod>2017-04-02T15:20:55.586Z</lastmod>
     <data>
         <display>
         <title>Android PropertyAnimation 属性动画（二）弹跳小球实例</title>
@@ -44,6 +24,26 @@
           
              
               <breadCrumb title="UI" url="http://www.viseator.com/categories/Android/UI/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.viseator.com/2017/04/01/resource_general/</loc>
+    <lastmod>2017-04-02T15:11:04.386Z</lastmod>
+    <data>
+        <display>
+        <title>学习资源收集</title>
+        <pubTime>2017-04-01T15:43:06.000Z</pubTime>
+        
+        <tag>Resource</tag>
+         
+         
+           
+             
+              <breadCrumb title="Resource" url="http://www.viseator.com/categories/Resource/"/>
           
         </display>
     </data>
