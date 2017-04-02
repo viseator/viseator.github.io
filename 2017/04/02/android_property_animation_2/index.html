@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Android,View," />
+  <meta name="keywords" content="Android,UI,Animation," />
 
 
 
@@ -87,21 +87,21 @@
 
 
 
-<meta name="description" content="上一篇博客简单地介绍了View绘制的生命周期， 从这篇博客开始将会对这个周期中一些有用的过程进行一个详细一些的介绍。这篇的主角就是在构造方法之后调用的measure过程。
-为了演示，继承了TextView来实现一个自定义的View。注意这里继承的应该是android.support.v7.widget.AppCompatTextView这个类。同时为了xml文件的正常解析，我们需要实现View的三">
+<meta name="description" content="上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。
+目标是自定义一个View，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android View绘制之measure过程">
-<meta property="og:url" content="http://www.viseator.com/2017/03/10/android_view_onMeasure/index.html">
+<meta property="og:title" content="Android PropertyAnimation 属性动画（二）弹跳小球实例">
+<meta property="og:url" content="http://www.viseator.com/2017/04/02/android_property_animation_2/index.html">
 <meta property="og:site_name" content="viseator's blog">
-<meta property="og:description" content="上一篇博客简单地介绍了View绘制的生命周期， 从这篇博客开始将会对这个周期中一些有用的过程进行一个详细一些的介绍。这篇的主角就是在构造方法之后调用的measure过程。
-为了演示，继承了TextView来实现一个自定义的View。注意这里继承的应该是android.support.v7.widget.AppCompatTextView这个类。同时为了xml文件的正常解析，我们需要实现View的三">
-<meta property="og:image" content="http://www.viseator.com/images/onMeasureOutput1.png">
-<meta property="og:updated_time" content="2017-03-15T06:01:39.057Z">
+<meta property="og:description" content="上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。
+目标是自定义一个View，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：">
+<meta property="og:image" content="http://www.viseator.com/images/android_animator.gif">
+<meta property="og:updated_time" content="2017-04-02T03:11:40.477Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android View绘制之measure过程">
-<meta name="twitter:description" content="上一篇博客简单地介绍了View绘制的生命周期， 从这篇博客开始将会对这个周期中一些有用的过程进行一个详细一些的介绍。这篇的主角就是在构造方法之后调用的measure过程。
-为了演示，继承了TextView来实现一个自定义的View。注意这里继承的应该是android.support.v7.widget.AppCompatTextView这个类。同时为了xml文件的正常解析，我们需要实现View的三">
-<meta name="twitter:image" content="http://www.viseator.com/images/onMeasureOutput1.png">
+<meta name="twitter:title" content="Android PropertyAnimation 属性动画（二）弹跳小球实例">
+<meta name="twitter:description" content="上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。
+目标是自定义一个View，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：">
+<meta name="twitter:image" content="http://www.viseator.com/images/android_animator.gif">
 
 
 
@@ -129,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://www.viseator.com/2017/03/10/android_view_onMeasure/"/>
+  <link rel="canonical" href="http://www.viseator.com/2017/04/02/android_property_animation_2/"/>
 
 
 
 
 
-  <title> Android View绘制之measure过程 | viseator's blog </title>
+  <title> Android PropertyAnimation 属性动画（二）弹跳小球实例 | viseator's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -323,7 +323,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.viseator.com/2017/03/10/android_view_onMeasure/">
+    <link itemprop="mainEntityOfPage" href="http://www.viseator.com/2017/04/02/android_property_animation_2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="viseator">
@@ -344,7 +344,7 @@
             
             
               
-                Android View绘制之measure过程
+                Android PropertyAnimation 属性动画（二）弹跳小球实例
               
             
           </h2>
@@ -359,8 +359,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-10T18:30:16+08:00">
-                2017-03-10
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-02T10:08:31+08:00">
+                2017-04-02
               </time>
             
 
@@ -393,8 +393,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/View/" itemprop="url" rel="index">
-                    <span itemprop="name">View</span>
+                  <a href="/categories/Android/UI/" itemprop="url" rel="index">
+                    <span itemprop="name">UI</span>
                   </a>
                 </span>
 
@@ -411,8 +411,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2017/03/10/android_view_onMeasure/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/03/10/android_view_onMeasure/" itemprop="commentCount"></span>
+                <a href="/2017/04/02/android_property_animation_2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/02/android_property_animation_2/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -438,44 +438,9 @@
       
 
       
-        <p><a href="http://www.viseator.xyz/2017/03/09/android_view_lifeCycle/" target="_blank" rel="external">上一篇博客</a>简单地介绍了<code>View</code>绘制的生命周期， 从这篇博客开始将会对这个周期中一些有用的过程进行一个详细一些的介绍。这篇的主角就是在构造方法之后调用的<code>measure</code>过程。</p>
-<p>为了演示，继承了<code>TextView</code>来实现一个自定义的<code>View</code>。注意这里继承的应该是<code>android.support.v7.widget.AppCompatTextView</code>这个类。同时为了<code>xml</code>文件的正常解析，我们需要实现<code>View</code>的三个构造方法。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">VView</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">VView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">VView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyleAttr)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>(context, attrs, defStyleAttr);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>再通过完整包名的方法在<code>xml</code>布局文件中创建我们的<code>View</code>就可以直接显示了。</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">com.viseator.viewtest.VView</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"@color/Gray"</span></div><div class="line">    /&gt;</div></pre></td></tr></table></figure>
-<p>这里给了<code>TextView</code>一个背景颜色便于后面的观察。</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h2><p>下面就开始分析<code>measure</code>过程。</p>
-<p><code>measure</code>是一个自顶向下的过程，即父<code>View</code>会依次调用它的子<code>View</code>的<code>measure()</code>方法来对它的子<code>View</code>进行测量。</p>
-<p><code>View</code>的<code>measure()</code>方法最终会调用<code>onMeasure()</code>，真正的尺寸信息就是在<code>onMeasure()</code>方法中最终确定的。所以我们需要做的就是在自定义<code>View</code>中重写<code>onMeasure()</code>方法。</p>
-<p>那么子<code>View</code>根据什么来确定自己应该具有的尺寸呢？当然不可能让子<code>View</code>自由地决定自己的大小，父<code>View</code>必然需要向子<code>View</code>传递信息来帮助子<code>View</code>来确定尺寸，而子<code>View</code>则必须满足父<code>View</code>的要求。查看<code>measure()</code>的方法签名：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">measure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span></span></div></pre></td></tr></table></figure>
-<p>这里的<code>widthMeasureSpec</code>与<code>heightMeasureSpec</code>就是存储这一信息的参数。它们的类型是<code>int</code>，内部以高两位来存储测量的模式，低三十位为测量的大小，计算中使用了位运算来提高并优化效率。当然我们不必使用位运算来获得对应的数值，<code>View.MeasureSpec</code>为我们提供了对应的方法。</p>
-<p>测量模式有三种：</p>
-<ul>
-<li><code>EXACTLY</code>：精确值模式，即子<code>View</code>必须使用这一尺寸，并且保证它们的所有后代都在这个范围之内。当我们将控件的<code>layout_width</code>、<code>layout_height</code>属性指定为具体数值或<code>match_parent</code>时，系统使用这一模式。</li>
-<li><code>UNSPECIFIED</code>：无限制模式，不对子<code>View</code>施加任何限制，完全由子<code>View</code>决定自己的大小。可以用于查看子<code>View</code>想要的尺寸，比如可以把子<code>View</code>的长度使用<code>EXACTLY</code>模式限制在100，不限制宽度来查看子<code>View</code>在长度为100情况想要的宽度。</li>
-<li><code>AT_MOST</code>：最大值模式，只限制子<code>View</code>能具有的最大尺寸，子<code>View</code>必须保证它和它的后代们都在这一范围之内。</li>
-</ul>
-<p>了解这些，我们就可以通过重写<code>onMeasure()</code>来确定一个<code>View</code>的尺寸。</p>
-<p>但在重写方法时要注意：必须调用<code>setMeasuredDimension()</code> 来将最终尺寸存储在<code>View</code>中，否则会抛出一个<code>IllegalStateException</code>。</p>
-<p><code>xml</code>:</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">com.viseator.viewtest.VView</span></span></div><div class="line">    <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">    <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></div><div class="line">    <span class="attr">android:background</span>=<span class="string">"@color/Gray"</span></div><div class="line">    /&gt;</div></pre></td></tr></table></figure>
-<p><code>VView</code>:</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> widthMode = MeasureSpec.getMode(widthMeasureSpec);</div><div class="line">    <span class="keyword">int</span> heightMode = MeasureSpec.getMode(heightMeasureSpec);</div><div class="line">    <span class="keyword">int</span> width = MeasureSpec.getSize(widthMeasureSpec);</div><div class="line">    <span class="keyword">int</span> height = MeasureSpec.getSize(heightMeasureSpec);</div><div class="line">    Log.d(TAG, <span class="string">"widthMode: "</span> + widthMode);</div><div class="line">    Log.d(TAG, <span class="string">"heightMode: "</span> + heightMode);</div><div class="line">    Log.d(TAG, <span class="string">"width :"</span> + width);</div><div class="line">    Log.d(TAG, <span class="string">"height :"</span> + height);</div><div class="line">    <span class="keyword">super</span>.onMeasure(widthMeasureSpec, heightMeasureSpec);</div></pre></td></tr></table></figure>
-<p>log:</p>
-<p><img src="/images/onMeasureOutput1.png" alt="output"></p>
-<p>这段简单的代码验证了之前的说法，分别对宽高设置了<code>wrap_content</code>和固定值，可以发现模式分别为<code>AT_MOST</code>与<code>EXACTLY</code>（以数值表示）。</p>
-<p>这里输出的宽高值是以像素为单位的，可以看到高度的期望值就是设置的大小，但<code>wrap_content</code>期望的宽度值为1080（屏幕宽度），默认即为屏幕宽度，但最终计算得出的宽度值由于里面没有文字所以为0。</p>
-<p>同样地，<code>UNSPECIFIED</code>模式给出的默认尺寸也是屏幕的宽/高。</p>
-<p>所以我们可以看到如果想要实现<code>wrap_content</code>的效果，我们必须在<code>onMeasure</code>中对<code>AT_MOST</code>模式计算其内容宽/高并作为最终的宽/高，否则将以屏幕的宽/高进行填充。以<code>LinearLayout</code>的源码为例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (useLargestChild &amp;&amp;</div><div class="line">        (heightMode == MeasureSpec.AT_MOST || heightMode == MeasureSpec.UNSPECIFIED)) &#123;</div><div class="line">    mTotalLength = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; count; ++i) &#123;</div><div class="line">        <span class="keyword">final</span> View child = getVirtualChildAt(i);</div><div class="line">        <span class="keyword">if</span> (child == <span class="keyword">null</span>) &#123;</div><div class="line">            mTotalLength += measureNullChild(i);</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (child.getVisibility() == GONE) &#123;</div><div class="line">            i += getChildrenSkipCount(child, i);</div><div class="line">            <span class="keyword">continue</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">final</span> LinearLayout.LayoutParams lp = (LinearLayout.LayoutParams)</div><div class="line">                child.getLayoutParams();</div><div class="line">        <span class="comment">// Account for negative margins</span></div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> totalLength = mTotalLength;</div><div class="line">        mTotalLength = Math.max(totalLength, totalLength + largestChildHeight +</div><div class="line">                lp.topMargin + lp.bottomMargin + getNextLocationOffset(child));</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="comment">// Add in our padding</span></div><div class="line">mTotalLength += mPaddingTop + mPaddingBottom;</div><div class="line"></div><div class="line"><span class="keyword">int</span> heightSize = mTotalLength;</div></pre></td></tr></table></figure>
-<p>这部分代码向我们展示了<code>LinearLayout</code>处理子<code>View</code>并计算所有的高度的情况。</p>
-<p>知道了这个调用过程，我们就可以真正地进行<code>onMeasure()</code>的重写了。</p>
-<p>例如可以暴力指定<code>View</code>尺寸：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">    setMeasuredDimension(<span class="number">100</span>,<span class="number">600</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以为<code>AT_MOST</code>与<code>UNSPECIFIED</code>模式指定一个默认大小：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">    setMeasuredDimension(measureSize(widthMeasureSpec), measureSize(heightMeasureSpec));</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">measureSize</span><span class="params">(<span class="keyword">int</span> measureSpec)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> mode = MeasureSpec.getMode(measureSpec);</div><div class="line">    <span class="keyword">int</span> size = MeasureSpec.getSize(measureSpec);</div><div class="line">    <span class="keyword">if</span> (mode == MeasureSpec.EXACTLY) &#123;</div><div class="line">        <span class="keyword">return</span> size;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        size = <span class="number">300</span>; <span class="comment">//Default size</span></div><div class="line">        <span class="keyword">return</span> Math.min(size,MeasureSpec.getSize(measureSpec));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>至于更复杂的计算逻辑由于本人能力有限就不写demo了，如果以后实际中遇到需要的时候再作补充。</p>
+        <p><a href="http://www.viseator.com/2017/03/26/android_property_animation_1/">上篇博客</a>简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对<code>Animator</code>的几个回调方法进行讲解。</p>
+<p>目标是自定义一个<code>View</code>，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：</p>
+<p><img src="/images/android_animator.gif" alt=""></p>
 
       
     </div>
@@ -501,7 +466,9 @@
           
             <a href="/tags/Android/" rel="tag"># Android</a>
           
-            <a href="/tags/View/" rel="tag"># View</a>
+            <a href="/tags/UI/" rel="tag"># UI</a>
+          
+            <a href="/tags/Animation/" rel="tag"># Animation</a>
           
         </div>
       
@@ -514,8 +481,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/09/android_view_lifeCycle/" rel="next" title="Android View绘制生命周期总览">
-                <i class="fa fa-chevron-left"></i> Android View绘制生命周期总览
+              <a href="/2017/04/01/resource_general/" rel="next" title="学习资源收集">
+                <i class="fa fa-chevron-left"></i> 学习资源收集
               </a>
             
           </div>
@@ -523,10 +490,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/03/12/android_view_onLayout/" rel="prev" title="Android View绘制之layout过程">
-                Android View绘制之layout过程 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -552,8 +515,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2017/03/10/android_view_onMeasure/"
-           data-title="Android View绘制之measure过程" data-url="http://www.viseator.com/2017/03/10/android_view_onMeasure/">
+      <div class="ds-thread" data-thread-key="2017/04/02/android_property_animation_2/"
+           data-title="Android PropertyAnimation 属性动画（二）弹跳小球实例" data-url="http://www.viseator.com/2017/04/02/android_property_animation_2/">
       </div>
     
   </div>
@@ -577,17 +540,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview sidebar-panel">
+      <section class="site-overview sidebar-panel sidebar-panel-active">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -703,22 +657,6 @@
 
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
