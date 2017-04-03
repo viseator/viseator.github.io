@@ -99,7 +99,7 @@
 目标是自定义一个View，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：">
 <meta property="og:image" content="http://www.viseator.com/images/android_animator.gif">
 <meta property="og:image" content="http://www.viseator.com/images/AnimatorListener.jpg">
-<meta property="og:updated_time" content="2017-04-03T03:58:49.650Z">
+<meta property="og:updated_time" content="2017-04-03T04:01:00.238Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android PropertyAnimation 属性动画（二）弹跳小球实例">
 <meta name="twitter:description" content="前言GitHub完整代码
@@ -474,7 +474,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">    init(radius, canvasHeight);</div><div class="line">	animationHeight = canvasHeight + radius;</div><div class="line">    animator.start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><code>start()</code>方法令<code>animator</code>开始。</p>
 <p>到这里，我们已经可以看到点击屏幕后小球下落到底部并停止的效果。</p>
-<h4 id="回弹"><a href="#回弹" class="headerlink" title="回弹"></a>回弹</h4><p>我们之前已经为<code>animator</code>设置了无限重复，并且模式为重新开始，那么要做到回弹的效果，就要在小球落到底边（动画完成）之后，为小球设置新的初始值与最终值，让小球从最低点回到落下时一半的高度。高度数据我们在<code>onClick()</code>中的第4行（上面代码）已经初始化为了相对于画布的高度，之后再使用时只需把它除2就可以表示圆心距底边的高度了。</p>
+<h3 id="回弹效果实现"><a href="#回弹效果实现" class="headerlink" title="回弹效果实现"></a>回弹效果实现</h3><p>我们之前已经为<code>animator</code>设置了无限重复，并且模式为重新开始，那么要做到回弹的效果，就要在小球落到底边（动画完成）之后，为小球设置新的初始值与最终值，让小球从最低点回到落下时一半的高度。高度数据我们在<code>onClick()</code>中的第4行（上面代码）已经初始化为了相对于画布的高度，之后再使用时只需把它除2就可以表示圆心距底边的高度了。</p>
 <p><code>Animator.AnimatorListener</code>为我们提供了一系列方法用于监听<code>animator</code>状态的变化（而不是数值）：</p>
 <p><img src="/images/AnimatorListener.jpg" alt=""></p>
 <p>（除金色为Android 8新增外），依次为动画取消，动画结束，动画开始重复，动画开始。</p>
@@ -724,7 +724,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建自定义View"><span class="nav-number">2.</span> <span class="nav-text">创建自定义View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制"><span class="nav-number">3.</span> <span class="nav-text">绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#小球的绘制"><span class="nav-number">3.1.</span> <span class="nav-text">小球的绘制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下落动画的绘制"><span class="nav-number">3.2.</span> <span class="nav-text">下落动画的绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#animator的初始化"><span class="nav-number">3.2.1.</span> <span class="nav-text">animator的初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#完成下落动画"><span class="nav-number">3.2.2.</span> <span class="nav-text">完成下落动画</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回弹"><span class="nav-number">3.2.3.</span> <span class="nav-text">回弹</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建自定义View"><span class="nav-number">2.</span> <span class="nav-text">创建自定义View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制"><span class="nav-number">3.</span> <span class="nav-text">绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#小球的绘制"><span class="nav-number">3.1.</span> <span class="nav-text">小球的绘制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下落动画的绘制"><span class="nav-number">3.2.</span> <span class="nav-text">下落动画的绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#animator的初始化"><span class="nav-number">3.2.1.</span> <span class="nav-text">animator的初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#完成下落动画"><span class="nav-number">3.2.2.</span> <span class="nav-text">完成下落动画</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#回弹效果实现"><span class="nav-number">3.3.</span> <span class="nav-text">回弹效果实现</span></a></li></ol></li></ol></div>
             
 
           </div>
