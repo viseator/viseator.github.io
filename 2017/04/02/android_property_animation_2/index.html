@@ -87,19 +87,23 @@
 
 
 
-<meta name="description" content="前言上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。
+<meta name="description" content="前言GitHub完整代码
+上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。
 目标是自定义一个View，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android PropertyAnimation 属性动画（二）弹跳小球实例">
 <meta property="og:url" content="http://www.viseator.com/2017/04/02/android_property_animation_2/index.html">
 <meta property="og:site_name" content="viseator's blog">
-<meta property="og:description" content="前言上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。
+<meta property="og:description" content="前言GitHub完整代码
+上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。
 目标是自定义一个View，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：">
 <meta property="og:image" content="http://www.viseator.com/images/android_animator.gif">
-<meta property="og:updated_time" content="2017-04-02T15:20:55.586Z">
+<meta property="og:image" content="http://www.viseator.com/images/AnimatorListener.jpg">
+<meta property="og:updated_time" content="2017-04-03T03:58:49.650Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android PropertyAnimation 属性动画（二）弹跳小球实例">
-<meta name="twitter:description" content="前言上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。
+<meta name="twitter:description" content="前言GitHub完整代码
+上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。
 目标是自定义一个View，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：">
 <meta name="twitter:image" content="http://www.viseator.com/images/android_animator.gif">
 
@@ -438,7 +442,8 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="http://www.viseator.com/2017/03/26/android_property_animation_1/">上篇博客</a>简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对<code>Animator</code>的几个回调方法进行讲解。</p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://github.com/viseator/AndroidAnimatorBounceBallDemo" target="_blank" rel="external">GitHub完整代码</a></p>
+<p><a href="http://www.viseator.com/2017/03/26/android_property_animation_1/">上篇博客</a>简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对<code>Animator</code>的几个回调方法进行讲解。</p>
 <p>目标是自定义一个<code>View</code>，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：</p>
 <p><img src="/images/android_animator.gif" alt=""></p>
 <a id="more"></a>
@@ -453,6 +458,37 @@
 <h2 id="绘制"><a href="#绘制" class="headerlink" title="绘制"></a>绘制</h2><h3 id="小球的绘制"><a href="#小球的绘制" class="headerlink" title="小球的绘制"></a>小球的绘制</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> ValueAnimator animator;</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> radius = <span class="number">50</span>;</div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> xPos = radius;</div><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> yPos = radius;</div><div class="line"><span class="keyword">private</span> Paint paint = <span class="keyword">new</span> Paint();</div><div class="line"></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onDraw(canvas);</div><div class="line">	<span class="keyword">if</span> (animator == <span class="keyword">null</span>) &#123;</div><div class="line">		canvasHeight = canvas.getHeight() - radius;    		</div><div class="line">		paint.setColor(getResources().getColor(R.color.Gray));</div><div class="line">		paint.setAntiAlias(<span class="keyword">true</span>);</div><div class="line">	&#125;</div><div class="line">    drawCircle(canvas);</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">drawCircle</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">	canvas.drawCircle(xPos, yPos, radius, paint);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这里第10行对是否是第一次绘制进行判断并将画布大小保存到<code>canvasHeight</code>供之后的绘制使用（之后的绘制的坐标需要相对于画布的坐标）并设置<code>paint</code>的属性。</p>
 <p><code>drawCircle()</code>方法也非常简单，只是调用<code>canvas</code>提供的<code>drawCircle()</code>方法指定位置与半径和之前设置的<code>paint</code>，调用后就会在屏幕上的对应位置绘制一个小球。</p>
+<h3 id="下落动画的绘制"><a href="#下落动画的绘制" class="headerlink" title="下落动画的绘制"></a>下落动画的绘制</h3><p>下面就要让小球“动”起来，其实并不是小球发生了移动，只是我们不停地改变小球绘制的位置，当绘制的速率（帧率）大于24帧时的，就在视觉上变成了流畅的动画。也就是说，我们需要使用<code>Animator</code>连续地改变小球的位置，为了实现加速的效果，位置的改变速率应该随时间增加，也就是需要我们上一篇博客提到的<code>Evaluator</code>来实现。</p>
+<h4 id="animator的初始化"><a href="#animator的初始化" class="headerlink" title="animator的初始化"></a>animator的初始化</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">init</span><span class="params">(<span class="keyword">int</span> start, <span class="keyword">int</span> end)</span> </span>&#123;</div><div class="line">    animator = ValueAnimator.ofInt(start, end);</div><div class="line">    animator.setDuration(<span class="number">1000</span>);</div><div class="line">    animator.setRepeatCount(ValueAnimator.INFINITE);</div><div class="line">    animator.setRepeatMode(ValueAnimator.RESTART);</div><div class="line">    animator.setInterpolator(<span class="keyword">new</span> AccelerateInterpolator(rate));</div><div class="line">    animator.addUpdateListener(<span class="keyword">this</span>);</div><div class="line">    animator.addListener(<span class="keyword">this</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>写成一个初始化方法便于重新初始化。</p>
+<p>第2行将传入的值区间的开始与结束值作为参数获得了一个值为<code>int</code>的<code>ValueAnimator</code>。</p>
+<p>第3行设置了动画的时间为1秒。</p>
+<p>第4、5行分别设置了动画的重复次数为无限次，重复模式为重新开始，顾名思义，动画可以重复进行，重新开始的重复模式意味着一次动画结束之后数值重新从<code>start</code>到<code>end</code>进行改变，也可以设置重复的模式为反向，即一次动画结束之后数值从<code>end</code>到<code>start</code>变化。</p>
+<p>第六行为<code>animator</code>设置了一个库中提供的<code>AccelerateInterpolator</code>即加速插值器，这就是我们实现加速效果的关键，上篇之中已经看过它的源码，默认时返回的最终动画进行百分比是时间百分比的平方，达到了位置随着时间的平方变化，也就是实现了加速下落的效果。</p>
+<p>第7、8两行分别为<code>animator</code>设置了一个<code>UpdateListener</code>用于监听数值变化，一个<code>Listener</code>用于监听<code>animator</code>本身开始、停止、重复。</p>
+<h4 id="完成下落动画"><a href="#完成下落动画" class="headerlink" title="完成下落动画"></a>完成下落动画</h4><p>创建好了<code>ValueAnimator</code>，下一步就是在适合的时候在画布上重新绘制位置参数被<code>animator</code>改变后的小球。注意到我们之前小球的y坐标存储在<code>yPos</code>变量中，我们只要适时令<code>yPos</code>等于改变后的值再通过<code>invalidate()</code>方法进入<code>onDraw()</code>方法让<code>View</code>按小球的参数重新进行绘制就可以了。</p>
+<p><code>animator</code>的<code>ValueAnimator.AnimatorUpdateListener</code>为我们提供了一个及时刷新<code>View</code>的时机，之前为<code>animator</code>注册一个<code>UpdateListener</code>之后，每当<code>animator</code>的值发生改变时，<code>onAniamtionUpdate()</code>就会被回调。</p>
+<p>那我们就可以在这个回调方法中为<code>yPos</code>设置新的值并令<code>View</code>重新绘制：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationUpdate</span><span class="params">(ValueAnimator animation)</span> </span>&#123;</div><div class="line">    yPos = (<span class="keyword">int</span>) animation.getAnimatedValue();</div><div class="line">    invalidate();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样，我们只要启动<code>animator</code>令它的值开始变化，就会不断地调用<code>onAnimationUpdate()</code>重绘<code>View</code>：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">    init(radius, canvasHeight);</div><div class="line">	animationHeight = canvasHeight + radius;</div><div class="line">    animator.start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>start()</code>方法令<code>animator</code>开始。</p>
+<p>到这里，我们已经可以看到点击屏幕后小球下落到底部并停止的效果。</p>
+<h4 id="回弹"><a href="#回弹" class="headerlink" title="回弹"></a>回弹</h4><p>我们之前已经为<code>animator</code>设置了无限重复，并且模式为重新开始，那么要做到回弹的效果，就要在小球落到底边（动画完成）之后，为小球设置新的初始值与最终值，让小球从最低点回到落下时一半的高度。高度数据我们在<code>onClick()</code>中的第4行（上面代码）已经初始化为了相对于画布的高度，之后再使用时只需把它除2就可以表示圆心距底边的高度了。</p>
+<p><code>Animator.AnimatorListener</code>为我们提供了一系列方法用于监听<code>animator</code>状态的变化（而不是数值）：</p>
+<p><img src="/images/AnimatorListener.jpg" alt=""></p>
+<p>（除金色为Android 8新增外），依次为动画取消，动画结束，动画开始重复，动画开始。</p>
+<p>这里我们就需要在<code>onAnimationReapt()</code>回调中为动画设置新的初值与结束数值：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationRepeat</span><span class="params">(Animator animation)</span> </span>&#123;</div><div class="line">    ValueAnimator vAnimation = (ValueAnimator) animation;</div><div class="line">    <span class="keyword">if</span> (isDown) &#123;</div><div class="line">        animationHeight = (<span class="keyword">int</span>) (animationHeight * <span class="number">0.5</span>);</div><div class="line">    &#125;</div><div class="line">    isDown = !isDown;</div><div class="line">    <span class="keyword">if</span> (isDown) &#123;</div><div class="line">        vAnimation.setIntValues(canvasHeight - animationHeight, canvasHeight);</div><div class="line">        vAnimation.setInterpolator(<span class="keyword">new</span> AccelerateInterpolator());</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        vAnimation.setIntValues(canvasHeight, canvasHeight - animationHeight);</div><div class="line">        vAnimation.setInterpolator(<span class="keyword">new</span> DecelerateInterpolator());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>回调参数中的<code>animation</code>就是回调这个函数的<code>animator</code>，第3行对其进行一个类型转换。</p>
+<p>这里我们使用了一个<code>isDown</code>参数来判断是否是下落过程，如果上个动画是下落过程，就将<code>animationHeight</code>减半。</p>
+<p>第7行把<code>isDown</code>置反，再根据<code>isDown</code>的判断使用<code>setIntValues()</code>方法为<code>animator</code>设置新的范围，使用<code>setInterpolator()</code>方法设置新的插值器，注意上升时使用的应该是<code>DecelerateInterpolater</code>减速上升。</p>
+<p>这样在新的动画开始时属性改变的范围就得到了改变，也就使得小球可以反弹了。</p>
+<p>为了让每一次点击时动画都可以重新开始，在<code>onClick()</code>方法中加入几行初始化代码：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (animator != <span class="keyword">null</span>) &#123;</div><div class="line">        animator.end();</div><div class="line">    &#125;</div><div class="line">    init(radius, canvasHeight);</div><div class="line">    animationHeight = canvasHeight + radius;</div><div class="line">    isDown = <span class="keyword">true</span>;</div><div class="line">    animator.start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里第3-5行让如果存在的<code>animator</code>停止，否则新动画无法启动。</p>
+<p>下篇博客将会从源码角度继续探索<code>animator</code>的实现原理和更高级的一些特性。</p>
+<p><a href="https://github.com/viseator/AndroidAnimatorBounceBallDemo" target="_blank" rel="external">GitHub完整代码</a></p>
 
       
     </div>
@@ -688,7 +724,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建自定义View"><span class="nav-number">2.</span> <span class="nav-text">创建自定义View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制"><span class="nav-number">3.</span> <span class="nav-text">绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#小球的绘制"><span class="nav-number">3.1.</span> <span class="nav-text">小球的绘制</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建自定义View"><span class="nav-number">2.</span> <span class="nav-text">创建自定义View</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#绘制"><span class="nav-number">3.</span> <span class="nav-text">绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#小球的绘制"><span class="nav-number">3.1.</span> <span class="nav-text">小球的绘制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下落动画的绘制"><span class="nav-number">3.2.</span> <span class="nav-text">下落动画的绘制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#animator的初始化"><span class="nav-number">3.2.1.</span> <span class="nav-text">animator的初始化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#完成下落动画"><span class="nav-number">3.2.2.</span> <span class="nav-text">完成下落动画</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#回弹"><span class="nav-number">3.2.3.</span> <span class="nav-text">回弹</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
