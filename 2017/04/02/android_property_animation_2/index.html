@@ -99,7 +99,7 @@
 目标是自定义一个View，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：">
 <meta property="og:image" content="http://www.viseator.com/images/android_animator.gif">
 <meta property="og:image" content="http://www.viseator.com/images/AnimatorListener.jpg">
-<meta property="og:updated_time" content="2017-04-03T04:01:00.238Z">
+<meta property="og:updated_time" content="2017-04-03T09:35:44.342Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android PropertyAnimation 属性动画（二）弹跳小球实例">
 <meta name="twitter:description" content="前言GitHub完整代码
@@ -477,7 +477,7 @@
 <h3 id="回弹效果实现"><a href="#回弹效果实现" class="headerlink" title="回弹效果实现"></a>回弹效果实现</h3><p>我们之前已经为<code>animator</code>设置了无限重复，并且模式为重新开始，那么要做到回弹的效果，就要在小球落到底边（动画完成）之后，为小球设置新的初始值与最终值，让小球从最低点回到落下时一半的高度。高度数据我们在<code>onClick()</code>中的第4行（上面代码）已经初始化为了相对于画布的高度，之后再使用时只需把它除2就可以表示圆心距底边的高度了。</p>
 <p><code>Animator.AnimatorListener</code>为我们提供了一系列方法用于监听<code>animator</code>状态的变化（而不是数值）：</p>
 <p><img src="/images/AnimatorListener.jpg" alt=""></p>
-<p>（除金色为Android 8新增外），依次为动画取消，动画结束，动画开始重复，动画开始。</p>
+<p>（除金色为Android 8新增外）依次为动画取消，动画结束，动画开始重复，动画开始。</p>
 <p>这里我们就需要在<code>onAnimationReapt()</code>回调中为动画设置新的初值与结束数值：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationRepeat</span><span class="params">(Animator animation)</span> </span>&#123;</div><div class="line">    ValueAnimator vAnimation = (ValueAnimator) animation;</div><div class="line">    <span class="keyword">if</span> (isDown) &#123;</div><div class="line">        animationHeight = (<span class="keyword">int</span>) (animationHeight * <span class="number">0.5</span>);</div><div class="line">    &#125;</div><div class="line">    isDown = !isDown;</div><div class="line">    <span class="keyword">if</span> (isDown) &#123;</div><div class="line">        vAnimation.setIntValues(canvasHeight - animationHeight, canvasHeight);</div><div class="line">        vAnimation.setInterpolator(<span class="keyword">new</span> AccelerateInterpolator());</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        vAnimation.setIntValues(canvasHeight, canvasHeight - animationHeight);</div><div class="line">        vAnimation.setInterpolator(<span class="keyword">new</span> DecelerateInterpolator());</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>回调参数中的<code>animation</code>就是回调这个函数的<code>animator</code>，第3行对其进行一个类型转换。</p>
