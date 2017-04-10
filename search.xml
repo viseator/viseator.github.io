@@ -5,7 +5,7 @@
     <entry>
       <title><![CDATA[王爽汇编语言第三版实验9 双循环实现]]></title>
       <url>%2F2017%2F04%2F10%2Fassembly_wang_lab_9%2F</url>
-      <content type="text"><![CDATA[编程：在屏幕中间分别显示绿色、绿底红色、白底蓝色的字符串’welcome to masm!’。 效果图： 采用了双循环嵌套的写法，外层控制输出行数，内层逐字符读取ASCII码与对应行的属性。 把loop s1改为loop s2有惊喜哦 所有实验答案在这里 123456789101112131415161718192021222324252627282930313233343536373839assume cs:code,ss:datacode segment mov ax,0b800h mov ds,ax mov bx,1760 mov ax,data mov ss,ax mov si,0 mov bp,0 mov cx,3s1: mov ss:[19],cx mov si,0 mov cx,16s2: mov di,si add di,di mov al,ss:[si] mov [bx+64+di],al mov al,ss:[16+bp] mov [bx+65+di],al inc si loop s2 inc bp add bx,160 mov cx,ss:[19] loop s1 mov ax,4c00h int 21hcode endsdata segment db &apos;welcome to masm!&apos; db 00000010b,00100100b,01110001b dw 0data endsend]]></content>
+      <content type="text"><![CDATA[编程：在屏幕中间分别显示绿色、绿底红色、白底蓝色的字符串welcome to masm!。 效果图： 采用了双循环嵌套的写法，外层控制输出行数，内层逐字符读取ASCII码与对应行的属性。 把loop s1改为loop s2有惊喜哦 所有实验答案在这里 123456789101112131415161718192021222324252627282930313233343536373839assume cs:code,ss:datacode segment mov ax,0b800h mov ds,ax mov bx,1760 mov ax,data mov ss,ax mov si,0 mov bp,0 mov cx,3s1: mov ss:[19],cx mov si,0 mov cx,16s2: mov di,si add di,di mov al,ss:[si] mov [bx+64+di],al mov al,ss:[16+bp] mov [bx+65+di],al inc si loop s2 inc bp add bx,160 mov cx,ss:[19] loop s1 mov ax,4c00h int 21hcode endsdata segment db &apos;welcome to masm!&apos; db 00000010b,00100100b,01110001b dw 0data endsend]]></content>
     </entry>
 
     
