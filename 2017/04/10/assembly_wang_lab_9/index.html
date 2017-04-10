@@ -71,7 +71,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="viseator, blog" />
+  <meta name="keywords" content="Assembly," />
 
 
 
@@ -87,15 +87,42 @@
 
 
 
-<meta name="description" content="永远欣赏那些可以行我所不能行之事的人">
-<meta property="og:type" content="website">
-<meta property="og:title" content="viseator's blog">
-<meta property="og:url" content="http://www.viseator.com/tags/Android/index.html">
+<meta name="description" content="编程：在屏幕中间分别显示绿色、绿底红色、白底蓝色的字符串’welcome to masm!’。
+效果图：
+
+采用了双循环嵌套的写法，外层控制输出行数，内层逐字符读取ASCII码与对应行的属性。
+
+  把loop s1改为loop s2有惊喜哦
+
+所有实验答案在这里
+1234567891011121314151617181920212223242526272829303132333435363738">
+<meta property="og:type" content="article">
+<meta property="og:title" content="王爽汇编语言第三版实验9 双循环实现">
+<meta property="og:url" content="http://www.viseator.com/2017/04/10/assembly_wang_lab_9/index.html">
 <meta property="og:site_name" content="viseator's blog">
-<meta property="og:description" content="永远欣赏那些可以行我所不能行之事的人">
+<meta property="og:description" content="编程：在屏幕中间分别显示绿色、绿底红色、白底蓝色的字符串’welcome to masm!’。
+效果图：
+
+采用了双循环嵌套的写法，外层控制输出行数，内层逐字符读取ASCII码与对应行的属性。
+
+  把loop s1改为loop s2有惊喜哦
+
+所有实验答案在这里
+1234567891011121314151617181920212223242526272829303132333435363738">
+<meta property="og:image" content="http://www.viseator.com/images/assembly_9.jpg">
+<meta property="og:updated_time" content="2017-04-10T12:53:54.339Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="viseator's blog">
-<meta name="twitter:description" content="永远欣赏那些可以行我所不能行之事的人">
+<meta name="twitter:title" content="王爽汇编语言第三版实验9 双循环实现">
+<meta name="twitter:description" content="编程：在屏幕中间分别显示绿色、绿底红色、白底蓝色的字符串’welcome to masm!’。
+效果图：
+
+采用了双循环嵌套的写法，外层控制输出行数，内层逐字符读取ASCII码与对应行的属性。
+
+  把loop s1改为loop s2有惊喜哦
+
+所有实验答案在这里
+1234567891011121314151617181920212223242526272829303132333435363738">
+<meta name="twitter:image" content="http://www.viseator.com/images/assembly_9.jpg">
 
 
 
@@ -123,13 +150,13 @@
 
 
 
-  <link rel="canonical" href="http://www.viseator.com/tags/Android/"/>
+  <link rel="canonical" href="http://www.viseator.com/2017/04/10/assembly_wang_lab_9/"/>
 
 
 
 
 
-  <title> 标签: Android | viseator's blog </title>
+  <title> 王爽汇编语言第三版实验9 双循环实现 | viseator's blog </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -169,7 +196,7 @@
     
   
 
-  <div class="container one-collumn sidebar-position-left  ">
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -317,186 +344,168 @@
           <div id="content" class="content">
             
 
-  <div id="posts" class="posts-collapse">
-    <div class="collection-title">
-      <h2 >
-        Android
-        <small>标签</small>
-      </h2>
-    </div>
-
+  <div id="posts" class="posts-expand">
     
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/04/02/android_property_animation_2/" itemprop="url">
-              
-                <span itemprop="name">Android PropertyAnimation 属性动画（二）弹跳小球实例</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-04-02T10:08:31+08:00"
-              content="2017-04-02" >
-          04-02
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/26/android_property_animation_1/" itemprop="url">
-              
-                <span itemprop="name">Android PropertyAnimation 属性动画（一）初探</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-26T14:14:45+08:00"
-              content="2017-03-26" >
-          03-26
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/12/android_view_onDraw_canvas/" itemprop="url">
-              
-                <span itemprop="name">Android View绘制之onDraw过程与Canvas Bitmap</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-12T16:29:40+08:00"
-              content="2017-03-12" >
-          03-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/12/android_view_onLayout/" itemprop="url">
-              
-                <span itemprop="name">Android View绘制之layout过程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-12T14:02:47+08:00"
-              content="2017-03-12" >
-          03-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/10/android_view_onMeasure/" itemprop="url">
-              
-                <span itemprop="name">Android View绘制之measure过程</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-10T18:30:16+08:00"
-              content="2017-03-10" >
-          03-10
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/03/09/android_view_lifeCycle/" itemprop="url">
-              
-                <span itemprop="name">Android View绘制生命周期总览</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated"
-              datetime="2017-03-09T17:22:41+08:00"
-              content="2017-03-09" >
-          03-09
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-    
-  </div>
 
   
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.viseator.com/2017/04/10/assembly_wang_lab_9/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="viseator">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="viseator's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+            
+            
+              
+                王爽汇编语言第三版实验9 双循环实现
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-10T20:44:49+08:00">
+                2017-04-10
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/04/10/assembly_wang_lab_9/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2017/04/10/assembly_wang_lab_9/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>编程：在屏幕中间分别显示绿色、绿底红色、白底蓝色的字符串’welcome to masm!’。</p>
+<p>效果图：</p>
+<p><img src="/images/assembly_9.jpg" alt=""></p>
+<p>采用了双循环嵌套的写法，外层控制输出行数，内层逐字符读取ASCII码与对应行的属性。</p>
+<blockquote>
+<p>  把loop s1改为loop s2有惊喜哦</p>
+</blockquote>
+<p>所有实验答案<a href="http://blog.duskdragon.com/2017/03/09/%E7%8E%8B%E7%88%BD%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E7%AC%AC%E4%B8%89%E7%89%88%E5%AE%9E%E9%AA%8C/" target="_blank" rel="external">在这里</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line">assume cs:code,ss:data</div><div class="line"></div><div class="line">code segment</div><div class="line">    mov ax,0b800h</div><div class="line">    mov ds,ax</div><div class="line">    mov bx,1760</div><div class="line"></div><div class="line">    mov ax,data</div><div class="line">    mov ss,ax</div><div class="line">    mov si,0</div><div class="line"></div><div class="line">    mov bp,0</div><div class="line">    mov cx,3</div><div class="line">s1: mov ss:[19],cx</div><div class="line">    mov si,0</div><div class="line">    mov cx,16</div><div class="line">s2: mov di,si</div><div class="line">    add di,di</div><div class="line">    mov al,ss:[si]</div><div class="line">    mov [bx+64+di],al</div><div class="line">    mov al,ss:[16+bp]</div><div class="line">    mov [bx+65+di],al</div><div class="line">    inc si</div><div class="line">    loop s2</div><div class="line">    inc bp</div><div class="line">    add bx,160</div><div class="line">    mov cx,ss:[19]</div><div class="line">    loop s1</div><div class="line">    mov ax,4c00h</div><div class="line">    int 21h</div><div class="line">code ends</div><div class="line"></div><div class="line">data segment</div><div class="line">    db &apos;welcome to masm!&apos;</div><div class="line">    db 00000010b,00100100b,01110001b</div><div class="line">    dw 0</div><div class="line">data ends</div><div class="line"></div><div class="line">end</div></pre></td></tr></table></figure>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Assembly/" rel="tag"># Assembly</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/02/android_property_animation_2/" rel="next" title="Android PropertyAnimation 属性动画（二）弹跳小球实例">
+                <i class="fa fa-chevron-left"></i> Android PropertyAnimation 属性动画（二）弹跳小球实例
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
 
           
           </div>
@@ -504,6 +513,14 @@
 
 
           
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2017/04/10/assembly_wang_lab_9/"
+           data-title="王爽汇编语言第三版实验9 双循环实现" data-url="http://www.viseator.com/2017/04/10/assembly_wang_lab_9/">
+      </div>
+    
+  </div>
+
 
         </div>
         
@@ -745,6 +762,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
 
   
 
