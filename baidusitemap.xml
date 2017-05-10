@@ -4,25 +4,8 @@
 
     
   <url>
-    <loc>http://www.viseator.com/2017/04/10/assembly_wang_lab_9/</loc>
-    <lastmod>2017-04-10T12:58:06.135Z</lastmod>
-    <data>
-        <display>
-        <title>王爽汇编语言第三版实验9 双循环实现</title>
-        <pubTime>2017-04-10T12:44:49.000Z</pubTime>
-        
-        <tag>Assembly</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.viseator.com/2017/03/25/resource_general/</loc>
-    <lastmod>2017-04-08T04:41:52.000Z</lastmod>
+    <lastmod>2017-05-10T13:09:46.341Z</lastmod>
     <data>
         <display>
         <title>学习资源收集</title>
@@ -35,6 +18,23 @@
              
               <breadCrumb title="Resource" url="http://www.viseator.com/categories/Resource/"/>
           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.viseator.com/2017/04/10/assembly_wang_lab_9/</loc>
+    <lastmod>2017-04-10T12:58:06.135Z</lastmod>
+    <data>
+        <display>
+        <title>王爽汇编语言第三版实验9 双循环实现</title>
+        <pubTime>2017-04-10T12:44:49.000Z</pubTime>
+        
+        <tag>Assembly</tag>
+         
+         
+           
         </display>
     </data>
     </url>
