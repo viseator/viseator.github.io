@@ -463,7 +463,10 @@
       
         
           <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>在团队内部的hackweek中实现了一个在局域网环境中（同一个wifi下）进行的卡片收发小游戏，踩了一些关于局域网内通信的坑，这篇博文就用来整理一下整个过程的思路，<a href="https://github.com/viseator/AnonymousCard" target="_blank" rel="external">完整代码地址</a>。</p>
-<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2>
+<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><p>在整个过程中利用到了UDP与TCP两种传输层协议，两者的特性决定了使用上的不同。</p>
+<p>简单地说，UDP非面向连接，不需要先与目标建立连接，所以UDP不提供可靠的数据传输，也不能保证数据准确无误地到达目的地，但UDP的优势在于它可以迅速传送大量信息，传输性能比较好。</p>
+<p>而TCP是面向连接的协议，需要经过三次握手与目的地址建立一个稳定的连接，可以保证数据准确、完整地到达。但是它的传输效率就没有UDP那么高。</p>
+<p>首先，为了数据传输的稳定和准确性，在传送主要数据部分我们必需使用TCP来建立一个点对点的稳定的连接来传输主要数据。</p>
           <!--noindex-->
           <div class="post-button text-center">
             <a class="btn" href="/2017/05/11/android_lan_messages/#more" rel="contents">
