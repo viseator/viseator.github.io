@@ -4,25 +4,8 @@
 
     
   <url>
-    <loc>http://www.viseator.com/2017/04/10/assembly_wang_lab_9/</loc>
-    <lastmod>2017-05-11T12:27:40.000Z</lastmod>
-    <data>
-        <display>
-        <title>王爽汇编语言第三版实验9 双循环实现</title>
-        <pubTime>2017-04-10T12:44:49.000Z</pubTime>
-        
-        <tag>Assembly</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.viseator.com/2017/05/11/android_lan_messages/</loc>
-    <lastmod>2017-05-11T12:27:16.000Z</lastmod>
+    <lastmod>2017-05-11T12:29:32.345Z</lastmod>
     <data>
         <display>
         <title>Android利用UDP、TCP进行局域网数据传输</title>
@@ -36,6 +19,26 @@
            
              
               <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.viseator.com/2017/04/10/assembly_wang_lab_9/</loc>
+    <lastmod>2017-05-11T12:29:15.509Z</lastmod>
+    <data>
+        <display>
+        <title>王爽汇编语言第三版实验9 双循环实现</title>
+        <pubTime>2017-04-10T12:44:49.000Z</pubTime>
+        
+        <tag>Assembly</tag>
+         
+         
+           
+             
+              <breadCrumb title="Assembly" url="http://www.viseator.com/categories/Assembly/"/>
           
         </display>
     </data>
