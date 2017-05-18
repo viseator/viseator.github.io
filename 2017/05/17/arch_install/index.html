@@ -107,7 +107,8 @@
 <meta property="og:image" content="http://www.viseator.com/images/arch06.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch07.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch08.jpg">
-<meta property="og:updated_time" content="2017-05-18T08:13:04.777Z">
+<meta property="og:image" content="http://www.viseator.com/images/arch09.jpg">
+<meta property="og:updated_time" content="2017-05-18T08:44:40.333Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用官方Wiki的方式安装ArchLinux（编写中）">
 <meta name="twitter:description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
@@ -458,7 +459,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  3,164
+                  3,548
                 </span>
               
 
@@ -492,7 +493,7 @@
 <li>缺乏合适的教程：安装Arch最好的也是最完备的教程就是官方的<a href="https://wiki.archlinux.org/index.php/installation_guide" target="_blank" rel="external">Installation guide</a>与<a href="https://wiki.archlinux.org/" target="_blank" rel="external">Wiki</a>，虽然部分内容有中文版，但是中文的翻译有些时候会落后于英文版，不推荐完全依赖于中文Wiki。并且官方Wiki的写作方式更偏向于文档，没有我们所习惯的按步骤编排的安装过程，给不熟悉这种写作方式的同学造成了阅读与使用上的困难。国内的可以找到的教程往往都是时间比较久远，或是没有提及或是忽略了一些新手容易犯错误的地方。</li>
 </ul>
 <blockquote>
-<p>  本篇教程致力于与现有的Wiki保持一致，并且适当地加入一些适合初学者学习的链接，希望可以让阅读了这篇教程的同学可以提高自己利用现有及以后可能出现的新的Wiki内容的能力。</p>
+<p>  <strong>本篇教程致力于与现有的Wiki保持一致，并且适当地加入一些适合初学者学习的链接，希望可以让阅读了这篇教程的同学可以提高自己利用现有及以后可能出现的新的Wiki内容的能力。</strong></p>
 </blockquote>
 <p><code>ArchLinux</code>或者是<code>Linux</code>的优点就不在这里多说了，我相信打开这篇教程的同学一定可以从这样的过程中得到很多。</p>
 <p>下面就正式开始我们的教程。</p>
@@ -599,7 +600,7 @@
 <h4 id="更新系统时间"><a href="#更新系统时间" class="headerlink" title="更新系统时间"></a>更新系统时间</h4><p>输入如下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">timedatectl <span class="built_in">set</span>-ntp <span class="literal">true</span></div></pre></td></tr></table></figure>
 <blockquote>
-<p>  正常情况下这样的命令并没有输出，也就是没有消息就是最好的消息</p>
+<p>  正常情况下这样的命令并没有输出，所谓没有消息就是最好的消息</p>
 </blockquote>
 <h4 id="分区与格式化"><a href="#分区与格式化" class="headerlink" title="分区与格式化"></a>分区与格式化</h4><p><strong>特别注意：涉及到分区与格式化的操作要格外注意，命令在回车之前请再三确认知道自己在做什么，并且没有输错命令，否则将会来带来数据的丢失！如果有需要在操作之前请备份重要的数据。</strong></p>
 <p>但是我们也并不要过于惧怕分区与格式化过程，正确操作的情况下不会对你其他数据产生任何影响。</p>
@@ -611,12 +612,12 @@
 <hr>
 <ul>
 <li>如果你是BIOS/MBR方式引导，<strong>跳过下面创建一个引导分区</strong>的步骤。</li>
-<li>如果你是EFI/GPT方式引导，并且同时安装了其他系统，那么你应该可以在分区列表中发现一个较小的并且类型为EFI的分区，这是你的引导分区，请记下它的路径（/dev/sd..)备用，<strong>跳过下面创建一个引导分区</strong>的步骤。</li>
+<li>如果你是EFI/GPT方式引导，并且同时安装了其他系统，那么你应该可以在分区列表中发现一个较小的并且类型为EFI的分区，这是你的引导分区，请记下它的路径（/dev/sdxY)备用，<strong>跳过下面创建一个引导分区</strong>的步骤。</li>
 <li>如果你是EFI/GPT方式引导，但是没有这个较小的并且类型为EFI的引导分区（这种情况一般只会出现在新的硬盘），那么你需要<strong>先创建一个引导分区</strong>。</li>
 </ul>
 <hr>
 <h5 id="创建一个引导分区（仅上面所列的第三种情况需要进行这步）"><a href="#创建一个引导分区（仅上面所列的第三种情况需要进行这步）" class="headerlink" title="创建一个引导分区（仅上面所列的第三种情况需要进行这步）"></a>创建一个引导分区（<strong>仅上面所列的第三种情况需要进行这步</strong>）</h5><p>输入命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fdisk /dev/sda （请将sda替换成你要操作的磁盘如sdb sdc等）</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fdisk /dev/sdx （请将sdx替换成你要操作的磁盘如sdb sdc等）</div></pre></td></tr></table></figure>
 <p>下面你就进入了<code>fdisk</code>的操作环境， 输入<code>m</code>并回车可以查看各命令的作用。</p>
 <ol>
 <li><p>如果你是一块全新的硬盘，输入<code>g</code>来创建一个全新的gpt分区表。</p>
@@ -635,7 +636,7 @@
 </ol>
 <p>现在引导分区就创建好了。</p>
 <h5 id="创建根分区"><a href="#创建根分区" class="headerlink" title="创建根分区"></a>创建根分区</h5><p>输入命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fdisk /dev/sda （请将sda替换成你要操作的磁盘如sdb sdc等）</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fdisk /dev/sdx （请将sdx替换成你要操作的磁盘如sdb sdc等）</div></pre></td></tr></table></figure>
 <ol>
 <li><p>如果你是一块全新的硬盘，输入<code>o</code>来创建一个新的MBR分区表。</p>
 </li>
@@ -652,6 +653,29 @@
 <p>这是我的分区过程供参考：</p>
 <p><img src="/images/arch07.jpg" alt=""></p>
 <p><img src="/images/arch08.jpg" alt=""></p>
+<h4 id="挂载分区"><a href="#挂载分区" class="headerlink" title="挂载分区"></a>挂载分区</h4><p>执行以下命令将根分区挂载到<code>/mnt</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mount /dev/sdxY /mnt （请将sdxY替换为之前创建的根分区）</div></pre></td></tr></table></figure>
+<hr>
+<p><strong>如果你是EFI/GPT引导方式</strong>，执行以下命令创建/boot文件夹并将引导分区挂载到上面。<strong>BIOS/MBR引导方式无需进行这步。</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir /mnt/boot</div><div class="line">mkdir /dev/sdxY /mnt/boot （请将sdxY替换为之前创建的引导分区）</div></pre></td></tr></table></figure>
+<hr>
+<h4 id="选择镜像源"><a href="#选择镜像源" class="headerlink" title="选择镜像源"></a>选择镜像源</h4><p>因为从这步开始，需要进行一些编辑配置文件的操作，所以需要掌握一些命令行下非常著名的一款编辑器<code>Vim</code>的基本操作，在这里推荐学习下面这个链接中的存活部分，可以完成编辑、复制粘贴与保存工作即可。</p>
+<blockquote>
+<p>  <a href="http://coolshell.cn/articles/5426.html" target="_blank" rel="external">http://coolshell.cn/articles/5426.html</a></p>
+</blockquote>
+<hr>
+<p>镜像源是我们下载的软件包的来源，我们需要根据自己的地区选择不同的源来加快下载的速度。</p>
+<p>执行以下命令，用<code>Vim</code>来编辑<code>/etc/pacman.d/mirrorlist</code>这个文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/pacman.d/mirrorlist</div></pre></td></tr></table></figure>
+<blockquote>
+<p>  提示：输入路径时可以用<code>Tab</code>键补全</p>
+</blockquote>
+<p><img src="/images/arch09.jpg" alt=""></p>
+<p>找到标有<code>China</code>的镜像源，<code>normal</code>模式下按下<code>dd</code>可以剪切光标下的行，按<code>gg</code>回到文件首，按<code>p</code>将行粘贴到文件最前面的位置。</p>
+<p>当然也可以直接手工输入。</p>
+<p>这里推荐使用清华、浙大源：</p>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Server = http:<span class="regexp">//mi</span>rrors.tuna.tsinghua.edu.cn<span class="regexp">/archlinux/</span><span class="variable">$repo</span><span class="regexp">/os/</span><span class="variable">$arch</span></div><div class="line">Server = http:<span class="regexp">//mi</span>rrors.zju.edu.cn<span class="regexp">/archlinux/</span><span class="variable">$repo</span><span class="regexp">/os/</span><span class="variable">$arch</span></div></pre></td></tr></table></figure>
+<p>最后记得用<code>:wq</code>命令保存文件并退出。</p>
 
       
     </div>
@@ -885,7 +909,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装教程"><span class="nav-number">2.</span> <span class="nav-text">安装教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前期准备"><span class="nav-number">2.1.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装介质"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装介质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#磁盘准备"><span class="nav-number">2.1.2.</span> <span class="nav-text">磁盘准备</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#U盘安装"><span class="nav-number">2.2.</span> <span class="nav-text">U盘安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置启动顺序"><span class="nav-number">2.2.1.</span> <span class="nav-text">设置启动顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进入U盘下的Linux系统"><span class="nav-number">2.2.2.</span> <span class="nav-text">进入U盘下的Linux系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#检查引导方式"><span class="nav-number">2.2.3.</span> <span class="nav-text">检查引导方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#联网"><span class="nav-number">2.2.4.</span> <span class="nav-text">联网</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新系统时间"><span class="nav-number">2.2.5.</span> <span class="nav-text">更新系统时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分区与格式化"><span class="nav-number">2.2.6.</span> <span class="nav-text">分区与格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查看目前的分区情况"><span class="nav-number">2.2.6.1.</span> <span class="nav-text">查看目前的分区情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建一个引导分区（仅上面所列的第三种情况需要进行这步）"><span class="nav-number">2.2.6.2.</span> <span class="nav-text">创建一个引导分区（仅上面所列的第三种情况需要进行这步）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建根分区"><span class="nav-number">2.2.6.3.</span> <span class="nav-text">创建根分区</span></a></li></ol></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装教程"><span class="nav-number">2.</span> <span class="nav-text">安装教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前期准备"><span class="nav-number">2.1.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装介质"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装介质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#磁盘准备"><span class="nav-number">2.1.2.</span> <span class="nav-text">磁盘准备</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#U盘安装"><span class="nav-number">2.2.</span> <span class="nav-text">U盘安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置启动顺序"><span class="nav-number">2.2.1.</span> <span class="nav-text">设置启动顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进入U盘下的Linux系统"><span class="nav-number">2.2.2.</span> <span class="nav-text">进入U盘下的Linux系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#检查引导方式"><span class="nav-number">2.2.3.</span> <span class="nav-text">检查引导方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#联网"><span class="nav-number">2.2.4.</span> <span class="nav-text">联网</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新系统时间"><span class="nav-number">2.2.5.</span> <span class="nav-text">更新系统时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分区与格式化"><span class="nav-number">2.2.6.</span> <span class="nav-text">分区与格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查看目前的分区情况"><span class="nav-number">2.2.6.1.</span> <span class="nav-text">查看目前的分区情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建一个引导分区（仅上面所列的第三种情况需要进行这步）"><span class="nav-number">2.2.6.2.</span> <span class="nav-text">创建一个引导分区（仅上面所列的第三种情况需要进行这步）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建根分区"><span class="nav-number">2.2.6.3.</span> <span class="nav-text">创建根分区</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#挂载分区"><span class="nav-number">2.2.7.</span> <span class="nav-text">挂载分区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择镜像源"><span class="nav-number">2.2.8.</span> <span class="nav-text">选择镜像源</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
