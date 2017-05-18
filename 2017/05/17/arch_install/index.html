@@ -109,7 +109,11 @@
 <meta property="og:image" content="http://www.viseator.com/images/arch08.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch09.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch10.jpg">
-<meta property="og:updated_time" content="2017-05-18T09:02:37.570Z">
+<meta property="og:image" content="http://www.viseator.com/images/arch11.jpg">
+<meta property="og:image" content="http://www.viseator.com/images/arch12.jpg">
+<meta property="og:image" content="http://www.viseator.com/images/arch13.jpg">
+<meta property="og:image" content="http://www.viseator.com/images/arch14.jpg">
+<meta property="og:updated_time" content="2017-05-18T09:24:38.574Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用官方Wiki的方式安装ArchLinux（编写中）">
 <meta name="twitter:description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
@@ -460,7 +464,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  3,919
+                  4,307
                 </span>
               
 
@@ -695,7 +699,34 @@
 <hr>
 <p>这里顺便说一下，如果以后我们的系统出现了问题，只要插入U盘并启动， 将我们的系统根分区挂载到了<code>/mnt</code>下，再通过这条命令就可以进入我们的系统进行修复操作。</p>
 <hr>
-
+<h4 id="设置时区"><a href="#设置时区" class="headerlink" title="设置时区"></a>设置时区</h4><p>依次执行如下命令设置我们的时区为上海并生成相关文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</div><div class="line">hwclock --systohc</div></pre></td></tr></table></figure>
+<p><img src="/images/arch11.jpg" alt=""></p>
+<h4 id="设置Locale"><a href="#设置Locale" class="headerlink" title="设置Locale"></a>设置Locale</h4><p>设置我们使用的语言选项，执行如下命令来编辑<code>/etc/locale.gen</code>文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/locale.gen</div></pre></td></tr></table></figure>
+<hr>
+<p>等等，怎么提示<code>bash:vim:command not found</code>了？</p>
+<p>因为我们现在已经<code>Chroot</code>到了新的系统中，只有一些最基本的包（组件），这时候我们就需要自己安装新的包了，下面就要介绍一下<code>ArchLinux</code>下非常强大的包管理工具<code>pacman</code>，大部分情况下，一行命令就可以搞定包与依赖的问题。</p>
+<p>安装包的命令格式为<code>pacman -S 包名</code>，<code>pacman</code>会自动检查这个包所需要的其他包（即为依赖）并一起装上。下面我们就通过<code>pacman</code>来安装一些包，这些包在之后会用上，在这里先提前装好。</p>
+<p>执行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacman -S vim dialog wpa_supplicant</div></pre></td></tr></table></figure>
+<p>一路确认之后包就被成功装上了。</p>
+<p><img src="/images/arch12.jpg" alt=""></p>
+<p>图中只安装了<code>Vim</code>和它的依赖。</p>
+<hr>
+<p>安装好<code>Vim</code>以后，再次执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/locale.gen</div></pre></td></tr></table></figure>
+<p>在文件中找到<code>zh_CN.UTF-8 UTF-8</code> <code>zh_HK.UTF-8 UTF-8</code> <code>zh_TW.UTF-8 UTF-8``en_US.UTF-8 UTF-8</code>这四行，去掉行首的#号，保存并退出。如图：</p>
+<p><img src="/images/arch13.jpg" alt=""></p>
+<p><img src="/images/arch14.jpg" alt=""></p>
+<p>然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">locale-gen</div></pre></td></tr></table></figure>
+<p>打开（不存在时会创建）<code>/etc/locale.conf</code>文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/locale.conf</div></pre></td></tr></table></figure>
+<p>在文件的第一行加入以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LANG=en_US.UTF-8</div></pre></td></tr></table></figure>
+<p>保存并退出。</p>
+<h4 id="设置主机名"><a href="#设置主机名" class="headerlink" title="设置主机名"></a>设置主机名</h4>
       
     </div>
 
@@ -928,7 +959,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装教程"><span class="nav-number">2.</span> <span class="nav-text">安装教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前期准备"><span class="nav-number">2.1.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装介质"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装介质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#磁盘准备"><span class="nav-number">2.1.2.</span> <span class="nav-text">磁盘准备</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#U盘安装"><span class="nav-number">2.2.</span> <span class="nav-text">U盘安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置启动顺序"><span class="nav-number">2.2.1.</span> <span class="nav-text">设置启动顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进入U盘下的Linux系统"><span class="nav-number">2.2.2.</span> <span class="nav-text">进入U盘下的Linux系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#检查引导方式"><span class="nav-number">2.2.3.</span> <span class="nav-text">检查引导方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#联网"><span class="nav-number">2.2.4.</span> <span class="nav-text">联网</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新系统时间"><span class="nav-number">2.2.5.</span> <span class="nav-text">更新系统时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分区与格式化"><span class="nav-number">2.2.6.</span> <span class="nav-text">分区与格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查看目前的分区情况"><span class="nav-number">2.2.6.1.</span> <span class="nav-text">查看目前的分区情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建一个引导分区（仅上面所列的第三种情况需要进行这步）"><span class="nav-number">2.2.6.2.</span> <span class="nav-text">创建一个引导分区（仅上面所列的第三种情况需要进行这步）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建根分区"><span class="nav-number">2.2.6.3.</span> <span class="nav-text">创建根分区</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#挂载分区"><span class="nav-number">2.2.7.</span> <span class="nav-text">挂载分区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择镜像源"><span class="nav-number">2.2.8.</span> <span class="nav-text">选择镜像源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装基本包"><span class="nav-number">2.2.9.</span> <span class="nav-text">安装基本包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置Fstab"><span class="nav-number">2.2.10.</span> <span class="nav-text">配置Fstab</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chroot"><span class="nav-number">2.2.11.</span> <span class="nav-text">Chroot</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装教程"><span class="nav-number">2.</span> <span class="nav-text">安装教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前期准备"><span class="nav-number">2.1.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装介质"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装介质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#磁盘准备"><span class="nav-number">2.1.2.</span> <span class="nav-text">磁盘准备</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#U盘安装"><span class="nav-number">2.2.</span> <span class="nav-text">U盘安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置启动顺序"><span class="nav-number">2.2.1.</span> <span class="nav-text">设置启动顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进入U盘下的Linux系统"><span class="nav-number">2.2.2.</span> <span class="nav-text">进入U盘下的Linux系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#检查引导方式"><span class="nav-number">2.2.3.</span> <span class="nav-text">检查引导方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#联网"><span class="nav-number">2.2.4.</span> <span class="nav-text">联网</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新系统时间"><span class="nav-number">2.2.5.</span> <span class="nav-text">更新系统时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分区与格式化"><span class="nav-number">2.2.6.</span> <span class="nav-text">分区与格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查看目前的分区情况"><span class="nav-number">2.2.6.1.</span> <span class="nav-text">查看目前的分区情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建一个引导分区（仅上面所列的第三种情况需要进行这步）"><span class="nav-number">2.2.6.2.</span> <span class="nav-text">创建一个引导分区（仅上面所列的第三种情况需要进行这步）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建根分区"><span class="nav-number">2.2.6.3.</span> <span class="nav-text">创建根分区</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#挂载分区"><span class="nav-number">2.2.7.</span> <span class="nav-text">挂载分区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择镜像源"><span class="nav-number">2.2.8.</span> <span class="nav-text">选择镜像源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装基本包"><span class="nav-number">2.2.9.</span> <span class="nav-text">安装基本包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置Fstab"><span class="nav-number">2.2.10.</span> <span class="nav-text">配置Fstab</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chroot"><span class="nav-number">2.2.11.</span> <span class="nav-text">Chroot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置时区"><span class="nav-number">2.2.12.</span> <span class="nav-text">设置时区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置Locale"><span class="nav-number">2.2.13.</span> <span class="nav-text">设置Locale</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置主机名"><span class="nav-number">2.2.14.</span> <span class="nav-text">设置主机名</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
