@@ -113,7 +113,9 @@
 <meta property="og:image" content="http://www.viseator.com/images/arch12.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch13.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch14.jpg">
-<meta property="og:updated_time" content="2017-05-18T09:24:38.574Z">
+<meta property="og:image" content="http://www.viseator.com/images/arch15.jpg">
+<meta property="og:image" content="http://www.viseator.com/images/arch16.jpg">
+<meta property="og:updated_time" content="2017-05-18T09:32:34.904Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用官方Wiki的方式安装ArchLinux（编写中）">
 <meta name="twitter:description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
@@ -464,7 +466,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  4,307
+                  4,407
                 </span>
               
 
@@ -721,12 +723,24 @@
 <p><img src="/images/arch14.jpg" alt=""></p>
 <p>然后执行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">locale-gen</div></pre></td></tr></table></figure>
+<p><img src="/images/arch15.jpg" alt=""></p>
 <p>打开（不存在时会创建）<code>/etc/locale.conf</code>文件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/locale.conf</div></pre></td></tr></table></figure>
 <p>在文件的第一行加入以下内容：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">LANG=en_US.UTF-8</div></pre></td></tr></table></figure>
 <p>保存并退出。</p>
-<h4 id="设置主机名"><a href="#设置主机名" class="headerlink" title="设置主机名"></a>设置主机名</h4>
+<h4 id="设置主机名"><a href="#设置主机名" class="headerlink" title="设置主机名"></a>设置主机名</h4><p>打开（不存在时会创建）<code>/etc/hostname</code>文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/hostname</div></pre></td></tr></table></figure>
+<p>在文件的第一行输入你自己设定的一个<code>myhostname</code></p>
+<p>保存并退出。</p>
+<p>编辑<code>/etc/hosts</code>文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/hosts</div></pre></td></tr></table></figure>
+<p>作如下修改（将<code>myhostname</code>替换成你自己设定的主机名）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">127.0.0.1	localhost.localdomain	localhost</div><div class="line">::1		localhost.localdomain	localhost</div><div class="line">127.0.1.1	myhostname.localdomain	myhostname</div></pre></td></tr></table></figure>
+<p><img src="/images/arch16.jpg" alt=""></p>
+<p>这里我设置的是<code>viseator</code>。</p>
+<p>保存并退出。</p>
+
       
     </div>
 
