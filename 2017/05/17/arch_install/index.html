@@ -115,7 +115,10 @@
 <meta property="og:image" content="http://www.viseator.com/images/arch14.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch15.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch16.jpg">
-<meta property="og:updated_time" content="2017-05-18T09:37:20.324Z">
+<meta property="og:image" content="http://www.viseator.com/images/arch17.jpg">
+<meta property="og:image" content="http://www.viseator.com/images/arch18.jpg">
+<meta property="og:image" content="http://www.viseator.com/images/arch19.jpg">
+<meta property="og:updated_time" content="2017-05-18T10:46:49.843Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="用官方Wiki的方式安装ArchLinux（编写中）">
 <meta name="twitter:description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
@@ -466,7 +469,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  4,407
+                  5,182
                 </span>
               
 
@@ -740,6 +743,62 @@
 <p><img src="/images/arch16.jpg" alt=""></p>
 <p>这里我设置的是<code>viseator</code>。</p>
 <p>保存并退出。</p>
+<h4 id="设置Root密码"><a href="#设置Root密码" class="headerlink" title="设置Root密码"></a>设置Root密码</h4><p><code>Root</code>是<code>Linux</code>中具有最高权限帐户，有些敏感的操作必须通过<code>Root</code>用户进行，比如使用<code>pacman</code>，我们之前进行所有的操作也都是以<code>Root</code>用户进行的，也正是因为<code>Root</code>的权限过高，如果使用不当会造成安全问题，所以我们之后会新建一个普通用户来进行日常的操作。在这里我们需要为<code>Root</code>帐户设置一个密码：</p>
+<p>执行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">passwd</div></pre></td></tr></table></figure>
+<p>按提示设置并确认就可以了。</p>
+<p><img src="/images/arch17.jpg" alt=""></p>
+<hr>
+<p>或许有的人已经发现官方Wiki和一些其他教程资料中的命令是以<code>#</code>或<code>$</code>开头的，这两个符号就对应着命令行中的命令提示符，<code>#</code>代表以<code>Root</code>用户执行命令，<code>$</code>代表以普通用户执行命令，平时使用教程中的命令时应该注意这一点。</p>
+<hr>
+<h4 id="安装Intel-ucode（非IntelCPU可以跳过此步骤）"><a href="#安装Intel-ucode（非IntelCPU可以跳过此步骤）" class="headerlink" title="安装Intel-ucode（非IntelCPU可以跳过此步骤）"></a>安装<code>Intel-ucode</code>（非<code>Intel</code>CPU可以跳过此步骤）</h4><p>直接<code>pacman</code>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacman -S intel-ucode</div></pre></td></tr></table></figure>
+<h4 id="安装Bootloader"><a href="#安装Bootloader" class="headerlink" title="安装Bootloader"></a>安装<code>Bootloader</code></h4><p>经常听说很多人因为引导问题导致系统安装失败，多数是因为教程没有统一或是过时的教程引起的，这里只要按照步骤来其实是不难的。</p>
+<p>这里我们安装最流行的<code>Grub2</code>。</p>
+<ul>
+<li><p>首先安装<code>os-prober</code>这个包，它可以配合<code>Grub</code>检测已经存在的系统，自动设置启动选项。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacman -S os-prober</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<p>如果为BIOS/MBR引导方式：</p>
+<ul>
+<li><p>安装<code>grub</code>包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacman -S grub</div></pre></td></tr></table></figure>
+</li>
+<li><p>部署<code>grub</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grub-install --target=i386-pc /dev/sdx （将sdx换成你安装的硬盘）</div></pre></td></tr></table></figure>
+<p>注意这里的<code>sdx</code>应该为硬盘（例如<code>/dev/sda</code>），<strong>而不是</strong>形如<code>/dev/sda1</code>这样的分区。</p>
+</li>
+<li><p>生成配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grub-mkconfig -o /boot/grub/grub.cfg</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><img src="/images/arch18.jpg" alt=""></p>
+<p><strong>如果你没有看到如图所示的提示信息，请仔细检查是否正确完成上面的过程。</strong></p>
+<hr>
+<p>如果为EFI/GPT引导方式：</p>
+<ul>
+<li><p>安装<code>grub</code>与<code>efibootmgr</code>两个包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacman -S grub efibootmgr</div></pre></td></tr></table></figure>
+</li>
+<li><p>部署<code>grub</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub</div></pre></td></tr></table></figure>
+</li>
+<li><p>生成配置文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grub-mkconfig -o /boot/grub/grub.cfg</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><strong>提示信息应与上面的图类似，如果你发现错误，请仔细检查是否正确完成上面的过程。</strong></p>
+<hr>
+<p>接下来，你需要进行重启来启动已经安装好的系统，执行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">exit</span></div><div class="line">reboot</div></pre></td></tr></table></figure>
+<p>注意这个时候你可能会卡在有两行提示的地方无法正常关机，长按电源键强制关机即可，没有影响。</p>
+<p>关机后拔出U盘，启动顺序会自动以硬盘启动，如果一切顺利，那么你将会看到下面的界面：</p>
+<p><img src="/images/arch19.jpg" alt=""></p>
+<p>启动时有可能会有输出信息显示在这里，直接回车就可以了。</p>
+<p>输入<code>root</code>，再输入之前设置的密码，显示出命令提示符，恭喜你，你已经成功安装<code>ArchLinux</code>！</p>
+<p>但是虽然系统安装好了，但是还没有进行基本配置和安装图形界面，所以接下来我们来进行一些必须的配置和图形界面的安装。</p>
 
       
     </div>
@@ -973,7 +1032,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装教程"><span class="nav-number">2.</span> <span class="nav-text">安装教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前期准备"><span class="nav-number">2.1.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装介质"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装介质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#磁盘准备"><span class="nav-number">2.1.2.</span> <span class="nav-text">磁盘准备</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#U盘安装"><span class="nav-number">2.2.</span> <span class="nav-text">U盘安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置启动顺序"><span class="nav-number">2.2.1.</span> <span class="nav-text">设置启动顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进入U盘下的Linux系统"><span class="nav-number">2.2.2.</span> <span class="nav-text">进入U盘下的Linux系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#检查引导方式"><span class="nav-number">2.2.3.</span> <span class="nav-text">检查引导方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#联网"><span class="nav-number">2.2.4.</span> <span class="nav-text">联网</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新系统时间"><span class="nav-number">2.2.5.</span> <span class="nav-text">更新系统时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分区与格式化"><span class="nav-number">2.2.6.</span> <span class="nav-text">分区与格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查看目前的分区情况"><span class="nav-number">2.2.6.1.</span> <span class="nav-text">查看目前的分区情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建一个引导分区（仅上面所列的第三种情况需要进行这步）"><span class="nav-number">2.2.6.2.</span> <span class="nav-text">创建一个引导分区（仅上面所列的第三种情况需要进行这步）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建根分区"><span class="nav-number">2.2.6.3.</span> <span class="nav-text">创建根分区</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#挂载分区"><span class="nav-number">2.2.7.</span> <span class="nav-text">挂载分区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择镜像源"><span class="nav-number">2.2.8.</span> <span class="nav-text">选择镜像源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装基本包"><span class="nav-number">2.2.9.</span> <span class="nav-text">安装基本包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置Fstab"><span class="nav-number">2.2.10.</span> <span class="nav-text">配置Fstab</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chroot"><span class="nav-number">2.2.11.</span> <span class="nav-text">Chroot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置时区"><span class="nav-number">2.2.12.</span> <span class="nav-text">设置时区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置Locale"><span class="nav-number">2.2.13.</span> <span class="nav-text">设置Locale</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置主机名"><span class="nav-number">2.2.14.</span> <span class="nav-text">设置主机名</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装教程"><span class="nav-number">2.</span> <span class="nav-text">安装教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前期准备"><span class="nav-number">2.1.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装介质"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装介质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#磁盘准备"><span class="nav-number">2.1.2.</span> <span class="nav-text">磁盘准备</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#U盘安装"><span class="nav-number">2.2.</span> <span class="nav-text">U盘安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置启动顺序"><span class="nav-number">2.2.1.</span> <span class="nav-text">设置启动顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进入U盘下的Linux系统"><span class="nav-number">2.2.2.</span> <span class="nav-text">进入U盘下的Linux系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#检查引导方式"><span class="nav-number">2.2.3.</span> <span class="nav-text">检查引导方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#联网"><span class="nav-number">2.2.4.</span> <span class="nav-text">联网</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新系统时间"><span class="nav-number">2.2.5.</span> <span class="nav-text">更新系统时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分区与格式化"><span class="nav-number">2.2.6.</span> <span class="nav-text">分区与格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查看目前的分区情况"><span class="nav-number">2.2.6.1.</span> <span class="nav-text">查看目前的分区情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建一个引导分区（仅上面所列的第三种情况需要进行这步）"><span class="nav-number">2.2.6.2.</span> <span class="nav-text">创建一个引导分区（仅上面所列的第三种情况需要进行这步）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建根分区"><span class="nav-number">2.2.6.3.</span> <span class="nav-text">创建根分区</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#挂载分区"><span class="nav-number">2.2.7.</span> <span class="nav-text">挂载分区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择镜像源"><span class="nav-number">2.2.8.</span> <span class="nav-text">选择镜像源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装基本包"><span class="nav-number">2.2.9.</span> <span class="nav-text">安装基本包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置Fstab"><span class="nav-number">2.2.10.</span> <span class="nav-text">配置Fstab</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chroot"><span class="nav-number">2.2.11.</span> <span class="nav-text">Chroot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置时区"><span class="nav-number">2.2.12.</span> <span class="nav-text">设置时区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置Locale"><span class="nav-number">2.2.13.</span> <span class="nav-text">设置Locale</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置主机名"><span class="nav-number">2.2.14.</span> <span class="nav-text">设置主机名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置Root密码"><span class="nav-number">2.2.15.</span> <span class="nav-text">设置Root密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Intel-ucode（非IntelCPU可以跳过此步骤）"><span class="nav-number">2.2.16.</span> <span class="nav-text">安装Intel-ucode（非IntelCPU可以跳过此步骤）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Bootloader"><span class="nav-number">2.2.17.</span> <span class="nav-text">安装Bootloader</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
