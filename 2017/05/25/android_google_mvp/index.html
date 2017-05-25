@@ -91,18 +91,18 @@
 
 
 
-<meta name="description" content="关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：    https://segmentfault.com/a/1190000003927200  本文的重点是对Google官方写的一个MVP架构实现的Demo进行简单的分析来看看谷歌实现的Android MVP架构是怎么搭建的。 谷歌官方的架构Demo地址：    https://github.com/googlesamples/androi">
+<meta name="description" content="写在前面关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：    https://segmentfault.com/a/1190000003927200  本文的重点是对Google官方写的一个MVP架构实现的Demo进行简单的分析来看看谷歌实现的Android MVP架构是怎么搭建的。 谷歌官方的架构Demo地址：    https://github.com/googlesamples/an">
 <meta name="keywords" content="Android,MVP,Architecture">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Google官方MVP架构分析">
 <meta property="og:url" content="http://www.viseator.com/2017/05/25/android_google_mvp/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
-<meta property="og:description" content="关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：    https://segmentfault.com/a/1190000003927200  本文的重点是对Google官方写的一个MVP架构实现的Demo进行简单的分析来看看谷歌实现的Android MVP架构是怎么搭建的。 谷歌官方的架构Demo地址：    https://github.com/googlesamples/androi">
+<meta property="og:description" content="写在前面关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：    https://segmentfault.com/a/1190000003927200  本文的重点是对Google官方写的一个MVP架构实现的Demo进行简单的分析来看看谷歌实现的Android MVP架构是怎么搭建的。 谷歌官方的架构Demo地址：    https://github.com/googlesamples/an">
 <meta property="og:image" content="http://www.viseator.com/images/android_mvp_uml.jpg">
-<meta property="og:updated_time" content="2017-05-25T13:25:38.267Z">
+<meta property="og:updated_time" content="2017-05-25T14:08:09.904Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Google官方MVP架构分析">
-<meta name="twitter:description" content="关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：    https://segmentfault.com/a/1190000003927200  本文的重点是对Google官方写的一个MVP架构实现的Demo进行简单的分析来看看谷歌实现的Android MVP架构是怎么搭建的。 谷歌官方的架构Demo地址：    https://github.com/googlesamples/androi">
+<meta name="twitter:description" content="写在前面关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：    https://segmentfault.com/a/1190000003927200  本文的重点是对Google官方写的一个MVP架构实现的Demo进行简单的分析来看看谷歌实现的Android MVP架构是怎么搭建的。 谷歌官方的架构Demo地址：    https://github.com/googlesamples/an">
 <meta name="twitter:image" content="http://www.viseator.com/images/android_mvp_uml.jpg">
 
 
@@ -450,7 +450,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  194
+                  820
                 </span>
               
 
@@ -472,7 +472,7 @@
       
 
       
-        <p>关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：</p>
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：</p>
 <blockquote>
 <p>  <a href="https://segmentfault.com/a/1190000003927200" target="_blank" rel="external">https://segmentfault.com/a/1190000003927200</a></p>
 </blockquote>
@@ -485,9 +485,21 @@
 <blockquote>
 <p>  <a href="https://github.com/googlesamples/android-architecture/tree/todo-mvp" target="_blank" rel="external">https://github.com/googlesamples/android-architecture/tree/todo-mvp</a></p>
 </blockquote>
-<p>需要读者参照源码查看本文，我将这个todo应用的框架提炼出来（同时也意味着丢失了很多的实现细节，但可以将架构看得更加清晰），制作了一张伪<code>UML</code>图（为了简化，没有遵循<code>UML</code>的规范），下面我们参照着表中的内容进行分析：</p>
+<p>需要读者参照源码查看本文。</p>
+<p>我将这个todo应用的框架提炼出来（同时也意味着丢失了很多的实现细节，但可以将架构看得更加清晰），制作了一张伪<code>UML</code>图（为了简化，没有遵循<code>UML</code>的规范），下面我们参照着表中的内容进行分析：</p>
 <a id="more"></a>
 <p><img src="/images/android_mvp_uml.jpg" alt=""></p>
+<h2 id="BaseView与BasePresenter"><a href="#BaseView与BasePresenter" class="headerlink" title="BaseView与BasePresenter"></a>BaseView与BasePresenter</h2><p>可以看到它们是独立于包外的两个基础接口，之后的所有<code>View</code>与<code>Presenter</code>接口都将继承它们，所以应该将一些通用的方法写在这两个<code>Base</code>接口中。</p>
+<h2 id="tasks包"><a href="#tasks包" class="headerlink" title="tasks包"></a>tasks包</h2><p>整个app中<code>tasks</code>、<code>taskdetail</code>、<code>statistics</code>三个包对应着的就是三个<code>Activity</code>，可以看到每一个包中包含了对应的<code>Activity</code>、<code>View</code> 、<code>Presenter</code>与<code>Contract</code>类和其他工具组件，通过这样的方式构成了应用的一个组成单元（每一个<code>Activity</code>与其对应的<code>View</code>和实现逻辑的<code>Presenter</code>）。</p>
+<p>图中我只展现了<code>tasks</code>这一个包，其他的包内部的结构也是一样的。</p>
+<h3 id="TasksContract接口"><a href="#TasksContract接口" class="headerlink" title="TasksContract接口"></a>TasksContract接口</h3><p><code>TasksContract</code>接口包含两个接口，分别是继承了<code>BaseView</code>与<code>BasePresenter</code>的<code>View</code>与<code>Presenter</code>。</p>
+<p>我们可以将<code>Contract</code>接口视为管理<code>View</code>与<code>Presenter</code>需要实现的方法的汇总接口，这些方法在实例类中实际上都是通过接口来进行调用的，这样就可以避免依赖于某一个特定类的方法来进行处理，从而可以有多种实现<code>View</code>与<code>Presenter</code>的方式，便于进行单元测试（可以看到源代码中就有很多单元测试的内容，但是在这篇文章中我们将它们忽略）。</p>
+<p>一切与更新UI有关的逻辑都应该放在<code>TasksContract.View</code>接口中。</p>
+<p>一切与业务有关的逻辑都应该放在<code>TaskContract.Presenter</code>接口中。</p>
+<h3 id="TasksFragment与TasksPresenter"><a href="#TasksFragment与TasksPresenter" class="headerlink" title="TasksFragment与TasksPresenter"></a>TasksFragment与TasksPresenter</h3><p><code>TasksFragment</code>与<code>TaskPresenter</code>分别是<code>TasksContract.View</code>与<code>TaskContract.Presenter</code>接口的实例。</p>
+<p><code>TaskActivity</code>在初始化时会先创建<code>TasksFragment</code>实例，再将其作为构造参数传递给<code>TaskPresenter</code>，<code>TaskPresenter</code>在构造方法中又会调用<code>TasksFragment</code>的<code>setPresenter</code>方法将自身传递给<code>TasksFragment</code>。这样<code>Presenter</code>与<code>View</code>就分别存有了一份对方的引用。</p>
+<p>构造完成后，当用户与UI进行交互，<code>View</code>一律调用<code>Presenter</code>的相关方法来进行交互事件的处理或请求数据更新。如果有新的内容需要呈现在UI上，则由<code>Presenter</code>调用<code>View</code>的相关方法来进行更新。<code>Presenter</code>则负责与上一级的数据存储池进行交互来更新数据或是获取新的数据。</p>
+<p>可以看到<code>Presenter</code>充当了一个“中介”，<code>View</code>的所有请求都将交由<code>Presenter</code>进行处理，而<code>View</code>现在需要做的只有提供相应方法供<code>Presenter</code>进行调用，避免了将大量业务逻辑写在<code>View</code>中。同时也避免了<code>View</code>与数据的直接交互，而是由<code>Presenter</code>“单线操作”，降低了耦合度。</p>
 
       
     </div>
@@ -591,8 +603,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview sidebar-panel sidebar-panel-active">
+      <section class="site-overview sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
           <img class="site-author-image" itemprop="image"
                src="/images/avatar.jpg"
@@ -704,6 +725,22 @@
 
       </section>
 
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BaseView与BasePresenter"><span class="nav-number">2.</span> <span class="nav-text">BaseView与BasePresenter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tasks包"><span class="nav-number">3.</span> <span class="nav-text">tasks包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TasksContract接口"><span class="nav-number">3.1.</span> <span class="nav-text">TasksContract接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TasksFragment与TasksPresenter"><span class="nav-number">3.2.</span> <span class="nav-text">TasksFragment与TasksPresenter</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
       
 
       
