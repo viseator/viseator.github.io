@@ -99,7 +99,7 @@
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="写在前面关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：    https://segmentfault.com/a/1190000003927200  本文的重点是对Google官方写的一个MVP架构实现的Demo进行简单的分析来看看谷歌实现的Android MVP架构是怎么搭建的。 谷歌官方的架构Demo地址：    https://github.com/googlesamples/an">
 <meta property="og:image" content="http://www.viseator.com/images/android_mvp_uml.jpg">
-<meta property="og:updated_time" content="2017-05-25T14:08:09.904Z">
+<meta property="og:updated_time" content="2017-05-25T15:22:12.267Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Google官方MVP架构分析">
 <meta name="twitter:description" content="写在前面关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：    https://segmentfault.com/a/1190000003927200  本文的重点是对Google官方写的一个MVP架构实现的Demo进行简单的分析来看看谷歌实现的Android MVP架构是怎么搭建的。 谷歌官方的架构Demo地址：    https://github.com/googlesamples/an">
@@ -450,7 +450,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  820
+                  1,229
                 </span>
               
 
@@ -500,6 +500,13 @@
 <p><code>TaskActivity</code>在初始化时会先创建<code>TasksFragment</code>实例，再将其作为构造参数传递给<code>TaskPresenter</code>，<code>TaskPresenter</code>在构造方法中又会调用<code>TasksFragment</code>的<code>setPresenter</code>方法将自身传递给<code>TasksFragment</code>。这样<code>Presenter</code>与<code>View</code>就分别存有了一份对方的引用。</p>
 <p>构造完成后，当用户与UI进行交互，<code>View</code>一律调用<code>Presenter</code>的相关方法来进行交互事件的处理或请求数据更新。如果有新的内容需要呈现在UI上，则由<code>Presenter</code>调用<code>View</code>的相关方法来进行更新。<code>Presenter</code>则负责与上一级的数据存储池进行交互来更新数据或是获取新的数据。</p>
 <p>可以看到<code>Presenter</code>充当了一个“中介”，<code>View</code>的所有请求都将交由<code>Presenter</code>进行处理，而<code>View</code>现在需要做的只有提供相应方法供<code>Presenter</code>进行调用，避免了将大量业务逻辑写在<code>View</code>中。同时也避免了<code>View</code>与数据的直接交互，而是由<code>Presenter</code>“单线操作”，降低了耦合度。</p>
+<h2 id="Data包"><a href="#Data包" class="headerlink" title="Data包"></a>Data包</h2><h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>这里的<code>Task</code>是一个<a href="https://en.wikipedia.org/wiki/Plain_old_Java_object" target="_blank" rel="external"><code>POJO</code></a>类，用于表示储存的数据。</p>
+<h3 id="source包"><a href="#source包" class="headerlink" title="source包"></a>source包</h3><h4 id="TaskDataSource接口"><a href="#TaskDataSource接口" class="headerlink" title="TaskDataSource接口"></a>TaskDataSource接口</h4><p><code>TaskDataSource</code>接口定义了所有可以的用于操作数据的对象的方法，换句话说，无论数据的来源是什么，我们都可以通过调用实现了这个接口的对象的方法来操纵数据。</p>
+<h4 id="GetTaskCallback与LoadTasksCallback"><a href="#GetTaskCallback与LoadTasksCallback" class="headerlink" title="GetTaskCallback与LoadTasksCallback"></a>GetTaskCallback与LoadTasksCallback</h4><p>注意到用于获取数据的方法的参数都利用了<code>callback</code>进行回调来传递数据。这样做主要因为数据的获取有可能是异步的，使用回调机制可以避免线程因为等待数据而阻塞。</p>
+<h4 id="local包与remote包"><a href="#local包与remote包" class="headerlink" title="local包与remote包"></a>local包与remote包</h4><p>这两个包分别存放着一个实现了<code>TaskDataSource</code>接口的类，他们就代表了从本地缓存获取数据与从远端获取数据。当然与获取数据有关的其他类也应该放在这个包下。</p>
+<h4 id="TaskRepository"><a href="#TaskRepository" class="headerlink" title="TaskRepository"></a>TaskRepository</h4><p>有了从本地与远端获取数据的类，那么就应该有一个类对它们进行管理，我们希望的是有本地缓存时读取本地缓存，没有时就从远端的获取数据。在更为复杂的情况下，我们需要处理来自远端的请求并与本地的数据进行同步。</p>
+<p><code>TaskRepository</code>就是用于管理所有的这些数据来源并统一成一个<code>TaskDataSource</code>暴露给<code>Presenter</code>来操作数据，而这些数据管理逻辑就被隐藏在了<code>TaskRepository</code>中。</p>
+<p>值得注意的是，源码中在<code>TaskRepository</code>中还实现了一个内存缓存，可以避免从其他两个低速来源中获取数据。</p>
 
       
     </div>
@@ -735,7 +742,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BaseView与BasePresenter"><span class="nav-number">2.</span> <span class="nav-text">BaseView与BasePresenter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tasks包"><span class="nav-number">3.</span> <span class="nav-text">tasks包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TasksContract接口"><span class="nav-number">3.1.</span> <span class="nav-text">TasksContract接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TasksFragment与TasksPresenter"><span class="nav-number">3.2.</span> <span class="nav-text">TasksFragment与TasksPresenter</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BaseView与BasePresenter"><span class="nav-number">2.</span> <span class="nav-text">BaseView与BasePresenter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tasks包"><span class="nav-number">3.</span> <span class="nav-text">tasks包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TasksContract接口"><span class="nav-number">3.1.</span> <span class="nav-text">TasksContract接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TasksFragment与TasksPresenter"><span class="nav-number">3.2.</span> <span class="nav-text">TasksFragment与TasksPresenter</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data包"><span class="nav-number">4.</span> <span class="nav-text">Data包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Task"><span class="nav-number">4.1.</span> <span class="nav-text">Task</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#source包"><span class="nav-number">4.2.</span> <span class="nav-text">source包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TaskDataSource接口"><span class="nav-number">4.2.1.</span> <span class="nav-text">TaskDataSource接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GetTaskCallback与LoadTasksCallback"><span class="nav-number">4.2.2.</span> <span class="nav-text">GetTaskCallback与LoadTasksCallback</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#local包与remote包"><span class="nav-number">4.2.3.</span> <span class="nav-text">local包与remote包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TaskRepository"><span class="nav-number">4.2.4.</span> <span class="nav-text">TaskRepository</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
