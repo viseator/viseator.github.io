@@ -118,7 +118,7 @@
 <meta property="og:image" content="http://www.viseator.com/images/arch17.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch18.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch19.jpg">
-<meta property="og:updated_time" content="2017-05-19T15:00:36.000Z">
+<meta property="og:updated_time" content="2017-05-28T13:14:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="以官方Wiki的方式安装ArchLinux">
 <meta name="twitter:description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
@@ -667,7 +667,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mount /dev/sdxY /mnt （请将sdxY替换为之前创建的根分区）</div></pre></td></tr></table></figure>
 <hr>
 <p><strong>如果你是EFI/GPT引导方式</strong>，执行以下命令创建/boot文件夹并将引导分区挂载到上面。<strong>BIOS/MBR引导方式无需进行这步。</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir /mnt/boot</div><div class="line">mkdir /dev/sdxY /mnt/boot （请将sdxY替换为之前创建或是已经存在的引导分区）</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">mkdir /mnt/boot</div><div class="line">mount /dev/sdxY /mnt/boot （请将sdxY替换为之前创建或是已经存在的引导分区）</div></pre></td></tr></table></figure>
 <hr>
 <h4 id="选择镜像源"><a href="#选择镜像源" class="headerlink" title="选择镜像源"></a>选择镜像源</h4><p>因为从这步开始，需要进行一些编辑配置文件的操作，所以需要掌握一些命令行下非常著名的一款编辑器<code>Vim</code>的基本操作，在这里推荐学习下面这个链接中的存活部分，可以完成编辑、复制粘贴与保存工作即可。</p>
 <blockquote>
