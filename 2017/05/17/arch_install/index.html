@@ -117,8 +117,9 @@
 <meta property="og:image" content="http://www.viseator.com/images/arch16.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch17.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch18.jpg">
+<meta property="og:image" content="http://www.viseator.com/images/arch22.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch19.jpg">
-<meta property="og:updated_time" content="2017-05-28T13:14:39.000Z">
+<meta property="og:updated_time" content="2017-06-05T08:57:07.313Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="以官方Wiki的方式安装ArchLinux">
 <meta name="twitter:description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
@@ -469,7 +470,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  5,210
+                  5,435
                 </span>
               
 
@@ -790,6 +791,18 @@
 </li>
 </ul>
 <p><strong>提示信息应与上面的图类似，如果你发现错误，请仔细检查是否正确完成上面的过程。</strong></p>
+<hr>
+<p><strong>如果你是多系统，请注意上面一节中对<code>os-prober</code>这个包的安装。</strong></p>
+<p><strong>强烈建议使用如下命令检查是否成功生成各系统的入口，如果没有正常生成会出现开机没有系统入口的情况：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /boot/grub/grub.cfg</div></pre></td></tr></table></figure>
+<p>检查接近末尾的<code>menuentry</code>部分是否有<code>windows</code>或其他系统名入口。下图例子中是<code>Arch Linux</code>入口与检测到的<code>windows10</code>入口（安装在<code>/dev/sda1</code>），具体情况可能有不同：</p>
+<p><img src="/images/arch22.jpg" alt=""></p>
+<p><strong>如果你没有看到系统入口或者该文件不存在</strong>，请检查上一小节内容并重新生成配置文件。</p>
+<p><strong>如果你已经安装<code>os-prober</code>包并生成配置文件后还是没有生成其他系统的入口</strong>，请参照：</p>
+<blockquote>
+<p>  <a href="https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Combining_the_use_of_UUIDs_and_basic_scripting" target="_blank" rel="external">https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Combining_the_use_of_UUIDs_and_basic_scripting</a> </p>
+</blockquote>
+<p>编辑配置文件手动添加引导的分区入口。</p>
 <hr>
 <p>接下来，你需要进行重启来启动已经安装好的系统，执行如下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">exit</span></div><div class="line">reboot</div></pre></td></tr></table></figure>
