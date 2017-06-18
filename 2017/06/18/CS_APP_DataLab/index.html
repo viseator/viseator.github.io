@@ -94,14 +94,16 @@
 <meta name="description" content="关于CS:APP《深入理解计算机系统》(Computer Systems: A Programmer’s Perspective;CS:APP)这本书作为CMU核心课程的核心教材，一直被众人所推崇。这本书的主要内容就如它的英文名称那样：以一个程序员的视角看待计算机系统（现在的中文书名翻译给人一种这本书非常精深的错觉）。实际上这本书的内容并没有太过于深入，并且一直都作为计算机科学与技术专业低年级的计">
 <meta name="keywords" content="CS:APP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="深入理解计算机系统（CS:APP) - DataLab解题报告">
+<meta property="og:title" content="深入理解计算机系统（CS:APP) - Data Lab解题报告">
 <meta property="og:url" content="http://www.viseator.com/2017/06/18/CS_APP_DataLab/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="关于CS:APP《深入理解计算机系统》(Computer Systems: A Programmer’s Perspective;CS:APP)这本书作为CMU核心课程的核心教材，一直被众人所推崇。这本书的主要内容就如它的英文名称那样：以一个程序员的视角看待计算机系统（现在的中文书名翻译给人一种这本书非常精深的错觉）。实际上这本书的内容并没有太过于深入，并且一直都作为计算机科学与技术专业低年级的计">
-<meta property="og:updated_time" content="2017-06-18T07:32:21.977Z">
+<meta property="og:image" content="http://www.viseator.com/images/bitCount.jpg">
+<meta property="og:updated_time" content="2017-06-18T09:11:37.970Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="深入理解计算机系统（CS:APP) - DataLab解题报告">
+<meta name="twitter:title" content="深入理解计算机系统（CS:APP) - Data Lab解题报告">
 <meta name="twitter:description" content="关于CS:APP《深入理解计算机系统》(Computer Systems: A Programmer’s Perspective;CS:APP)这本书作为CMU核心课程的核心教材，一直被众人所推崇。这本书的主要内容就如它的英文名称那样：以一个程序员的视角看待计算机系统（现在的中文书名翻译给人一种这本书非常精深的错觉）。实际上这本书的内容并没有太过于深入，并且一直都作为计算机科学与技术专业低年级的计">
+<meta name="twitter:image" content="http://www.viseator.com/images/bitCount.jpg">
 
 
 
@@ -135,7 +137,7 @@
 
 
 
-  <title>深入理解计算机系统（CS:APP) - DataLab解题报告 | viseator's blog</title>
+  <title>深入理解计算机系统（CS:APP) - Data Lab解题报告 | viseator's blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -360,7 +362,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">深入理解计算机系统（CS:APP) - DataLab解题报告</h2>
+          <h2 class="post-title" itemprop="name headline">深入理解计算机系统（CS:APP) - Data Lab解题报告</h2>
         
 
         <div class="post-meta">
@@ -412,7 +414,7 @@
 
           
           
-             <span id="/2017/06/18/CS_APP_DataLab/" class="leancloud_visitors" data-flag-title="深入理解计算机系统（CS:APP) - DataLab解题报告">
+             <span id="/2017/06/18/CS_APP_DataLab/" class="leancloud_visitors" data-flag-title="深入理解计算机系统（CS:APP) - Data Lab解题报告">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -437,7 +439,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  503
+                  1,608
                 </span>
               
 
@@ -463,6 +465,80 @@
 <p>我在三月份时得知本书第三版的英文版即将出版就早早预订了（第三版中文翻译版早已出版），苦苦等待一个月以后终于如愿成为了这版CS:APP的第一批读者。</p>
 <p>读这本书的感受第一就是非常地爽，可以说这本书可以引领你从表层的程序一直深入到计算机内部的运作方式中，里面对于一些概念的理解也是给人一种前所未有的透彻感觉（溢出的图形表示、补码的权值理解等等）都切中了问题的本质。</p>
 <p>除了书本上的内容，CMU的<a href="http://csapp.cs.cmu.edu/3e/labs.html" target="_blank" rel="external">课程官网上还提供了11个lab</a>，这11个lab也一直深受CMU开设的课程的学生们的喜爱，在lab中我们可以将在各章中学习到的知识运用在解决一个实际的问题中，并且通过自动化的评分机制评估对知识的掌握程度。这11个lab同样是这本书的核心内容。</p>
+<a id="more"></a>
+<h2 id="Data-Lab"><a href="#Data-Lab" class="headerlink" title="Data Lab"></a>Data Lab</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>在严格限制的条件下实现简单的逻辑、补码、浮点数操作函数。</p>
+<p>本lab旨在帮助学生理解C中各类型的位表示和操作符对数据的位级作用行为。</p>
+<h3 id="第一部分-整数"><a href="#第一部分-整数" class="headerlink" title="第一部分 整数"></a>第一部分 整数</h3><p>所编写的程序必须满足如下要求：</p>
+<ol>
+<li>只能使用0-255的整型常数</li>
+<li>只能使用函数参数与函数内声明的局部变量</li>
+<li>只能使用如下单目操作符：! ~</li>
+<li>只能使用如下双目操作符：&amp; ^ | + &lt;&lt; &gt;&gt;</li>
+<li>最多只能使用有限个运算符（等于号、括号不计），可以认为使用的运算符个数越少得分越高</li>
+<li>一些函数可能对操作符有更多的限制（在题目前以操作符限制给出）</li>
+<li>禁止使用任何控制结构如 if do while for switch等</li>
+<li>禁止定义或使用任何宏</li>
+<li>禁止定义任何函数</li>
+<li>禁止调用任何函数（除了可以使用printf输出中间变量，但提交时必须去掉）</li>
+<li>禁止使用任何形式的类型转换</li>
+<li>禁止使用int以外的任何类型（包括结构体、数组、联合体）</li>
+</ol>
+<p>可以假设程序在如下环境的机器上运行：</p>
+<ul>
+<li>采用补码表示整型</li>
+<li>32位int</li>
+<li>执行算术右移</li>
+<li>右移超过类型的长度时的行为未定义</li>
+</ul>
+<h4 id="bitAnd"><a href="#bitAnd" class="headerlink" title="bitAnd"></a>bitAnd</h4><ul>
+<li>要求：只用~ |实现x&amp;y</li>
+<li>操作符限制：~ |</li>
+<li>操作符使用数量限制：8</li>
+<li>思路：略</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">bitAnd</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123; <span class="keyword">return</span> ~((~x) | (~y)); &#125;</div></pre></td></tr></table></figure>
+<h4 id="getByte"><a href="#getByte" class="headerlink" title="getByte"></a>getByte</h4><ul>
+<li><p>要求：取出x中的n号字节</p>
+<p>编号从低位到高位从0开始</p>
+</li>
+<li><p>操作符使用数量限制：6</p>
+</li>
+<li><p>思路：将x右移n*8位之后取出低8位的值</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">getByte</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> n)</span> </span>&#123; <span class="keyword">return</span> (x &gt;&gt; (n &lt;&lt; <span class="number">3</span>)) &amp; <span class="number">0xff</span>; &#125;</div></pre></td></tr></table></figure>
+<h4 id="logicalShift"><a href="#logicalShift" class="headerlink" title="logicalShift"></a>logicalShift</h4><ul>
+<li>要求：将x逻辑右移n位（0&lt;=n&lt;=31)</li>
+<li>操作符使用数量限制：20</li>
+<li>思路：将x的最高位除去后右移n位（保证高位补0），然后使用|操作符手动将最高位移动到的位置置上x的最高位。</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">logicalShift</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> a = <span class="number">1</span> &lt;&lt; <span class="number">31</span>;</div><div class="line">    <span class="keyword">return</span> ((x &amp; ~a) &gt;&gt; n) | ((!!(x &amp; a)) &lt;&lt; (<span class="number">32</span> + ~n));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="bitCount"><a href="#bitCount" class="headerlink" title="bitCount"></a>bitCount</h4><ul>
+<li><p>要求：统计x的二进制表示中1的数量</p>
+</li>
+<li><p>操作符使用数量限制：40</p>
+</li>
+<li><p>思路：</p>
+<p>做这道题参考了stackoverflow上的一个<a href="https://stackoverflow.com/questions/3815165/how-to-implement-bitcount-using-only-bitwise-operators" target="_blank" rel="external">回答</a>，核心思想是分治：</p>
+<ol>
+<li>将所有位分成32组，一组中只有1位</li>
+<li>将相邻两组合为一组，组中的数值为原来两组中的数值相加</li>
+<li>重复第2步，直到合成只有1组，组中的数值即为结果</li>
+</ol>
+<p>用图片比较便于理解：</p>
+<p><img src="/images/bitCount.jpg" alt=""></p>
+<p>可以看到最终的0x0000000F即为1的数量15</p>
+<p>该算法能成功的关键在于一开始中每组中的数值即为每组中1的数量，然后将相邻两组中的数值相加的过程就相当于将之前一级的1的数量汇总，不断重复这个过程就可以将1的数量汇总到最后的一个数中。</p>
+<p>有了算法我们还要考虑如何在题目的限制条件下实现这一算法。</p>
+<p>为了实现将相邻两组中的值相加并放在合适的位置，我们采用掩码+位移的方式，例如有掩码：</p>
+<p><code>int mask1 = 0x55555555 (0101...0101)</code></p>
+<p>那么<code>x = x &amp; mask1 + (x &gt;&gt; 1) &amp; mask1;</code>实现了相加的过程，前面一部分先取出了一半的组，右移后再取出的就是后一半的组，再由按位相加的特点，它们相加后的值就存放在特定的位上（可以参照上面的图理解这一过程）。</p>
+<p>接下来只要使用不同的掩码和不用的位移就可以一步步实现这一过程。</p>
+<p>但是题目限制中我们只能使用0x00-0xFF的整型值，所以掩码也需要我们进行构造。</p>
+<p>答案如下，注意到当剩下4组，每组8位的时候我们就可以直接位移相加再取出低8位得到它们的和。</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">bitCount</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">    <span class="comment">// referenced :</span></div><div class="line">    <span class="comment">// https://stackoverflow.com/questions/3815165/how-to-implement-bitcount-using-only-bitwise-operators</span></div><div class="line">    <span class="keyword">int</span> mask1 = <span class="number">0x55</span>;</div><div class="line">    <span class="keyword">int</span> mask2 = <span class="number">0x33</span>;</div><div class="line">    <span class="keyword">int</span> mask3 = <span class="number">0x0F</span>;</div><div class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">    mask1 = mask1 | (mask1 &lt;&lt; <span class="number">8</span>);</div><div class="line">    mask1 = mask1 | (mask1 &lt;&lt; <span class="number">16</span>);</div><div class="line">    mask2 = mask2 | (mask2 &lt;&lt; <span class="number">8</span>);</div><div class="line">    mask2 = mask2 | (mask2 &lt;&lt; <span class="number">16</span>);</div><div class="line">    mask3 = mask3 | (mask3 &lt;&lt; <span class="number">8</span>);</div><div class="line">    mask3 = mask3 | (mask3 &lt;&lt; <span class="number">16</span>);</div><div class="line"></div><div class="line">    result = (x &amp; mask1) + ((x &gt;&gt; <span class="number">1</span>) &amp; mask1);</div><div class="line">    result = (result &amp; mask2) + ((result &gt;&gt; <span class="number">2</span>) &amp; mask2);</div><div class="line">    result = (result &amp; mask3) + ((result &gt;&gt; <span class="number">4</span>) &amp; mask3);</div><div class="line">    <span class="keyword">return</span> (result + (result &gt;&gt; <span class="number">8</span>) + (result &gt;&gt; <span class="number">16</span>) + (result &gt;&gt; <span class="number">24</span>)) &amp; <span class="number">0xff</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -698,7 +774,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于CS-APP"><span class="nav-number">1.</span> <span class="nav-text">关于CS:APP</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于CS-APP"><span class="nav-number">1.</span> <span class="nav-text">关于CS:APP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Lab"><span class="nav-number">2.</span> <span class="nav-text">Data Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一部分-整数"><span class="nav-number">2.2.</span> <span class="nav-text">第一部分 整数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bitAnd"><span class="nav-number">2.2.1.</span> <span class="nav-text">bitAnd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getByte"><span class="nav-number">2.2.2.</span> <span class="nav-text">getByte</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#logicalShift"><span class="nav-number">2.2.3.</span> <span class="nav-text">logicalShift</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bitCount"><span class="nav-number">2.2.4.</span> <span class="nav-text">bitCount</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
