@@ -99,7 +99,7 @@
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="关于CS:APP《深入理解计算机系统》(Computer Systems: A Programmer’s Perspective;CS:APP)这本书作为CMU核心课程的核心教材，一直被众人所推崇。这本书的主要内容就如它的英文名称那样：以一个程序员的视角看待计算机系统（现在的中文书名翻译给人一种这本书非常精深的错觉）。实际上这本书的内容并没有太过于深入，并且一直都作为计算机科学与技术专业低年级的计">
 <meta property="og:image" content="http://www.viseator.com/images/bitCount.jpg">
-<meta property="og:updated_time" content="2017-06-18T09:11:37.970Z">
+<meta property="og:updated_time" content="2017-06-18T09:32:21.777Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解计算机系统（CS:APP) - Data Lab解题报告">
 <meta name="twitter:description" content="关于CS:APP《深入理解计算机系统》(Computer Systems: A Programmer’s Perspective;CS:APP)这本书作为CMU核心课程的核心教材，一直被众人所推崇。这本书的主要内容就如它的英文名称那样：以一个程序员的视角看待计算机系统（现在的中文书名翻译给人一种这本书非常精深的错觉）。实际上这本书的内容并没有太过于深入，并且一直都作为计算机科学与技术专业低年级的计">
@@ -439,7 +439,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,608
+                  1,992
                 </span>
               
 
@@ -464,7 +464,7 @@
         <h2 id="关于CS-APP"><a href="#关于CS-APP" class="headerlink" title="关于CS:APP"></a>关于CS:APP</h2><p>《深入理解计算机系统》(Computer Systems: A Programmer’s Perspective;CS:APP)这本书作为CMU核心课程的核心教材，一直被众人所推崇。这本书的主要内容就如它的英文名称那样：以一个程序员的视角看待计算机系统（现在的中文书名翻译给人一种这本书非常精深的错觉）。实际上这本书的内容并没有太过于深入，并且一直都作为计算机科学与技术专业低年级的计算机基础课来开设。所需要的前置知识也不是很多，一般来说学习过C语言之后就可以看了，并不需要提前学习汇编（本书第三章会讲解汇编的基础内容）。但个人感觉在学习过王爽的8086汇编以后学习本书的汇编会顺利不少。</p>
 <p>我在三月份时得知本书第三版的英文版即将出版就早早预订了（第三版中文翻译版早已出版），苦苦等待一个月以后终于如愿成为了这版CS:APP的第一批读者。</p>
 <p>读这本书的感受第一就是非常地爽，可以说这本书可以引领你从表层的程序一直深入到计算机内部的运作方式中，里面对于一些概念的理解也是给人一种前所未有的透彻感觉（溢出的图形表示、补码的权值理解等等）都切中了问题的本质。</p>
-<p>除了书本上的内容，CMU的<a href="http://csapp.cs.cmu.edu/3e/labs.html" target="_blank" rel="external">课程官网上还提供了11个lab</a>，这11个lab也一直深受CMU开设的课程的学生们的喜爱，在lab中我们可以将在各章中学习到的知识运用在解决一个实际的问题中，并且通过自动化的评分机制评估对知识的掌握程度。这11个lab同样是这本书的核心内容。</p>
+<p>除了书本上的内容，CMU的<a href="http://csapp.cs.cmu.edu/3e/labs.html" target="_blank" rel="external">课程官网上还提供了11个lab</a>，这11个lab也一直深受CMU开设的课程的学生们的喜爱，在lab中我们可以将在各章中学习到的知识运用到解决一个有趣的问题中，并且通过自动化的评分机制评估对知识的掌握程度。这11个lab同样是这本书的核心内容。</p>
 <a id="more"></a>
 <h2 id="Data-Lab"><a href="#Data-Lab" class="headerlink" title="Data Lab"></a>Data Lab</h2><h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>在严格限制的条件下实现简单的逻辑、补码、浮点数操作函数。</p>
 <p>本lab旨在帮助学生理解C中各类型的位表示和操作符对数据的位级作用行为。</p>
@@ -539,6 +539,37 @@
 </li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">bitCount</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">    <span class="comment">// referenced :</span></div><div class="line">    <span class="comment">// https://stackoverflow.com/questions/3815165/how-to-implement-bitcount-using-only-bitwise-operators</span></div><div class="line">    <span class="keyword">int</span> mask1 = <span class="number">0x55</span>;</div><div class="line">    <span class="keyword">int</span> mask2 = <span class="number">0x33</span>;</div><div class="line">    <span class="keyword">int</span> mask3 = <span class="number">0x0F</span>;</div><div class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">    mask1 = mask1 | (mask1 &lt;&lt; <span class="number">8</span>);</div><div class="line">    mask1 = mask1 | (mask1 &lt;&lt; <span class="number">16</span>);</div><div class="line">    mask2 = mask2 | (mask2 &lt;&lt; <span class="number">8</span>);</div><div class="line">    mask2 = mask2 | (mask2 &lt;&lt; <span class="number">16</span>);</div><div class="line">    mask3 = mask3 | (mask3 &lt;&lt; <span class="number">8</span>);</div><div class="line">    mask3 = mask3 | (mask3 &lt;&lt; <span class="number">16</span>);</div><div class="line"></div><div class="line">    result = (x &amp; mask1) + ((x &gt;&gt; <span class="number">1</span>) &amp; mask1);</div><div class="line">    result = (result &amp; mask2) + ((result &gt;&gt; <span class="number">2</span>) &amp; mask2);</div><div class="line">    result = (result &amp; mask3) + ((result &gt;&gt; <span class="number">4</span>) &amp; mask3);</div><div class="line">    <span class="keyword">return</span> (result + (result &gt;&gt; <span class="number">8</span>) + (result &gt;&gt; <span class="number">16</span>) + (result &gt;&gt; <span class="number">24</span>)) &amp; <span class="number">0xff</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="bang"><a href="#bang" class="headerlink" title="bang"></a>bang</h4><ul>
+<li><p>要求：不使用!实现!操作符</p>
+</li>
+<li><p>操作符限制：~ &amp; ^ | + &lt;&lt; &gt;&gt;</p>
+</li>
+<li><p>操作符使用数量限制：12</p>
+</li>
+<li><p>思路：</p>
+<p>!操作符的含义是0变为1，非0变为0，我们自然可以想到要做的是区分非零和零，零相对的非零数有一个非常明显的特征是-0=0，而对于非零数，取负后必定是一正一负而不可能相等，利用这一点，可以得出非零数与它的相反数进行|运算后符号位一定为1，我们将符号位取出并取反就可以返回正确的值。</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">bang</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; <span class="keyword">return</span> <span class="number">1</span> &amp; (<span class="number">1</span> ^ ((x | (~x + <span class="number">1</span>)) &gt;&gt; <span class="number">31</span>)); &#125;</div></pre></td></tr></table></figure>
+<h4 id="tmin"><a href="#tmin" class="headerlink" title="tmin"></a>tmin</h4><ul>
+<li>要求：返回补码表示的整型的最小值</li>
+<li>操作符使用数量限制：4</li>
+<li>思路：按照补码的权值理解，只要将权为-32的位置为1即可</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">tmin</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123; <span class="keyword">return</span> <span class="number">1</span> &lt;&lt; <span class="number">31</span>; &#125;</div></pre></td></tr></table></figure>
+<h4 id="fitBits"><a href="#fitBits" class="headerlink" title="fitBits"></a>fitBits</h4><ul>
+<li><p>要求：如果x可以用n位补码表示则返回1，否则返回0</p>
+<p>1 &lt;= n &lt;= 32</p>
+</li>
+</ul>
+<ul>
+<li><p>操作符使用数量限制：15</p>
+</li>
+<li><p>思路：</p>
+<p>如果x可以用n位补码表示，那么左移多余的位的个数后再右移回来的数值一定与原值相等，这个方法利用了左移后溢出的位会被丢弃，而右移回来时的是补符号位，如果丢弃了1或者右移时补的是1都会导致值的改变，而这两种情况也正说明了x不可以用n位补码表示。</p>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">fitsBits</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> a = <span class="number">33</span> + ~n;</div><div class="line">    <span class="keyword">return</span> !((x &lt;&lt; a &gt;&gt; a) ^ x);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -774,7 +805,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于CS-APP"><span class="nav-number">1.</span> <span class="nav-text">关于CS:APP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Lab"><span class="nav-number">2.</span> <span class="nav-text">Data Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一部分-整数"><span class="nav-number">2.2.</span> <span class="nav-text">第一部分 整数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bitAnd"><span class="nav-number">2.2.1.</span> <span class="nav-text">bitAnd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getByte"><span class="nav-number">2.2.2.</span> <span class="nav-text">getByte</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#logicalShift"><span class="nav-number">2.2.3.</span> <span class="nav-text">logicalShift</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bitCount"><span class="nav-number">2.2.4.</span> <span class="nav-text">bitCount</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于CS-APP"><span class="nav-number">1.</span> <span class="nav-text">关于CS:APP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Lab"><span class="nav-number">2.</span> <span class="nav-text">Data Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一部分-整数"><span class="nav-number">2.2.</span> <span class="nav-text">第一部分 整数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bitAnd"><span class="nav-number">2.2.1.</span> <span class="nav-text">bitAnd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getByte"><span class="nav-number">2.2.2.</span> <span class="nav-text">getByte</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#logicalShift"><span class="nav-number">2.2.3.</span> <span class="nav-text">logicalShift</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bitCount"><span class="nav-number">2.2.4.</span> <span class="nav-text">bitCount</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bang"><span class="nav-number">2.2.5.</span> <span class="nav-text">bang</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tmin"><span class="nav-number">2.2.6.</span> <span class="nav-text">tmin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fitBits"><span class="nav-number">2.2.7.</span> <span class="nav-text">fitBits</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
