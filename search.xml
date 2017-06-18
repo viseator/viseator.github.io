@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title><![CDATA[深入理解计算机系统（CS:APP) - DataLab解题报告]]></title>
+    <url>%2F2017%2F06%2F18%2FCS_APP_DataLab%2F</url>
+    <content type="text"></content>
+      <categories>
+        <category>CS:APP</category>
+      </categories>
+      <tags>
+        <tag>CS:APP</tag>
+      </tags>
+  </entry>
+  <entry>
     <title><![CDATA[Android Google官方MVP架构分析]]></title>
     <url>%2F2017%2F05%2F25%2Fandroid_google_mvp%2F</url>
     <content type="text"><![CDATA[写在前面关于MVP模式的基本介绍与优缺点可以参见下面这篇文章： https://segmentfault.com/a/1190000003927200 本文的重点是对Google官方写的一个MVP架构实现的Demo进行简单的分析来看看谷歌实现的Android MVP架构是怎么搭建的。 谷歌官方的架构Demo地址： https://github.com/googlesamples/android-architecture 本文所讲解的为： https://github.com/googlesamples/android-architecture/tree/todo-mvp 需要读者参照源码查看本文。 我将这个todo应用的框架提炼出来（同时也意味着丢失了很多的实现细节，但可以将架构看得更加清晰），制作了一张伪UML图（为了简化，没有遵循UML的规范），下面我们参照着表中的内容进行分析： BaseView与BasePresenter可以看到它们是独立于包外的两个基础接口，之后的所有View与Presenter接口都将继承它们，所以应该将一些通用的方法写在这两个Base接口中。 tasks包整个app中tasks、taskdetail、statistics三个包对应着的就是三个Activity，可以看到每一个包中包含了对应的Activity、View 、Presenter与Contract类和其他工具组件，通过这样的方式构成了应用的一个组成单元（每一个Activity与其对应的View和实现逻辑的Presenter）。 图中我只展现了tasks这一个包，其他的包内部的结构也是一样的。 TasksContract接口TasksContract接口包含两个接口，分别是继承了BaseView与BasePresenter的View与Presenter。 我们可以将Contract接口视为管理View与Presenter需要实现的方法的汇总接口，这些方法在实例类中实际上都是通过接口来进行调用的，这样就可以避免依赖于某一个特定类的方法来进行处理，从而可以有多种实现View与Presenter的方式，便于进行单元测试（可以看到源代码中就有很多单元测试的内容，但是在这篇文章中我们将它们忽略）。 一切与更新UI有关的逻辑都应该放在TasksContract.View接口中。 一切与业务有关的逻辑都应该放在TaskContract.Presenter接口中。 TasksFragment与TasksPresenterTasksFragment与TaskPresenter分别是TasksContract.View与TaskContract.Presenter接口的实例。 TaskActivity在初始化时会先创建TasksFragment实例，再将其作为构造参数传递给TaskPresenter，TaskPresenter在构造方法中又会调用TasksFragment的setPresenter方法将自身传递给TasksFragment。这样Presenter与View就分别存有了一份对方的引用。 构造完成后，当用户与UI进行交互，View一律调用Presenter的相关方法来进行交互事件的处理或请求数据更新。如果有新的内容需要呈现在UI上，则由Presenter调用View的相关方法来进行更新。Presenter则负责与上一级的数据存储池进行交互来更新数据或是获取新的数据。 可以看到Presenter充当了一个“中介”，View的所有请求都将交由Presenter进行处理，而View现在需要做的只有提供相应方法供Presenter进行调用，避免了将大量业务逻辑写在View中。同时也避免了View与数据的直接交互，而是由Presenter“单线操作”，降低了耦合度。 Data包Task这里的Task是一个POJO类，用于表示储存的数据。 source包TaskDataSource接口TaskDataSource接口定义了所有可以的用于操作数据的对象的方法，换句话说，无论数据的来源是什么，我们都可以通过调用实现了这个接口的对象的方法来操纵数据。 GetTaskCallback与LoadTasksCallback注意到用于获取数据的方法的参数都利用了callback进行回调来传递数据。这样做主要因为数据的获取有可能是异步的，使用回调机制可以避免线程因为等待数据而阻塞。 local包与remote包这两个包分别存放着一个实现了TaskDataSource接口的类，他们就代表了从本地缓存获取数据与从远端获取数据。当然与获取数据有关的其他类也应该放在这个包下。 TaskRepository有了从本地与远端获取数据的类，那么就应该有一个类对它们进行管理，我们希望的是有本地缓存时读取本地缓存，没有时就从远端的获取数据。在更为复杂的情况下，我们需要处理来自远端的请求并与本地的数据进行同步。 TaskRepository就是用于管理所有的这些数据来源并统一成一个TaskDataSource暴露给Presenter来操作数据，而这些数据管理逻辑就被隐藏在了TaskRepository中。 值得注意的是，源码中在TaskRepository中还实现了一个内存缓存，可以避免从其他两个低速来源中获取数据。]]></content>
