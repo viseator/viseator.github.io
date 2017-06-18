@@ -99,7 +99,7 @@
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="关于CS:APP《深入理解计算机系统》(Computer Systems: A Programmer’s Perspective;CS:APP)这本书作为CMU核心课程的核心教材，一直被众人所推崇。这本书的主要内容就如它的英文名称那样：以一个程序员的视角看待计算机系统（现在的中文书名翻译给人一种这本书非常精深的错觉）。实际上这本书的内容并没有太过于深入，并且一直都作为计算机科学与技术专业低年级的计">
 <meta property="og:image" content="http://www.viseator.com/images/bitCount.jpg">
-<meta property="og:updated_time" content="2017-06-18T09:32:21.777Z">
+<meta property="og:updated_time" content="2017-06-18T16:28:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解计算机系统（CS:APP) - Data Lab解题报告">
 <meta name="twitter:description" content="关于CS:APP《深入理解计算机系统》(Computer Systems: A Programmer’s Perspective;CS:APP)这本书作为CMU核心课程的核心教材，一直被众人所推崇。这本书的主要内容就如它的英文名称那样：以一个程序员的视角看待计算机系统（现在的中文书名翻译给人一种这本书非常精深的错觉）。实际上这本书的内容并没有太过于深入，并且一直都作为计算机科学与技术专业低年级的计">
@@ -439,7 +439,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,992
+                  2,990
                 </span>
               
 
@@ -558,7 +558,7 @@
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">tmin</span><span class="params">(<span class="keyword">void</span>)</span> </span>&#123; <span class="keyword">return</span> <span class="number">1</span> &lt;&lt; <span class="number">31</span>; &#125;</div></pre></td></tr></table></figure>
 <h4 id="fitBits"><a href="#fitBits" class="headerlink" title="fitBits"></a>fitBits</h4><ul>
-<li><p>要求：如果x可以用n位补码表示则返回1，否则返回0</p>
+<li><p>要求：如果x可以l只用n位补码表示则返回1，否则返回0</p>
 <p>1 &lt;= n &lt;= 32</p>
 </li>
 </ul>
@@ -566,10 +566,46 @@
 <li><p>操作符使用数量限制：15</p>
 </li>
 <li><p>思路：</p>
-<p>如果x可以用n位补码表示，那么左移多余的位的个数后再右移回来的数值一定与原值相等，这个方法利用了左移后溢出的位会被丢弃，而右移回来时的是补符号位，如果丢弃了1或者右移时补的是1都会导致值的改变，而这两种情况也正说明了x不可以用n位补码表示。</p>
+<p>如果x可以用n位补码表示，那么左移多余的位的个数后再右移回来的数值一定与原值相等，这个方法利用了左移后溢出的位会被丢弃，而右移回来时的是补符号位，如果丢弃了1或者右移时补的是1都会导致值的改变，而这两种情况也正说明了x不可以只用n位补码表示。</p>
 </li>
 </ul>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">fitsBits</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> a = <span class="number">33</span> + ~n;</div><div class="line">    <span class="keyword">return</span> !((x &lt;&lt; a &gt;&gt; a) ^ x);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h4 id="divpwr2"><a href="#divpwr2" class="headerlink" title="divpwr2"></a>divpwr2</h4><ul>
+<li>要求：计算x/(2^n) 0 &lt;= n &lt;= 30 结果向零取整</li>
+</ul>
+<ul>
+<li>操作符使用数量限制：15</li>
+<li>思路：对于正数，我们直接把x右移n位就可以得到向零取整的结果（实际上是向下取整）；对于负数，虽然我们右移n位可以得到结果，但是这个结果是向下取整的，所以我们需要适当地加上1来补为向零取整，那么我们什么时候需要加1呢？整除时当然不用，在不能整除时就都需要加上1来调整，如何判断是否整除？只要移出的位中有一个不为0，那么就表示无法整除。​<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">divpwr2</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> n)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> a = <span class="number">1</span> &lt;&lt; <span class="number">31</span>;</div><div class="line">    <span class="keyword">int</span> isALessThanZero = !!(x &amp; a);</div><div class="line">    <span class="keyword">int</span> isXHasMoreBit = (!!((~(a &gt;&gt; (<span class="number">32</span> + ~n))) &amp; x));</div><div class="line">    <span class="keyword">return</span> (x &gt;&gt; n) + (isXHasMoreBit &amp; isALessThanZero);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="negate"><a href="#negate" class="headerlink" title="negate"></a>negate</h4><ul>
+<li>要求：计算-x</li>
+<li>操作符使用数量限制：5</li>
+<li>思路：略。<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">negate</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; <span class="keyword">return</span> ~x + <span class="number">1</span>; &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="isPositive"><a href="#isPositive" class="headerlink" title="isPositive"></a>isPositive</h4><ul>
+<li>要求：如果x大于0返回1，否则返回0</li>
+<li>操作符使用数量限制：8</li>
+<li>思路：检测符号位与x是否为0即可。<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">isPositive</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; <span class="keyword">return</span> !((x &amp; (<span class="number">1</span> &lt;&lt; <span class="number">31</span>)) | !x); &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="isLessOrEqual"><a href="#isLessOrEqual" class="headerlink" title="isLessOrEqual"></a>isLessOrEqual</h4><ul>
+<li>要求：如果x小于等于y则返回1，否则返回0</li>
+<li>操作符使用数量限制：24</li>
+<li>思路：本题的基本思路是判断x-y得到的值是否小于等于0，但是要考虑溢出带来的影响，首先定义了两个变量xp,yp分别表示x,y是否大于等于0。return的表达式的含义为并并非x大于等于0且y小于0的情况下（&amp;的后半部分），如果x-y小于或等于0或x小于零且y大于等于0，则返回1。<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">isLessOrEqual</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> t = <span class="number">1</span> &lt;&lt; <span class="number">31</span>;</div><div class="line">    <span class="keyword">int</span> xp = !(x &amp; t);</div><div class="line">    <span class="keyword">int</span> yp = !(y &amp; t);</div><div class="line">    <span class="keyword">int</span> p = x + ~y + <span class="number">1</span>;</div><div class="line">    <span class="keyword">return</span> (!!(((!xp) &amp; yp) | ((p &amp; t) | !p))) &amp; (!(xp &amp; (!yp)));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h4 id="ilog2"><a href="#ilog2" class="headerlink" title="ilog2"></a>ilog2</h4><ul>
+<li>要求：返回x求以2为底的对数的结果 向下取整</li>
+<li>操作符使用数量限制：90</li>
+<li>思路：本题参照了<a href="http://blog.duskdragon.com/2017/04/04/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9FDataLab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" target="_blank" rel="external">陈志浩学长的答案</a>。<br>解题算法的核心思想是二分查找，首先我们要明白这道题实际上想让我们求的是什么，经过观察我们可以得出结论，一个数求以2为底的对数的结果就相当于它二进制中位置最高的1的序号（序号从零开始由低位到高位）。那么我们需要做的就是查找并记录这个位置最高的1的位置。<br>算法过程如下：<ol>
+<li>如果x &gt;&gt; 16的结果大于0，那么可以说明最高位的位置至少是16，那么我们可以将结果的第4位置1（序号编号规则同上），因为2 ^ 4 = 16，反之置0说明结果小于16.</li>
+<li>下面考虑两种情况，如果第1步中x &gt;&gt; 16 大于0，说明我们需要在16位之后的第8位（第24位，相当于再二分）再进行二分查找，如果x &gt;&gt; 16小于0，那我们需要在16位之前的第8位（第8位，相当于再二分）进行查找，那么我们可以得出，下次查找时的范围为x &gt;&gt; (8 + result) (result表示上一步得到的结果（0或16）)，这个+result的意义可以认为是重新确定开始进一步二分查找的位置。<br>如果x &gt;&gt; (8 + result) 的结果大于0，那么说明结果（result)的第3位必为1，相当于在结果上加上了查找到的新位置，反之第3位应该仍为0.</li>
+<li>按照上面的思路继续查找到不能再二分（偏移为x &gt;&gt; (1 + reuslt)），此时result中得到最终的最高位的位置。<br>算法讲起来比较难，参照代码推理几次就可以明白其中的巧妙之处：<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">ilog2</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</div><div class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> b4 = !!(x &gt;&gt; <span class="number">16</span>);</div><div class="line">    <span class="keyword">int</span> b3 = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> b2 = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> b1 = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> b0 = <span class="number">0</span>;</div><div class="line">    result = b4 &lt;&lt; <span class="number">4</span>;</div><div class="line">    b3 = !!(x &gt;&gt; (<span class="number">8</span> + result));</div><div class="line">    result = result | (b3 &lt;&lt; <span class="number">3</span>);</div><div class="line">    b2 = !!(x &gt;&gt; (<span class="number">4</span> + result));</div><div class="line">    result = result | (b2 &lt;&lt; <span class="number">2</span>);</div><div class="line">    b1 = !!(x &gt;&gt; (<span class="number">2</span> + result));</div><div class="line">    result = result | (b1 &lt;&lt; <span class="number">1</span>);</div><div class="line">    b0 = !!(x &gt;&gt; (<span class="number">1</span> + result));</div><div class="line">    result = result | b0;</div><div class="line">    <span class="keyword">return</span> result;</div><div class="line">&#125;</div></pre></td></tr></table></figure></li>
+</ol>
+</li>
+</ul>
 
       
     </div>
@@ -805,7 +841,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于CS-APP"><span class="nav-number">1.</span> <span class="nav-text">关于CS:APP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Lab"><span class="nav-number">2.</span> <span class="nav-text">Data Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一部分-整数"><span class="nav-number">2.2.</span> <span class="nav-text">第一部分 整数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bitAnd"><span class="nav-number">2.2.1.</span> <span class="nav-text">bitAnd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getByte"><span class="nav-number">2.2.2.</span> <span class="nav-text">getByte</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#logicalShift"><span class="nav-number">2.2.3.</span> <span class="nav-text">logicalShift</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bitCount"><span class="nav-number">2.2.4.</span> <span class="nav-text">bitCount</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bang"><span class="nav-number">2.2.5.</span> <span class="nav-text">bang</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tmin"><span class="nav-number">2.2.6.</span> <span class="nav-text">tmin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fitBits"><span class="nav-number">2.2.7.</span> <span class="nav-text">fitBits</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于CS-APP"><span class="nav-number">1.</span> <span class="nav-text">关于CS:APP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Lab"><span class="nav-number">2.</span> <span class="nav-text">Data Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一部分-整数"><span class="nav-number">2.2.</span> <span class="nav-text">第一部分 整数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bitAnd"><span class="nav-number">2.2.1.</span> <span class="nav-text">bitAnd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getByte"><span class="nav-number">2.2.2.</span> <span class="nav-text">getByte</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#logicalShift"><span class="nav-number">2.2.3.</span> <span class="nav-text">logicalShift</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bitCount"><span class="nav-number">2.2.4.</span> <span class="nav-text">bitCount</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bang"><span class="nav-number">2.2.5.</span> <span class="nav-text">bang</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tmin"><span class="nav-number">2.2.6.</span> <span class="nav-text">tmin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fitBits"><span class="nav-number">2.2.7.</span> <span class="nav-text">fitBits</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#divpwr2"><span class="nav-number">2.2.8.</span> <span class="nav-text">divpwr2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#negate"><span class="nav-number">2.2.9.</span> <span class="nav-text">negate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#isPositive"><span class="nav-number">2.2.10.</span> <span class="nav-text">isPositive</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#isLessOrEqual"><span class="nav-number">2.2.11.</span> <span class="nav-text">isLessOrEqual</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ilog2"><span class="nav-number">2.2.12.</span> <span class="nav-text">ilog2</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
