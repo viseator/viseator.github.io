@@ -4,19 +4,49 @@
 
     
   <url>
-    <loc>http://www.viseator.com/2017/06/18/CS_APP_DataLab/</loc>
-    <lastmod>2017-06-21T01:38:58.786Z</lastmod>
+    <loc>http://www.viseator.com/2017/06/21/CS_APP_BombLab/</loc>
+    <lastmod>2017-06-21T02:27:26.106Z</lastmod>
     <data>
         <display>
-        <title>深入理解计算机系统（CS:APP) - Data Lab解题报告</title>
-        <pubTime>2017-06-18T07:01:01.000Z</pubTime>
+        <title>深入理解计算机系统（CS:APP) - Bomb Lab解题报告</title>
+        <pubTime>2017-06-21T01:53:01.000Z</pubTime>
         
+        <tag>Computer System</tag>
+         
         <tag>CS:APP</tag>
          
          
            
              
-              <breadCrumb title="CS:APP" url="http://www.viseator.com/categories/CS-APP/"/>
+              <breadCrumb title="Computer System" url="http://www.viseator.com/categories/Computer-System/"/>
+          
+             
+              <breadCrumb title="CS:APP" url="http://www.viseator.com/categories/Computer-System/CS-APP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.viseator.com/2017/06/18/CS_APP_DataLab/</loc>
+    <lastmod>2017-06-21T02:24:32.000Z</lastmod>
+    <data>
+        <display>
+        <title>深入理解计算机系统（CS:APP) - Data Lab解题报告</title>
+        <pubTime>2017-06-18T07:01:01.000Z</pubTime>
+        
+        <tag>Computer System</tag>
+         
+        <tag>CS:APP</tag>
+         
+         
+           
+             
+              <breadCrumb title="Computer System" url="http://www.viseator.com/categories/Computer-System/"/>
+          
+             
+              <breadCrumb title="CS:APP" url="http://www.viseator.com/categories/Computer-System/CS-APP/"/>
           
         </display>
     </data>
