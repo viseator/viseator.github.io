@@ -99,7 +99,8 @@
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件”bomb”，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来">
 <meta property="og:image" content="http://www.viseator.com/images/bomblab1.jpg">
-<meta property="og:updated_time" content="2017-06-21T03:09:36.579Z">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab2.png">
+<meta property="og:updated_time" content="2017-06-27T04:31:49.626Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解计算机系统（CS:APP) - Bomb Lab解题报告">
 <meta name="twitter:description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件”bomb”，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来">
@@ -450,7 +451,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,168
+                  1,824
                 </span>
               
 
@@ -519,9 +520,22 @@
 <p>一直向下查看，我们就可以看到C文件中出现的<code>initialize_bomb</code>函数，然后就到了<code>phase_1</code>函数，我们可以推测这个函数就是判断是否通过的核心函数。</p>
 <p>这时候就要用到<code>gdb</code>的指令了，在汇编模式下的指令与普通模式有一些不同。我们可以使用<code>ni</code>(<code>next instruction</code>)和<code>si</code>(<code>step into</code>)来实现普通模式下的单步向下执行与步入操作。</p>
 <p>打断点需要使用<code>b &lt;func_name&gt;</code>或<code>b *&lt;address&gt;</code>来进行比如我们可以看到调用<code>phase_1</code>函数的<code>call</code>指令的地址是<code>0x400e3a</code>，所以我们可以使用<code>b phase_1</code>或<code>b *0x400e3a</code>来打断点的，这两条命令有一点不同就在于断在地址会停在地址 上也就是<code>call</code>指令的位置，断在函数名会进入函数中，相当于再进行了一次<code>si</code>操作。</p>
-<p>下面把断点打在<code>phase_1</code>函数之后就可以使用<code>r</code>命令来运行指令了，程序会提示我们输入字符串，这个时候因为我们打了断点不用担心炸弹会爆炸，可以随意输入。执行后程序会停在`phase_1函数的位置，我们可以看到函数内部的情况。</p>
+<p>下面把断点打在<code>phase_1</code>函数之后就可以使用<code>r</code>命令来运行指令了，程序会提示我们输入字符串，这个时候因为我们打了断点不用担心炸弹会爆炸，可以随意输入。执行后程序会停在<code>phase_1</code>函数的位置，我们可以看到函数内部的情况。</p>
 <p>下面就可以根据函数内部的逻辑来解决炸弹了。</p>
-<h4 id="阶段1"><a href="#阶段1" class="headerlink" title="阶段1"></a>阶段1</h4>
+<p>代码来自<code>objdump -d</code>反汇编出来的代码，与<code>gdb</code>的汇编模式下看到的代码是一样的。</p>
+<h4 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h4><p>主函数代码比较长，只贴我们需要分析的关键部分。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">400e32:	e8 67 06 00 00       	callq  40149e &lt;read_line&gt;</div><div class="line">400e37:	48 89 c7             	mov    %rax,%rdi</div></pre></td></tr></table></figure>
+<p>第一句调用了<code>read_line</code>函数，我们可以转到函数入口地址<code>40149e</code>去查看<code>read_line</code>的代码（事实上一开始我也这么做了），但是会发现代码中包含了许多对系统库函数的调用，仔细分析的难度比较大并且没有必要。从提供的C代码与函数名称，我们可以推测出这个函数的作用是读取一行输入。根据返回值一般存放在<code>rax</code>中的约定，<code>rax</code>中应该就是读入的数据的地址，第二句中我们把这个值复制到了<code>rdi</code>中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">400e3a:	e8 a1 00 00 00       	callq  400ee0 &lt;phase_1&gt;</div><div class="line">400e3f:	e8 80 07 00 00       	callq  4015c4 &lt;phase_defused&gt;</div></pre></td></tr></table></figure>
+<p>接下来两句分别开始调用<code>phase_1</code>与<code>phase_defused</code>，下面的五个阶段也是上面这样的模式。</p>
+<h4 id="阶段1"><a href="#阶段1" class="headerlink" title="阶段1"></a>阶段1</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">0000000000400ee0 &lt;phase_1&gt;:</div><div class="line">  400ee0:	48 83 ec 08          	sub    $0x8,%rsp</div><div class="line">  400ee4:	be 00 24 40 00       	mov    $0x402400,%esi</div><div class="line">  400ee9:	e8 4a 04 00 00       	callq  401338 &lt;strings_not_equal&gt;</div><div class="line">  400eee:	85 c0                	test   %eax,%eax</div><div class="line">  400ef0:	74 05                	je     400ef7 &lt;phase_1+0x17&gt;</div><div class="line">  400ef2:	e8 43 05 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">  400ef7:	48 83 c4 08          	add    $0x8,%rsp</div><div class="line">  400efb:	c3                   	retq</div></pre></td></tr></table></figure>
+<p>阶段1的代码比较短，第二行中把一个地址给了<code>esi</code>，接下来调用了<code>strings_not_equal</code>这个函数，我们可以跳到函数入口地址查看这个函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">40133c:	48 89 fb             	mov    %rdi,%rbx</div><div class="line">40133f:	48 89 f5             	mov    %rsi,%rbp</div><div class="line">401342:	e8 d4 ff ff ff       	callq  40131b &lt;string_length&gt;</div></pre></td></tr></table></figure>
+<p>函数中这两行分别把<code>rdi</code> <code>rsi</code>的值复制到了<code>rbx</code>与<code>rbp</code>，然后调用了<code>string_length</code>，这个时候就不用去看<code>string_length</code>函数了，我们可以直接猜测出<code>rbx</code>与<code>rbp</code>就是函数的参数。那么可以说明<code>rdi</code> <code>rsi</code>就是给<code>string_not_equal</code>的函数，那么<code>string_not_equal</code>的返回值是什么呢？</p>
+<p>看到<code>string_not_equal</code>返回后的5、6两句，测试了<code>eax</code>的值，在<code>eax</code>等于0时就跳转到<code>400ef7</code>，如果不为0，那么会继续向下执行，下面一句是调用<code>explode_bomb</code>函数，不用说这一定是触发炸弹的函数，所以我们需要令<code>string_not_equal</code>的返回值为0，那么从名字判断，我们需要令两个字符串相等，两个字符串之前说过存放在<code>rdi</code>与<code>rsi</code>中，<code>rdi</code>是我们读入的字符串，而<code>rsi</code>中存放的是<code>400ee4</code>复制的<code>0x402400</code>，这个时候用<code>gdb</code>去查看该地址中存放的字符串比较方便：</p>
+<p><img src="/images/bomblab2.png" alt=""></p>
+<p>这串字符就是第一阶段的答案。</p>
+
       
     </div>
 
@@ -758,7 +772,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bomb-Lab"><span class="nav-number">1.</span> <span class="nav-text">Bomb Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#所用工具"><span class="nav-number">1.2.</span> <span class="nav-text">所用工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题过程"><span class="nav-number">1.3.</span> <span class="nav-text">解题过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前期"><span class="nav-number">1.3.1.</span> <span class="nav-text">前期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段1"><span class="nav-number">1.3.2.</span> <span class="nav-text">阶段1</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bomb-Lab"><span class="nav-number">1.</span> <span class="nav-text">Bomb Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#所用工具"><span class="nav-number">1.2.</span> <span class="nav-text">所用工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题过程"><span class="nav-number">1.3.</span> <span class="nav-text">解题过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前期"><span class="nav-number">1.3.1.</span> <span class="nav-text">前期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主函数"><span class="nav-number">1.3.2.</span> <span class="nav-text">主函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段1"><span class="nav-number">1.3.3.</span> <span class="nav-text">阶段1</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
