@@ -2,9 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.viseator.com/2017/05/19/arch_setup/</loc>
+    
+    <lastmod>2017-06-27T23:39:00.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.viseator.com/2017/06/21/CS_APP_BombLab/</loc>
     
-    <lastmod>2017-06-27T04:31:49.626Z</lastmod>
+    <lastmod>2017-06-27T04:32:06.139Z</lastmod>
     
   </url>
   
@@ -19,13 +26,6 @@
     <loc>http://www.viseator.com/2017/05/17/arch_install/</loc>
     
     <lastmod>2017-06-16T08:53:10.083Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.viseator.com/2017/05/19/arch_setup/</loc>
-    
-    <lastmod>2017-05-28T13:38:47.476Z</lastmod>
     
   </url>
   
