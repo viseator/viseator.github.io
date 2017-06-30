@@ -103,7 +103,9 @@
 <meta property="og:image" content="http://www.viseator.com/images/bomblab3.png">
 <meta property="og:image" content="http://www.viseator.com/images/bomblab4.png">
 <meta property="og:image" content="http://www.viseator.com/images/bomblab5.png">
-<meta property="og:updated_time" content="2017-06-30T06:52:50.962Z">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab6.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab7.png">
+<meta property="og:updated_time" content="2017-06-30T08:59:18.339Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解计算机系统（CS:APP) - Bomb Lab解题报告">
 <meta name="twitter:description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件”bomb”，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来">
@@ -454,7 +456,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  4,351
+                  5,260
                 </span>
               
 
@@ -580,6 +582,33 @@
 <p>第1、2行将输入的第二个参数与0进行比较，如果不为0就引爆炸弹。所以输入的第二个参数必为0。</p>
 <p>综上我们得出（一个）答案为：</p>
 <p><code>0 0</code></p>
+<h4 id="阶段5"><a href="#阶段5" class="headerlink" title="阶段5"></a>阶段5</h4><p>后面的阶段难度开始加大，我们分部分进行分析：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">0000000000401062 &lt;phase_5&gt;:</div><div class="line">  401062:	53                   	push   %rbx</div><div class="line">  401063:	48 83 ec 20          	sub    $0x20,%rsp</div><div class="line">  401067:	48 89 fb             	mov    %rdi,%rbx</div><div class="line">  40106a:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax</div><div class="line">  401071:	00 00</div><div class="line">  401073:	48 89 44 24 18       	mov    %rax,0x18(%rsp)</div></pre></td></tr></table></figure>
+<p>第4行把输入的地址<code>rdi</code>给<code>rbx</code>，第5、7行则是在栈中压入了一个哨兵变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">401078:	31 c0                	xor    %eax,%eax</div><div class="line">40107a:	e8 9c 02 00 00       	callq  40131b &lt;string_length&gt;</div><div class="line">40107f:	83 f8 06             	cmp    $0x6,%eax</div><div class="line">401082:	74 4e                	je     4010d2 &lt;phase_5+0x70&gt;</div><div class="line">401084:	e8 b1 03 00 00       	callq  40143a &lt;explode_bomb&gt;</div></pre></td></tr></table></figure>
+<p>第1行清空了<code>eax</code>，第2行中调用了<code>string_length</code>，我们想到之前的把输入放入<code>rbx</code>这个动作，可以推测这个函数是为了统计输入字符的个数，并存放在了<code>eax</code>中。</p>
+<p>下面将<code>eax</code>的值与<code>0x6</code>进行比较，等于则进行跳转避免引爆炸弹。我们进入跳转到的位置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">4010d2:	b8 00 00 00 00       	mov    $0x0,%eax</div><div class="line">4010d7:	eb b2                	jmp    40108b &lt;phase_5+0x29&gt;</div></pre></td></tr></table></figure>
+<p>把<code>eax</code>置为0后进行跳转。</p>
+<p>继续进入跳转到的位置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">40108b:	0f b6 0c 03          	movzbl (%rbx,%rax,1),%ecx</div><div class="line"> 40108f:	88 0c 24             	mov    %cl,(%rsp)</div><div class="line"> 401092:	48 8b 14 24          	mov    (%rsp),%rdx</div><div class="line"> 401096:	83 e2 0f             	and    $0xf,%edx</div><div class="line"> 401099:	0f b6 92 b0 24 40 00 	movzbl 0x4024b0(%rdx),%edx</div><div class="line"> 4010a0:	88 54 04 10          	mov    %dl,0x10(%rsp,%rax,1)</div><div class="line"> 4010a4:	48 83 c0 01          	add    $0x1,%rax</div><div class="line"> 4010a8:	48 83 f8 06          	cmp    $0x6,%rax</div><div class="line"> 4010ac:	75 dd                	jne    40108b &lt;phase_5+0x29&gt;</div></pre></td></tr></table></figure>
+<p>第1行中<code>movzbl</code>命令将从<code>rbx</code>（输入）开始的<code>rax</code>位置的一个字节赋给<code>ecx</code>的低16位。</p>
+<p>接下来的两行先把<code>cl</code>中的值（上一步得到）复制到<code>rsp</code>处，再将<code>rsp</code>中的值复制到<code>rdx</code>中，第4行使用掩码<code>0xf</code>取<code>edx</code>的低4位。到这里我们总结一下上面的操作：取读入的字符串中<code>rax</code>位置处的字符，再取它的低4位放在<code>edx</code>中。</p>
+<p>下面第5行中，将地址<code>0x4024b0+rdx</code>中的一个字节放入<code>edx</code>的低16位中。第6行将这16位复制到了<code>rsp+0x10+rax</code>的位置中。</p>
+<p>接下来把<code>rax</code>加1，我们从前面可以看出来这个<code>rax</code>起的是一个索引的作用。第 8行与6进行比较，如果不等于6则跳到第1行重复这个过程。</p>
+<p>在这段之中，循环一共进行了6次，分别读取了输入的6个字符，记录这个6个字符的低6位作为索引<code>rdx</code>，从<code>0x4024b0+rdx</code>的位置复制一个字节到<code>rsp+0x10</code>开始的6字节中。结束之后，<code>rsp+0x10</code>开始存放了6个字符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">4010ae:	c6 44 24 16 00       	movb   $0x0,0x16(%rsp)</div></pre></td></tr></table></figure>
+<p>接下来一行在<code>rsp+0x16</code>的位置也就是6个字符之后置上一个<code>0x0</code>也就是终止符<code>\0</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">4010b3:	be 5e 24 40 00       	mov    $0x40245e,%esi</div><div class="line">4010b8:	48 8d 7c 24 10       	lea    0x10(%rsp),%rdi</div><div class="line">4010bd:	e8 76 02 00 00       	callq  401338 &lt;strings_not_equal&gt;</div><div class="line">4010c2:	85 c0                	test   %eax,%eax</div><div class="line">4010c4:	74 13                	je     4010d9 &lt;phase_5+0x77&gt;</div><div class="line">4010c6:	e8 6f 03 00 00       	callq  40143a &lt;explode_bomb&gt;</div></pre></td></tr></table></figure>
+<p>接下来将<code>0x40245e</code>这个地址赋给<code>esi</code>，把<code>rsp+0x10</code>这个地址赋给<code>rdi</code>，接下来调用<code>strings_not_equal</code>这个函数，之前的经验告诉我们<code>esi</code>与<code>rdi</code>就是要比较的两个字符串的首地址。如果两个字符串不相同就引爆炸弹。</p>
+<p>我们先看<code>0x40245e</code>位置的字符串：</p>
+<p><img src="/images/bomblab6.png" alt=""></p>
+<p>这就是我们应该构造并存放在<code>rsp+0x10</code>处的字符串。</p>
+<p>接下来再查看我们复制到<code>rsp</code>中的字符来源也就是<code>0x4024b0</code>开始的字符：</p>
+<p><img src="/images/bomblab7.png" alt=""></p>
+<p>可以看到我们需要的字符<code>flyers</code>的索引分别为<code>9 15 14 5 6 7</code>。这个索引就是我们输入的字符的低4位，那我们只要找到低4位分别是以上数值的字符就可以了。</p>
+<p>所以阶段5的（一个）答案为：</p>
+<p><code>ionefg</code></p>
 
       
     </div>
@@ -817,7 +846,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bomb-Lab"><span class="nav-number">1.</span> <span class="nav-text">Bomb Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#所用工具"><span class="nav-number">1.2.</span> <span class="nav-text">所用工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题过程"><span class="nav-number">1.3.</span> <span class="nav-text">解题过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前期"><span class="nav-number">1.3.1.</span> <span class="nav-text">前期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主函数"><span class="nav-number">1.3.2.</span> <span class="nav-text">主函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段1"><span class="nav-number">1.3.3.</span> <span class="nav-text">阶段1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段2"><span class="nav-number">1.3.4.</span> <span class="nav-text">阶段2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段3"><span class="nav-number">1.3.5.</span> <span class="nav-text">阶段3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段4"><span class="nav-number">1.3.6.</span> <span class="nav-text">阶段4</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bomb-Lab"><span class="nav-number">1.</span> <span class="nav-text">Bomb Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#所用工具"><span class="nav-number">1.2.</span> <span class="nav-text">所用工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题过程"><span class="nav-number">1.3.</span> <span class="nav-text">解题过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前期"><span class="nav-number">1.3.1.</span> <span class="nav-text">前期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主函数"><span class="nav-number">1.3.2.</span> <span class="nav-text">主函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段1"><span class="nav-number">1.3.3.</span> <span class="nav-text">阶段1</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段2"><span class="nav-number">1.3.4.</span> <span class="nav-text">阶段2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段3"><span class="nav-number">1.3.5.</span> <span class="nav-text">阶段3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段4"><span class="nav-number">1.3.6.</span> <span class="nav-text">阶段4</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段5"><span class="nav-number">1.3.7.</span> <span class="nav-text">阶段5</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
