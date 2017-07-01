@@ -91,13 +91,13 @@
 
 
 
-<meta name="description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件”bomb”，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来">
+<meta name="description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件bomb，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来解除">
 <meta name="keywords" content="Computer System,CS:APP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解计算机系统（CS:APP) - Bomb Lab解题报告">
 <meta property="og:url" content="http://www.viseator.com/2017/06/21/CS_APP_BombLab/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
-<meta property="og:description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件”bomb”，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来">
+<meta property="og:description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件bomb，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来解除">
 <meta property="og:image" content="http://www.viseator.com/images/bomblab1.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/bomblab2.png">
 <meta property="og:image" content="http://www.viseator.com/images/bomblab3.png">
@@ -113,10 +113,10 @@
 <meta property="og:image" content="http://www.viseator.com/images/bomblab12.png">
 <meta property="og:image" content="http://www.viseator.com/images/bomblab13.png">
 <meta property="og:image" content="http://www.viseator.com/images/bomblab14.png">
-<meta property="og:updated_time" content="2017-07-01T02:46:49.139Z">
+<meta property="og:updated_time" content="2017-07-01T02:56:14.032Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解计算机系统（CS:APP) - Bomb Lab解题报告">
-<meta name="twitter:description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件”bomb”，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来">
+<meta name="twitter:description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件bomb，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来解除">
 <meta name="twitter:image" content="http://www.viseator.com/images/bomblab1.jpg">
 
 
@@ -464,7 +464,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  9,762
+                  10,059
                 </span>
               
 
@@ -487,7 +487,7 @@
 
       
         <h2 id="Bomb-Lab"><a href="#Bomb-Lab" class="headerlink" title="Bomb Lab"></a>Bomb Lab</h2><p>实验代码见<a href="https://github.com/viseator/CS-APP-3e-labs" target="_blank" rel="external">GitHub</a></p>
-<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件”bomb”，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来解除自己的炸弹（理论上每个人的炸弹答案都不同，但自学材料的答案都是一样的，本文针对的是自学材料）。</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件<code>bomb</code>，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来解除自己的炸弹（理论上每个人的炸弹答案都不同，但自学材料的答案都是一样的，本文针对的是自学材料）。</p>
 <a id="more"></a>
 <h3 id="所用工具"><a href="#所用工具" class="headerlink" title="所用工具"></a>所用工具</h3><p><code>objdump</code>-用于反汇编二进制对象文件</p>
 <p><code>VS Code</code>-用于查看反汇编后的结果与文本文件的编写</p>
@@ -708,7 +708,11 @@
 <hr>
 <p>至此，炸弹全部解除：</p>
 <p><img src="/images/bomblab14.png" alt=""></p>
-<h3 id="实验小结"><a href="#实验小结" class="headerlink" title="实验小结"></a>实验小结</h3>
+<h3 id="实验小结"><a href="#实验小结" class="headerlink" title="实验小结"></a>实验小结</h3><p>整个实验包括秘密部分用时九个小时，引爆了3次炸弹（一次因为错误的尝试，两次因为将<code>ni</code>命令错打成<code>n</code>）。</p>
+<p>一开始拿到题目的时候会比较蒙，需要先去学习工具的使用与一些编译的基础知道（符号表、定址表等等）花费了一些时间。前几个阶段过于关注函数的具体实现而没有根据常识去推测一些明显函数的作用花费了一些时间。</p>
+<p>前4个阶段都算比较简单，考查了一些常用结构在汇编中的出现形式。第5、6与秘密阶段分别考察了堆、链表、二叉树这三个数据结构在内存中的结构与汇编级的使用，受益良多。</p>
+<p>这个实验需要细致的分析与大胆的猜测与实验验证，还需要小心操作，最重要的是耐心，面对非常晦涩的汇编代码如何一步步地弄清代码的作用很需要毅力。当然也可以通过自己写出等价的C代码来帮助自己理解。</p>
+
       
     </div>
 
