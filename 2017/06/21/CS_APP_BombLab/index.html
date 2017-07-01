@@ -107,7 +107,10 @@
 <meta property="og:image" content="http://www.viseator.com/images/bomblab7.png">
 <meta property="og:image" content="http://www.viseator.com/images/bomblab8.png">
 <meta property="og:image" content="http://www.viseator.com/images/bomblab8.png">
-<meta property="og:updated_time" content="2017-06-30T14:03:17.360Z">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab9.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab10.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab11.png">
+<meta property="og:updated_time" content="2017-07-01T01:37:05.139Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解计算机系统（CS:APP) - Bomb Lab解题报告">
 <meta name="twitter:description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件”bomb”，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来">
@@ -458,7 +461,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  7,590
+                  8,560
                 </span>
               
 
@@ -656,7 +659,25 @@
 <p>数据由大到小的排列依次是<code>3 4 5 6 1 2</code>。</p>
 <p>由于有一步x = 7 - x，所以倒推回来的答案应该是：</p>
 <p><code>4 3 2 1 6 5</code></p>
-<h4 id="秘密阶段"><a href="#秘密阶段" class="headerlink" title="秘密阶段"></a>秘密阶段</h4>
+<h4 id="秘密阶段"><a href="#秘密阶段" class="headerlink" title="秘密阶段"></a>秘密阶段</h4><p>在之前C代码的暗示以及我们查看汇编代码的过程中都可以猜测出有一个秘密阶段的存在，<code>secret_phase</code>的代码就在<code>phase_6</code>后的<code>func7</code>之后。第一个问题是我们如何进入<code>secret_phase</code>。</p>
+<p>这里可以用一个简单的方法，直接在反汇编代码中搜索<code>secret_phase</code>的入口地址，很快就可以发现在每个阶段的<code>phase_x</code>之后都有一行<code>phase_defused</code>，就在这个函数里面存在<code>callq secret_phase</code>的代码。</p>
+<p>我们就开始分析这个<code>phase_defused</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">00000000004015c4 &lt;phase_defused&gt;:</div><div class="line">  4015c4:	48 83 ec 78          	sub    $0x78,%rsp</div><div class="line">  4015c8:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax</div><div class="line">  4015cf:	00 00 </div><div class="line">  4015d1:	48 89 44 24 68       	mov    %rax,0x68(%rsp)</div><div class="line">  4015d6:	31 c0                	xor    %eax,%eax</div><div class="line">  4015d8:	83 3d 81 21 20 00 06 	cmpl   $0x6,0x202181(%rip)        # 603760 &lt;num_input_strings&gt;</div><div class="line">  4015df:	75 5e                	jne    40163f &lt;phase_defused+0x7b&gt;</div><div class="line">  4015e1:	4c 8d 44 24 10       	lea    0x10(%rsp),%r8</div><div class="line">  4015e6:	48 8d 4c 24 0c       	lea    0xc(%rsp),%rcx</div><div class="line">  4015eb:	48 8d 54 24 08       	lea    0x8(%rsp),%rdx</div><div class="line">  4015f0:	be 19 26 40 00       	mov    $0x402619,%esi</div><div class="line">  4015f5:	bf 70 38 60 00       	mov    $0x603870,%edi</div><div class="line">  4015fa:	e8 f1 f5 ff ff       	callq  400bf0 &lt;__isoc99_sscanf@plt&gt;</div><div class="line">  4015ff:	83 f8 03             	cmp    $0x3,%eax</div><div class="line">  401602:	75 31                	jne    401635 &lt;phase_defused+0x71&gt;</div><div class="line">  401604:	be 22 26 40 00       	mov    $0x402622,%esi</div><div class="line">  401609:	48 8d 7c 24 10       	lea    0x10(%rsp),%rdi</div><div class="line">  40160e:	e8 25 fd ff ff       	callq  401338 &lt;strings_not_equal&gt;</div><div class="line">  401613:	85 c0                	test   %eax,%eax</div><div class="line">  401615:	75 1e                	jne    401635 &lt;phase_defused+0x71&gt;</div><div class="line">  401617:	bf f8 24 40 00       	mov    $0x4024f8,%edi</div><div class="line">  40161c:	e8 ef f4 ff ff       	callq  400b10 &lt;puts@plt&gt;</div><div class="line">  401621:	bf 20 25 40 00       	mov    $0x402520,%edi</div><div class="line">  401626:	e8 e5 f4 ff ff       	callq  400b10 &lt;puts@plt&gt;</div><div class="line">  40162b:	b8 00 00 00 00       	mov    $0x0,%eax</div><div class="line">  401630:	e8 0d fc ff ff       	callq  401242 &lt;secret_phase&gt;</div><div class="line">  401635:	bf 58 25 40 00       	mov    $0x402558,%edi</div><div class="line">  40163a:	e8 d1 f4 ff ff       	callq  400b10 &lt;puts@plt&gt;</div><div class="line">  40163f:	48 8b 44 24 68       	mov    0x68(%rsp),%rax</div><div class="line">  401644:	64 48 33 04 25 28 00 	xor    %fs:0x28,%rax</div><div class="line">  40164b:	00 00 </div><div class="line">  40164d:	74 05                	je     401654 &lt;phase_defused+0x90&gt;</div><div class="line">  40164f:	e8 dc f4 ff ff       	callq  400b30 &lt;__stack_chk_fail@plt&gt;</div><div class="line">  401654:	48 83 c4 78          	add    $0x78,%rsp</div><div class="line">  401658:	c3                   	retq</div></pre></td></tr></table></figure>
+<p>可以看到第7行将函数<code>num_input_strings</code>的返回值与6进行比较，如果不等于6则的直接跳过中间代码到达最后的结束部分。</p>
+<p>从函数名我们可以推测这个函数的作用的是检测读取的字符串的数量，当读取了6个字符串时，就不会跳过中间的代码。我们继续看中间的代码：</p>
+<p>第9到14行又是熟悉的<code>sscanf</code>调用过程，我们已经知道<code>esi</code>指向的是格式化字符串的首地址，我们先来查看它的内容：</p>
+<p><img src="/images/bomblab9.png" alt=""></p>
+<p>读取两个整数和一个字符串。</p>
+<p>有所不同的是在12行之后又有一行给<code>edi</code>赋上了一个地址值，我们之前所有阶段中<code>edi</code>的值都是来自于我们<code>read_line</code>的地址，想到<code>sscanf</code> 参数中确实存在一个输入，我们可以推测这个<code>edi</code>中存放的是我们读取位置的首地址。</p>
+<p>那么我们就可以在运行时查看这个地址的内容，看是从哪里进行读取的：</p>
+<p><img src="/images/bomblab10.png" alt=""></p>
+<p>首先符号表告诉我们这段数据的名字叫做<code>input_strings</code>也就是我们输入的字符串，那么这个地址上的<code>0 0</code>代表的应该就是我们的第4行输入。两个整型数字正好与格式化字符串也是匹配的。现在我们知道，应该在这两个0之后再追加一个字符串作为输入。</p>
+<p>第15、16行对成功输入的数据个数进行了一个判断，如果不为3个则跳过调用<code>secret_phase</code>的代码。</p>
+<p>第17-19行是对<code>strings_not_equal</code>的调用，我们已经知道它的两个参数分别是<code>esi</code>与<code>edi</code>，<code>esi</code>被赋上了一个地址值，<code>edi</code>被赋上了<code>esp+0x10</code>，我们可以推测出<code>edi</code>的地址就是指向我们读入的第三个字符串的，那么需要比较的对象是什么呢？我们在运行时查看内存的内容：</p>
+<p><img src="/images/bomblab11.png" alt=""></p>
+<p>这就是我们需要的第三个参数。</p>
+<p>可以看到如果第三个参数与</p>
+
       
     </div>
 
