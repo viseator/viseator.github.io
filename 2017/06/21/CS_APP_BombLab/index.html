@@ -110,7 +110,10 @@
 <meta property="og:image" content="http://www.viseator.com/images/bomblab9.png">
 <meta property="og:image" content="http://www.viseator.com/images/bomblab10.png">
 <meta property="og:image" content="http://www.viseator.com/images/bomblab11.png">
-<meta property="og:updated_time" content="2017-07-01T01:59:17.136Z">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab12.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab13.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab14.png">
+<meta property="og:updated_time" content="2017-07-01T02:46:49.139Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解计算机系统（CS:APP) - Bomb Lab解题报告">
 <meta name="twitter:description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件”bomb”，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来">
@@ -461,7 +464,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  8,768
+                  9,762
                 </span>
               
 
@@ -678,8 +681,34 @@
 <p>这就是我们需要的第三个参数。</p>
 <p>可以看到如果第三个参数与上面这个字符串相同的话就会调用两次<code>puts</code>输出提示信息，然后进入<code>secret_phase</code>阶段。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">0000000000401242 &lt;secret_phase&gt;:</div><div class="line">  401242:	53                   	push   %rbx</div><div class="line">  401243:	e8 56 02 00 00       	callq  40149e &lt;read_line&gt;</div><div class="line">  401248:	ba 0a 00 00 00       	mov    $0xa,%edx</div><div class="line">  40124d:	be 00 00 00 00       	mov    $0x0,%esi</div><div class="line">  401252:	48 89 c7             	mov    %rax,%rdi</div><div class="line">  401255:	e8 76 f9 ff ff       	callq  400bd0 &lt;strtol@plt&gt;</div><div class="line">  40125a:	48 89 c3             	mov    %rax,%rbx</div><div class="line">  40125d:	8d 40 ff             	lea    -0x1(%rax),%eax</div><div class="line">  401260:	3d e8 03 00 00       	cmp    $0x3e8,%eax</div><div class="line">  401265:	76 05                	jbe    40126c &lt;secret_phase+0x2a&gt;</div><div class="line">  401267:	e8 ce 01 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">  40126c:	89 de                	mov    %ebx,%esi</div><div class="line">  40126e:	bf f0 30 60 00       	mov    $0x6030f0,%edi</div><div class="line">  401273:	e8 8c ff ff ff       	callq  401204 &lt;fun7&gt;</div><div class="line">  401278:	83 f8 02             	cmp    $0x2,%eax</div><div class="line">  40127b:	74 05                	je     401282 &lt;secret_phase+0x40&gt;</div><div class="line">  40127d:	e8 b8 01 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">  401282:	bf 38 24 40 00       	mov    $0x402438,%edi</div><div class="line">  401287:	e8 84 f8 ff ff       	callq  400b10 &lt;puts@plt&gt;</div><div class="line">  40128c:	e8 33 03 00 00       	callq  4015c4 &lt;phase_defused&gt;</div><div class="line">  401291:	5b                   	pop    %rbx</div><div class="line">  401292:	c3                   	retq</div></pre></td></tr></table></figure>
-<p>可以看到</p>
-
+<p>可以看到第3行调用了<code>read_line</code>函数，接着把<code>read_line</code>的返回值赋给了<code>rdi</code>，并调用了<code>strtol</code>函数，这个标准库函数的作用是把一个字符串转换成对应的长整型数值。返回值还是存放在<code>rax</code>中，第8行将<code>rax</code>复制给了<code>rbx</code>，第9行将<code>rax</code>减1赋给<code>eax</code>，第十行与<code>0x3e8</code>进行比较，如果这个值小于等于<code>0x3e8</code>就跳过引爆代码。看到这里我们可以知道我们需要再加入一行数据，它应该是一个小于等于1001的数值。</p>
+<p>接下来将<code>ebx</code>赋给了<code>esi</code>，也就是我们一开始输入的<code>rax</code>值。第14行将一个地址值赋给了<code>edi</code>，15行调用了<code>fun7</code>函数。我们还是先往下了解一下我们需要得到的结果。</p>
+<p>函数返回后令返回值<code>eax</code>与<code>0x2</code>做了一个比较，如果相等则跳过引爆代码。</p>
+<p>所以我们需要返回2。</p>
+<p>下面查看<code>fun7</code>的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">0000000000401204 &lt;fun7&gt;:</div><div class="line">  401204:	48 83 ec 08          	sub    $0x8,%rsp</div><div class="line">  401208:	48 85 ff             	test   %rdi,%rdi</div><div class="line">  40120b:	74 2b                	je     401238 &lt;fun7+0x34&gt;</div><div class="line">  40120d:	8b 17                	mov    (%rdi),%edx</div><div class="line">  40120f:	39 f2                	cmp    %esi,%edx</div><div class="line">  401211:	7e 0d                	jle    401220 &lt;fun7+0x1c&gt;</div><div class="line">  401213:	48 8b 7f 08          	mov    0x8(%rdi),%rdi</div><div class="line">  401217:	e8 e8 ff ff ff       	callq  401204 &lt;fun7&gt;</div><div class="line">  40121c:	01 c0                	add    %eax,%eax</div><div class="line">  40121e:	eb 1d                	jmp    40123d &lt;fun7+0x39&gt;</div><div class="line">  401220:	b8 00 00 00 00       	mov    $0x0,%eax</div><div class="line">  401225:	39 f2                	cmp    %esi,%edx</div><div class="line">  401227:	74 14                	je     40123d &lt;fun7+0x39&gt;</div><div class="line">  401229:	48 8b 7f 10          	mov    0x10(%rdi),%rdi</div><div class="line">  40122d:	e8 d2 ff ff ff       	callq  401204 &lt;fun7&gt;</div><div class="line">  401232:	8d 44 00 01          	lea    0x1(%rax,%rax,1),%eax</div><div class="line">  401236:	eb 05                	jmp    40123d &lt;fun7+0x39&gt;</div><div class="line">  401238:	b8 ff ff ff ff       	mov    $0xffffffff,%eax</div><div class="line">  40123d:	48 83 c4 08          	add    $0x8,%rsp</div><div class="line">  401241:	c3                   	retq</div></pre></td></tr></table></figure>
+<p>第3、4两行先对我们输入的这个数作一个判断，如果等于0直接跳到第19行，返回-1，这显然不是我们想要的结果。</p>
+<p>第5行将<code>rdi</code>的值读入到了<code>edx</code>中，第6行则将这个数与我们读入的数进行比较，如果这个数小于等于我们读入的数就跳至第12行，第12行将<code>eax</code>置0，再进行一次相同的比较，如果相等则跳至第20行返回。</p>
+<p>如果不等（也就是<code>edx</code>小于我们读入的数），则继续向下执行第15行，这行代码有些与之前的链表跳至下一个节点类似，到这里，我们就需要查看一下<code>rdi</code>这个地址里存放的是怎样一种数据结构：</p>
+<p><img src="/images/bomblab12.png" alt=""></p>
+<p>仔细观察可以发现这是一个二叉树的结构，每个节点第1个8字节存放数据，第2个8字节存放左子树地址，第3个8字节存放右子树位置。并且命令也有规律，<code>nab</code>，<code>a</code>代表层数，<code>b</code>代表从左至右第b个节点。</p>
+<p>根据这个结构，我们可以把树画出来以便我们进行分析。随意找了个工具表示一下：</p>
+<p><img src="/images/bomblab13.png" alt=""></p>
+<p>下面我们回到代码，现在我们知道第15行代码的作用是将<code>rdi</code>移到它的右子树的位置，接着调用<code>fun7</code>，在返回后令<code>eax = 2 * rax + 1</code>。</p>
+<p>如果第6行的比较中树节点的值大于我们读入的数呢？</p>
+<p>代码会进行到第8行，令<code>rdi</code>移到它的左子树的位置，接下来调用<code>fun7</code>在返回后令<code>eax = 2 * eax</code>。下面跳至返回处。</p>
+<p>总结上面的过程：<code>edi</code>指向一个树的节点，令<code>edi</code>节点的值与我们读入的值进行比较。</p>
+<ul>
+<li>如果两者相等：返回0</li>
+<li>如果前者大于后者：<code>rdi</code>移至左子树，返回<code>2 * rax</code></li>
+<li>如果后者大于前者：<code>rdi</code>移至右子树，返回<code>2 * rax + 1</code></li>
+</ul>
+<p>那么我们需要返回2，应该在最后一次调用返回0，倒数第二次调用返回<code>2 * rax + 1</code>，第一次调用返回<code>2 * rax</code>。换句话说，这个数应该在第三层，比父节点大且比根结节小。观察上图，唯一的答案是：</p>
+<p><code>0x16</code>（22）</p>
+<hr>
+<p>至此，炸弹全部解除：</p>
+<p><img src="/images/bomblab14.png" alt=""></p>
+<h3 id="实验小结"><a href="#实验小结" class="headerlink" title="实验小结"></a>实验小结</h3>
       
     </div>
 
@@ -916,7 +945,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bomb-Lab"><span class="nav-number">1.</span> <span class="nav-text">Bomb Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#所用工具"><span class="nav-number">1.2.</span> <span class="nav-text">所用工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题过程"><span class="nav-number">1.3.</span> <span class="nav-text">解题过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前期"><span class="nav-number">1.3.1.</span> <span class="nav-text">前期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主函数"><span class="nav-number">1.3.2.</span> <span class="nav-text">主函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段一"><span class="nav-number">1.3.3.</span> <span class="nav-text">阶段一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段二"><span class="nav-number">1.3.4.</span> <span class="nav-text">阶段二</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段三"><span class="nav-number">1.3.5.</span> <span class="nav-text">阶段三</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段四"><span class="nav-number">1.3.6.</span> <span class="nav-text">阶段四</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段五"><span class="nav-number">1.3.7.</span> <span class="nav-text">阶段五</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段六"><span class="nav-number">1.3.8.</span> <span class="nav-text">阶段六</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#秘密阶段"><span class="nav-number">1.3.9.</span> <span class="nav-text">秘密阶段</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bomb-Lab"><span class="nav-number">1.</span> <span class="nav-text">Bomb Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#所用工具"><span class="nav-number">1.2.</span> <span class="nav-text">所用工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题过程"><span class="nav-number">1.3.</span> <span class="nav-text">解题过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前期"><span class="nav-number">1.3.1.</span> <span class="nav-text">前期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主函数"><span class="nav-number">1.3.2.</span> <span class="nav-text">主函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段一"><span class="nav-number">1.3.3.</span> <span class="nav-text">阶段一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段二"><span class="nav-number">1.3.4.</span> <span class="nav-text">阶段二</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段三"><span class="nav-number">1.3.5.</span> <span class="nav-text">阶段三</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段四"><span class="nav-number">1.3.6.</span> <span class="nav-text">阶段四</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段五"><span class="nav-number">1.3.7.</span> <span class="nav-text">阶段五</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段六"><span class="nav-number">1.3.8.</span> <span class="nav-text">阶段六</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#秘密阶段"><span class="nav-number">1.3.9.</span> <span class="nav-text">秘密阶段</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验小结"><span class="nav-number">1.4.</span> <span class="nav-text">实验小结</span></a></li></ol></li></ol></div>
             
 
           </div>
