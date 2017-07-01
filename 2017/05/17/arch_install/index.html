@@ -119,7 +119,7 @@
 <meta property="og:image" content="http://www.viseator.com/images/arch18.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch22.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch19.jpg">
-<meta property="og:updated_time" content="2017-06-29T01:13:35.000Z">
+<meta property="og:updated_time" content="2017-07-01T09:42:30.337Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="以官方Wiki的方式安装ArchLinux">
 <meta name="twitter:description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
@@ -470,7 +470,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  5,539
+                  5,565
                 </span>
               
 
@@ -626,7 +626,7 @@
 <hr>
 <ul>
 <li>如果你是BIOS/MBR方式引导，<strong>跳过下面创建一个引导分区</strong>的步骤。</li>
-<li>如果你是EFI/GPT方式引导，并且同时安装了其他系统，那么你应该可以在分区列表中发现一个较小的并且类型为EFI的分区，这是你的引导分区，请记下它的路径（/dev/sdxY)备用，<strong>跳过下面创建一个引导分区</strong>的步骤。</li>
+<li>如果你是EFI/GPT方式引导，并且同时安装了其他系统，那么你应该可以在分区列表中发现一个较小的并且类型为EFI的分区（<strong>注意查看硬盘的大小，这个<code>EFI</code>分区有可能是你U盘中的，需要排除</strong>），这是你的引导分区，请记下它的路径（/dev/sdxY)备用，<strong>跳过下面创建一个引导分区</strong>的步骤。</li>
 <li>如果你是EFI/GPT方式引导，但是没有这个较小的并且类型为EFI的引导分区（这种情况一般只会出现在新的硬盘），那么你需要<strong>先创建一个引导分区</strong>。</li>
 </ul>
 <hr>

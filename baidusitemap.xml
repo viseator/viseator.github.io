@@ -4,6 +4,31 @@
 
     
   <url>
+    <loc>http://www.viseator.com/2017/05/17/arch_install/</loc>
+    <lastmod>2017-07-01T09:42:30.337Z</lastmod>
+    <data>
+        <display>
+        <title>以官方Wiki的方式安装ArchLinux</title>
+        <pubTime>2017-05-17T15:26:29.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>Arch</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="http://www.viseator.com/categories/Linux/"/>
+          
+             
+              <breadCrumb title="Arch" url="http://www.viseator.com/categories/Linux/Arch/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.viseator.com/2017/06/21/CS_APP_BombLab/</loc>
     <lastmod>2017-07-01T03:03:20.826Z</lastmod>
     <data>
@@ -22,31 +47,6 @@
           
              
               <breadCrumb title="CS:APP" url="http://www.viseator.com/categories/Computer-System/CS-APP/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/05/17/arch_install/</loc>
-    <lastmod>2017-06-29T01:13:35.000Z</lastmod>
-    <data>
-        <display>
-        <title>以官方Wiki的方式安装ArchLinux</title>
-        <pubTime>2017-05-17T15:26:29.000Z</pubTime>
-        
-        <tag>Linux</tag>
-         
-        <tag>Arch</tag>
-         
-         
-           
-             
-              <breadCrumb title="Linux" url="http://www.viseator.com/categories/Linux/"/>
-          
-             
-              <breadCrumb title="Arch" url="http://www.viseator.com/categories/Linux/Arch/"/>
           
         </display>
     </data>
