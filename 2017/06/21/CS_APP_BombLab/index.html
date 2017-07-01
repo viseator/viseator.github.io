@@ -110,7 +110,7 @@
 <meta property="og:image" content="http://www.viseator.com/images/bomblab9.png">
 <meta property="og:image" content="http://www.viseator.com/images/bomblab10.png">
 <meta property="og:image" content="http://www.viseator.com/images/bomblab11.png">
-<meta property="og:updated_time" content="2017-07-01T01:37:05.139Z">
+<meta property="og:updated_time" content="2017-07-01T01:59:17.136Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解计算机系统（CS:APP) - Bomb Lab解题报告">
 <meta name="twitter:description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件”bomb”，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来">
@@ -461,7 +461,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  8,560
+                  8,768
                 </span>
               
 
@@ -676,7 +676,9 @@
 <p>第17-19行是对<code>strings_not_equal</code>的调用，我们已经知道它的两个参数分别是<code>esi</code>与<code>edi</code>，<code>esi</code>被赋上了一个地址值，<code>edi</code>被赋上了<code>esp+0x10</code>，我们可以推测出<code>edi</code>的地址就是指向我们读入的第三个字符串的，那么需要比较的对象是什么呢？我们在运行时查看内存的内容：</p>
 <p><img src="/images/bomblab11.png" alt=""></p>
 <p>这就是我们需要的第三个参数。</p>
-<p>可以看到如果第三个参数与</p>
+<p>可以看到如果第三个参数与上面这个字符串相同的话就会调用两次<code>puts</code>输出提示信息，然后进入<code>secret_phase</code>阶段。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">0000000000401242 &lt;secret_phase&gt;:</div><div class="line">  401242:	53                   	push   %rbx</div><div class="line">  401243:	e8 56 02 00 00       	callq  40149e &lt;read_line&gt;</div><div class="line">  401248:	ba 0a 00 00 00       	mov    $0xa,%edx</div><div class="line">  40124d:	be 00 00 00 00       	mov    $0x0,%esi</div><div class="line">  401252:	48 89 c7             	mov    %rax,%rdi</div><div class="line">  401255:	e8 76 f9 ff ff       	callq  400bd0 &lt;strtol@plt&gt;</div><div class="line">  40125a:	48 89 c3             	mov    %rax,%rbx</div><div class="line">  40125d:	8d 40 ff             	lea    -0x1(%rax),%eax</div><div class="line">  401260:	3d e8 03 00 00       	cmp    $0x3e8,%eax</div><div class="line">  401265:	76 05                	jbe    40126c &lt;secret_phase+0x2a&gt;</div><div class="line">  401267:	e8 ce 01 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">  40126c:	89 de                	mov    %ebx,%esi</div><div class="line">  40126e:	bf f0 30 60 00       	mov    $0x6030f0,%edi</div><div class="line">  401273:	e8 8c ff ff ff       	callq  401204 &lt;fun7&gt;</div><div class="line">  401278:	83 f8 02             	cmp    $0x2,%eax</div><div class="line">  40127b:	74 05                	je     401282 &lt;secret_phase+0x40&gt;</div><div class="line">  40127d:	e8 b8 01 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">  401282:	bf 38 24 40 00       	mov    $0x402438,%edi</div><div class="line">  401287:	e8 84 f8 ff ff       	callq  400b10 &lt;puts@plt&gt;</div><div class="line">  40128c:	e8 33 03 00 00       	callq  4015c4 &lt;phase_defused&gt;</div><div class="line">  401291:	5b                   	pop    %rbx</div><div class="line">  401292:	c3                   	retq</div></pre></td></tr></table></figure>
+<p>可以看到</p>
 
       
     </div>
