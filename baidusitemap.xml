@@ -5,11 +5,36 @@
     
   <url>
     <loc>http://www.viseator.com/2017/05/17/arch_install/</loc>
-    <lastmod>2017-07-01T09:42:30.337Z</lastmod>
+    <lastmod>2017-07-02T02:44:14.163Z</lastmod>
     <data>
         <display>
         <title>以官方Wiki的方式安装ArchLinux</title>
         <pubTime>2017-05-17T15:26:29.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>Arch</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="http://www.viseator.com/categories/Linux/"/>
+          
+             
+              <breadCrumb title="Arch" url="http://www.viseator.com/categories/Linux/Arch/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.viseator.com/2017/07/02/arch_more/</loc>
+    <lastmod>2017-07-02T02:29:23.883Z</lastmod>
+    <data>
+        <display>
+        <title>ArchLinux你可能需要知道的操作与软件包推荐「编写中」</title>
+        <pubTime>2017-07-02T02:26:58.000Z</pubTime>
         
         <tag>Linux</tag>
          
