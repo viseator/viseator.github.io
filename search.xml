@@ -3,7 +3,7 @@
   <entry>
     <title><![CDATA[ArchLinux你可能需要知道的操作与软件包推荐「编写中」]]></title>
     <url>%2F2017%2F07%2F02%2Farch_more%2F</url>
-    <content type="text"></content>
+    <content type="text"><![CDATA[你可能需要知道的操作与软件包推荐在第一篇教程中介绍了ArchLinux的基本安装，第二篇教程中介绍了必须的设置与图形界面的安装，这篇文章并不是教程，只是推荐一些自己日常使用的操作与软件包。写这篇文章时没有重新安装，所以不会有详细的过程，只是简单地列举应该装的软件包或者是基础的配置，更加细节的内容请查阅相关wiki。 安装Yaourt在之前我们管理软件包都是使用官方为我们提供的pacman，软件包的来源都是官方。但是Arch拥有一个强大的用户库AUR即Arch User Repository，为我们提供了官方包之外的各种软件包，一些闭源的软件包也可以在上面找到，可以说AUR极大地丰富了软件包的种类与数量，并可以配合yaourt这样的工具为用户省下大量安装、更新软件包的时间。 yaourt实际上也是一个软件包，我们可以把它看成是对pacman的包装，它兼容pacman的所有操作，最大的不同是我们可以用它方便地安装与管理AUR中的包，下面的许多软件包都是在AUR库中的，也都是使用AUR来安装的。 安装yaourt以root权限打开编译/etc/pacman.conf，将下面这三行加入到文件末尾并保存： 123[archlinuxcn]SigLevel = NeverServer = http://repo.archlinuxcn.org/$arch 同步软件信息库并安装yaourt： 1sudo pacman -Sy yaourt fakeroot yaourt使用请见 https://www.linuxdashen.com/arch-linux%E4%BD%BF%E7%94%A8yaourt%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E8%BD%BB%E6%9D%BE%E5%AE%89%E8%A3%85aur%E8%BD%AF%E4%BB%B6%E5%8C%85 滚动更新ArchLinux的更新机制是非常激进的滚动更新，也就是说ArchLinux的软件与内核会时刻与稳定版本保持一致，你所用的系统总是时刻保持最新的。 这个机制给很多Arch教徒带来了强大的快感，可以第一时间体验到新的软件与新 的内核，但是也存在着日常滚炸这样的问题。虽然滚动更新的包可能因为没有经过完善的测试会导致系统不能工作种种问题，但是绝大部分情况下的更新都不会导致太大的问题。修复滚炸的系统和提交Bug信息也是ArchLinux用户的技能之一。 滚动更新命令使用yaourt非常简单： 1yaourt -Syu --aur --aur参数是检查并更新AUR包中的内容。 shadowsocks安装官方源中的shadowsocks-qt5包，自带图形界面，通过软件菜单（桌面环境自带）启动即可。 Chrome代理安装官方源中开源的chromium或者AUR中的google-chrome都可以，下面以google-chrome为例。 先用命令行代理启动chrome： 1google-chrome-stable --proxy-server="socks5://foobar:66" chromium换下命令就可以。 然后安装SwitchyOmega这个插件，配置好GFWList和代理规则就可以自动代理了。]]></content>
       <categories>
         <category>Linux</category>
         <category>Arch</category>
