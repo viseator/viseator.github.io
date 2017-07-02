@@ -98,7 +98,7 @@
 <meta property="og:url" content="http://www.viseator.com/2017/07/02/arch_more/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="你可能需要知道的操作与软件包推荐在第一篇教程中介绍了ArchLinux的基本安装，第二篇教程中介绍了必须的设置与图形界面的安装，这篇文章并不是教程，只是推荐一些自己日常使用的操作与软件包。写这篇文章时没有重新安装，所以不会有详细的过程，只是简单地列举应该装的软件包或者是基础的配置，更加细节的内容请查阅相关wiki。">
-<meta property="og:updated_time" content="2017-07-02T03:37:02.623Z">
+<meta property="og:updated_time" content="2017-07-02T03:38:20.793Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ArchLinux你可能需要知道的操作与软件包推荐「持续更新」">
 <meta name="twitter:description" content="你可能需要知道的操作与软件包推荐在第一篇教程中介绍了ArchLinux的基本安装，第二篇教程中介绍了必须的设置与图形界面的安装，这篇文章并不是教程，只是推荐一些自己日常使用的操作与软件包。写这篇文章时没有重新安装，所以不会有详细的过程，只是简单地列举应该装的软件包或者是基础的配置，更加细节的内容请查阅相关wiki。">
@@ -493,7 +493,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">google-chrome-stable --proxy-server=<span class="string">"socks5://foobar:66"</span></div></pre></td></tr></table></figure>
 <p><code>chromium</code>换下命令就可以。</p>
 <p>然后安装<a href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=en" target="_blank" rel="external">SwitchyOmega</a>这个插件，配置好<a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="external"><code>GFWList</code></a>和代理规则就可以自动代理了。之后的启动就不需要命令行了。</p>
-<h4 id="中文字体与中文输入法"><a href="#中文字体与中文输入法" class="headerlink" title="中文字体与中文输入法"></a>中文字体与中文输入法</h4><p>中文字体推荐安装官方源中<code>noto-fonts-cjk</code>，中文输入法需要安装<code>fcitx</code>包与<code>fcitx-im</code>集合包，再加上一个中文支持包，可以到<a href="https://wiki.archlinux.org/index.php/fcitx#Chinese中挑选一个喜欢的包装上。" target="_blank" rel="external">https://wiki.archlinux.org/index.php/fcitx#Chinese中挑选一个喜欢的包装上。</a></p>
+<h4 id="中文字体与中文输入法"><a href="#中文字体与中文输入法" class="headerlink" title="中文字体与中文输入法"></a>中文字体与中文输入法</h4><p>中文字体推荐安装官方源中<code>noto-fonts-cjk</code>，中文输入法需要安装<code>fcitx</code>包与<code>fcitx-im</code>集合包，再加上一个中文支持包，可以到<a href="https://wiki.archlinux.org/index.php/fcitx#Chinese" target="_blank" rel="external">https://wiki.archlinux.org/index.php/fcitx#Chinese</a>中挑选一个喜欢的包装上。</p>
 <p>装完以后需要修改<code>/etc/profile</code>文件，在文件开头加入三行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> XMODIFIERS=<span class="string">"@im=fcitx"</span></div><div class="line"><span class="built_in">export</span> GTK_IM_MODULE=<span class="string">"fcitx"</span></div><div class="line"><span class="built_in">export</span> QT_IM_MODULE=<span class="string">"fcitx"</span></div></pre></td></tr></table></figure>
 <p>可以解决一些软件无法调出<code>fcitx</code>的问题。</p>
