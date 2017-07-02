@@ -4,6 +4,31 @@
 
     
   <url>
+    <loc>http://www.viseator.com/2017/07/02/arch_more/</loc>
+    <lastmod>2017-07-02T04:05:35.536Z</lastmod>
+    <data>
+        <display>
+        <title>ArchLinux你可能需要知道的操作与软件包推荐「持续更新」</title>
+        <pubTime>2017-07-02T02:26:58.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>Arch</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="http://www.viseator.com/categories/Linux/"/>
+          
+             
+              <breadCrumb title="Arch" url="http://www.viseator.com/categories/Linux/Arch/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.viseator.com/2017/05/17/arch_install/</loc>
     <lastmod>2017-07-02T03:58:50.090Z</lastmod>
     <data>
@@ -35,31 +60,6 @@
         <display>
         <title>ArchLinux安装后的必须配置与图形界面安装教程</title>
         <pubTime>2017-05-19T13:38:57.000Z</pubTime>
-        
-        <tag>Linux</tag>
-         
-        <tag>Arch</tag>
-         
-         
-           
-             
-              <breadCrumb title="Linux" url="http://www.viseator.com/categories/Linux/"/>
-          
-             
-              <breadCrumb title="Arch" url="http://www.viseator.com/categories/Linux/Arch/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/07/02/arch_more/</loc>
-    <lastmod>2017-07-02T03:54:30.186Z</lastmod>
-    <data>
-        <display>
-        <title>ArchLinux你可能需要知道的操作与软件包推荐「持续更新」</title>
-        <pubTime>2017-07-02T02:26:58.000Z</pubTime>
         
         <tag>Linux</tag>
          

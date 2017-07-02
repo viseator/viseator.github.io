@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.viseator.com/2017/07/02/arch_more/</loc>
+    
+    <lastmod>2017-07-02T04:05:35.536Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.viseator.com/2017/05/17/arch_install/</loc>
     
     <lastmod>2017-07-02T03:58:50.090Z</lastmod>
@@ -12,13 +19,6 @@
     <loc>http://www.viseator.com/2017/05/19/arch_setup/</loc>
     
     <lastmod>2017-07-02T03:55:47.543Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.viseator.com/2017/07/02/arch_more/</loc>
-    
-    <lastmod>2017-07-02T03:54:30.186Z</lastmod>
     
   </url>
   
