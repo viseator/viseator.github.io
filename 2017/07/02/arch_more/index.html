@@ -98,7 +98,7 @@
 <meta property="og:url" content="http://www.viseator.com/2017/07/02/arch_more/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="你可能需要知道的操作与软件包推荐在第一篇教程中介绍了ArchLinux的基本安装，第二篇教程中介绍了必须的设置与图形界面的安装，这篇文章并不是教程，只是推荐一些自己日常使用的操作与软件包。写这篇文章时没有重新安装，所以不会有详细的过程，只是简单地列举应该装的软件包或者是基础的配置，更加细节的内容请查阅相关wiki。">
-<meta property="og:updated_time" content="2017-07-02T03:39:26.523Z">
+<meta property="og:updated_time" content="2017-07-02T03:47:37.826Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ArchLinux你可能需要知道的操作与软件包推荐「持续更新」">
 <meta name="twitter:description" content="你可能需要知道的操作与软件包推荐在第一篇教程中介绍了ArchLinux的基本安装，第二篇教程中介绍了必须的设置与图形界面的安装，这篇文章并不是教程，只是推荐一些自己日常使用的操作与软件包。写这篇文章时没有重新安装，所以不会有详细的过程，只是简单地列举应该装的软件包或者是基础的配置，更加细节的内容请查阅相关wiki。">
@@ -448,7 +448,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  926
+                  1,082
                 </span>
               
 
@@ -497,6 +497,14 @@
 <p>装完以后需要修改<code>/etc/profile</code>文件，在文件开头加入三行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> XMODIFIERS=<span class="string">"@im=fcitx"</span></div><div class="line"><span class="built_in">export</span> GTK_IM_MODULE=<span class="string">"fcitx"</span></div><div class="line"><span class="built_in">export</span> QT_IM_MODULE=<span class="string">"fcitx"</span></div></pre></td></tr></table></figure>
 <p>可以解决一些软件无法调出<code>fcitx</code>的问题。</p>
+<h3 id="zsh"><a href="#zsh" class="headerlink" title="zsh"></a>zsh</h3><p><code>zsh</code>是默认<code>shell``bash</code>的替代品之一，它的特点是插件多配置方便，兼容<code>bash</code>脚本并且支持更强大的高亮与补全。</p>
+<p>安装官方源中<code>zsh</code>包。</p>
+<p>设置<code>zsh</code>为默认<code>shell</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chsh <span class="_">-s</span> /bin/zsh username</div></pre></td></tr></table></figure>
+<p>推荐安装<code>AUR</code>中的<code>oh-my-zsh-git</code>这个包，可以帮助配置一些实用的功能。</p>
+<p>其他主题插件配置请见<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">oh-my-zsh</a>的配置介绍，分享一下我安装的插件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plugins=(vim git sudo extract z wd archlinux zsh-autosuggestions zsh-syntax-highlighting)</div></pre></td></tr></table></figure>
+<p>注意后面两个插件需要安装相应的支持包并配置才能使用。</p>
 
       
     </div>
@@ -738,7 +746,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#你可能需要知道的操作与软件包推荐"><span class="nav-number">1.</span> <span class="nav-text">你可能需要知道的操作与软件包推荐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Yaourt"><span class="nav-number">1.1.</span> <span class="nav-text">安装Yaourt</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装yaourt"><span class="nav-number">1.1.1.</span> <span class="nav-text">安装yaourt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#yaourt使用"><span class="nav-number">1.1.2.</span> <span class="nav-text">yaourt使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#滚动更新"><span class="nav-number">1.2.</span> <span class="nav-text">滚动更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shadowsocks"><span class="nav-number">1.3.</span> <span class="nav-text">shadowsocks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chrome代理"><span class="nav-number">1.4.</span> <span class="nav-text">Chrome代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中文字体与中文输入法"><span class="nav-number">1.5.</span> <span class="nav-text">中文字体与中文输入法</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#你可能需要知道的操作与软件包推荐"><span class="nav-number">1.</span> <span class="nav-text">你可能需要知道的操作与软件包推荐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Yaourt"><span class="nav-number">1.1.</span> <span class="nav-text">安装Yaourt</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装yaourt"><span class="nav-number">1.1.1.</span> <span class="nav-text">安装yaourt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#yaourt使用"><span class="nav-number">1.1.2.</span> <span class="nav-text">yaourt使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#滚动更新"><span class="nav-number">1.2.</span> <span class="nav-text">滚动更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shadowsocks"><span class="nav-number">1.3.</span> <span class="nav-text">shadowsocks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chrome代理"><span class="nav-number">1.4.</span> <span class="nav-text">Chrome代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中文字体与中文输入法"><span class="nav-number">1.5.</span> <span class="nav-text">中文字体与中文输入法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zsh"><span class="nav-number">1.6.</span> <span class="nav-text">zsh</span></a></li></ol></li></ol></div>
             
 
           </div>
