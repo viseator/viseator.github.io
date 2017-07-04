@@ -4,12 +4,12 @@
 
     
   <url>
-    <loc>http://www.viseator.com/2017/05/19/arch_setup/</loc>
-    <lastmod>2017-07-04T13:09:04.034Z</lastmod>
+    <loc>http://www.viseator.com/2017/05/17/arch_install/</loc>
+    <lastmod>2017-07-04T13:18:53.707Z</lastmod>
     <data>
         <display>
-        <title>ArchLinux安装后的必须配置与图形界面安装教程</title>
-        <pubTime>2017-05-19T13:38:57.000Z</pubTime>
+        <title>以官方Wiki的方式安装ArchLinux</title>
+        <pubTime>2017-05-17T15:26:29.000Z</pubTime>
         
         <tag>Linux</tag>
          
@@ -29,12 +29,12 @@
 
     
   <url>
-    <loc>http://www.viseator.com/2017/05/17/arch_install/</loc>
-    <lastmod>2017-07-04T11:49:49.827Z</lastmod>
+    <loc>http://www.viseator.com/2017/05/19/arch_setup/</loc>
+    <lastmod>2017-07-04T13:09:10.374Z</lastmod>
     <data>
         <display>
-        <title>以官方Wiki的方式安装ArchLinux</title>
-        <pubTime>2017-05-17T15:26:29.000Z</pubTime>
+        <title>ArchLinux安装后的必须配置与图形界面安装教程</title>
+        <pubTime>2017-05-19T13:38:57.000Z</pubTime>
         
         <tag>Linux</tag>
          
