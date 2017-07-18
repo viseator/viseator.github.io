@@ -98,10 +98,12 @@
 <meta property="og:url" content="http://www.viseator.com/2017/07/18/CS_APP_AttackLab/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="Attack Lab实验代码见GitHub 简介Attack Lab的内容针对的是CS-APP中第三章中关于程序安全性描述中的栈溢出攻击。在这个Lab中，我们需要针对不同的目的编写攻击字符串来填充一个有漏洞的程序的栈来达到执行攻击代码的目的，攻击方式分为代码注入攻击与返回攻击。本实验也是对旧版本中IA32编写的Buffer Lab的替代。 我们可以从CMU的lab主页来获取自学者版本与实验讲义(W">
-<meta property="og:updated_time" content="2017-07-18T06:28:21.210Z">
+<meta property="og:image" content="http://www.viseator.com/images/attacklab01.png">
+<meta property="og:updated_time" content="2017-07-18T07:08:25.427Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解计算机系统（CS:APP) - Attack Lab解题报告">
 <meta name="twitter:description" content="Attack Lab实验代码见GitHub 简介Attack Lab的内容针对的是CS-APP中第三章中关于程序安全性描述中的栈溢出攻击。在这个Lab中，我们需要针对不同的目的编写攻击字符串来填充一个有漏洞的程序的栈来达到执行攻击代码的目的，攻击方式分为代码注入攻击与返回攻击。本实验也是对旧版本中IA32编写的Buffer Lab的替代。 我们可以从CMU的lab主页来获取自学者版本与实验讲义(W">
+<meta name="twitter:image" content="http://www.viseator.com/images/attacklab01.png">
 
 
 
@@ -448,7 +450,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  451
+                  1,159
                 </span>
               
 
@@ -481,6 +483,24 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="title">getbuf</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">char</span> buf[BUFFER_SIZE];</div><div class="line">    Gets(buf);</div><div class="line">    <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><code>getbuf</code>函数在栈中申请了一块<code>BUFFER_SIZE</code>大小的空间，然后利用这块空间首地址作为<code>Gets</code>函数的参数来从标准输入流中读取字符。由于没有对读入字符数量的检查，我们可以通过提供一个超过<code>BUFFER_SIZE</code>的字符串来向<code>getbuf</code>的栈帧之外写入数据。</p>
 <p>在代码注入攻击中就是利用函数返回时<code>RET</code>指令会将调用方在栈中存放的返回地址读入<code>IP</code>中，执行该地址指向的代码。栈溢出后，我们可以改写这个返回地址，指向我们同样存放在栈中的指令，以达到攻击的目的。</p>
+<p>###　第一部分：代码注入攻击</p>
+<h4 id="等级１"><a href="#等级１" class="headerlink" title="等级１"></a>等级１</h4><p>在这个等级中，我们不需要注入任何攻击代码，只需要更改<code>getbuf</code>函数的返回地址执行指定的函数<code>touch1</code>（该函数已经存在于程序中）。</p>
+<p>那么我们需要做的就是将栈中存放返回地址的位置改为<code>touch1</code>函数的入口地址，问题在于我们如何将地址精确地写入到原来的地址的位置。</p>
+<p>讲义给出了<code>getbuf</code>的调用函数：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> val;</div><div class="line">    val = getbuf();</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"No exploit. Getbuf returned 0x%x\n"</span>, val);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>如果攻击成功，我们不会执行到第五行，而是跳转到<code>touch1</code>中执行：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">touch1</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    vlevel = <span class="number">1</span>; <span class="comment">/* Part of validation protocol */</span></div><div class="line">    <span class="built_in">printf</span>(<span class="string">"Touch1!: You called touch1()\n"</span>);</div><div class="line">    validate(<span class="number">1</span>);</div><div class="line">    <span class="built_in">exit</span>(<span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>输出上面的字符串代表我们攻击成功。</p>
+<p>下面我们利用<code>objdump -d</code>命令将程序反汇编来查看<code>getbuf</code>函数的行为。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">00000000004017a8 &lt;getbuf&gt;:</div><div class="line">  4017a8:	48 83 ec 28          	sub    $0x28,%rsp</div><div class="line">  4017ac:	48 89 e7             	mov    %rsp,%rdi</div><div class="line">  4017af:	e8 8c 02 00 00       	callq  401a40 &lt;Gets&gt;</div><div class="line">  4017b4:	b8 01 00 00 00       	mov    $0x1,%eax</div><div class="line">  4017b9:	48 83 c4 28          	add    $0x28,%rsp</div><div class="line">  4017bd:	c3                   	retq   </div><div class="line">  4017be:	90                   	nop</div><div class="line">  4017bf:	90                   	nop</div></pre></td></tr></table></figure>
+<p>代码比较简单，在第2行中将<code>rsp</code>减了0x28，申请了一块28字节的空间，第3行将<code>rsp</code>赋给<code>rdi</code>就是空间的首地址，然后调用了<code>Gets</code>函数，<code>rdi</code>就是它的参数。到这里我们可以确定<code>BUFFER_SIZE</code>的大小为0x28（自学讲义中这个值是固定的，但是真正的实验中这个值是由服务器生成的）。换句话说，在0x28字节的栈被<code>Gets</code>函数写满之后，多出来的字符会被写入<code>getbuf</code>函数的栈外。我们用图来说明栈的结构：</p>
+<p><img src="/images/attacklab01.png" alt=""></p>
+<p>下面是低地址，上面是高地址，在<code>getbuf</code>函数申请的0x28字节内存之外的8个字节存放的就是<code>test</code>函数<code>call</code>指令后下一条指令的地址。</p>
+<p>现在我们可以知道，我们需要用0x28字节来将栈填满，再写入<code>touch1</code>函数的入口地址，在<code>getbuf</code>函数执行到<code>ret</code>指令的时候就会返回到<code>touch1</code>中执行。</p>
+<p>下面就要利用官方提供的<code>hex2raw</code>程序来帮助我们生成攻击字符串，这个程序将以空白字符隔开表示的字节转换成真正的二进制字节，注意这个程序只是原样地转换文件中的字符，所以字节序的问题是我们应该考虑的。</p>
+<p>最终的答案如下：</p>
+<figure class="highlight lsl"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span></div><div class="line"><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span></div><div class="line"><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span></div><div class="line"><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span></div><div class="line"><span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> </div><div class="line">c0 <span class="number">17</span> <span class="number">40</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span> <span class="number">00</span></div></pre></td></tr></table></figure>
+<p>可以看到前0x28个字节都使用0x00来填充，然后在溢出的8个字节中写入了<code>touch1</code>的首地址<code>0x4017c0</code>，注意字节序就可以了。</p>
 
       
     </div>
@@ -722,7 +742,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-Lab"><span class="nav-number">1.</span> <span class="nav-text">Attack Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前置"><span class="nav-number">1.2.</span> <span class="nav-text">前置</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-Lab"><span class="nav-number">1.</span> <span class="nav-text">Attack Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前置"><span class="nav-number">1.2.</span> <span class="nav-text">前置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#等级１"><span class="nav-number">1.2.1.</span> <span class="nav-text">等级１</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
