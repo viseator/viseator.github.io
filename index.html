@@ -343,6 +343,212 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.viseator.com/2017/07/19/android_context/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="viseator">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="viseator's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2017/07/19/android_context/" itemprop="url">Android Context理解与陷阱</a></h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-19T19:07:42+08:00">
+                2017-07-19
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/07/19/android_context/" class="leancloud_visitors" data-flag-title="Android Context理解与陷阱">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,312
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="Context"><a href="#Context" class="headerlink" title="Context?"></a>Context?</h2><p><code>Context</code>在安卓开发时是一个非常常见的组件，我们会在许多地方使用它，举一些例子：</p>
+<ul>
+<li>启动新的<code>Activity</code> <code>Service</code></li>
+<li>发送广播，接收广播</li>
+<li>填充<code>View</code></li>
+<li>获取资源</li>
+</ul>
+<p>相信每一个开发者在看见它时都有过这样一些疑问：</p>
+<ul>
+<li><code>Context</code>是什么</li>
+<li><code>Context</code>的作用</li>
+<li><code>Context</code>从哪里来</li>
+</ul>
+<p>同时，我们也经历过需要一个<code>Context</code>但不知道如何去正确获取/传递的情况，事实上不正确地保存一个<code>Context</code>的引用可能会导致部分内存不能被正确GC从而造成事实上的内存泄漏。</p>
+<p>本文将着重对上面这些内容进行讲解。</p>
+<h2 id="Context的定义"><a href="#Context的定义" class="headerlink" title="Context的定义"></a>Context的定义</h2><p>字面上解释，<code>Context</code>意为“环境”，这个解释比较符合它的作用。</p>
+<p>官方文档中对<code>Context</code>的解释是：</p>
+<blockquote>
+<p>  Interface to global information about an application environment. This is an abstract class whose implementation is provided by the Android system. It allows access to application-specific resources and classes, as well as up-calls for application-level operations such as launching activities, broadcasting and receiving intents, etc.</p>
+<p>  关于应用环境的全局信息的接口。它是一个抽象类，具体由安卓系统来实现。它允许我们去访问特定的应用的资源和类，同时也可以经由它去向上请求应用级别的操作例如启动<code>Activity</code>、发送广播、接收<code>intents</code>等等。</p>
+</blockquote>
+<p>首先我们可以把它看作是一个连接我们代码与安卓系统的“桥梁”，我们开发的应用是与运行在设备上的操作系统紧密相关的，只能通过操作系统，我们才能去启动一个新的<code>Activity</code>，向其他应用发送广播，启动一个新的<code>Service</code>或是访问我们存放在<code>apk</code>中的资源文件。</p>
+<p><code>Context</code>就是系统为我们提供上述功能的一个接口，我们需要使用它去完成与系统的信息交换。</p>
+<h2 id="Context从哪里来"><a href="#Context从哪里来" class="headerlink" title="Context从哪里来"></a>Context从哪里来</h2><p><code>Context</code>作为一个依赖于系统的类，<code>SDK</code>中只给了我们一个抽象类，具体的实现由系统完成，下文举例使用的<code>ContextImpl</code>就是<code>AOSP</code>中安卓源码对于<code>Context</code>的一个实现。</p>
+<h2 id="Context的作用"><a href="#Context的作用" class="headerlink" title="Context的作用"></a>Context的作用</h2><h3 id="Context中封装的信息"><a href="#Context中封装的信息" class="headerlink" title="Context中封装的信息"></a>Context中封装的信息</h3><p>我们可以看看<code>Context</code>里面包含了哪些东西（部分）。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> String mBasePackageName; </div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> String mOpPackageName; <span class="comment">//软件包名</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> Resources mResources;</div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> ResourcesManager mResourcesManager; <span class="comment">//用于管理资源文件</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> Display mDisplay; <span class="comment">//为View填充等提供屏幕尺寸、像素密度等信息</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> DisplayAdjustments mDisplayAdjustments = <span class="keyword">new</span> DisplayAdjustments();</div><div class="line"><span class="keyword">private</span> Resources.Theme mTheme = <span class="keyword">null</span>; <span class="comment">//主题信息</span></div><div class="line"><span class="keyword">private</span> File mCacheDir;</div><div class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</div><div class="line"><span class="keyword">private</span> File mCodeCacheDir;</div><div class="line">...</div><div class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</div><div class="line"><span class="keyword">private</span> File[] mExternalObbDirs;</div><div class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</div><div class="line"><span class="keyword">private</span> File[] mExternalFilesDirs;</div><div class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</div><div class="line"><span class="keyword">private</span> File[] mExternalCacheDirs;</div><div class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</div><div class="line"><span class="keyword">private</span> File[] mExternalMediaDirs; <span class="comment">//各种文件路径</span></div></pre></td></tr></table></figure>
+<p>这些域的存在为功能提供了必要的信息，例如在<code>LayoutInflater</code>填充<code>View</code>时需要一个<code>context</code>作为参数，我们查看这个<code>context</code>如何被使用：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> XmlResourceParser childParser = context.getResources().getLayout(layout);</div></pre></td></tr></table></figure>
+<p>我们传入的<code>ResourceId</code>最终会被通过<code>context</code>的<code>getResource()</code>方法获取的<code>Resource</code>对象的<code>getLayout()</code>方法定位到对应的<code>xml</code>文件提供给<code>Inflater</code>进行解析。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Apply a theme wrapper, if allowed and one is specified.</span></div><div class="line"><span class="keyword">if</span> (!ignoreThemeAttr) &#123;</div><div class="line">    <span class="keyword">final</span> TypedArray ta = context.obtainStyledAttributes(attrs, ATTRS_THEME);</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> themeResId = ta.getResourceId(<span class="number">0</span>, <span class="number">0</span>);</div><div class="line">    <span class="keyword">if</span> (themeResId != <span class="number">0</span>) &#123;</div><div class="line">        context = <span class="keyword">new</span> ContextThemeWrapper(context, themeResId);</div><div class="line">    &#125;</div><div class="line">    ta.recycle();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在这里调用了<code>context</code>的<code>obtainStyledAttributes()</code>方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> TypedArray <span class="title">obtainStyledAttributes</span><span class="params">(</span></span></div><div class="line">        AttributeSet set, @StyleableRes <span class="keyword">int</span>[] attrs) &#123;</div><div class="line">    <span class="keyword">return</span> getTheme().obtainStyledAttributes(set, attrs, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>最终使用了<code>context</code>中存放的主题信息为填充的<code>view</code>设置属性。</p>
+<p>现在我们知道，我们存放在<code>res</code>文件夹下的内容（布局文件、字符串文件、图片、主题……）都需要通过一个<code>context</code>去向系统获取。</p>
+<p>那么为什么在启动<code>activity</code>、启动<code>service</code>、发送广播时都需要使用<code>context</code>呢？因为这些操作与系统是紧密相关的，我们知道启动这些东西都需要使用一个叫<code>intent</code>的东西（关于<code>intent</code>的内容会在另外的文章讲），以<code>startActivity()</code>方法为例，我们一路向上追溯，可以发现启动<code>activity</code>最终是由<code>AcitivityManagerNative.getDefault()</code>的本地方法<code>startActivity()</code>执行的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    intent.migrateExtraStreamToClipData();</div><div class="line">    intent.prepareToLeaveProcess();</div><div class="line">    <span class="keyword">int</span> result = ActivityManagerNative.getDefault().startActivity(</div><div class="line">        whoThread, who.getBasePackageName(), intent,</div><div class="line">        intent.resolveTypeIfNeeded(who.getContentResolver()), token,</div><div class="line">        target != <span class="keyword">null</span> ? target.mEmbeddedID : <span class="keyword">null</span>, requestCode, <span class="number">0</span>, <span class="keyword">null</span>, options);</div><div class="line">    checkStartActivityResult(result, intent);</div><div class="line">&#125; <span class="keyword">catch</span> (RemoteException e) &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这个时候我们发现，传入的<code>context</code>已经变成了上面代码中的<code>who</code>，利用这个 <code>context</code>获取了包名与方法的第四个参数<code>who.getContentResolver()</code>。它的作用是提供信息来解析<code>intent</code>的<a href="https://en.wikipedia.org/wiki/Media_type" target="_blank" rel="external"><code>MIME type</code></a>，帮助系统决定<code>intent</code>的目标。</p>
+<p>可以看到<code>intent</code>在这里同样起到了一个提供必要信息的作用。</p>
+<h3 id="Context的作用-1"><a href="#Context的作用-1" class="headerlink" title="Context的作用"></a>Context的作用</h3><p>在这里再重复一遍上面说过的话，配合之前的例子，是不是可以更好地理解了呢？</p>
+<blockquote>
+<p>  首先我们可以把它看作是一个连接我们代码与安卓系统的“桥梁”，我们开发的应用是与运行在设备上的操作系统紧密相关的，只能通过操作系统，我们才能去启动一个新的<code>Activity</code>，向其他应用发送广播，启动一个新的<code>Service</code>或是访问我们存放在<code>apk</code>中的资源文件。</p>
+<p>   <code>Context</code>就是系统为我们提供上述功能的一个接口，我们需要使用它去完成与系统的信息交换。</p>
+</blockquote>
+
+          
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
     <link itemprop="mainEntityOfPage" href="http://www.viseator.com/2017/07/18/CS_APP_AttackLab/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1614,178 +1820,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.viseator.com/2017/05/11/android_lan_messages/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="viseator">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="viseator's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/05/11/android_lan_messages/" itemprop="url">Android利用UDP、TCP进行局域网数据传输</a></h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-11T15:58:06+08:00">
-                2017-05-11
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/05/11/android_lan_messages/" class="leancloud_visitors" data-flag-title="Android利用UDP、TCP进行局域网数据传输">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数 </span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-            <div class="post-wordcount">
-              
-                <span class="post-meta-divider">|</span>
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-file-word-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">字数统计</span>
-                
-                <span title="字数统计">
-                  2,246
-                </span>
-              
-
-              
-
-              
-            </div>
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>在团队内部的hackweek中实现了一个在局域网环境中（同一个wifi下）进行的卡片收发小游戏，踩了一些关于局域网内通信的坑，这篇博文就用来整理一下整个过程的思路，<a href="https://github.com/viseator/AnonymousCard" target="_blank" rel="external">完整代码地址</a>。</p>
-<h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><p>在整个过程中利用到了UDP与TCP两种传输层协议，两者的特性决定了使用上的不同。</p>
-<p>简单地说，UDP非面向连接，不需要先与目标建立连接，所以UDP不提供可靠的数据传输，也不能保证数据准确无误地到达目的地，但UDP的优势在于它可以迅速传送大量信息，传输性能比较好。</p>
-<p>而TCP是面向连接的协议，需要经过三次握手与目的地址建立一个稳定的连接，可以保证数据准确、完整地到达。但是它的传输效率就没有UDP那么高。</p>
-<p>首先，为了数据传输的稳定和准确性，在传送主要数据部分我们必需使用TCP来建立一个点对点的稳定的连接来传输主要数据。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/05/11/android_lan_messages/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <div>
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
   </section>
 
   
@@ -1835,7 +1869,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">22</span>
+                <span class="site-state-item-count">23</span>
                 <span class="site-state-item-name">文章</span>
               </a>
             </div>
