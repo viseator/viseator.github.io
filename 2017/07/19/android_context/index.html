@@ -98,7 +98,7 @@
 <meta property="og:url" content="http://www.viseator.com/2017/07/19/android_context/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="Context?Context在安卓开发时是一个非常常见的组件，我们会在许多地方使用它，举一些例子：  启动新的Activity Service 发送广播，接收广播 填充View 获取资源  相信每一个开发者在看见它时都有过这样一些疑问：  Context是什么 Context的作用 Context从哪里来  同时，我们也经历过需要一个Context但不知道如何去正确获取/传递的情况，事实上不正确">
-<meta property="og:updated_time" content="2017-07-19T12:42:36.403Z">
+<meta property="og:updated_time" content="2017-07-19T12:55:31.696Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Context理解与陷阱">
 <meta name="twitter:description" content="Context?Context在安卓开发时是一个非常常见的组件，我们会在许多地方使用它，举一些例子：  启动新的Activity Service 发送广播，接收广播 填充View 获取资源  相信每一个开发者在看见它时都有过这样一些疑问：  Context是什么 Context的作用 Context从哪里来  同时，我们也经历过需要一个Context但不知道如何去正确获取/传递的情况，事实上不正确">
@@ -437,7 +437,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,312
+                  1,308
                 </span>
               
 
@@ -474,13 +474,14 @@
 </ul>
 <p>同时，我们也经历过需要一个<code>Context</code>但不知道如何去正确获取/传递的情况，事实上不正确地保存一个<code>Context</code>的引用可能会导致部分内存不能被正确GC从而造成事实上的内存泄漏。</p>
 <p>本文将着重对上面这些内容进行讲解。</p>
+<a id="more"></a>
 <h2 id="Context的定义"><a href="#Context的定义" class="headerlink" title="Context的定义"></a>Context的定义</h2><p>字面上解释，<code>Context</code>意为“环境”，这个解释比较符合它的作用。</p>
 <p>官方文档中对<code>Context</code>的解释是：</p>
 <blockquote>
 <p>  Interface to global information about an application environment. This is an abstract class whose implementation is provided by the Android system. It allows access to application-specific resources and classes, as well as up-calls for application-level operations such as launching activities, broadcasting and receiving intents, etc.</p>
 <p>  关于应用环境的全局信息的接口。它是一个抽象类，具体由安卓系统来实现。它允许我们去访问特定的应用的资源和类，同时也可以经由它去向上请求应用级别的操作例如启动<code>Activity</code>、发送广播、接收<code>intents</code>等等。</p>
 </blockquote>
-<p>首先我们可以把它看作是一个连接我们代码与安卓系统的“桥梁”，我们开发的应用是与运行在设备上的操作系统紧密相关的，只能通过操作系统，我们才能去启动一个新的<code>Activity</code>，向其他应用发送广播，启动一个新的<code>Service</code>或是访问我们存放在<code>apk</code>中的资源文件。</p>
+<p>我们可以把它看作是一个连接我们代码与安卓系统的“桥梁”，我们开发的应用是与运行在设备上的操作系统紧密相关的，只能通过操作系统，我们才能去启动一个新的<code>Activity</code>，向其他应用发送广播，启动一个新的<code>Service</code>或是访问我们存放在<code>apk</code>中的资源文件。</p>
 <p><code>Context</code>就是系统为我们提供上述功能的一个接口，我们需要使用它去完成与系统的信息交换。</p>
 <h2 id="Context从哪里来"><a href="#Context从哪里来" class="headerlink" title="Context从哪里来"></a>Context从哪里来</h2><p><code>Context</code>作为一个依赖于系统的类，<code>SDK</code>中只给了我们一个抽象类，具体的实现由系统完成，下文举例使用的<code>ContextImpl</code>就是<code>AOSP</code>中安卓源码对于<code>Context</code>的一个实现。</p>
 <h2 id="Context的作用"><a href="#Context的作用" class="headerlink" title="Context的作用"></a>Context的作用</h2><h3 id="Context中封装的信息"><a href="#Context中封装的信息" class="headerlink" title="Context中封装的信息"></a>Context中封装的信息</h3><p>我们可以看看<code>Context</code>里面包含了哪些东西（部分）。</p>
@@ -499,7 +500,7 @@
 <p>可以看到<code>intent</code>在这里同样起到了一个提供必要信息的作用。</p>
 <h3 id="Context的作用-1"><a href="#Context的作用-1" class="headerlink" title="Context的作用"></a>Context的作用</h3><p>在这里再重复一遍上面说过的话，配合之前的例子，是不是可以更好地理解了呢？</p>
 <blockquote>
-<p>  首先我们可以把它看作是一个连接我们代码与安卓系统的“桥梁”，我们开发的应用是与运行在设备上的操作系统紧密相关的，只能通过操作系统，我们才能去启动一个新的<code>Activity</code>，向其他应用发送广播，启动一个新的<code>Service</code>或是访问我们存放在<code>apk</code>中的资源文件。</p>
+<p>  我们可以把它看作是一个连接我们代码与安卓系统的“桥梁”，我们开发的应用是与运行在设备上的操作系统紧密相关的，只能通过操作系统，我们才能去启动一个新的<code>Activity</code>，向其他应用发送广播，启动一个新的<code>Service</code>或是访问我们存放在<code>apk</code>中的资源文件。</p>
 <p>   <code>Context</code>就是系统为我们提供上述功能的一个接口，我们需要使用它去完成与系统的信息交换。</p>
 </blockquote>
 
