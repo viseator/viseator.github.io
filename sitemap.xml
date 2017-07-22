@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.viseator.com/about/index.html</loc>
+    
+    <lastmod>2017-07-22T11:30:49.702Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.viseator.com/2017/06/21/CS_APP_BombLab/</loc>
+    
+    <lastmod>2017-07-21T14:34:05.260Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.viseator.com/2017/07/19/android_context/</loc>
     
     <lastmod>2017-07-20T11:17:56.534Z</lastmod>
@@ -19,13 +33,6 @@
     <loc>http://www.viseator.com/2017/07/18/CS_APP_AttackLab/</loc>
     
     <lastmod>2017-07-18T12:31:59.924Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.viseator.com/2017/06/21/CS_APP_BombLab/</loc>
-    
-    <lastmod>2017-07-18T12:31:41.000Z</lastmod>
     
   </url>
   
@@ -110,13 +117,6 @@
     <loc>http://www.viseator.com/2017/03/26/android_property_animation_1/</loc>
     
     <lastmod>2017-03-28T00:23:22.268Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.viseator.com/about/index.html</loc>
-    
-    <lastmod>2017-03-16T09:18:51.400Z</lastmod>
     
   </url>
   

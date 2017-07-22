@@ -3,6 +3,32 @@
 
 
     
+    
+  <url>
+    <loc>http://www.viseator.com/2017/06/21/CS_APP_BombLab/</loc>
+    <lastmod>2017-07-21T14:34:05.260Z</lastmod>
+    <data>
+        <display>
+        <title>深入理解计算机系统（CS:APP) - Bomb Lab详解</title>
+        <pubTime>2017-06-21T01:53:01.000Z</pubTime>
+        
+        <tag>Computer System</tag>
+         
+        <tag>CS:APP</tag>
+         
+         
+           
+             
+              <breadCrumb title="Computer System" url="http://www.viseator.com/categories/Computer-System/"/>
+          
+             
+              <breadCrumb title="CS:APP" url="http://www.viseator.com/categories/Computer-System/CS-APP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
   <url>
     <loc>http://www.viseator.com/2017/07/19/android_context/</loc>
     <lastmod>2017-07-20T11:17:56.534Z</lastmod>
@@ -55,31 +81,6 @@
         <display>
         <title>深入理解计算机系统（CS:APP) - Attack Lab详解</title>
         <pubTime>2017-07-18T05:47:01.000Z</pubTime>
-        
-        <tag>Computer System</tag>
-         
-        <tag>CS:APP</tag>
-         
-         
-           
-             
-              <breadCrumb title="Computer System" url="http://www.viseator.com/categories/Computer-System/"/>
-          
-             
-              <breadCrumb title="CS:APP" url="http://www.viseator.com/categories/Computer-System/CS-APP/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/06/21/CS_APP_BombLab/</loc>
-    <lastmod>2017-07-18T12:31:41.000Z</lastmod>
-    <data>
-        <display>
-        <title>深入理解计算机系统（CS:APP) - Bomb Lab详解</title>
-        <pubTime>2017-06-21T01:53:01.000Z</pubTime>
         
         <tag>Computer System</tag>
          
@@ -337,7 +338,6 @@
     </data>
     </url>
 
-    
     
   <url>
     <loc>http://www.viseator.com/2017/03/12/android_view_onDraw_canvas/</loc>
