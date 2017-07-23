@@ -75,7 +75,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Linux,Arch," />
+  <meta name="keywords" content="Android,View," />
 
 
 
@@ -91,19 +91,17 @@
 
 
 
-<meta name="description" content="你可能需要知道的操作与软件包推荐在第一篇教程中介绍了ArchLinux的基本安装，第二篇教程中介绍了必须的设置与图形界面的安装，这篇文章并不是教程，只是推荐一些自己日常使用的操作与软件包。写这篇文章时没有重新安装，所以不会有详细的过程，只是简单地列举应该装的软件包或者是基础的配置，更加细节的内容请查阅相关wiki。">
-<meta name="keywords" content="Linux,Arch">
+<meta name="description" content="写在前面本文基于Android 7.1.1 (API 25)的源码分析编写 安卓是基于触摸操作进行交互的系统，几乎所有的操作都由对屏幕的一次次触摸完成，如何正确处理触摸事件关乎整个应用的操作体验。因此安卓对于触摸事件的分发与处理机制也是我们学习安卓开发的重中之重。同时几乎每一个安卓技术博客中都会对触摸分发机制这一块进行详解，例如比较早期也是最为出名的郭霖（《第一行代码》的作者）。现在网络上对于这一">
+<meta name="keywords" content="Android,View">
 <meta property="og:type" content="article">
-<meta property="og:title" content="ArchLinux你可能需要知道的操作与软件包推荐「持续更新」">
-<meta property="og:url" content="http://www.viseator.com/2017/07/02/arch_more/index.html">
+<meta property="og:title" content="Android 触摸事件分发机制（一）一切的开始">
+<meta property="og:url" content="http://www.viseator.com/2017/07/23/android_view_event_1/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
-<meta property="og:description" content="你可能需要知道的操作与软件包推荐在第一篇教程中介绍了ArchLinux的基本安装，第二篇教程中介绍了必须的设置与图形界面的安装，这篇文章并不是教程，只是推荐一些自己日常使用的操作与软件包。写这篇文章时没有重新安装，所以不会有详细的过程，只是简单地列举应该装的软件包或者是基础的配置，更加细节的内容请查阅相关wiki。">
-<meta property="og:image" content="http://www.viseator.com/images/arch23.png">
-<meta property="og:updated_time" content="2017-07-02T04:47:10.797Z">
+<meta property="og:description" content="写在前面本文基于Android 7.1.1 (API 25)的源码分析编写 安卓是基于触摸操作进行交互的系统，几乎所有的操作都由对屏幕的一次次触摸完成，如何正确处理触摸事件关乎整个应用的操作体验。因此安卓对于触摸事件的分发与处理机制也是我们学习安卓开发的重中之重。同时几乎每一个安卓技术博客中都会对触摸分发机制这一块进行详解，例如比较早期也是最为出名的郭霖（《第一行代码》的作者）。现在网络上对于这一">
+<meta property="og:updated_time" content="2017-07-23T11:48:48.723Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="ArchLinux你可能需要知道的操作与软件包推荐「持续更新」">
-<meta name="twitter:description" content="你可能需要知道的操作与软件包推荐在第一篇教程中介绍了ArchLinux的基本安装，第二篇教程中介绍了必须的设置与图形界面的安装，这篇文章并不是教程，只是推荐一些自己日常使用的操作与软件包。写这篇文章时没有重新安装，所以不会有详细的过程，只是简单地列举应该装的软件包或者是基础的配置，更加细节的内容请查阅相关wiki。">
-<meta name="twitter:image" content="http://www.viseator.com/images/arch23.png">
+<meta name="twitter:title" content="Android 触摸事件分发机制（一）一切的开始">
+<meta name="twitter:description" content="写在前面本文基于Android 7.1.1 (API 25)的源码分析编写 安卓是基于触摸操作进行交互的系统，几乎所有的操作都由对屏幕的一次次触摸完成，如何正确处理触摸事件关乎整个应用的操作体验。因此安卓对于触摸事件的分发与处理机制也是我们学习安卓开发的重中之重。同时几乎每一个安卓技术博客中都会对触摸分发机制这一块进行详解，例如比较早期也是最为出名的郭霖（《第一行代码》的作者）。现在网络上对于这一">
 
 
 
@@ -131,13 +129,13 @@
 
 
 
-  <link rel="canonical" href="http://www.viseator.com/2017/07/02/arch_more/"/>
+  <link rel="canonical" href="http://www.viseator.com/2017/07/23/android_view_event_1/"/>
 
 
 
 
 
-  <title>ArchLinux你可能需要知道的操作与软件包推荐「持续更新」 | viseator's blog</title>
+  <title>Android 触摸事件分发机制（一）一切的开始 | viseator's blog</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -345,7 +343,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://www.viseator.com/2017/07/02/arch_more/">
+    <link itemprop="mainEntityOfPage" href="http://www.viseator.com/2017/07/23/android_view_event_1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="viseator">
@@ -362,7 +360,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">ArchLinux你可能需要知道的操作与软件包推荐「持续更新」</h2>
+          <h2 class="post-title" itemprop="name headline">Android 触摸事件分发机制（一）一切的开始</h2>
         
 
         <div class="post-meta">
@@ -374,8 +372,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-02T10:26:58+08:00">
-                2017-07-02
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-23T13:40:38+08:00">
+                2017-07-23
               </time>
             
 
@@ -397,8 +395,8 @@
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index">
-                    <span itemprop="name">Linux</span>
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
                   </a>
                 </span>
 
@@ -408,8 +406,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/Arch/" itemprop="url" rel="index">
-                    <span itemprop="name">Arch</span>
+                  <a href="/categories/Android/View/" itemprop="url" rel="index">
+                    <span itemprop="name">View</span>
                   </a>
                 </span>
 
@@ -425,7 +423,7 @@
 
           
           
-             <span id="/2017/07/02/arch_more/" class="leancloud_visitors" data-flag-title="ArchLinux你可能需要知道的操作与软件包推荐「持续更新」">
+             <span id="/2017/07/23/android_view_event_1/" class="leancloud_visitors" data-flag-title="Android 触摸事件分发机制（一）一切的开始">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -450,7 +448,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,312
+                  353
                 </span>
               
 
@@ -472,50 +470,12 @@
       
 
       
-        <h2 id="你可能需要知道的操作与软件包推荐"><a href="#你可能需要知道的操作与软件包推荐" class="headerlink" title="你可能需要知道的操作与软件包推荐"></a>你可能需要知道的操作与软件包推荐</h2><p>在<a href="http://www.viseator.com/2017/05/17/arch_install/">第一篇教程</a>中介绍了<code>ArchLinux</code>的基本安装，<a href="http://www.viseator.com/2017/05/19/arch_setup/">第二篇教程</a>中介绍了必须的设置与图形界面的安装，这篇文章并不是教程，只是推荐一些自己日常使用的操作与软件包。写这篇文章时没有重新安装，所以不会有详细的过程，只是简单地列举应该装的软件包或者是基础的配置，更加细节的内容请查阅相关<code>wiki</code>。</p>
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p><strong>本文基于<code>Android 7.1.1 (API 25)</code>的源码分析编写</strong></p>
+<p>安卓是基于触摸操作进行交互的系统，几乎所有的操作都由对屏幕的一次次触摸完成，如何正确处理触摸事件关乎整个应用的操作体验。因此安卓对于触摸事件的分发与处理机制也是我们学习安卓开发的重中之重。同时几乎每一个安卓技术博客中都会对触摸分发机制这一块进行详解，例如比较早期也是最为出名的<a href="http://blog.csdn.net/guolin_blog/article/details/9097463/" target="_blank" rel="external">郭霖</a>（《第一行代码》的作者）。现在网络上对于这一块的分析也已经比较详尽了，基本上一篇博客中遗漏的部分都可以在其他博客中找到答案。</p>
+<p>但是无论别人的文章讲得多好，多么详细，我们都需要自己去打开源码仔细分析好好体会，一是这样一个比较复杂的过程不经历自己的思考很难完全理解，二是随着<code>api</code>版本的推进这部分源码也会发生很多变化，虽然大致思路相同，但是接触到新的内容总是一件好事。</p>
+<p>这也就是我写这篇博文的原因：记录自己思考与分析的过程。</p>
 <a id="more"></a>
-<h3 id="安装Yaourt"><a href="#安装Yaourt" class="headerlink" title="安装Yaourt"></a>安装Yaourt</h3><p>在之前我们管理软件包都是使用官方为我们提供的<code>pacman</code>，软件包的来源都是官方。但是<code>Arch</code>拥有一个强大的用户库<code>AUR</code>即<a href="https://wiki.archlinux.org/index.php/Arch_User_Repository" target="_blank" rel="external">Arch User Repository</a>，为我们提供了官方包之外的各种软件包，一些闭源的软件包也可以在上面找到，可以说<code>AUR</code>极大地丰富了软件包的种类与数量，并可以配合<code>yaourt</code>这样的工具为用户省下大量安装、更新软件包的时间。</p>
-<p><code>yaourt</code>实际上也是一个软件包，我们可以把它看成是对<code>pacman</code>的包装，它兼容<code>pacman</code>的所有操作，最大的不同是我们可以用它方便地安装与管理<code>AUR</code>中的包，下面的许多软件包都是在<code>AUR</code>库中的，也都是使用<code>AUR</code>来安装的。</p>
-<h4 id="安装yaourt"><a href="#安装yaourt" class="headerlink" title="安装yaourt"></a>安装<code>yaourt</code></h4><p>以<code>root</code>权限打开编译<code>/etc/pacman.conf</code>，将下面这三行加入到文件末尾并保存：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[archlinuxcn]</div><div class="line">SigLevel = Never</div><div class="line">Server   =  http://repo.archlinuxcn.org/<span class="variable">$arch</span></div></pre></td></tr></table></figure>
-<p>同步软件信息库并安装<code>yaourt</code>：</p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">sudo pacman -Sy yaourt fakeroot</span></div></pre></td></tr></table></figure>
-<h4 id="yaourt使用"><a href="#yaourt使用" class="headerlink" title="yaourt使用"></a><code>yaourt</code>使用</h4><p>请见</p>
-<blockquote>
-<p>  <a href="https://www.linuxdashen.com/arch-linux%E4%BD%BF%E7%94%A8yaourt%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E8%BD%BB%E6%9D%BE%E5%AE%89%E8%A3%85aur%E8%BD%AF%E4%BB%B6%E5%8C%85" target="_blank" rel="external">https://www.linuxdashen.com/arch-linux%E4%BD%BF%E7%94%A8yaourt%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E8%BD%BB%E6%9D%BE%E5%AE%89%E8%A3%85aur%E8%BD%AF%E4%BB%B6%E5%8C%85</a></p>
-</blockquote>
-<h3 id="滚动更新"><a href="#滚动更新" class="headerlink" title="滚动更新"></a>滚动更新</h3><p><code>ArchLinux</code>的更新机制是非常激进的滚动更新，也就是说<code>ArchLinux</code>的软件与内核会时刻与稳定版本保持一致，你所用的系统总是时刻保持最新的。</p>
-<p>这个机制给很多<code>Arch</code>教徒带来了强大的快感，可以第一时间体验到新的软件与新 的内核，但是也存在着日常滚炸这样的问题。虽然滚动更新的包可能因为没有经过完善的测试会导致系统不能工作种种问题，但是绝大部分情况下的更新都不会导致太大的问题。修复滚炸的系统和提交Bug信息也是<code>ArchLinux</code>用户的技能之一。</p>
-<p>滚动更新命令使用<code>yaourt</code>非常简单：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">yaourt -Syu --aur</div></pre></td></tr></table></figure>
-<p><code>--aur</code>参数是检查并更新<code>AUR</code>包中的内容。</p>
-<h3 id="shadowsocks"><a href="#shadowsocks" class="headerlink" title="shadowsocks"></a>shadowsocks</h3><p>安装官方源中的<code>shadowsocks-qt5</code>包，自带图形界面，通过软件菜单（桌面环境自带）启动即可。</p>
-<h3 id="Chrome代理"><a href="#Chrome代理" class="headerlink" title="Chrome代理"></a>Chrome代理</h3><p>安装官方源中开源的<code>chromium</code>或者<code>AUR</code>中的<code>google-chrome</code>都可以，下面以<code>google-chrome</code>为例。</p>
-<p>先用命令行代理启动<code>chrome</code>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">google-chrome-stable --proxy-server=<span class="string">"socks5://foobar:66"</span></div></pre></td></tr></table></figure>
-<p><code>chromium</code>换下命令就可以。</p>
-<p>然后安装<a href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=en" target="_blank" rel="external">SwitchyOmega</a>这个插件，配置好<a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="external"><code>GFWList</code></a>和代理规则就可以自动代理了。之后的启动就不需要命令行了。</p>
-<h3 id="中文字体与中文输入法"><a href="#中文字体与中文输入法" class="headerlink" title="中文字体与中文输入法"></a>中文字体与中文输入法</h3><p>中文字体推荐安装官方源中<code>noto-fonts-cjk</code>，中文输入法需要安装<code>fcitx</code>包与<code>fcitx-im</code>集合包，再加上一个中文支持包，可以到<a href="https://wiki.archlinux.org/index.php/fcitx#Chinese" target="_blank" rel="external">https://wiki.archlinux.org/index.php/fcitx#Chinese</a>中挑选一个喜欢的包装上。</p>
-<p>装完以后需要修改<code>/etc/profile</code>文件，在文件开头加入三行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> XMODIFIERS=<span class="string">"@im=fcitx"</span></div><div class="line"><span class="built_in">export</span> GTK_IM_MODULE=<span class="string">"fcitx"</span></div><div class="line"><span class="built_in">export</span> QT_IM_MODULE=<span class="string">"fcitx"</span></div></pre></td></tr></table></figure>
-<p>可以解决一些软件无法调出<code>fcitx</code>的问题。</p>
-<h3 id="zsh"><a href="#zsh" class="headerlink" title="zsh"></a>zsh</h3><p><code>zsh</code>是默认<code>shell``bash</code>的替代品之一，它的特点是插件多配置方便，兼容<code>bash</code>脚本并且支持更强大的高亮与补全。</p>
-<p>安装官方源中<code>zsh</code>包。</p>
-<p>设置<code>zsh</code>为默认<code>shell</code>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chsh <span class="_">-s</span> /bin/zsh username</div></pre></td></tr></table></figure>
-<p>推荐安装<code>AUR</code>中的<code>oh-my-zsh-git</code>这个包，可以帮助配置一些实用的功能。</p>
-<p>其他主题插件配置请见<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">oh-my-zsh</a>的配置介绍，分享一下我安装的插件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plugins=(vim git sudo extract z wd archlinux zsh-autosuggestions zsh-syntax-highlighting)</div></pre></td></tr></table></figure>
-<p>注意后面两个插件需要安装相应的支持包并配置才能使用。</p>
-<h3 id="Synapse"><a href="#Synapse" class="headerlink" title="Synapse"></a>Synapse</h3><p><code>Synapse</code>是一个快速的软件启动器，可以方便地查找安装的软件，设置快捷键使用再也不用找软件入口了。</p>
-<p>安装官方源中的<code>synapse</code>包。</p>
-<h3 id="Yakuake"><a href="#Yakuake" class="headerlink" title="Yakuake"></a>Yakuake</h3><p><code>Yakuake</code>是一个终端模拟器，我使用它的原因是它支持下拉，配合快捷键使用非常方便：</p>
-<p><img src="/images/arch23.png" alt=""></p>
-<p>安装官方源中的<code>yakuake</code>包。</p>
-<h3 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h3><p>有些时候需要使用<code>windows</code>而不想切换系统或干脆没有<code>windows</code>的情况下，我们可以使用<code>windows</code>虚拟机来代替。当然虚拟机的用处不止于此。</p>
-<p><code>Arch</code>下的虚拟机首先开源的<code>VirtualBox</code>，安装官方源的<code>virtualbox</code> <code>virtualbox-ext-vnc</code> <code>virtualbox-guest-iso</code> <code>virtualbox-host-modules-arch</code>这几个包。</p>
-<p>再去<a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="external">官网</a>下载<strong>Oracle VM VirtualBox Extension Pack</strong> ，在设置中导入使用。安装<code>windows</code>的过程不在这里讲解，记得安装之后在<code>windows</code>内安装扩展客户端软件即可。</p>
-
+<h2 id="触摸事件的来源"><a href="#触摸事件的来源" class="headerlink" title="触摸事件的来源"></a>触摸事件的来源</h2>
       
     </div>
 
@@ -544,9 +504,9 @@
       
         <div class="post-tags">
           
-            <a href="/tags/Linux/" rel="tag"># Linux</a>
+            <a href="/tags/Android/" rel="tag"># Android</a>
           
-            <a href="/tags/Arch/" rel="tag"># Arch</a>
+            <a href="/tags/View/" rel="tag"># View</a>
           
         </div>
       
@@ -559,8 +519,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/06/21/CS_APP_BombLab/" rel="next" title="深入理解计算机系统（CS:APP) - Bomb Lab详解">
-                <i class="fa fa-chevron-left"></i> 深入理解计算机系统（CS:APP) - Bomb Lab详解
+              <a href="/2017/07/19/android_context/" rel="next" title="Android Context理解与陷阱">
+                <i class="fa fa-chevron-left"></i> Android Context理解与陷阱
               </a>
             
           </div>
@@ -568,10 +528,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/07/18/CS_APP_AttackLab/" rel="prev" title="深入理解计算机系统（CS:APP) - Attack Lab详解">
-                深入理解计算机系统（CS:APP) - Attack Lab详解 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -760,7 +716,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#你可能需要知道的操作与软件包推荐"><span class="nav-number">1.</span> <span class="nav-text">你可能需要知道的操作与软件包推荐</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装Yaourt"><span class="nav-number">1.1.</span> <span class="nav-text">安装Yaourt</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装yaourt"><span class="nav-number">1.1.1.</span> <span class="nav-text">安装yaourt</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#yaourt使用"><span class="nav-number">1.1.2.</span> <span class="nav-text">yaourt使用</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#滚动更新"><span class="nav-number">1.2.</span> <span class="nav-text">滚动更新</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#shadowsocks"><span class="nav-number">1.3.</span> <span class="nav-text">shadowsocks</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Chrome代理"><span class="nav-number">1.4.</span> <span class="nav-text">Chrome代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#中文字体与中文输入法"><span class="nav-number">1.5.</span> <span class="nav-text">中文字体与中文输入法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#zsh"><span class="nav-number">1.6.</span> <span class="nav-text">zsh</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Synapse"><span class="nav-number">1.7.</span> <span class="nav-text">Synapse</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Yakuake"><span class="nav-number">1.8.</span> <span class="nav-text">Yakuake</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#虚拟机"><span class="nav-number">1.9.</span> <span class="nav-text">虚拟机</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#触摸事件的来源"><span class="nav-number">2.</span> <span class="nav-text">触摸事件的来源</span></a></li></ol></div>
             
 
           </div>

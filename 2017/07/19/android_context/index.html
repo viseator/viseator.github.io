@@ -99,7 +99,7 @@
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="Context?Context在安卓开发时是一个非常常见的组件，我们会在许多地方使用它，举一些例子：  启动新的Activity Service 发送广播，接收广播 填充View 获取资源  相信每一个开发者在看见它时都有过这样一些疑问：  Context是什么 Context的作用 Context从哪里来  同时，我们也经历过需要一个Context但不知道如何去正确获取/传递的情况，事实上不正确">
 <meta property="og:image" content="http://www.viseator.com/images/context01.png">
-<meta property="og:updated_time" content="2017-07-20T11:17:56.534Z">
+<meta property="og:updated_time" content="2017-07-23T11:49:52.556Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android Context理解与陷阱">
 <meta name="twitter:description" content="Context?Context在安卓开发时是一个非常常见的组件，我们会在许多地方使用它，举一些例子：  启动新的Activity Service 发送广播，接收广播 填充View 获取资源  相信每一个开发者在看见它时都有过这样一些疑问：  Context是什么 Context的作用 Context从哪里来  同时，我们也经历过需要一个Context但不知道如何去正确获取/传递的情况，事实上不正确">
@@ -499,7 +499,7 @@
 <p>那么为什么在启动<code>activity</code>、启动<code>service</code>、发送广播时都需要使用<code>context</code>呢？因为这些操作与系统是紧密相关的，我们知道启动这些东西都需要使用一个叫<code>intent</code>的东西（关于<code>intent</code>的内容会在另外的文章讲），以<code>startActivity()</code>方法为例，我们一路向上追溯，可以发现启动<code>activity</code>最终是由<code>AcitivityManagerNative.getDefault()</code>的本地方法<code>startActivity()</code>执行的：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    intent.migrateExtraStreamToClipData();</div><div class="line">    intent.prepareToLeaveProcess();</div><div class="line">    <span class="keyword">int</span> result = ActivityManagerNative.getDefault().startActivity(</div><div class="line">        whoThread, who.getBasePackageName(), intent,</div><div class="line">        intent.resolveTypeIfNeeded(who.getContentResolver()), token,</div><div class="line">        target != <span class="keyword">null</span> ? target.mEmbeddedID : <span class="keyword">null</span>, requestCode, <span class="number">0</span>, <span class="keyword">null</span>, options);</div><div class="line">    checkStartActivityResult(result, intent);</div><div class="line">&#125; <span class="keyword">catch</span> (RemoteException e) &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这个时候我们发现，传入的<code>context</code>已经变成了上面代码中的<code>who</code>，利用这个 <code>context</code>获取了包名与方法的第四个参数<code>who.getContentResolver()</code>。它的作用是提供信息来解析<code>intent</code>的<a href="https://en.wikipedia.org/wiki/Media_type" target="_blank" rel="external"><code>MIME type</code></a>，帮助系统决定<code>intent</code>的目标。</p>
-<p>可以看到<code>intent</code>在这里同样起到了一个提供必要信息的作用。</p>
+<p>可以看到<code>context</code>在这里同样起到了一个提供必要信息的作用。</p>
 <h3 id="Context的作用-1"><a href="#Context的作用-1" class="headerlink" title="Context的作用"></a>Context的作用</h3><p>在这里再重复一遍上面说过的话，配合之前的例子，是不是可以更好地理解了呢？</p>
 <blockquote>
 <p>  我们可以把它看作是一个连接我们代码与安卓系统的“桥梁”，我们开发的应用是与运行在设备上的操作系统紧密相关的，只能通过操作系统，我们才能去启动一个新的<code>Activity</code>，向其他应用发送广播，启动一个新的<code>Service</code>或是访问我们存放在<code>apk</code>中的资源文件。</p>
@@ -512,7 +512,7 @@
 <p><strong>对于每一个<code>Activity</code>/<code>Service</code>实例，它们的基础<code>Context</code>都是独立的。</strong></p>
 <h4 id="Application"><a href="#Application" class="headerlink" title="Application"></a><code>Application</code></h4><p><code>Application</code>同样继承于<code>ContextWrapper</code>，但是<code>Application</code>本身是以单例模式运行在应用进程中的，它可以被任何<code>Activity</code>/<code>Service</code>用<code>getApplication()</code>或是被任何<code>Context</code>使用<code>getApplicationContext()</code>方法获取。</p>
 <p><strong>不管使用什么方法去获取<code>Application</code>，获取的总是同一个<code>Application</code>实例。</strong></p>
-<h4 id="BroadcastReciver"><a href="#BroadcastReciver" class="headerlink" title="BroadcastReciver"></a>BroadcastReciver</h4><p><code>BroadcastReciver</code>本身并不是一个<code>Context</code>或在内部保存了一个<code>Context</code>，但是系统会在每次调用其<code>onRecive()</code>方法时向它传递一个<code>Context</code>对象，这个<code>Context</code>对象是一个<code>ReceiverRestrictedContext</code>（接收器限定<code>Context</code>），与普通<code>Context</code>不同在它的<code>registerReceiver()</code>与<code>bindSerivce()</code>方法是被禁止使用的，这意味着我们不能在<code>onRecive()</code>方法中调用该<code>Context</code>的这两个方法。</p>
+<h4 id="BroadcastReciver"><a href="#BroadcastReciver" class="headerlink" title="BroadcastReciver"></a><code>BroadcastReciver</code></h4><p><code>BroadcastReciver</code>本身并不是一个<code>Context</code>或在内部保存了一个<code>Context</code>，但是系统会在每次调用其<code>onRecive()</code>方法时向它传递一个<code>Context</code>对象，这个<code>Context</code>对象是一个<code>ReceiverRestrictedContext</code>（接收器限定<code>Context</code>），与普通<code>Context</code>不同在它的<code>registerReceiver()</code>与<code>bindSerivce()</code>方法是被禁止使用的，这意味着我们不能在<code>onRecive()</code>方法中调用该<code>Context</code>的这两个方法。</p>
 <p><strong>每次调用<code>onReceive()</code>方法传递的<code>Context</code>都是全新的。</strong></p>
 <h4 id="ContentProvider"><a href="#ContentProvider" class="headerlink" title="ContentProvider"></a><code>ContentProvider</code></h4><p>它本身同样不是一个<code>Context</code>，但它在创建时会被赋予一个<code>Context</code>并可以通过<code>getContext()</code>方法获取。</p>
 <p><strong>如果这个内容提供器运行在调用它的应用中，将会返回该应用的<code>Application</code>单例，如果它是由其他应用提供的，返回的<code>Context</code>将会是一个新创建的表示其他应用环境的<code>Context</code>。</strong></p>
@@ -596,6 +596,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2017/07/23/android_view_event_1/" rel="prev" title="Android 触摸事件分发机制（一）一切的开始">
+                Android 触摸事件分发机制（一）一切的开始 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -668,7 +672,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">23</span>
+                <span class="site-state-item-count">24</span>
                 <span class="site-state-item-name">文章</span>
               </a>
             </div>

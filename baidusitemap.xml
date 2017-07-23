@@ -3,6 +3,51 @@
 
 
     
+  <url>
+    <loc>http://www.viseator.com/2017/07/19/android_context/</loc>
+    <lastmod>2017-07-23T11:49:52.556Z</lastmod>
+    <data>
+        <display>
+        <title>Android Context理解与陷阱</title>
+        <pubTime>2017-07-19T11:07:42.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.viseator.com/2017/07/23/android_view_event_1/</loc>
+    <lastmod>2017-07-23T11:48:48.723Z</lastmod>
+    <data>
+        <display>
+        <title>Android 触摸事件分发机制（一）一切的开始</title>
+        <pubTime>2017-07-23T05:40:38.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
   <url>
     <loc>http://www.viseator.com/2017/06/21/CS_APP_BombLab/</loc>
@@ -23,26 +68,6 @@
           
              
               <breadCrumb title="CS:APP" url="http://www.viseator.com/categories/Computer-System/CS-APP/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/07/19/android_context/</loc>
-    <lastmod>2017-07-20T11:17:56.534Z</lastmod>
-    <data>
-        <display>
-        <title>Android Context理解与陷阱</title>
-        <pubTime>2017-07-19T11:07:42.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
           
         </display>
     </data>
