@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://www.viseator.com/images/mr11u-1.png">
 <meta property="og:image" content="http://www.viseator.com/images/mr12u-2.png">
 <meta property="og:image" content="http://www.viseator.com/images/mr12u-3.png">
-<meta property="og:updated_time" content="2017-09-05T15:28:40.835Z">
+<meta property="og:updated_time" content="2017-09-05T15:31:39.411Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）">
 <meta name="twitter:description" content="写在前面开学学校启用了有线网，由于校园网存在只能单一设备登陆的限制与无线登陆限速，所以想通过路由器刷openwrt再使用mentohust进行校园网的锐捷认证来实现多设备与不限速使用。 在选择路由器时考虑了如下因素：  可刷openwrt：只有特定的处理器支持openwrt，支持的路由器型号在官网有一个列表，直接参照这个列表选就可以了。 有电源/usb供电：在寝室使用的话因为有段时间断电但不断网，">
@@ -442,7 +442,7 @@
                   <span class="post-meta-item-text">字数统计</span>
                 
                 <span title="字数统计">
-                  1,839
+                  1,844
                 </span>
               
 
@@ -501,7 +501,7 @@
 <p><a href="http://xzper.com/2015/07/11/TP-MR12U%E5%88%B7openwrt-%E4%B8%8D%E6%AD%BBboot/" target="_blank" rel="external">图片来源</a></p>
 <h2 id="刷入最新固件（可选）"><a href="#刷入最新固件（可选）" class="headerlink" title="刷入最新固件（可选）"></a>刷入最新固件（可选）</h2><p>下面就可以直接在不死<code>boot</code>里面选择固件更新刷入最新的固件了，最新固件的下载可以到<a href="https://downloads.openwrt.org/snapshots/trunk/ar71xx/generic/" target="_blank" rel="external">这里</a>找到。</p>
 <p>但是<code>mr12u</code>的闪存只有可怜的4m，如果安装最新的<code>openwrt</code>就没有空间放下<code>mentohust</code>了，所以还不如就直接用这个解锁用的固件。</p>
-<h2 id="交叉编译mentohust"><a href="#交叉编译mentohust" class="headerlink" title="交叉编译mentohust"></a>交叉编译mentohust</h2><p>在网上找了一圈愣是没找到<code>ar71xx</code>处理器已经编译好的<code>mentohust</code>，只能选择自己交叉编译了。没有条件自己编译的可以使用我编译好的<strong>只适用于ar71xx</strong>处理器的<a href="www.viseator.com/file/mentohust"><code>mentohust</code></a>。</p>
+<h2 id="交叉编译mentohust"><a href="#交叉编译mentohust" class="headerlink" title="交叉编译mentohust"></a>交叉编译mentohust</h2><p>在网上找了一圈愣是没找到<code>ar71xx</code>处理器已经编译好的<code>mentohust</code>，只能选择自己交叉编译了。没有条件自己编译的可以使用我编译好的<strong>只适用于ar71xx</strong>处理器的<code>mentohust</code>:www.viseator.com/file/mentohust 。</p>
 <h3 id="依赖包的安装"><a href="#依赖包的安装" class="headerlink" title="依赖包的安装"></a>依赖包的安装</h3><p>可以到<a href="https://wiki.openwrt.org/zh-cn/doc/howto/buildroot.exigence" target="_blank" rel="external">https://wiki.openwrt.org/zh-cn/doc/howto/buildroot.exigence</a> 根据自己的发行版安装必要的软件包。</p>
 <h3 id="下载编译工具链"><a href="#下载编译工具链" class="headerlink" title="下载编译工具链"></a>下载编译工具链</h3><p>首先到<a href="https://downloads.openwrt.org/snapshots/trunk/ar71xx/generic/" target="_blank" rel="external">https://downloads.openwrt.org/snapshots/trunk/ar71xx/generic/</a> 页面下载 <a href="https://downloads.openwrt.org/snapshots/trunk/ar71xx/generic/OpenWrt-SDK-ar71xx-generic_gcc-5.3.0_musl-1.1.16.Linux-x86_64.tar.bz2" target="_blank" rel="external">OpenWrt-SDK-ar71xx-generic_gcc-5.3.0_musl-1.1.16.Linux-x86_64.tar.bz2</a> 处理器<code>SDK</code>，解压后进入目录下的<code>./staging_dir/toolchain-mips_34kc_gcc-5.3.0_musl-1.1.16/bin</code>。</p>
 <h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:到上述/staging_dir/toolchain-mips_34kc_gcc-5.3.0_musl-1.1.16/bin 目录的完整路径</div><div class="line"><span class="built_in">export</span> CC=mipsel-openwrt-linux-gcc  </div><div class="line"><span class="built_in">export</span> CPP=mipsel-openwrt-linux-cpp  </div><div class="line"><span class="built_in">export</span> GCC=mipsel-openwrt-linux-gcc  </div><div class="line"><span class="built_in">export</span> CXX=mipsel-openwrt-linux-g++  </div><div class="line"><span class="built_in">export</span> RANLIB=mipsel-openwrt-linux-uclibc-ranlib</div><div class="line"><span class="built_in">export</span> LDFLAGS=<span class="string">"-static"</span>  </div><div class="line"><span class="built_in">export</span> CFLAGS=<span class="string">"-Os -s"</span></div></pre></td></tr></table></figure>
