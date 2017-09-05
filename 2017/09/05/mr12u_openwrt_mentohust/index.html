@@ -1,0 +1,1415 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="openwrt," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="写在前面开学学校启用了有线网，由于校园网存在只能单一设备登陆的限制与无线登陆限速，所以想通过路由器刷openwrt再使用mentohust进行校园网的锐捷认证来实现多设备与不限速使用。 在选择路由器时考虑了如下因素：  可刷openwrt：只有特定的处理器支持openwrt，支持的路由器型号在官网有一个列表，直接参照这个列表选就可以了。 有电源/usb供电：在寝室使用的话因为有段时间断电但不断网，">
+<meta name="keywords" content="openwrt">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）">
+<meta property="og:url" content="http://www.viseator.com/2017/09/05/mr12u_openwrt_mentohust/index.html">
+<meta property="og:site_name" content="viseator&#39;s blog">
+<meta property="og:description" content="写在前面开学学校启用了有线网，由于校园网存在只能单一设备登陆的限制与无线登陆限速，所以想通过路由器刷openwrt再使用mentohust进行校园网的锐捷认证来实现多设备与不限速使用。 在选择路由器时考虑了如下因素：  可刷openwrt：只有特定的处理器支持openwrt，支持的路由器型号在官网有一个列表，直接参照这个列表选就可以了。 有电源/usb供电：在寝室使用的话因为有段时间断电但不断网，">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.viseator.com/images/mr11u-1.png">
+<meta property="og:image" content="http://www.viseator.com/images/mr12u-2.png">
+<meta property="og:image" content="http://www.viseator.com/images/mr12u-3.png">
+<meta property="og:updated_time" content="2017-09-05T15:22:01.578Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）">
+<meta name="twitter:description" content="写在前面开学学校启用了有线网，由于校园网存在只能单一设备登陆的限制与无线登陆限速，所以想通过路由器刷openwrt再使用mentohust进行校园网的锐捷认证来实现多设备与不限速使用。 在选择路由器时考虑了如下因素：  可刷openwrt：只有特定的处理器支持openwrt，支持的路由器型号在官网有一个列表，直接参照这个列表选就可以了。 有电源/usb供电：在寝室使用的话因为有段时间断电但不断网，">
+<meta name="twitter:image" content="http://www.viseator.com/images/mr11u-1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.viseator.com/2017/09/05/mr12u_openwrt_mentohust/"/>
+
+
+
+
+
+  <title>TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载） | viseator's blog</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-93455229-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?825cced91f7243ff630582af2a1a81d7";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261494271&web_id=1261494271" language="JavaScript"></script>
+  </div>
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">viseator's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">吴迪的博客</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="/2017/03/25/resource_general" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br />
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://www.viseator.com/2017/09/05/mr12u_openwrt_mentohust/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="viseator">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="viseator's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-05T20:06:16+08:00">
+                2017-09-05
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/openwrt/" itemprop="url" rel="index">
+                    <span itemprop="name">openwrt</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/09/05/mr12u_openwrt_mentohust/" class="leancloud_visitors" data-flag-title="TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计</span>
+                
+                <span title="字数统计">
+                  1,872
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>开学学校启用了有线网，由于校园网存在只能单一设备登陆的限制与无线登陆限速，所以想通过路由器刷<code>openwrt</code>再使用<code>mentohust</code>进行校园网的锐捷认证来实现多设备与不限速使用。</p>
+<p>在选择路由器时考虑了如下因素：</p>
+<ol>
+<li>可刷<code>openwrt</code>：只有特定的处理器支持<code>openwrt</code>，支持的路由器型号在官网有一个<a href="https://wiki.openwrt.org/toh/start" target="_blank" rel="external">列表</a>，直接参照这个列表选就可以了。</li>
+<li>有电源/usb供电：在寝室使用的话因为有段时间断电但不断网，所以需要自带电源或可用移动电源usb供电。</li>
+<li>性价比高：因为只用于转发校园网，所以可以买便宜一些的。</li>
+</ol>
+<p>最终选择了<code>TP-Link mr12u</code>这款路由器，在闲鱼上找了一家同城二手的，45元人民币拿下。</p>
+<a id="more"></a>
+<p><strong>注意下面需要在<code>linux</code>终端环境下操作</strong></p>
+<h2 id="刷不死Boot"><a href="#刷不死Boot" class="headerlink" title="刷不死Boot"></a>刷不死Boot</h2><p>由于路由器固件的特殊性，一旦刷崩了或者设置错误导致无法正常登陆路由器，那么就无法对路由器进行管理，也就是所谓的变砖。</p>
+<p>不死boot的作用就是在这种情况下提供进路由设置重新刷固件的机会。</p>
+<h3 id="刷解锁固件"><a href="#刷解锁固件" class="headerlink" title="刷解锁固件"></a>刷解锁固件</h3><p>由于<code>U-Boot</code>分区默认是锁定的，所以无法刷入新的<code>boot</code>。因此我们要先刷入一个修改过的解锁<code>U-Boot</code>分区的固件，这个修改过的固件可以在<a href="https://pan.baidu.com/s/1slWHygP" target="_blank" rel="external">百度网盘下载</a>，另外由于我手上的这个是v1版本的，与v2版本的硬件不同，所以需要使用的是<code>mr11u-v2</code>的解锁固件（即<code>openwr-ar71xx-generic-tl-mr11u-v2-squashfs-factory.bin</code>）。下载完以后先长按复位键复位路由器，连接上以后直接进入<code>192.168.1.1</code> <code>TP-Link</code>默认的管理界面，在下图这里选择刚下好的固件刷入即可：</p>
+<p><img src="/images/mr11u-1.png" alt=""></p>
+<p>（图源网络）</p>
+<h3 id="刷不死boot"><a href="#刷不死boot" class="headerlink" title="刷不死boot"></a>刷不死boot</h3><p>先下载不死<code>boot</code>：</p>
+<blockquote>
+<p>  <a href="http://viseator.com/file/breed-ar9331-mr12u.bin" target="_blank" rel="external">http://viseator.com/file/breed-ar9331-mr12u.bin</a></p>
+</blockquote>
+<p>路由器自动重启以后使用网线连接电脑与路由器，先用浏览器登陆<code>192.168.1.1</code>，用户名为<code>root</code>密码为空，然后设置<code>ssh</code>密码并保存。</p>
+<p>现在就可以使用<code>ssh</code>用<code>root</code>与刚刚设置的密码登陆路由器了：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh root@192.168.1.1</div></pre></td></tr></table></figure>
+<p>登陆以后先查看并记下<code>mac</code>地址，之后要用到：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ifconfig eth0</div></pre></td></tr></table></figure>
+<p><img src="/images/mr12u-2.png" alt=""></p>
+<p><a href="http://xzper.com/2015/07/11/TP-MR12U%E5%88%B7openwrt-%E4%B8%8D%E6%AD%BBboot/" target="_blank" rel="external">图片来源</a></p>
+<p>然后<code>exit</code>退出<code>ssh</code>，使用<code>scp</code>命令传送下载好的<code>boot</code>包：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scp breed-ar9331-mr12u.bin root@192.168.1.1:/tmp/</div></pre></td></tr></table></figure>
+<p>再次登陆路由器，刷入<code>U-Boot</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">ssh root@192.168.1.1</div><div class="line">cd /tmp</div><div class="line">mtd write breed-ar9331-mr12u.bin u-boot</div></pre></td></tr></table></figure>
+<p>等待命令返回后直接将路由器关机。</p>
+<p>想要进入不死<code>boot</code>，只需按住<code>reset</code>复位键不放，再开机，等待个十几秒后松开，再有线连接电脑与路由器，浏览器输入<code>192.168.1.1</code>就可以进入管理界面了，以后变砖了只要这样都可以重新刷固件，所以称不死。</p>
+<p>进入不死<code>boot</code>以后，先进入下图界面设置之前记录的<code>mac</code>地址：</p>
+<p><img src="/images/mr12u-3.png" alt=""></p>
+<p><a href="http://xzper.com/2015/07/11/TP-MR12U%E5%88%B7openwrt-%E4%B8%8D%E6%AD%BBboot/" target="_blank" rel="external">图片来源</a></p>
+<h2 id="刷入最新固件（可选）"><a href="#刷入最新固件（可选）" class="headerlink" title="刷入最新固件（可选）"></a>刷入最新固件（可选）</h2><p>下面就可以直接在不死<code>boot</code>里面选择固件更新刷入最新的固件了，最新固件的下载可以到<a href="https://downloads.openwrt.org/snapshots/trunk/ar71xx/generic/" target="_blank" rel="external">这里</a>找到。</p>
+<p>但是<code>mr12u</code>的闪存只有可怜的4m，如果安装最新的<code>openwrt</code>就没有空间放下<code>mentohust</code>了，所以还不如就直接用这个解锁用的固件。</p>
+<h2 id="交叉编译mentohust"><a href="#交叉编译mentohust" class="headerlink" title="交叉编译mentohust"></a>交叉编译mentohust</h2><p>在网上找了一圈愣是没找到<code>ar71xx</code>处理器已经编译好的<code>mentohust</code>，只能选择自己交叉编译了。没有条件自己编译的可以使用我编译好的<strong>只适用于ar71xx</strong>处理器的<a href="www.viseator.com/file/mentohust"><code>mentohust</code></a>。</p>
+<h3 id="依赖包的安装"><a href="#依赖包的安装" class="headerlink" title="依赖包的安装"></a>依赖包的安装</h3><p>可以到<a href="https://wiki.openwrt.org/zh-cn/doc/howto/buildroot.exigence根据自己的发行版安装必要的软件包。" target="_blank" rel="external">https://wiki.openwrt.org/zh-cn/doc/howto/buildroot.exigence根据自己的发行版安装必要的软件包。</a></p>
+<h3 id="下载编译工具链"><a href="#下载编译工具链" class="headerlink" title="下载编译工具链"></a>下载编译工具链</h3><p>首先到<a href="https://downloads.openwrt.org/snapshots/trunk/ar71xx/generic/页面下载[OpenWrt-SDK-ar71xx-generic_gcc-5.3.0_musl-1.1.16.Linux-x86_64.tar.bz2](https://downloads.openwrt.org/snapshots/trunk/ar71xx/generic/OpenWrt-SDK-ar71xx-generic_gcc-5.3.0_musl-1.1.16.Linux-x86_64.tar.bz2)处理器`SDK`，解压后进入目录下的`./staging_dir/toolchain-mips_34kc_gcc-5.3.0_musl-1.1.16/bin`。" target="_blank" rel="external">https://downloads.openwrt.org/snapshots/trunk/ar71xx/generic/页面下载[OpenWrt-SDK-ar71xx-generic_gcc-5.3.0_musl-1.1.16.Linux-x86_64.tar.bz2](https://downloads.openwrt.org/snapshots/trunk/ar71xx/generic/OpenWrt-SDK-ar71xx-generic_gcc-5.3.0_musl-1.1.16.Linux-x86_64.tar.bz2)处理器`SDK`，解压后进入目录下的`./staging_dir/toolchain-mips_34kc_gcc-5.3.0_musl-1.1.16/bin`。</a></p>
+<h3 id="配置环境变量"><a href="#配置环境变量" class="headerlink" title="配置环境变量"></a>配置环境变量</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> PATH=<span class="variable">$PATH</span>:到上述/staging_dir/toolchain-mips_34kc_gcc-5.3.0_musl-1.1.16/bin 目录的完整路径</div><div class="line"><span class="built_in">export</span> CC=mipsel-openwrt-linux-gcc  </div><div class="line"><span class="built_in">export</span> CPP=mipsel-openwrt-linux-cpp  </div><div class="line"><span class="built_in">export</span> GCC=mipsel-openwrt-linux-gcc  </div><div class="line"><span class="built_in">export</span> CXX=mipsel-openwrt-linux-g++  </div><div class="line"><span class="built_in">export</span> RANLIB=mipsel-openwrt-linux-uclibc-ranlib</div><div class="line"><span class="built_in">export</span> LDFLAGS=<span class="string">"-static"</span>  </div><div class="line"><span class="built_in">export</span> CFLAGS=<span class="string">"-Os -s"</span></div></pre></td></tr></table></figure>
+<h3 id="编译libpcap动态链接库"><a href="#编译libpcap动态链接库" class="headerlink" title="编译libpcap动态链接库"></a>编译libpcap动态链接库</h3><p>到<a href="http://www.tcpdump.org/下载[libpcap-1.8.1.tar.gz](http://www.tcpdump.org/release/libpcap-1.8.1.tar.gz)，解压以后进入目录，执行：" target="_blank" rel="external">http://www.tcpdump.org/下载[libpcap-1.8.1.tar.gz](http://www.tcpdump.org/release/libpcap-1.8.1.tar.gz)，解压以后进入目录，执行：</a></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure --host=mipsel-openwrt-linux --prefix=/home/自已设定目录/ --with-pcap=linux</div></pre></td></tr></table></figure>
+<p>然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make</div></pre></td></tr></table></figure>
+<p>会报错误，但是不影响我们需要的<code>libpcap.a</code>文件，在当前目录下找到这个文件复制出来备用。</p>
+<h3 id="编译mentohust"><a href="#编译mentohust" class="headerlink" title="编译mentohust"></a>编译mentohust</h3><p>克隆<code>mentohust</code>源码：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git <span class="built_in">clone</span> https://github.com/hyrathb/mentohust</div></pre></td></tr></table></figure>
+<p>进入目录，首先生成<code>configure</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sh autogen.sh</div></pre></td></tr></table></figure>
+<p>然后配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./configure --host=mipsel-openwrt-linux   --disable-encodepass --disable-notify --prefix=自设目录 --with-pcap=前面保存的libpcap.a文件路径</div></pre></td></tr></table></figure>
+<p>编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">make</div></pre></td></tr></table></figure>
+<p>成功以后就可以在<code>src</code>目录下找到编译好的<code>mentohust</code>文件了。</p>
+<h2 id="部署"><a href="#部署" class="headerlink" title="部署"></a>部署</h2><p>我们把编译好的文件传送到路由器中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scp mentohust root@192.168.1.1:/root</div></pre></td></tr></table></figure>
+<h3 id="安装libpcap"><a href="#安装libpcap" class="headerlink" title="安装libpcap"></a>安装libpcap</h3><p>路由器中默认没有我们依赖的<code>libpcap</code>库，我们要手动安装，先下载：</p>
+<blockquote>
+<p>  <a href="http://www.viseator.com/file/libpcap_1.0.0-2_ar71xx.ipk">http://www.viseator.com/file/libpcap_1.0.0-2_ar71xx.ipk</a></p>
+</blockquote>
+<p>然后传送到路由器中：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">scp libpcap_1.0.0-2_ar71xx.ipk root@192.168.1.1:/tmp</div></pre></td></tr></table></figure>
+<p>下面登陆路由器，进入<code>/tmp</code>目录，执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">opkg install libpcap_1.0.0-2_ar71xx.ipk</div></pre></td></tr></table></figure>
+<h3 id="新建wifi与桥接配置"><a href="#新建wifi与桥接配置" class="headerlink" title="新建wifi与桥接配置"></a>新建wifi与桥接配置</h3><p>新刷的路由器只有一个默认接入点，我们先到路由器管理界面修改接入点。增加访问密码等等。这一步的配置就不多说了网上都有。</p>
+<p>由于这个路由器只有一个接口，我们现在是将它作为<code>lan</code>口在用的，但是实际上我们需要使用它作为<code>wan</code>口来连接校园网认证上网，并且要将<code>lan</code>口与<code>wifi</code>进行桥接使得我们依旧可以通过<code>192.168.1.1</code>这个地址来管理路由器。</p>
+<p>这步操作需要直接修改<code>/etc/config/network</code>文件，如果使用图形界面配置可能会导致变砖。</p>
+<p>我们登陆路由器以后直接用<code>vim</code>修改上述文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vim /etc/config/network</div></pre></td></tr></table></figure>
+<p>下面提供我找到的示例文件供参考：<a href="http://www.right.com.cn/forum/thread-105317-1-1.html" target="_blank" rel="external">出处</a></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">config interface &apos;loopback&apos;</div><div class="line">        option ifname &apos;lo&apos;</div><div class="line">        option proto &apos;static&apos;</div><div class="line">        option ipaddr &apos;127.0.0.1&apos;</div><div class="line">        option netmask &apos;255.0.0.0&apos;</div><div class="line"></div><div class="line">config interface &apos;lan&apos;</div><div class="line">        option type &apos;bridge&apos;</div><div class="line">        option proto &apos;static&apos;</div><div class="line">        option ipaddr &apos;192.168.1.1&apos;</div><div class="line">        option netmask &apos;255.255.255.0&apos;</div><div class="line"></div><div class="line">config interface &apos;wan&apos;</div><div class="line">        option ifname &apos;eth0&apos;</div><div class="line">        option _orig_ifname &apos;eth0&apos;</div><div class="line">        option _orig_bridge &apos;false&apos;</div><div class="line">        option proto &apos;dhcp&apos;</div><div class="line">        option macaddr &apos;xx:xx:xx:xx:xx:xx&apos;替换为自己的mac</div></pre></td></tr></table></figure>
+<p>修改后保存，然后<code>reboot</code>重启。</p>
+<p>现在就不能通过有线来管理路由器了，因为管理地址已经桥接到了无线上了。所以我们要使用无线连接，有线接校园网，然后登陆到路由器。</p>
+<p>找到我们存放<code>mentohust</code>的<code>/root</code>目录（默认就是），启动<code>mentohust</code>:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">./mentohust -u username -p password -n eth0</div></pre></td></tr></table></figure>
+<p>如果要后台运行加个<code>-b1</code>就可以了。</p>
+<p>如果一切正常的话现在无线就可以正常上网了。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/openwrt/" rel="tag"># openwrt</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/07/19/android_context/" rel="next" title="Android Context理解与陷阱">
+                <i class="fa fa-chevron-left"></i> Android Context理解与陷阱
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.jpg"
+               alt="viseator" />
+          <p class="site-author-name" itemprop="name">viseator</p>
+           
+              <p class="site-description motion-element" itemprop="description"></p>
+           
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">24</span>
+                <span class="site-state-item-name">文章</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-categories">
+              <a href="/categories/index.html">
+                <span class="site-state-item-count">17</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              <a href="/tags/index.html">
+                <span class="site-state-item-count">20</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/viseator" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github-alt"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:viseator@gmail.com" target="_blank" title="Email">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Email
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+          <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+            <div class="links-of-blogroll-title">
+              <i class="fa  fa-fw fa-globe"></i>
+              Links
+            </div>
+            <ul class="links-of-blogroll-list">
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.hustunique.com/" title="UniqueStudio" target="_blank">UniqueStudio</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://www.hustmeituan.club/" title="HustMeituanClub" target="_blank">HustMeituanClub</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://blog.duskdragon.com/" title="BlackDragon" target="_blank">BlackDragon</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://imzhwk.com/" title="imzhwk" target="_blank">imzhwk</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="http://petnakanojo.com/" title="PetnaKanojo" target="_blank">PetnaKanojo</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://Alexanderinhust.github.io/" title="Alexander" target="_blank">Alexander</a>
+                </li>
+              
+                <li class="links-of-blogroll-item">
+                  <a href="https://qzwlecr.github.io/" title="qzwlecr" target="_blank">qzwlecr</a>
+                </li>
+              
+            </ul>
+          </div>
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刷不死Boot"><span class="nav-number">2.</span> <span class="nav-text">刷不死Boot</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#刷解锁固件"><span class="nav-number">2.1.</span> <span class="nav-text">刷解锁固件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#刷不死boot"><span class="nav-number">2.2.</span> <span class="nav-text">刷不死boot</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#刷入最新固件（可选）"><span class="nav-number">3.</span> <span class="nav-text">刷入最新固件（可选）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#交叉编译mentohust"><span class="nav-number">4.</span> <span class="nav-text">交叉编译mentohust</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#依赖包的安装"><span class="nav-number">4.1.</span> <span class="nav-text">依赖包的安装</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#下载编译工具链"><span class="nav-number">4.2.</span> <span class="nav-text">下载编译工具链</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#配置环境变量"><span class="nav-number">4.3.</span> <span class="nav-text">配置环境变量</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译libpcap动态链接库"><span class="nav-number">4.4.</span> <span class="nav-text">编译libpcap动态链接库</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译mentohust"><span class="nav-number">4.5.</span> <span class="nav-text">编译mentohust</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#部署"><span class="nav-number">5.</span> <span class="nav-text">部署</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#安装libpcap"><span class="nav-number">5.1.</span> <span class="nav-text">安装libpcap</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#新建wifi与桥接配置"><span class="nav-number">5.2.</span> <span class="nav-text">新建wifi与桥接配置</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy;  2016 - 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-rocket"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">viseator</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (search_path.endsWith("json")) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('2');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz", "shxNGHkps7WDMLyCkIKIKSSM");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+
+  
+
+</body>
+</html>
