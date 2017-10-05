@@ -105,7 +105,7 @@
 <meta property="og:description" content="你可能需要知道的操作与软件包推荐在第一篇教程中介绍了ArchLinux的基本安装，第二篇教程中介绍了必须的设置与图形界面的安装，这篇文章并不是教程，只是推荐一些自己日常使用的操作与软件包。写这篇文章时没有重新安装，所以不会有详细的过程，只是简单地列举应该装的软件包或者是基础的配置，更加细节的内容请查阅相关wiki。">
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.viseator.com/images/arch23.png">
-<meta property="og:updated_time" content="2017-07-02T04:47:10.797Z">
+<meta property="og:updated_time" content="2017-10-05T06:25:35.752Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ArchLinux你可能需要知道的操作与软件包推荐「持续更新」">
 <meta name="twitter:description" content="你可能需要知道的操作与软件包推荐在第一篇教程中介绍了ArchLinux的基本安装，第二篇教程中介绍了必须的设置与图形界面的安装，这篇文章并不是教程，只是推荐一些自己日常使用的操作与软件包。写这篇文章时没有重新安装，所以不会有详细的过程，只是简单地列举应该装的软件包或者是基础的配置，更加细节的内容请查阅相关wiki。">
@@ -502,7 +502,7 @@
 <p>装完以后需要修改<code>/etc/profile</code>文件，在文件开头加入三行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> XMODIFIERS=<span class="string">"@im=fcitx"</span></div><div class="line"><span class="built_in">export</span> GTK_IM_MODULE=<span class="string">"fcitx"</span></div><div class="line"><span class="built_in">export</span> QT_IM_MODULE=<span class="string">"fcitx"</span></div></pre></td></tr></table></figure>
 <p>可以解决一些软件无法调出<code>fcitx</code>的问题。</p>
-<h3 id="zsh"><a href="#zsh" class="headerlink" title="zsh"></a>zsh</h3><p><code>zsh</code>是默认<code>shell``bash</code>的替代品之一，它的特点是插件多配置方便，兼容<code>bash</code>脚本并且支持更强大的高亮与补全。</p>
+<h3 id="zsh"><a href="#zsh" class="headerlink" title="zsh"></a>zsh</h3><p><code>zsh</code>是默认<code>shell</code> <code>bash</code>的替代品之一，它的特点是插件多配置方便，兼容<code>bash</code>脚本并且支持更强大的高亮与补全。</p>
 <p>安装官方源中<code>zsh</code>包。</p>
 <p>设置<code>zsh</code>为默认<code>shell</code>：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chsh <span class="_">-s</span> /bin/zsh username</div></pre></td></tr></table></figure>
