@@ -4,6 +4,31 @@
 
     
   <url>
+    <loc>http://www.viseator.com/2017/10/07/android_view_event_2/</loc>
+    <lastmod>2017-10-07T10:43:38.608Z</lastmod>
+    <data>
+        <display>
+        <title>Android 触摸事件分发机制（二）原始事件消息传递到分发</title>
+        <pubTime>2017-10-07T05:00:00.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.viseator.com/2017/09/14/android_view_event_1/</loc>
     <lastmod>2017-10-06T08:04:39.152Z</lastmod>
     <data>
