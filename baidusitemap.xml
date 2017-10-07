@@ -4,12 +4,12 @@
 
     
   <url>
-    <loc>http://www.viseator.com/2017/10/07/android_view_event_2/</loc>
-    <lastmod>2017-10-07T10:43:38.608Z</lastmod>
+    <loc>http://www.viseator.com/2017/09/14/android_view_event_1/</loc>
+    <lastmod>2017-10-07T13:55:44.000Z</lastmod>
     <data>
         <display>
-        <title>Android 触摸事件分发机制（二）原始事件消息传递到分发</title>
-        <pubTime>2017-10-07T05:00:00.000Z</pubTime>
+        <title>Android 触摸事件分发机制（一）从内核到应用 一切的开始</title>
+        <pubTime>2017-09-14T03:20:38.000Z</pubTime>
         
         <tag>Android</tag>
          
@@ -29,12 +29,12 @@
 
     
   <url>
-    <loc>http://www.viseator.com/2017/09/14/android_view_event_1/</loc>
-    <lastmod>2017-10-06T08:04:39.152Z</lastmod>
+    <loc>http://www.viseator.com/2017/10/07/android_view_event_2/</loc>
+    <lastmod>2017-10-07T13:54:43.675Z</lastmod>
     <data>
         <display>
-        <title>Android 触摸事件分发机制（一）从内核到应用 一切的开始</title>
-        <pubTime>2017-09-14T03:20:38.000Z</pubTime>
+        <title>Android 触摸事件分发机制（二）原始事件消息传递与分发的开始</title>
+        <pubTime>2017-10-07T05:00:00.000Z</pubTime>
         
         <tag>Android</tag>
          
