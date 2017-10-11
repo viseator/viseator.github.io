@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.viseator.com/images/arch24.png">
 <meta property="og:image" content="http://www.viseator.com/images/arch23.png">
-<meta property="og:updated_time" content="2017-10-11T04:43:28.203Z">
+<meta property="og:updated_time" content="2017-10-11T04:48:54.090Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="ArchLinux你可能需要知道的操作与软件包推荐「持续更新」">
 <meta name="twitter:description" content="你可能需要知道的操作与软件包推荐在第一篇教程中介绍了ArchLinux的基本安装，第二篇教程中介绍了必须的设置与图形界面的安装，这篇文章并不是教程，只是推荐一些自己日常使用的操作与软件包。写这篇文章时没有重新安装，所以不会有详细的过程，只是简单地列举应该装的软件包或者是基础的配置，更加细节的内容请查阅相关wiki。">
@@ -451,7 +451,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,581
+                  1,584
                 </span>
               
 
@@ -509,7 +509,7 @@
 <h3 id="Chrome代理"><a href="#Chrome代理" class="headerlink" title="Chrome代理"></a>Chrome代理</h3><p><strong>需先配置好本地<code>shadowsocks</code>代理</strong></p>
 <p>安装官方源中开源的<code>chromium</code>或者<code>AUR</code>中的<code>google-chrome</code>都可以，下面以<code>google-chrome</code>为例。</p>
 <p>先用命令行代理启动<code>chrome</code>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">google-chrome-stable --proxy-server=<span class="string">"socks5://foobar:66"</span></div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">google-chrome-stable --proxy-server=<span class="string">"socks5://127.0.0.1:1080"</span></div></pre></td></tr></table></figure>
 <p><code>chromium</code>换下命令就可以。</p>
 <p>然后安装<a href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=en" target="_blank" rel="external">SwitchyOmega</a>这个插件，配置好<a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="external"><code>GFWList</code></a>和代理规则就可以自动代理了。之后的启动就不需要命令行了。</p>
 <h3 id="命令行代理"><a href="#命令行代理" class="headerlink" title="命令行代理"></a>命令行代理</h3><p><strong>需先配置好本地<code>shadowsocks</code>代理</strong></p>
