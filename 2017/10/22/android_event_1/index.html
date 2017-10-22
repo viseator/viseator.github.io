@@ -80,7 +80,7 @@
 <link href="/css/main.css?v=5.1.2" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Android,UI,Animation," />
+  <meta name="keywords" content="Android,Event," />
 
 
 
@@ -96,18 +96,20 @@
 
 
 
-<meta name="description" content="前言相对于静态的页面，动画往往能更直观地表达所需的信息，在UI开发过程中起着相当大的作用。 Android为我们提供了一系列实现动画效果的方法，PropertyAnimaiton是最常见也是最实用的一种，如同它的名字一样，它的实现方式是通过改变对象的一系列属性值来改变对象的状态， 例如动态地改变绘制的位置就可以实现绘制物体的移动效果，动态地改变对象的显示状态可以实现闪烁效果。 Animator概览">
-<meta name="keywords" content="Android,UI,Animation">
+<meta name="description" content="写在前面  本文基于Android 7.1.1 (API 25)的源码分析编写  与之前的触摸事件分发机制分析的文章一样，Android系统机制的分析中关键的一环就是事件消息的处理。之前也说过，Android本质上是一个事件驱动的模型，通过各式各样不断产生事件消息的来推动UI、数据的更新与对我们交互的反馈，没有事件消息的产生，就不会有直观的界面的变化，也就不会有应用丰富的功能。 所以Android">
+<meta name="keywords" content="Android,Event">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android PropertyAnimation 属性动画（一）初探">
-<meta property="og:url" content="http://www.viseator.com/2017/03/26/android_property_animation_1/index.html">
+<meta property="og:title" content="Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue">
+<meta property="og:url" content="http://www.viseator.com/2017/10/22/android_event_1/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
-<meta property="og:description" content="前言相对于静态的页面，动画往往能更直观地表达所需的信息，在UI开发过程中起着相当大的作用。 Android为我们提供了一系列实现动画效果的方法，PropertyAnimaiton是最常见也是最实用的一种，如同它的名字一样，它的实现方式是通过改变对象的一系列属性值来改变对象的状态， 例如动态地改变绘制的位置就可以实现绘制物体的移动效果，动态地改变对象的显示状态可以实现闪烁效果。 Animator概览">
+<meta property="og:description" content="写在前面  本文基于Android 7.1.1 (API 25)的源码分析编写  与之前的触摸事件分发机制分析的文章一样，Android系统机制的分析中关键的一环就是事件消息的处理。之前也说过，Android本质上是一个事件驱动的模型，通过各式各样不断产生事件消息的来推动UI、数据的更新与对我们交互的反馈，没有事件消息的产生，就不会有直观的界面的变化，也就不会有应用丰富的功能。 所以Android">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2017-03-28T00:23:22.268Z">
+<meta property="og:image" content="http://www.viseator.com/images/android_event_1.png">
+<meta property="og:updated_time" content="2017-10-22T11:37:07.577Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android PropertyAnimation 属性动画（一）初探">
-<meta name="twitter:description" content="前言相对于静态的页面，动画往往能更直观地表达所需的信息，在UI开发过程中起着相当大的作用。 Android为我们提供了一系列实现动画效果的方法，PropertyAnimaiton是最常见也是最实用的一种，如同它的名字一样，它的实现方式是通过改变对象的一系列属性值来改变对象的状态， 例如动态地改变绘制的位置就可以实现绘制物体的移动效果，动态地改变对象的显示状态可以实现闪烁效果。 Animator概览">
+<meta name="twitter:title" content="Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue">
+<meta name="twitter:description" content="写在前面  本文基于Android 7.1.1 (API 25)的源码分析编写  与之前的触摸事件分发机制分析的文章一样，Android系统机制的分析中关键的一环就是事件消息的处理。之前也说过，Android本质上是一个事件驱动的模型，通过各式各样不断产生事件消息的来推动UI、数据的更新与对我们交互的反馈，没有事件消息的产生，就不会有直观的界面的变化，也就不会有应用丰富的功能。 所以Android">
+<meta name="twitter:image" content="http://www.viseator.com/images/android_event_1.png">
 
 
 
@@ -137,13 +139,13 @@
 
 
 
-  <link rel="canonical" href="http://www.viseator.com/2017/03/26/android_property_animation_1/"/>
+  <link rel="canonical" href="http://www.viseator.com/2017/10/22/android_event_1/"/>
 
 
 
 
 
-  <title>Android PropertyAnimation 属性动画（一）初探 | viseator's blog</title>
+  <title>Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue | viseator's blog</title>
   
 
 
@@ -343,7 +345,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.viseator.com/2017/03/26/android_property_animation_1/">
+    <link itemprop="mainEntityOfPage" href="http://www.viseator.com/2017/10/22/android_event_1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="viseator">
@@ -360,7 +362,7 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Android PropertyAnimation 属性动画（一）初探</h2>
+          <h2 class="post-title" itemprop="name headline">Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue</h2>
         
 
         <div class="post-meta">
@@ -372,8 +374,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-03-26T14:14:45+08:00">
-                2017-03-26
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-22T15:32:19+08:00">
+                2017-10-22
               </time>
             
 
@@ -406,8 +408,8 @@
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/UI/" itemprop="url" rel="index">
-                    <span itemprop="name">UI</span>
+                  <a href="/categories/Android/Event/" itemprop="url" rel="index">
+                    <span itemprop="name">Event</span>
                   </a>
                 </span>
 
@@ -423,7 +425,7 @@
 
           
           
-             <span id="/2017/03/26/android_property_animation_1/" class="leancloud_visitors" data-flag-title="Android PropertyAnimation 属性动画（一）初探">
+             <span id="/2017/10/22/android_event_1/" class="leancloud_visitors" data-flag-title="Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -448,7 +450,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  2,679
+                  2,048
                 </span>
               
 
@@ -473,67 +475,47 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>相对于静态的页面，动画往往能更直观地表达所需的信息，在UI开发过程中起着相当大的作用。</p>
-<p>Android为我们提供了一系列实现动画效果的方法，<code>PropertyAnimaiton</code>是最常见也是最实用的一种，如同它的名字一样，它的实现方式是通过改变对象的一系列属性值来改变对象的状态， 例如动态地改变绘制的位置就可以实现绘制物体的移动效果，动态地改变对象的显示状态可以实现闪烁效果。</p>
-<h2 id="Animator概览"><a href="#Animator概览" class="headerlink" title="Animator概览"></a>Animator概览</h2><p>Android提供的实现属性动画的工具是<code>android.animation.Animator</code>这个类，它的使用需要配合<code>animation</code>包下的其他工具类，这个类的功能是什么，我们要如何使用它来实现属性动画呢？</p>
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>  <strong>本文基于<code>Android 7.1.1 (API 25)</code>的源码分析编写</strong> </p>
+<p>与之前的<a href="http://www.viseator.com/2017/09/14/android_view_event_1/">触摸事件分发机制分析</a>的文章一样，<code>Android</code>系统机制的分析中关键的一环就是事件消息的处理。之前也说过，<code>Android</code>本质上是一个事件驱动的模型，通过各式各样不断产生事件消息的来推动UI、数据的更新与对我们交互的反馈，没有事件消息的产生，就不会有直观的界面的变化，也就不会有应用丰富的功能。</p>
+<p>所以<code>Android</code>的消息机制与其他过程的关系是极其紧密的，例如启动<code>Activity</code>的过程就涉及到<code>ActivityManagerService</code>与应用主进程的通信，产生的通知消息通过<code>Binder</code>机制送入应用主进程的消息队列，再由主进程的消息循环来读取这一消息来进行处理。之前触摸事件分发中也是利用了应用主进程的消息队列来读取我们的触摸事件再进行后续的分发处理。可以说消息队列在各种通信过程中无处不在。</p>
+<p>消息队列的存在为异步处理提供了一个非常好的基础，有了消息队列之后，我们就可以在新的线程中处理计算、IO密集、阻塞的任务而不会影响UI的更新，在处理过程中可以通过向消息队列中放入消息来进行UI的更新操作，而发送消息的行为也避免了工作线程为了等待返回而造成的阻塞。</p>
+<p>可以说，想要了解其他基于事件的过程，对主线程消息机制的了解是必不可少的基础，在触摸事件分发机制分析的文章中我对消息机制还不是很了解，所以后来发现分析中有很多描述不妥的地方，所以在对消息机制的系统学习之后我又修改完善了这部分的内容。</p>
 <a id="more"></a>
-<p>我们可以将<code>Animator</code>理解为<code>Android</code>为我们提供的一个按我们的需要在一定时间段内<strong>连续地</strong>计算并返回值的工具，这个值可以是通用的整型、浮点型，也可以是我们自定义的类型。</p>
-<p>我们可以设置返回值的范围，并可以控制值变化的快慢，例如实现自由落体下落的物体时我们需要让高度值以一个越来越快的速度降低。</p>
-<p>这里的连续需要注意，实际上是不可能产生真正意义上的连续值的，但是如果<strong>在绘制过程中计算这个值的速度小于绘制一帧所需要的时间</strong>，那么我们就可以在视觉上认为这个值是在连续改变的。这一点也是理解其作用的关键：我们很难去写出一个可以随时获取连续值的工具，而<code>Animator</code>正是一个满足我们这个需求的一个通用工具。</p>
-<p>通过将<code>Animator</code>与<code>View</code>的绘制过程结合，就可以实现绝大多数的动画效果， 但是<code>Animator</code>也不只局限在使用在绘制动画，只要是有相似需求的地方都可以使用它来实现， 同时由于属性动画只针对属性进行修改，与被修改对象之前几乎没有耦合，不需要对被修改对象作出改变，可以设置方式也多种多样，这些都是动画的另一种实现方法<code>ViewAnimator</code>所无法做到的，所以我属性动画是现在实现动画效果的普遍做法。</p>
-<h2 id="使用Animator"><a href="#使用Animator" class="headerlink" title="使用Animator"></a>使用Animator</h2><h3 id="Animator子类"><a href="#Animator子类" class="headerlink" title="Animator子类"></a>Animator子类</h3><p>下面就来看看如何使用<code>Animator</code>满足我们的需求。</p>
-<p>我们使用<code>Animator</code>可以分为两个步骤，一是进行数值的计算，二是将计算出的数值设置到对应的对象上。而<code>Animator</code>有着三个子类：<code>ValueAnimator</code> <code>ObjectAnimator</code> <code>AnimatorSet</code>。</p>
-<ul>
-<li><code>ValueAnimator</code>实现了上述过程的第一个步骤：进行数值的计算。第二个步骤则需要我们重写它的回调在值发生改变时候手动地为对象更新属性值。</li>
-<li><code>ObjectAnimator</code>则在其基础上进行了进一步的封装，加入了一些方法使得它可以绑定一个对象，在数值改变的同时对对象的属性进行更新。</li>
-<li><code>AnimatorSet</code>可以对<code>Animator</code>进行组合，让它们之间进行联动，例如可以设置一个动画根据另一个动画的状态来决定是否开始、暂停或停止。</li>
-</ul>
-<p>可以看到，<code>ValueAnimator</code>提供了一个<code>Animator</code>最核心的内容，也是使用中最为灵活的一个。<code>ObjectAnimator</code>由于绑定了相应的对象，在使用上会受一些限制。<code>AnimatorSet</code>专用于需要组合动画的场景。</p>
-<h3 id="ValueAnimator"><a href="#ValueAnimator" class="headerlink" title="ValueAnimator"></a>ValueAnimator</h3><p>在这篇博客中，我们关注最为核心的<code>ValueAnimator</code>。</p>
-<h4 id="关键属性"><a href="#关键属性" class="headerlink" title="关键属性"></a>关键属性</h4><p><code>ValueAnimator</code>对象内部维护了一系列属性来保存所需的各种信息。</p>
-<ul>
-<li><code>Duration</code>：动画的持续时间，通过<code>setDuration()</code>方法设置</li>
-<li><code>Repeat count and behavior</code>：重复计数与重复模式，我们可以通过设置这两个属性来控制动画是否重复以及重复的次数，通过<code>setRepeatCount()</code>与<code>setRepeatMode()</code>方法设置</li>
-<li><code>Frame refresh delay</code>：帧刷新延迟，也就是计算两帧动画之间的间隔时间，但这个时间只是<code>Animator</code>尽力去保持的值，具体的间隔时间会由于系统负载与性能的不同而不同，同时设置它的方法为一个静态方法：<code>ValueAnimator.setFrameDelay()</code>，会被设置到所有的<code>Animator</code>上，这是因为这些<code>Animator</code>都在同一个时间循环中。这个属性也有可能会被忽略如果动画系统采用了内部的计时来源，例如<code>vsync</code>来计算属性。同时这个方法需要在与<code>start()</code>方法相同的进程中调用</li>
-<li><code>Time interpolation</code>：时间插值器，是我们实现不同动画效果的关键，每一时刻所返回的数值由它决定，后文会详细讲</li>
-</ul>
-<h4 id="初始化与TypeEvaluator"><a href="#初始化与TypeEvaluator" class="headerlink" title="初始化与TypeEvaluator"></a>初始化与TypeEvaluator</h4><p><code>ValueAnimator</code>对象的构造函数只由内部使用，获取<code>ValueAnimator</code>对象的方法是调用它的工厂方法：</p>
-<p><code>ValueAnimator.ofArgb()</code></p>
-<p><code>ValueAnimator.ofInt()</code></p>
-<p><code>ValueAnimator.ofFloat()</code></p>
-<p><code>ValueAnimator.ofObject()</code></p>
-<p><code>ValueAnimator.ofPropertyValuesHolder()</code> //本篇未涉及，下一篇进行讲解</p>
-<p>前三个可以看作是<code>ValueAnimator</code>为我们提供的初始化方式，它们的参数都是对应类型的长度可变参数:<code>(Type ...values)</code>，我们需要提供一个以上的参数，<code>ValueAnimator</code>最终提供的值会在这些值之前变动。</p>
-<p>一般情况下这里提供的<code>Argb</code>（用于颜色值的变化）和整型、浮点值基本可以满足我们的需求，但是某些时候我们需要结果是我们自定义的一些对象，这个时候就需要用到<code>TypeEvaluator&lt;&gt;</code>接口了，与这个接口对应的工厂方法是<code>ValueAnimator.ofObject()</code>：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="function">ValueAnimator <span class="title">ofObject</span> <span class="params">(TypeEvaluator evaluator, </span></span></div><div class="line">                Object... values)</div></pre></td></tr></table></figure>
-<p>这里的可变参数类型变为了<code>Object</code>，同时还需要我们提供一个<code>TypeEvaluator&lt;&gt;</code>，用于“告诉”<code>Animator</code>如何返回这个<code>Object</code>值。</p>
-<hr>
-<p><code>TypeEvaluator&lt;&gt;</code>接口并不复杂，只有一个方法需要我们重写：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function">T <span class="title">evaluate</span> <span class="params">(<span class="keyword">float</span> fraction, </span></span></div><div class="line">                T startValue, </div><div class="line">                T endValue)</div></pre></td></tr></table></figure>
-<p><code>startValue</code>与<code>endValue</code>非常好理解，就是我们在获取<code>Animator</code>时指定的值的起始值和结束值。类型与返回类型一致，当然都是我们自定义的类型。</p>
-<p>这里的<code>fraction</code>就是决定我们最终返回值的关键参数。我们可以把这个<code>fraction</code>理解为<code>animator</code>提供给我们的最终的数值改变的比例，以小数表示，小于0表示低于<code>startValue</code>，大于0表示超出<code>endValue</code>，0-1之间表示在<code>startValue</code>与<code>endValue</code>之间。我们要做的就是把这个值转换为在起始和结果范围之间的合适的对象值。</p>
-<p>例如，对于基本的浮点类型，默认的<code>FloatEvaluator</code>是这样的：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> Float <span class="title">evaluate</span><span class="params">(<span class="keyword">float</span> fraction, Number startValue, Number endValue)</span> </span>&#123;</div><div class="line">    <span class="keyword">float</span> startFloat = startValue.floatValue();</div><div class="line">    <span class="keyword">return</span> startFloat + fraction * (endValue.floatValue() - startFloat);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>可以看到，就是相当于把<code>fraction</code>所表示的比例“投射”到了我们所需要的数据对象上，这里是浮点类型。如果使用我们的自定义类型，我们必须为自己的类型定义这样的操作。</p>
-<p><strong>注意：</strong>这里要求我们必须将<code>fraction</code><strong>线性</strong>地反应到对应的类型上，因为<code>fraction</code>反映的是最终的动画进度，我们必须如实地按照这个进度改变我们的属性，所以需要将result = x0 + t * (x1 - x0)`这样的形式反映到我们自己的对象上。</p>
-<p>自定义了<code>TypeEvaluator</code>以后就可以作为参数使用在上面的<code>obObject()</code>工厂方法中了。</p>
-<h4 id="插补细分器-Interpolators"><a href="#插补细分器-Interpolators" class="headerlink" title="插补细分器(Interpolators)"></a>插补细分器(<code>Interpolators</code>)</h4><p>下面介绍使用<code>ValueAnimator</code>控制值变化过程中最为重要的一个概念：插补细分器(<code>Interpolators</code>)。</p>
-<p>它实际上是一个关于时间的函数， 根据时刻的不同来返回不同的值，进而来控制最后的输出的值。那么它是如何表示的呢？</p>
-<p>系统为我们提供了一系列预置的<code>Interpolators</code>，以较常用的<code>LinearInterpolater</code>为例，顾名思义，它是一个线性的插补细分器，意味着输入与输出呈线性关系：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">getInterpolation</span><span class="params">(<span class="keyword">float</span> input)</span> </span>&#123;</div><div class="line">    <span class="keyword">return</span> input;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>输入输出的关键函数就是这个<code>getInterpolation()</code>了，可以看到，参数与返回值都是<code>float</code>类型，<code>input</code>的值在0-1之间，结合前面，我们可以很容易理解，这个<code>input</code>就是一个以0-1之间的小数表示的过去的时间值，例如整个动画是1000ms，当<code>input</code>为0.25的时候意味着现在的时间过去了250ms。</p>
-<p>而返回值就是经过我们的转换，表示出的动画应该进行的时间的比例，这里由于是线性的，所以可以直接返回<code>input</code>，这个值最后会到哪里呢？自然就是给我们前面介绍的<code>TypeEvaluator</code>。下面一段源码展示了这个过程：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (mInterpolator != <span class="keyword">null</span>) &#123;</div><div class="line">    fraction = mInterpolator.getInterpolation(fraction);</div><div class="line">&#125;</div><div class="line"><span class="keyword">return</span> mEvaluator.evaluate(fraction, mFirstKeyframe.getValue(),</div><div class="line">        mLastKeyframe.getValue());</div></pre></td></tr></table></figure>
-<p>作为<code>getInterpolation()</code>参数的<code>fraction</code>代表着过去的时间比例，这里调用我们设置的<code>Interpolator</code>来更新这个<code>fraction</code>，现在这个<code>fraction</code>表示的就是动画已经进行的比例，下一步就要根据它来获取对应的对象值（调用了我们之间谈到过的<code>evaluate()</code>方法，这里的<code>KeyFrame</code>的概念会在之后的博客讲到），后面的两个参数就是传递给<code>evaluate</code>的起始与结束范围。</p>
-<p>最终，我们就获得了一个按照我们设定的<code>Interpolator</code>返回的动画属性值。</p>
-<p>如果想要实现加速效果呢？Android同样为我们提供了现成的<code>AccelerateInterpolator</code>：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">float</span> <span class="title">getInterpolation</span><span class="params">(<span class="keyword">float</span> input)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (mFactor == <span class="number">1.0f</span>) &#123;</div><div class="line">        <span class="keyword">return</span> input * input;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> (<span class="keyword">float</span>)Math.pow(input, mDoubleFactor);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>同样很简洁，这里用到了<code>mFactor</code>与<code>mDoubleFactor</code>分别表示我们在构造函数里面设置的指数值：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="title">AccelerateInterpolator</span><span class="params">(<span class="keyword">float</span> factor)</span> </span>&#123;</div><div class="line">    mFactor = factor;</div><div class="line">    mDoubleFactor = <span class="number">2</span> * mFactor;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>如果我们设置的为1，会返回<code>input</code>的平方，其他值则会返回<code>input</code>的<code>mDoubleFactor</code>次方，使得动画属性可以以不同的函数曲线形式变化。</p>
-<p>如果我们要实现自己的<code>Interpolator</code>呢？只需要实现<code>TimeInterpolator</code>接口，这个接口只需要我们实现一个<code>getInterpolation</code>方法。我们可以根据<code>input</code>值返回不同的值来返回不同的值表示动画的进度。</p>
-<p><strong>注意：</strong>返回值的范围不一定要在0-1之间，小于0或大小1的值可以表示超出预设范围的目标值。</p>
-<p>这篇博客到此结束，在下一篇博客中将会以一个绘制自由落体的弹跳小球的示例来演示如何使用<code>Animator</code>与介绍它的回调函数。</p>
+<h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p><code>Android Studio</code>的<code>3.0</code>版本中引入了一个强大的性能分析工具：<code>Android Profiler</code>，对于它的详细介绍可以看<a href="https://developer.android.com/studio/profile/android-profiler.html" target="_blank" rel="external">官方的文档</a>。</p>
+<p>我们对一个简单的<code>HelloWorld</code>应用进行方法分析：</p>
+<p><img src="/images/android_event_1.png" alt=""></p>
+<p>可以看到，对于这样一个没有任务需要处理的程序，这段时间中它一直执行的是<code>nativePollOnce()</code>方法，对于这个，<code>stackoverflow</code>上就有人提了<a href="https://stackoverflow.com/questions/38818642/android-what-is-message-queue-native-poll-once-in-android" target="_blank" rel="external">一个问题</a>。这个方法其实就是消息队列在队列中没有消息时处于等待状态执行的一个<code>Native</code>方法。</p>
+<p>我们的分析就从消息队列(MessageQueue)与负责执行循环过程的<code>Looper</code>对象的创建与开始运行开始。</p>
+<h2 id="Looper与MessageQueue的创建"><a href="#Looper与MessageQueue的创建" class="headerlink" title="Looper与MessageQueue的创建"></a>Looper与MessageQueue的创建</h2><p>当一个<code>Activity</code>被创建时，<code>ActivityThread</code>的<code>main()</code>方法会被执行（关于<code>Activity</code>创建过程的内容，请参阅启动分析相关的文章）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, <span class="string">"ActivityThreadMain"</span>);</div><div class="line">...</div><div class="line"></div><div class="line">    Looper.prepareMainLooper();</div><div class="line"></div><div class="line">...</div><div class="line">    Looper.loop();</div><div class="line"></div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Main thread loop unexpectedly exited"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Looper的创建"><a href="#Looper的创建" class="headerlink" title="Looper的创建"></a>Looper的创建</h3><p>第5行中，调用<code>Looper</code>的<code>prepareMainLooper()</code>方法来创建<code>Looper</code>对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">prepareMainLooper</span><span class="params">()</span> </span>&#123;</div><div class="line">    prepare(<span class="keyword">false</span>);</div><div class="line">    <span class="keyword">synchronized</span> (Looper.class) &#123;</div><div class="line">        <span class="keyword">if</span> (sMainLooper != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"The main Looper has already been prepared."</span>);</div><div class="line">        &#125;</div><div class="line">        sMainLooper = myLooper();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">prepare</span><span class="params">(<span class="keyword">boolean</span> quitAllowed)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (sThreadLocal.get() != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Only one Looper may be created per thread"</span>);</div><div class="line">    &#125;</div><div class="line">    sThreadLocal.set(<span class="keyword">new</span> Looper(quitAllowed));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里的<code>sThreadLocal</code>对象的类型是<code>ThreadLocal&lt;Looper&gt;</code>是一个存放在<code>TLS</code>（<a href="https://en.wikipedia.org/wiki/Thread-local_storage" target="_blank" rel="external">Thread-local storage</a>)中的对象容器，储存在其中的对象的特点是每个线程中只有一个，并且个线程中储存的该对象不相同。</p>
+<p>我们在这里新建了一个<code>Looper</code>对象并放入了<code>TLS</code>中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="title">Looper</span><span class="params">(<span class="keyword">boolean</span> quitAllowed)</span> </span>&#123;</div><div class="line">    mQueue = <span class="keyword">new</span> MessageQueue(quitAllowed);</div><div class="line">    mThread = Thread.currentThread();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>mThread</code>保存了当前运行<code>Looper</code>的进程信息。</p>
+<p>而<code>mQueue</code>就是与<code>Looper</code>对应的<code>MessageQueue</code>。</p>
+<h3 id="MessageQueue的创建"><a href="#MessageQueue的创建" class="headerlink" title="MessageQueue的创建"></a>MessageQueue的创建</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">MessageQueue(<span class="keyword">boolean</span> quitAllowed) &#123;</div><div class="line">    mQuitAllowed = quitAllowed;</div><div class="line">    mPtr = nativeInit();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>构造函数十分简单，除了初始化<code>quitAllowed</code>标记之外，就是对<code>mPtr</code>的初始化了。</p>
+<p>那么<code>mPtr</code>是什么呢？可以推测出的是，真正的<code>MessageQueue</code>的创建一定在<code>nativeInit</code>这个<code>Native</code>调用中，也就是说，我们的<code>MessageQueue</code>实际上存在于<code>Native</code>层。</p>
+<p><code>android_os_MessageQueue.cpp</code>:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> jlong <span class="title">android_os_MessageQueue_nativeInit</span><span class="params">(JNIEnv* env, jclass clazz)</span> </span>&#123;</div><div class="line">    NativeMessageQueue* nativeMessageQueue = <span class="keyword">new</span> NativeMessageQueue();</div><div class="line">    <span class="keyword">if</span> (!nativeMessageQueue) &#123;</div><div class="line">        jniThrowRuntimeException(env, <span class="string">"Unable to allocate native queue"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    nativeMessageQueue-&gt;incStrong(env);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">reinterpret_cast</span>&lt;jlong&gt;(nativeMessageQueue);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在<code>Native</code>层创建了一个<code>NativeMessageQueue</code>对象：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">NativeMessageQueue::NativeMessageQueue() :</div><div class="line">        mPollEnv(<span class="literal">NULL</span>), mPollObj(<span class="literal">NULL</span>), mExceptionObj(<span class="literal">NULL</span>) &#123;</div><div class="line">    mLooper = Looper::getForThread();</div><div class="line">    <span class="keyword">if</span> (mLooper == <span class="literal">NULL</span>) &#123;</div><div class="line">        mLooper = <span class="keyword">new</span> Looper(<span class="literal">false</span>);</div><div class="line">        Looper::setForThread(mLooper);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里做的事情可以和<code>Java</code>层进行对应：在<code>TLS</code>中创建了一个<code>Looper</code>对象，但这个<code>Looper</code>对象和<code>Java</code>层并不是同一个，并且他们的功能也不相同：<code>Java</code>层的<code>Looper</code>是为了处理的消息队列中的消息，<code>Native</code>中的<code>Looper</code>是为了处理注册的自定义<code>Fd</code>引起的<code>Request</code>（这个部分另开文章讲，这篇文章只关注一般的事件分发）。</p>
+<p>我们来看看这个与<code>NativeMessageQueue</code>对应的<code>Native</code> <code>Looper</code>的构造：</p>
+<h3 id="Native-Looper-创建与-Epoll的初始化"><a href="#Native-Looper-创建与-Epoll的初始化" class="headerlink" title="Native Looper 创建与 Epoll的初始化"></a>Native Looper 创建与 Epoll的初始化</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Looper::Looper(<span class="keyword">bool</span> allowNonCallbacks) :</div><div class="line">        mAllowNonCallbacks(allowNonCallbacks), mSendingMessage(<span class="literal">false</span>),</div><div class="line">        mPolling(<span class="literal">false</span>), mEpollFd(<span class="number">-1</span>), mEpollRebuildRequired(<span class="literal">false</span>),</div><div class="line">        mNextRequestSeq(<span class="number">0</span>), mResponseIndex(<span class="number">0</span>), mNextMessageUptime(LLONG_MAX) &#123;</div><div class="line">    mWakeEventFd = eventfd(<span class="number">0</span>, EFD_NONBLOCK | EFD_CLOEXEC);</div><div class="line">    LOG_ALWAYS_FATAL_IF(mWakeEventFd &lt; <span class="number">0</span>, <span class="string">"Could not make wake event fd: %s"</span>,</div><div class="line">                        strerror(errno));</div><div class="line"></div><div class="line">    AutoMutex _l(mLock);</div><div class="line">    rebuildEpollLocked();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里就要涉及一些<code>Linux</code>中系统调用中<code>eventfd()</code>函数与多路I/O复用函数<code>epoll()</code>的相关知识了，这部分也是消息机制的底层核心。</p>
+<p>上面的代码中第5行中使用<code>eventFd()</code>系统调用获取了一个<code>mWakeEventFd</code>作为后续<code>epoll()</code>用于唤醒的<code>File Descriper</code>（文件描述符）。这里是较之前版本有所不同的地方，网上找到的大部分分析文章中的这个地方还是使用的之前使用的管道机制，也就是通过<code>pipe()</code>系统调用来创建一对<code>Fd</code>，再利用这对<code>Fd</code>来进行监听唤醒操作。相比于管道，<code>Linux</code>在内核版本2.6.22引入的<code>eventFd</code>在解决这种简单的监听操作中的开销比较小，并且更加轻量。</p>
+<p>我们现在有了一个<code>eventFd</code>对象的<code>Fd</code>，下面我们进入第10行的<code>rebuildEpollLocked()</code>调用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> Looper::rebuildEpollLocked() &#123;</div><div class="line">...</div><div class="line">    mEpollFd = epoll_create(EPOLL_SIZE_HINT);</div><div class="line">    LOG_ALWAYS_FATAL_IF(mEpollFd &lt; <span class="number">0</span>, <span class="string">"Could not create epoll instance: %s"</span>, strerror(errno));</div><div class="line"></div><div class="line">    <span class="keyword">struct</span> epoll_event eventItem;</div><div class="line">    <span class="built_in">memset</span>(&amp; eventItem, <span class="number">0</span>, <span class="keyword">sizeof</span>(epoll_event)); <span class="comment">// zero out unused members of data field union</span></div><div class="line">    eventItem.events = EPOLLIN;</div><div class="line">    eventItem.data.fd = mWakeEventFd;</div><div class="line">    <span class="keyword">int</span> result = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, mWakeEventFd, &amp; eventItem);</div><div class="line">    LOG_ALWAYS_FATAL_IF(result != <span class="number">0</span>, <span class="string">"Could not add wake event fd to epoll instance: %s"</span>,</div><div class="line">                        strerror(errno));</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; mRequests.size(); i++) &#123;</div><div class="line">        <span class="keyword">const</span> Request&amp; request = mRequests.valueAt(i);</div><div class="line">        <span class="keyword">struct</span> epoll_event eventItem;</div><div class="line">        request.initEventItem(&amp;eventItem);</div><div class="line"></div><div class="line">        <span class="keyword">int</span> epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, request.fd, &amp; eventItem);</div><div class="line">        <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</div><div class="line">            ALOGE(<span class="string">"Error adding epoll events for fd %d while rebuilding epoll set: %s"</span>,</div><div class="line">                  request.fd, strerror(errno));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第3行中，进行了系统调用<code>epoll_create()</code>初始化了一个<code>epoll</code>实例。之后的6-9行创建了<code>epoll</code>注册需要使用的<code>eventItem</code>并设置了<code>events</code>属性与<code>fd</code>域。</p>
+<p>在第10行，进行了系统调用<code>epoll_ctl()</code>来将之前创建的<code>mWakeEventFd</code>与<code>eventItem</code>注册到<code>epoll</code>。那么这些步骤的目的是什么呢？</p>
+<p>简单地说，<code>epoll</code>这个系统提供的组件允许我们对多个文件描述符（<code>fd</code>）进行监听，注册监听的<code>fd</code>后，可以调用<code>epoll_wait()</code>函数，当<code>fd</code>所指向的对象的数据可用时，<code>epoll_wait()</code>函数就会返回，同时以<code>events</code>的形式返回发生改变的<code>fd</code>对应的<code>eventItem</code>。</p>
+<p>借助这个功能，我们就可以实现在没有事件的时候让线程阻塞，当新的事件来临的时候让线程解除阻塞并唤醒。</p>
+<p>到这里你可能会想，这样的功能使用一个标志量，不断地查询这个标志量，当标志量发生变化的时候唤醒不也可以实现相同的功能吗？为什么要使用这么复杂的机制呢？这是因为<code>Looper</code>同时为我们提供了<code>addFd()</code>函数让我们可以设置自定义的<code>fd</code>与对应的<code>event</code>，然后在<code>Native Looper</code>中对自定义的<code>fd</code>发生改变的事件进行处理（上面代码中后面的部分就是在处理这部分注册）。之前文章讲过的触摸事件分发就是这样做的。（再次说明这一剖分的内容另外一篇文章讲，本篇只涉及一般的消息处理机制）</p>
+<p>现在，注册<code>epoll</code>的过程已经完成，<code>Native Looper</code>的初始化也到此结束。</p>
 
       
     </div>
@@ -553,9 +535,7 @@
           
             <a href="/tags/Android/" rel="tag"># Android</a>
           
-            <a href="/tags/UI/" rel="tag"># UI</a>
-          
-            <a href="/tags/Animation/" rel="tag"># Animation</a>
+            <a href="/tags/Event/" rel="tag"># Event</a>
           
         </div>
       
@@ -568,8 +548,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/03/25/resource_general/" rel="next" title="学习资源收集">
-                <i class="fa fa-chevron-left"></i> 学习资源收集
+              <a href="/2017/10/07/android_view_event_2/" rel="next" title="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始">
+                <i class="fa fa-chevron-left"></i> Android 触摸事件分发机制（二）原始事件消息传递与分发的开始
               </a>
             
           </div>
@@ -577,10 +557,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/04/02/android_property_animation_2/" rel="prev" title="Android PropertyAnimation 属性动画（二）弹跳小球实例">
-                Android PropertyAnimation 属性动画（二）弹跳小球实例 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -771,7 +747,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Animator概览"><span class="nav-number">2.</span> <span class="nav-text">Animator概览</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用Animator"><span class="nav-number">3.</span> <span class="nav-text">使用Animator</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Animator子类"><span class="nav-number">3.1.</span> <span class="nav-text">Animator子类</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ValueAnimator"><span class="nav-number">3.2.</span> <span class="nav-text">ValueAnimator</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#关键属性"><span class="nav-number">3.2.1.</span> <span class="nav-text">关键属性</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#初始化与TypeEvaluator"><span class="nav-number">3.2.2.</span> <span class="nav-text">初始化与TypeEvaluator</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#插补细分器-Interpolators"><span class="nav-number">3.2.3.</span> <span class="nav-text">插补细分器(Interpolators)</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引入"><span class="nav-number">2.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Looper与MessageQueue的创建"><span class="nav-number">3.</span> <span class="nav-text">Looper与MessageQueue的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Looper的创建"><span class="nav-number">3.1.</span> <span class="nav-text">Looper的创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MessageQueue的创建"><span class="nav-number">3.2.</span> <span class="nav-text">MessageQueue的创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Native-Looper-创建与-Epoll的初始化"><span class="nav-number">3.3.</span> <span class="nav-text">Native Looper 创建与 Epoll的初始化</span></a></li></ol></li></ol></div>
             
 
           </div>
