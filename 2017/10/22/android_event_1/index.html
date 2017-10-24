@@ -106,7 +106,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.viseator.com/images/android_event_1.png">
 <meta property="og:image" content="http://www.viseator.com/images/android_event_2.png">
-<meta property="og:updated_time" content="2017-10-24T09:05:28.847Z">
+<meta property="og:updated_time" content="2017-10-24T09:08:55.373Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue">
 <meta name="twitter:description" content="写在前面  本文基于Android 7.1.1 (API 25)的源码分析编写  与之前的触摸事件分发机制分析的文章一样，Android系统机制的分析中关键的一环就是事件消息的处理。之前也说过，Android本质上是一个事件驱动的模型，通过各式各样不断产生事件消息的来推动UI、数据的更新与对我们交互的反馈，没有事件消息的产生，就不会有直观的界面的变化，也就不会有应用丰富的功能。 所以Android">
@@ -451,7 +451,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  4,098
+                  4,122
                 </span>
               
 
@@ -561,10 +561,10 @@
 <p>你可能会想，为什么什么事情都没有做呢？因为这个<code>mWakeEventFd</code>存在的唯一目的就是解除阻塞，现在这个目的已经达到了，我们只要重置它以便下一次使用就可以了。</p>
 <p><code>Done</code>标号以后的代码与我们的过程无关，执行了自定义<code>fd</code>消息处理相关的内容。最后将<code>result</code>返回：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> result;</div></pre></td></tr></table></figure>
-<p>现在我们可以重新看待<code>nativePollOnce()</code>函数，再次强调，它的作用是<strong>阻塞，当有新的消息或达到超时后返回</strong>。</p>
+<p>现在我们可以重新看待<code>nativePollOnce()</code>函数，再次强调，它的作用是<strong>阻塞，当有新的消息或达到超时后返回</strong>。而这个核心的特性，完全是利用系统提供的<code>epoll</code>机制实现的。</p>
 <p>现在整个<code>Java</code>消息循环的处理过程已经看完了，下面我们来结合常用的<code>Handler</code>来讲解向消息队列中投入新的消息的过程。</p>
 <blockquote>
-<p>   <a href="">Android 消息机制（二）Handler对消息机制的使用</a></p>
+<p>   <a href="http://www.viseator.com/2017/10/24/android_event_2/">Android 消息机制（二）Handler对消息机制的使用</a></p>
 </blockquote>
 
       

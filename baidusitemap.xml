@@ -4,12 +4,12 @@
 
     
   <url>
-    <loc>http://www.viseator.com/2017/10/22/android_event_1/</loc>
-    <lastmod>2017-10-24T09:05:28.847Z</lastmod>
+    <loc>http://www.viseator.com/2017/10/24/android_event_2/</loc>
+    <lastmod>2017-10-24T09:14:19.464Z</lastmod>
     <data>
         <display>
-        <title>Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue</title>
-        <pubTime>2017-10-22T07:32:19.000Z</pubTime>
+        <title>Android 消息机制（二）Handler对消息机制的使用</title>
+        <pubTime>2017-10-24T09:03:43.000Z</pubTime>
         
         <tag>Android</tag>
          
@@ -29,12 +29,12 @@
 
     
   <url>
-    <loc>http://www.viseator.com/2017/10/24/android_event_2/</loc>
-    <lastmod>2017-10-24T09:05:05.270Z</lastmod>
+    <loc>http://www.viseator.com/2017/10/22/android_event_1/</loc>
+    <lastmod>2017-10-24T09:08:55.373Z</lastmod>
     <data>
         <display>
-        <title>Android 消息机制（二）Handler对消息机制的使用</title>
-        <pubTime>2017-10-24T09:03:43.000Z</pubTime>
+        <title>Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue</title>
+        <pubTime>2017-10-22T07:32:19.000Z</pubTime>
         
         <tag>Android</tag>
          
