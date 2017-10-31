@@ -4,8 +4,33 @@
 
     
   <url>
+    <loc>http://www.viseator.com/2017/09/14/android_view_event_1/</loc>
+    <lastmod>2017-10-31T12:00:05.000Z</lastmod>
+    <data>
+        <display>
+        <title>Android 触摸事件分发机制（一）从内核到应用 一切的开始</title>
+        <pubTime>2017-09-14T03:20:38.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.viseator.com/2017/10/24/android_event_2/</loc>
-    <lastmod>2017-10-24T09:14:19.464Z</lastmod>
+    <lastmod>2017-10-31T10:02:48.384Z</lastmod>
     <data>
         <display>
         <title>Android 消息机制（二）Handler对消息机制的使用</title>
@@ -30,7 +55,7 @@
     
   <url>
     <loc>http://www.viseator.com/2017/10/22/android_event_1/</loc>
-    <lastmod>2017-10-24T09:08:55.373Z</lastmod>
+    <lastmod>2017-10-24T09:16:03.034Z</lastmod>
     <data>
         <display>
         <title>Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue</title>
@@ -72,31 +97,6 @@
           
              
               <breadCrumb title="Arch" url="http://www.viseator.com/categories/Linux/Arch/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/09/14/android_view_event_1/</loc>
-    <lastmod>2017-10-07T13:55:44.000Z</lastmod>
-    <data>
-        <display>
-        <title>Android 触摸事件分发机制（一）从内核到应用 一切的开始</title>
-        <pubTime>2017-09-14T03:20:38.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
-          
-             
-              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
           
         </display>
     </data>
