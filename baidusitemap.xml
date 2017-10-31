@@ -4,6 +4,31 @@
 
     
   <url>
+    <loc>http://www.viseator.com/2017/10/07/android_view_event_2/</loc>
+    <lastmod>2017-10-31T12:21:01.000Z</lastmod>
+    <data>
+        <display>
+        <title>Android 触摸事件分发机制（二）原始事件消息传递与分发的开始</title>
+        <pubTime>2017-10-07T05:00:00.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.viseator.com/2017/09/14/android_view_event_1/</loc>
     <lastmod>2017-10-31T12:00:05.000Z</lastmod>
     <data>
@@ -97,31 +122,6 @@
           
              
               <breadCrumb title="Arch" url="http://www.viseator.com/categories/Linux/Arch/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/10/07/android_view_event_2/</loc>
-    <lastmod>2017-10-07T13:54:43.675Z</lastmod>
-    <data>
-        <display>
-        <title>Android 触摸事件分发机制（二）原始事件消息传递与分发的开始</title>
-        <pubTime>2017-10-07T05:00:00.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
-          
-             
-              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
           
         </display>
     </data>
