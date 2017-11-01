@@ -4,6 +4,31 @@
 
     
   <url>
+    <loc>http://www.viseator.com/2017/10/24/android_event_2/</loc>
+    <lastmod>2017-11-01T10:33:27.943Z</lastmod>
+    <data>
+        <display>
+        <title>Android 消息机制（二）Handler对消息机制的使用</title>
+        <pubTime>2017-10-24T09:03:43.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Event</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="Event" url="http://www.viseator.com/categories/Android/Event/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.viseator.com/2017/10/07/android_view_event_2/</loc>
     <lastmod>2017-10-31T12:21:01.000Z</lastmod>
     <data>
@@ -47,31 +72,6 @@
           
              
               <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/10/24/android_event_2/</loc>
-    <lastmod>2017-10-31T10:02:48.384Z</lastmod>
-    <data>
-        <display>
-        <title>Android 消息机制（二）Handler对消息机制的使用</title>
-        <pubTime>2017-10-24T09:03:43.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>Event</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
-          
-             
-              <breadCrumb title="Event" url="http://www.viseator.com/categories/Android/Event/"/>
           
         </display>
     </data>
