@@ -1,0 +1,1484 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+  <link rel="manifest" href="/images/manifest.json">
+
+
+  <meta name="msapplication-config" content="/images/browserconfig.xml" />
+
+
+
+  <meta name="keywords" content="Android,Event," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="写在前面  本文基于Android 7.1.1 (API 25)的源码分析编写  与之前的触摸事件分发机制分析的文章一样，Android系统机制的分析中关键的一环就是事件消息的处理。之前也说过，Android本质上是一个事件驱动的模型，通过各式各样不断产生事件消息的来推动UI、数据的更新与对我们交互的反馈，没有事件消息的产生，就不会有直观的界面的变化，也就不会有应用丰富的功能。 所以Android">
+<meta name="keywords" content="Android,Event">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue">
+<meta property="og:url" content="http://www.viseator.com/2017/10/22/android_event_1/index.html">
+<meta property="og:site_name" content="viseator&#39;s blog">
+<meta property="og:description" content="写在前面  本文基于Android 7.1.1 (API 25)的源码分析编写  与之前的触摸事件分发机制分析的文章一样，Android系统机制的分析中关键的一环就是事件消息的处理。之前也说过，Android本质上是一个事件驱动的模型，通过各式各样不断产生事件消息的来推动UI、数据的更新与对我们交互的反馈，没有事件消息的产生，就不会有直观的界面的变化，也就不会有应用丰富的功能。 所以Android">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.viseator.com/images/android_event_1.png">
+<meta property="og:image" content="http://www.viseator.com/images/android_event_2.png">
+<meta property="og:updated_time" content="2017-10-24T09:16:03.034Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue">
+<meta name="twitter:description" content="写在前面  本文基于Android 7.1.1 (API 25)的源码分析编写  与之前的触摸事件分发机制分析的文章一样，Android系统机制的分析中关键的一环就是事件消息的处理。之前也说过，Android本质上是一个事件驱动的模型，通过各式各样不断产生事件消息的来推动UI、数据的更新与对我们交互的反馈，没有事件消息的产生，就不会有直观的界面的变化，也就不会有应用丰富的功能。 所以Android">
+<meta name="twitter:image" content="http://www.viseator.com/images/android_event_1.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.viseator.com/2017/10/22/android_event_1/"/>
+
+
+
+
+
+  <title>Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue | viseator's blog</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-93455229-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?825cced91f7243ff630582af2a1a81d7";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">viseator's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">吴迪的博客</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="/2017/03/25/resource_general" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br />
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.viseator.com/2017/10/22/android_event_1/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="viseator">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="viseator's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-22T15:32:19+08:00">
+                2017-10-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/Event/" itemprop="url" rel="index">
+                    <span itemprop="name">Event</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/10/22/android_event_1/" class="leancloud_visitors" data-flag-title="Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  4,122
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>  <strong>本文基于<code>Android 7.1.1 (API 25)</code>的源码分析编写</strong> </p>
+<p>与之前的<a href="http://www.viseator.com/2017/09/14/android_view_event_1/">触摸事件分发机制分析</a>的文章一样，<code>Android</code>系统机制的分析中关键的一环就是事件消息的处理。之前也说过，<code>Android</code>本质上是一个事件驱动的模型，通过各式各样不断产生事件消息的来推动UI、数据的更新与对我们交互的反馈，没有事件消息的产生，就不会有直观的界面的变化，也就不会有应用丰富的功能。</p>
+<p>所以<code>Android</code>的消息机制与其他过程的关系是极其紧密的，例如启动<code>Activity</code>的过程就涉及到<code>ActivityManagerService</code>与应用主进程的通信，产生的通知消息通过<code>Binder</code>机制送入应用主进程的消息队列，再由主进程的消息循环来读取这一消息来进行处理。之前触摸事件分发中也是利用了应用主进程的消息队列来读取我们的触摸事件再进行后续的分发处理。可以说消息队列在各种通信过程中无处不在。</p>
+<p>消息队列的存在为异步处理提供了一个非常好的基础，有了消息队列之后，我们就可以在新的线程中处理计算、IO密集、阻塞的任务而不会影响UI的更新，在处理过程中可以通过向消息队列中放入消息来进行UI的更新操作，而发送消息的行为也避免了工作线程为了等待返回而造成的阻塞。</p>
+<p>可以说，想要了解其他基于事件的过程，对主线程消息机制的了解是必不可少的基础，在触摸事件分发机制分析的文章中我对消息机制还不是很了解，所以后来发现分析中有很多描述不妥的地方，所以在对消息机制的系统学习之后我又修改完善了这部分的内容。</p>
+<a id="more"></a>
+<h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p><code>Android Studio</code>的<code>3.0</code>版本中引入了一个强大的性能分析工具：<code>Android Profiler</code>，对于它的详细介绍可以看<a href="https://developer.android.com/studio/profile/android-profiler.html" target="_blank" rel="external">官方的文档</a>。</p>
+<p>我们对一个简单的<code>HelloWorld</code>应用进行方法分析：</p>
+<p><img src="/images/android_event_1.png" alt=""></p>
+<p>可以看到，对于这样一个没有任务需要处理的程序，这段时间中它一直执行的是<code>nativePollOnce()</code>方法，对于这个，<code>stackoverflow</code>上就有人提了<a href="https://stackoverflow.com/questions/38818642/android-what-is-message-queue-native-poll-once-in-android" target="_blank" rel="external">一个问题</a>。这个方法其实就是消息队列在队列中没有消息时处于等待状态执行的一个<code>Native</code>方法。</p>
+<p>我们的分析就从消息队列(MessageQueue)与负责执行循环过程的<code>Looper</code>对象的创建与开始运行开始。</p>
+<h2 id="Looper与MessageQueue的创建"><a href="#Looper与MessageQueue的创建" class="headerlink" title="Looper与MessageQueue的创建"></a>Looper与MessageQueue的创建</h2><p>当一个<code>Activity</code>被创建时，<code>ActivityThread</code>的<code>main()</code>方法会被执行（关于<code>Activity</code>创建过程的内容，请参阅启动分析相关的文章）：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">    Trace.traceBegin(Trace.TRACE_TAG_ACTIVITY_MANAGER, <span class="string">"ActivityThreadMain"</span>);</div><div class="line">...</div><div class="line"></div><div class="line">    Looper.prepareMainLooper();</div><div class="line"></div><div class="line">...</div><div class="line">    Looper.loop();</div><div class="line"></div><div class="line">    <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Main thread loop unexpectedly exited"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<h3 id="Looper的创建"><a href="#Looper的创建" class="headerlink" title="Looper的创建"></a>Looper的创建</h3><p>第5行中，调用<code>Looper</code>的<code>prepareMainLooper()</code>方法来创建<code>Looper</code>对象：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">prepareMainLooper</span><span class="params">()</span> </span>&#123;</div><div class="line">    prepare(<span class="keyword">false</span>);</div><div class="line">    <span class="keyword">synchronized</span> (Looper.class) &#123;</div><div class="line">        <span class="keyword">if</span> (sMainLooper != <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException(<span class="string">"The main Looper has already been prepared."</span>);</div><div class="line">        &#125;</div><div class="line">        sMainLooper = myLooper();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">prepare</span><span class="params">(<span class="keyword">boolean</span> quitAllowed)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (sThreadLocal.get() != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(<span class="string">"Only one Looper may be created per thread"</span>);</div><div class="line">    &#125;</div><div class="line">    sThreadLocal.set(<span class="keyword">new</span> Looper(quitAllowed));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里的<code>sThreadLocal</code>对象的类型是<code>ThreadLocal&lt;Looper&gt;</code>是一个存放在<code>TLS</code>（<a href="https://en.wikipedia.org/wiki/Thread-local_storage" target="_blank" rel="external">Thread-local storage</a>)中的对象容器，储存在其中的对象的特点是每个线程中只有一个，并且个线程中储存的该对象不相同。</p>
+<p>我们在这里新建了一个<code>Looper</code>对象并放入了<code>TLS</code>中：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="title">Looper</span><span class="params">(<span class="keyword">boolean</span> quitAllowed)</span> </span>&#123;</div><div class="line">    mQueue = <span class="keyword">new</span> MessageQueue(quitAllowed);</div><div class="line">    mThread = Thread.currentThread();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p><code>mThread</code>保存了当前运行<code>Looper</code>的进程信息。</p>
+<p>而<code>mQueue</code>就是与<code>Looper</code>对应的<code>MessageQueue</code>。</p>
+<h3 id="MessageQueue的创建"><a href="#MessageQueue的创建" class="headerlink" title="MessageQueue的创建"></a>MessageQueue的创建</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">MessageQueue(<span class="keyword">boolean</span> quitAllowed) &#123;</div><div class="line">    mQuitAllowed = quitAllowed;</div><div class="line">    mPtr = nativeInit();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>构造函数十分简单，除了初始化<code>quitAllowed</code>标记之外，就是对<code>mPtr</code>的初始化了。</p>
+<p>那么<code>mPtr</code>是什么呢？可以推测出的是，真正的<code>MessageQueue</code>的创建一定在<code>nativeInit</code>这个<code>Native</code>调用中，也就是说，我们的<code>MessageQueue</code>实际上存在于<code>Native</code>层。</p>
+<p><code>android_os_MessageQueue.cpp</code>:</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> jlong <span class="title">android_os_MessageQueue_nativeInit</span><span class="params">(JNIEnv* env, jclass clazz)</span> </span>&#123;</div><div class="line">    NativeMessageQueue* nativeMessageQueue = <span class="keyword">new</span> NativeMessageQueue();</div><div class="line">    <span class="keyword">if</span> (!nativeMessageQueue) &#123;</div><div class="line">        jniThrowRuntimeException(env, <span class="string">"Unable to allocate native queue"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    nativeMessageQueue-&gt;incStrong(env);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">reinterpret_cast</span>&lt;jlong&gt;(nativeMessageQueue);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>在<code>Native</code>层创建了一个<code>NativeMessageQueue</code>对象：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">NativeMessageQueue::NativeMessageQueue() :</div><div class="line">        mPollEnv(<span class="literal">NULL</span>), mPollObj(<span class="literal">NULL</span>), mExceptionObj(<span class="literal">NULL</span>) &#123;</div><div class="line">    mLooper = Looper::getForThread();</div><div class="line">    <span class="keyword">if</span> (mLooper == <span class="literal">NULL</span>) &#123;</div><div class="line">        mLooper = <span class="keyword">new</span> Looper(<span class="literal">false</span>);</div><div class="line">        Looper::setForThread(mLooper);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里做的事情可以和<code>Java</code>层进行对应：在<code>TLS</code>中创建了一个<code>Looper</code>对象，但这个<code>Looper</code>对象和<code>Java</code>层并不是同一个，并且他们的功能也不相同：<code>Java</code>层的<code>Looper</code>是为了处理的消息队列中的消息，<code>Native</code>中的<code>Looper</code>是为了处理注册的自定义<code>Fd</code>引起的<code>Request</code> 消息，这些消息一般来自于系统底层如触摸事件等（这个部分另开文章讲，这篇文章只关注一般的事件分发）。</p>
+<p>我们来看看这个与<code>NativeMessageQueue</code>对应的<code>Native</code> <code>Looper</code>的构造：</p>
+<h3 id="Native-Looper-创建与-Epoll的初始化"><a href="#Native-Looper-创建与-Epoll的初始化" class="headerlink" title="Native Looper 创建与 Epoll的初始化"></a>Native Looper 创建与 Epoll的初始化</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line">Looper::Looper(<span class="keyword">bool</span> allowNonCallbacks) :</div><div class="line">        mAllowNonCallbacks(allowNonCallbacks), mSendingMessage(<span class="literal">false</span>),</div><div class="line">        mPolling(<span class="literal">false</span>), mEpollFd(<span class="number">-1</span>), mEpollRebuildRequired(<span class="literal">false</span>),</div><div class="line">        mNextRequestSeq(<span class="number">0</span>), mResponseIndex(<span class="number">0</span>), mNextMessageUptime(LLONG_MAX) &#123;</div><div class="line">    mWakeEventFd = eventfd(<span class="number">0</span>, EFD_NONBLOCK | EFD_CLOEXEC);</div><div class="line">    LOG_ALWAYS_FATAL_IF(mWakeEventFd &lt; <span class="number">0</span>, <span class="string">"Could not make wake event fd: %s"</span>,</div><div class="line">                        strerror(errno));</div><div class="line"></div><div class="line">    AutoMutex _l(mLock);</div><div class="line">    rebuildEpollLocked();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里就要涉及一些<code>Linux</code>中系统调用中<code>eventfd()</code>函数与多路I/O复用函数<code>epoll()</code>的相关知识了，这部分也是消息机制的底层核心。</p>
+<p>上面的代码中第5行中使用<code>eventFd()</code>系统调用获取了一个<code>mWakeEventFd</code>作为后续<code>epoll()</code>用于唤醒的<code>File Descriper</code>（文件描述符）。这里是较之前版本有所不同的地方，网上找到的大部分分析文章中的这个地方还是使用的之前使用的管道机制，也就是通过<code>pipe()</code>系统调用来创建一对<code>Fd</code>，再利用这对<code>Fd</code>来进行监听唤醒操作。相比于管道，<code>Linux</code>在内核版本2.6.22引入的<code>eventFd</code>在解决这种简单的监听操作中的开销比较小，并且更加轻量。</p>
+<p>我们现在有了一个<code>eventFd</code>对象的<code>Fd</code>，下面我们进入第10行的<code>rebuildEpollLocked()</code>调用：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> Looper::rebuildEpollLocked() &#123;</div><div class="line">...</div><div class="line">    mEpollFd = epoll_create(EPOLL_SIZE_HINT);</div><div class="line">    LOG_ALWAYS_FATAL_IF(mEpollFd &lt; <span class="number">0</span>, <span class="string">"Could not create epoll instance: %s"</span>, strerror(errno));</div><div class="line"></div><div class="line">    <span class="keyword">struct</span> epoll_event eventItem;</div><div class="line">    <span class="built_in">memset</span>(&amp; eventItem, <span class="number">0</span>, <span class="keyword">sizeof</span>(epoll_event)); <span class="comment">// zero out unused members of data field union</span></div><div class="line">    eventItem.events = EPOLLIN;</div><div class="line">    eventItem.data.fd = mWakeEventFd;</div><div class="line">    <span class="keyword">int</span> result = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, mWakeEventFd, &amp; eventItem);</div><div class="line">    LOG_ALWAYS_FATAL_IF(result != <span class="number">0</span>, <span class="string">"Could not add wake event fd to epoll instance: %s"</span>,</div><div class="line">                        strerror(errno));</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; mRequests.size(); i++) &#123;</div><div class="line">        <span class="keyword">const</span> Request&amp; request = mRequests.valueAt(i);</div><div class="line">        <span class="keyword">struct</span> epoll_event eventItem;</div><div class="line">        request.initEventItem(&amp;eventItem);</div><div class="line"></div><div class="line">        <span class="keyword">int</span> epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, request.fd, &amp; eventItem);</div><div class="line">        <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</div><div class="line">            ALOGE(<span class="string">"Error adding epoll events for fd %d while rebuilding epoll set: %s"</span>,</div><div class="line">                  request.fd, strerror(errno));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第3行中，进行了系统调用<code>epoll_create()</code>初始化了一个<code>epoll</code>实例。之后的6-9行创建了<code>epoll</code>注册需要使用的<code>eventItem</code>并设置了<code>events</code>属性与<code>fd</code>域。</p>
+<p>在第10行，进行了系统调用<code>epoll_ctl()</code>来将之前创建的<code>mWakeEventFd</code>与<code>eventItem</code>注册到<code>epoll</code>。那么这些步骤的目的是什么呢？</p>
+<p>简单地说，<code>epoll</code>这个系统提供的组件允许我们对多个文件描述符（<code>fd</code>）进行监听，注册监听的<code>fd</code>后，可以调用<code>epoll_wait()</code>函数，当<code>fd</code>所指向的对象的数据可用时，<code>epoll_wait()</code>函数就会返回，同时以<code>events</code>的形式返回发生改变的<code>fd</code>对应的<code>eventItem</code>。</p>
+<p>借助这个功能，我们就可以实现在没有事件的时候让线程阻塞，当新的事件来临的时候让线程解除阻塞并唤醒。</p>
+<p>到这里你可能会想，这样的功能使用一个标志量，不断地查询这个标志量，当标志量发生变化的时候唤醒不也可以实现相同的功能吗？为什么要使用这么复杂的机制呢？这是因为<code>Looper</code>同时为我们提供了<code>addFd()</code>函数让我们可以设置自定义的<code>fd</code>与对应的<code>event</code>，然后在<code>Native Looper</code>中对自定义的<code>fd</code>发生改变的事件进行处理（上面代码中后面的部分就是在处理这部分注册）。之前文章讲过的触摸事件分发就是这样做的。（再次说明这一剖分的内容另外一篇文章讲，本篇只涉及一般的消息处理机制）</p>
+<p>现在，注册<code>epoll</code>的过程已经完成，<code>Native Looper</code>的初始化也到此结束。</p>
+<p>现在我们回到<code>nativeInit</code>调用，它的返回值赋给了<code>Java</code>层<code>MessageQueue</code>的<code>mPtr</code>域：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> jlong <span class="title">android_os_MessageQueue_nativeInit</span><span class="params">(JNIEnv* env, jclass clazz)</span> </span>&#123;</div><div class="line">    NativeMessageQueue* nativeMessageQueue = <span class="keyword">new</span> NativeMessageQueue();</div><div class="line">    <span class="keyword">if</span> (!nativeMessageQueue) &#123;</div><div class="line">        jniThrowRuntimeException(env, <span class="string">"Unable to allocate native queue"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    nativeMessageQueue-&gt;incStrong(env);</div><div class="line">    <span class="keyword">return</span> <span class="keyword">reinterpret_cast</span>&lt;jlong&gt;(nativeMessageQueue);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>第9行就将创建的<code>NativeMessageQueue</code>对象的地址转换为一个<code>Java long</code>类型返回，之后调用<code>Native</code>方法的时候就会传入这个参数来找到这个<code>MessageQueue</code>。</p>
+<p>用一张图来梳理这个过程：</p>
+<p><img src="/images/android_event_2.png" alt=""></p>
+<h2 id="消息循环"><a href="#消息循环" class="headerlink" title="消息循环"></a>消息循环</h2><h3 id="loop"><a href="#loop" class="headerlink" title="loop()"></a>loop()</h3><p>初始化过程结束后，我们回到<code>ActivityThread</code>的<code>main()</code>函数：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Looper.loop();</div></pre></td></tr></table></figure>
+<p>调用了<code>Looper</code>的<code>loop()</code>函数开始消息循环。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">loop</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> Looper me = myLooper();</div><div class="line">...</div><div class="line">    <span class="keyword">final</span> MessageQueue queue = me.mQueue;</div><div class="line">...</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (;;) &#123;</div><div class="line">        Message msg = queue.next(); <span class="comment">// might block</span></div><div class="line">        <span class="keyword">if</span> (msg == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="comment">// No message indicates that the message queue is quitting.</span></div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">...</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            msg.target.dispatchMessage(msg);</div><div class="line">        &#125; <span class="keyword">finally</span> &#123;</div><div class="line">            <span class="keyword">if</span> (traceTag != <span class="number">0</span>) &#123;</div><div class="line">                Trace.traceEnd(traceTag);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">...</div><div class="line">        msg.recycleUnchecked();</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>省略掉一些<code>log</code>的代码之后，我们看到第7行开始了一个无限循环，循环的第一步就是从<code>MessageQueue</code>里面获取一条<code>Message</code>，后面有一个注释告诉我们这个调用可能会阻塞。我们先不管这个调用具体情况，假设我们从这个调用中返回，我们先看后面的处理过程。</p>
+<p>首先检查获取到的<code>msg</code>是否为<code>null</code>，如果为<code>null</code>，那么将会直接退出<code>loop()</code>函数，对于<code>Activity</code>的主线程来说，这个情况只会发生在应用退出的时候。</p>
+<p>下面就直接调用了<code>Message</code>的<code>target</code>的<code>dispatchMessage()</code>函数，在使用<code>Handler</code>来发送消息的时候，这个<code>target</code>指的就是<code>Handler</code>本身，后面会看到这个过程。</p>
+<h3 id="MessageQueue-next"><a href="#MessageQueue-next" class="headerlink" title="MessageQueue next()"></a>MessageQueue next()</h3><p>这个函数过程比较长， 我们分开来分析。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="function">Message <span class="title">next</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">long</span> ptr = mPtr;</div><div class="line">    <span class="keyword">if</span> (ptr == <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">int</span> pendingIdleHandlerCount = -<span class="number">1</span>; <span class="comment">// -1 only during first iteration</span></div><div class="line">    <span class="keyword">int</span> nextPollTimeoutMillis = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (;;) &#123;</div><div class="line">...</div><div class="line">        nativePollOnce(ptr, nextPollTimeoutMillis);</div></pre></td></tr></table></figure>
+<p>第一部分是变量的初始化，如果<code>MessageQueue</code>的<code>mPtr</code>为0的话，说明<code>NativeMessageQueue</code>没有正确初始化，返回<code>null</code>结束消息循环。</p>
+<p>下面定义了两个变量，第一个<code>pendingIdleHandlerCount</code>初始化为-1，它表示的是将要执行的空闲<code>Handler</code>数量，之后会用到。</p>
+<p>第二个<code>nextPollTimeoutMillis</code>就是距下一条消息被处理需要等待的时间。</p>
+<p>下面又进入了一个无限循环，注意第11行，我们看到了熟悉的调用，它是引入中讲的在没有事件处理的时候不断执行的函数。我们可以猜测，等待的过程就是发生在这个函数中的。</p>
+<p>我们同样先看下面的处理，现在只要知道这个函数<strong>会造成阻塞，当有新的<code>Message</code>或者达到超时时间时才会返回</strong>，这点非常重要。</p>
+<p>下面的过程：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123;</div><div class="line">    <span class="keyword">final</span> <span class="keyword">long</span> now = SystemClock.uptimeMillis(); <span class="comment">// 获取当前时刻</span></div><div class="line">    Message prevMsg = <span class="keyword">null</span>;</div><div class="line">    Message msg = mMessages; <span class="comment">// Message是一个链表的结构，而mMessages相当于"头指针"</span></div><div class="line">    <span class="keyword">if</span> (msg != <span class="keyword">null</span> &amp;&amp; msg.target == <span class="keyword">null</span>) &#123;</div><div class="line">       <span class="comment">// 当message的target为null的时候，被认为是一个特殊的message，我们应当跳过这类message</span></div><div class="line">        <span class="keyword">do</span> &#123;</div><div class="line">            prevMsg = msg;</div><div class="line">            msg = msg.next;</div><div class="line">        &#125; <span class="keyword">while</span> (msg != <span class="keyword">null</span> &amp;&amp; !msg.isAsynchronous());</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (msg != <span class="keyword">null</span>) &#123;</div><div class="line">        <span class="keyword">if</span> (now &lt; msg.when) &#123;</div><div class="line">          <span class="comment">// 当时间还没到message的执行时间时，更新nextPollTimeoutMillis</span></div><div class="line">            nextPollTimeoutMillis = (<span class="keyword">int</span>) Math.min(msg.when - now, Integer.MAX_VALUE);</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            <span class="comment">// message到时间，需要被处理</span></div><div class="line">            mBlocked = <span class="keyword">false</span>; <span class="comment">// 取消阻塞状态标记</span></div><div class="line">            <span class="comment">// 从链表中取出表头的message</span></div><div class="line">            <span class="keyword">if</span> (prevMsg != <span class="keyword">null</span>) &#123;</div><div class="line">                prevMsg.next = msg.next;</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                mMessages = msg.next;</div><div class="line">            &#125;</div><div class="line">            msg.next = <span class="keyword">null</span>;</div><div class="line">            <span class="keyword">if</span> (DEBUG) Log.v(TAG, <span class="string">"Returning message: "</span> + msg);</div><div class="line">            msg.markInUse(); <span class="comment">// 标记使用状态</span></div><div class="line">            <span class="keyword">return</span> msg; <span class="comment">// 返回该message</span></div><div class="line">        &#125;</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="comment">// msg == null，没有消息</span></div><div class="line">        nextPollTimeoutMillis = -<span class="number">1</span>; <span class="comment">// 如果该值为-1，nativePullOnce()将会无限执行直到有新的消息通知</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 处理退出消息循环的请求，返回null退出消息循环</span></div><div class="line">    <span class="keyword">if</span> (mQuitting) &#123;</div><div class="line">        dispose();</div><div class="line">        <span class="keyword">return</span> <span class="keyword">null</span>;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>这个过程比较简单，需要注意的就是<code>Message</code>的链表结构，每次取首元素来进行处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 只会在第一次没有消息的时候执行，检查mIdleHandlers中注册的IdleHandler</span></div><div class="line"><span class="keyword">if</span> (pendingIdleHandlerCount &lt; <span class="number">0</span> &amp;&amp; (mMessages == <span class="keyword">null</span> || now &lt; mMessages.when)) &#123;</div><div class="line">    pendingIdleHandlerCount = mIdleHandlers.size();</div><div class="line">&#125;</div><div class="line"><span class="comment">// 如果没有注册pendingIdleHandler，继续保持阻塞状态</span></div><div class="line"><span class="keyword">if</span> (pendingIdleHandlerCount &lt;= <span class="number">0</span>) &#123;</div><div class="line">    mBlocked = <span class="keyword">true</span>;</div><div class="line">    <span class="keyword">continue</span>;</div><div class="line">&#125;</div><div class="line"><span class="comment">// 初始化mPendingHandlers</span></div><div class="line"><span class="keyword">if</span> (mPendingIdleHandlers == <span class="keyword">null</span>) &#123;</div><div class="line">    mPendingIdleHandlers = <span class="keyword">new</span> IdleHandler[Math.max(pendingIdleHandlerCount, <span class="number">4</span>)];</div><div class="line">&#125;</div><div class="line">mPendingIdleHandlers = mIdleHandlers.toArray(mPendingIdleHandlers);</div><div class="line"></div><div class="line"><span class="comment">// 执行pendingIdleHandler</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; pendingIdleHandlerCount; i++) &#123;</div><div class="line">    <span class="keyword">final</span> IdleHandler idler = mPendingIdleHandlers[i];</div><div class="line">    mPendingIdleHandlers[i] = <span class="keyword">null</span>;</div><div class="line">    <span class="keyword">boolean</span> keep = <span class="keyword">false</span>;</div><div class="line">    <span class="keyword">try</span> &#123;</div><div class="line">        <span class="comment">// 实质上是执行queueIdle()方法</span></div><div class="line">        keep = idler.queueIdle();</div><div class="line">    &#125; <span class="keyword">catch</span> (Throwable t) &#123;</div><div class="line">        Log.wtf(TAG, <span class="string">"IdleHandler threw exception"</span>, t);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (!keep) &#123;</div><div class="line">        <span class="comment">// 如果返回是false，则移除这个IdleHandler，不会再执行</span></div><div class="line">        <span class="keyword">synchronized</span> (<span class="keyword">this</span>) &#123; mIdleHandlers.remove(idler);</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 重置pendingIdleHandler计数</span></div><div class="line">    pendingIdleHandlerCount = <span class="number">0</span>;</div><div class="line">    <span class="comment">// 由于执行IdleHandler过程中可能已经有新的消息到来，故设置超时为0，直接检查新的消息</span></div><div class="line">    nextPollTimeoutMillis = <span class="number">0</span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里的<code>mIdleHandlers</code>中注册了一些需要在没有消息处理时进行的任务，在处理这些任务的过程中使用了<code>pendingIdleHandler</code>作为临时容器。这个过程就是去执行这些<code>IdleHandler</code>的过程。</p>
+<p>现在我们看完了返回消息的全过程，其中只有一环没有解决了：<code>nativePollOnce</code></p>
+<h3 id="NativePollOnce"><a href="#NativePollOnce" class="headerlink" title="NativePollOnce()"></a>NativePollOnce()</h3><p>调用的是<code>Native</code>层<code>android_os_MessageQueue.cpp</code>下的函数：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">android_os_MessageQueue_nativePollOnce</span><span class="params">(JNIEnv* env, jobject obj,</span></span></div><div class="line">        jlong ptr, jint timeoutMillis) &#123;</div><div class="line">    NativeMessageQueue* nativeMessageQueue = <span class="keyword">reinterpret_cast</span>&lt;NativeMessageQueue*&gt;(ptr);</div><div class="line">    nativeMessageQueue-&gt;pollOnce(env, obj, timeoutMillis);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>根据传入的地址，找到了之前新建的<code>NativeMessageQueue</code>对象，调用它的<code>pollOnce()</code>方法（注意参数中的<code>timeoutMillis</code>）：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> NativeMessageQueue::pollOnce(JNIEnv* env, jobject pollObj, <span class="keyword">int</span> timeoutMillis) &#123;</div><div class="line">    mPollEnv = env;</div><div class="line">    mPollObj = pollObj;</div><div class="line">    mLooper-&gt;pollOnce(timeoutMillis);</div><div class="line">    mPollObj = <span class="literal">NULL</span>;</div><div class="line">    mPollEnv = <span class="literal">NULL</span>;</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (mExceptionObj) &#123;</div><div class="line">        env-&gt;Throw(mExceptionObj);</div><div class="line">        env-&gt;DeleteLocalRef(mExceptionObj);</div><div class="line">        mExceptionObj = <span class="literal">NULL</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>其实调用的是保存的<code>NativeLooper</code>的<code>pollOnce()</code>方法（注意参数中的<code>timeoutMillis</code>）。</p>
+<p>现在我将<code>NativeLooper</code>中关于<code>Native</code>事件循环的代码全部忽略，只分析与前面这个过程有关的部分：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> Looper::pollOnce(<span class="keyword">int</span> timeoutMillis, <span class="keyword">int</span>* outFd, <span class="keyword">int</span>* outEvents, <span class="keyword">void</span>** outData) &#123;</div><div class="line">...</div><div class="line">        result = pollInner(timeoutMillis);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>调用了<code>pollInner()</code>方法（注意参数中的<code>timeoutMillis</code>），分为两部分分析：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">int</span> Looper::pollInner(<span class="keyword">int</span> timeoutMillis) &#123;</div><div class="line">...</div><div class="line">    mPolling = <span class="literal">true</span>;</div><div class="line">  </div><div class="line">    <span class="keyword">struct</span> epoll_event eventItems[EPOLL_MAX_EVENTS];</div><div class="line">    <span class="keyword">int</span> eventCount = epoll_wait(mEpollFd, eventItems, EPOLL_MAX_EVENTS, timeoutMillis);</div><div class="line">    mPolling = <span class="literal">false</span>;</div><div class="line">...</div><div class="line">    <span class="comment">// 检查轮询错误</span></div><div class="line">    <span class="keyword">if</span> (eventCount &lt; <span class="number">0</span>) &#123;</div><div class="line">        <span class="keyword">if</span> (errno == EINTR) &#123;</div><div class="line">            <span class="keyword">goto</span> Done;</div><div class="line">        &#125;</div><div class="line">        ALOGW(<span class="string">"Poll failed with an unexpected error: %s"</span>, strerror(errno));</div><div class="line">        result = POLL_ERROR;</div><div class="line">        <span class="keyword">goto</span> Done;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="comment">// 检查轮询超时</span></div><div class="line">    <span class="keyword">if</span> (eventCount == <span class="number">0</span>) &#123;</div><div class="line"><span class="meta">#<span class="meta-keyword">if</span> DEBUG_POLL_AND_WAKE</span></div><div class="line">        ALOGD(<span class="string">"%p ~ pollOnce - timeout"</span>, <span class="keyword">this</span>);</div><div class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></div><div class="line">        result = POLL_TIMEOUT;</div><div class="line">        <span class="keyword">goto</span> Done;</div><div class="line">    &#125;</div><div class="line">    <span class="comment">// 处理事件</span></div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; eventCount; i++) &#123;</div><div class="line">        <span class="keyword">int</span> fd = eventItems[i].data.fd;</div><div class="line">        <span class="keyword">uint32_t</span> epollEvents = eventItems[i].events;</div><div class="line">        <span class="keyword">if</span> (fd == mWakeEventFd) &#123;</div><div class="line">            <span class="keyword">if</span> (epollEvents &amp; EPOLLIN) &#123;</div><div class="line">                awoken();</div><div class="line">            &#125; <span class="keyword">else</span> &#123;</div><div class="line">                ALOGW(<span class="string">"Ignoring unexpected epoll events 0x%x on wake event fd."</span>, epollEvents);</div><div class="line">            &#125;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">		...         </div><div class="line">        &#125;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<p>第6行就是事情的关键，我们执行了系统<code>epoll_wait()</code>调用（对我们之前创建的<code>mEpollFd</code> <code>epoll</code>实例），这是一个阻塞调用，当注册的<code>Fd</code><strong>有新内容或者到达超时时间时才会返回</strong>。我们还记得前面我们创建了<code>mWakeEventFd</code>和<code>eventItem</code>并把它注册到了<code>mEpollFd</code>中。这样，只要<code>mWakeEventFd</code>中有了新的内容，这行调用就会返回，解除阻塞。</p>
+<p>现在我们可以推测，当有新消息到来时，正是以向<code>mWakeEvendFd</code>中写入内容的方式来使<code>nativePollOnce()</code>调用返回，达到了通知消息循环继续处理的目的。</p>
+<p>如果没有新的消息呢？我们一步步传进来的<code>timeoutMillis</code>就作为了<code>epoll_wait()</code>的超时参数，一旦到达这个时间，<code>epoll_wait()</code>函数就会返回，这达到了我们等待一段时间再去执行下一条消息的目的。</p>
+<p>如果超时，20行检测出超时，跳转到<code>Done</code>。</p>
+<p>如果因<code>fd</code>触发而返回，会进入28行的事件处理过程，这个过程依据拿到的<code>eventItem</code>对象，检查<code>fd</code>与<code>events</code>标志，如果是我们之前设置的用于唤醒的<code>mWakeEventFd</code>，调用<code>awaken()</code>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> Looper::awoken() &#123;</div><div class="line">    <span class="keyword">uint64_t</span> counter;</div><div class="line">    TEMP_FAILURE_RETRY(read(mWakeEventFd, &amp;counter, <span class="keyword">sizeof</span>(<span class="keyword">uint64_t</span>)));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>做的事情非常简单，通过<code>read()</code>读取并清零<code>fd</code>中的数据。</p>
+<p>你可能会想，为什么什么事情都没有做呢？因为这个<code>mWakeEventFd</code>存在的唯一目的就是解除阻塞，现在这个目的已经达到了，我们只要重置它以便下一次使用就可以了。</p>
+<p><code>Done</code>标号以后的代码与我们的过程无关，执行了自定义<code>fd</code>消息处理相关的内容。最后将<code>result</code>返回：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">return</span> result;</div></pre></td></tr></table></figure>
+<p>现在我们可以重新看待<code>nativePollOnce()</code>函数，再次强调，它的作用是<strong>阻塞，当有新的消息或达到超时后返回</strong>。而这个核心的特性，完全是利用系统提供的<code>epoll</code>机制实现的。</p>
+<p>现在整个<code>Java</code>消息循环的处理过程已经看完了，下面我们来结合常用的<code>Handler</code>来讲解向消息队列中投入新的消息的过程。</p>
+<blockquote>
+<p>   <a href="http://www.viseator.com/2017/10/24/android_event_2/">Android 消息机制（二）Handler对消息机制的使用</a></p>
+</blockquote>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Event/" rel="tag"># Event</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/07/android_view_event_2/" rel="next" title="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始">
+                <i class="fa fa-chevron-left"></i> Android 触摸事件分发机制（二）原始事件消息传递与分发的开始
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/10/24/android_event_2/" rel="prev" title="Android 消息机制（二）Handler对消息机制的使用">
+                Android 消息机制（二）Handler对消息机制的使用 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="viseator" />
+            
+              <p class="site-author-name" itemprop="name">viseator</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/viseator" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:viseator@gmail.com" target="_blank" title="Email">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>Email</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.hustunique.com/" title="UniqueStudio" target="_blank">UniqueStudio</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.hustmeituan.club/" title="HustMeituanClub" target="_blank">HustMeituanClub</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.duskdragon.com/" title="BlackDragon" target="_blank">BlackDragon</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://imzhwk.com/" title="imzhwk" target="_blank">imzhwk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://moe.petnakanojo.com/" title="PetnaKanojo" target="_blank">PetnaKanojo</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://alexandertang.cn/" title="Alexander" target="_blank">Alexander</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://qzwlecr.github.io/" title="qzwlecr" target="_blank">qzwlecr</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#引入"><span class="nav-number">2.</span> <span class="nav-text">引入</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Looper与MessageQueue的创建"><span class="nav-number">3.</span> <span class="nav-text">Looper与MessageQueue的创建</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Looper的创建"><span class="nav-number">3.1.</span> <span class="nav-text">Looper的创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MessageQueue的创建"><span class="nav-number">3.2.</span> <span class="nav-text">MessageQueue的创建</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Native-Looper-创建与-Epoll的初始化"><span class="nav-number">3.3.</span> <span class="nav-text">Native Looper 创建与 Epoll的初始化</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息循环"><span class="nav-number">4.</span> <span class="nav-text">消息循环</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#loop"><span class="nav-number">4.1.</span> <span class="nav-text">loop()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MessageQueue-next"><span class="nav-number">4.2.</span> <span class="nav-text">MessageQueue next()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#NativePollOnce"><span class="nav-number">4.3.</span> <span class="nav-text">NativePollOnce()</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-rocket"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">viseator</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261494271&web_id=1261494271" language="JavaScript"></script>
+  </div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('2');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz", "shxNGHkps7WDMLyCkIKIKSSM");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

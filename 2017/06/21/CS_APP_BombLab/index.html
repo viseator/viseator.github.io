@@ -1,0 +1,1633 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+  <link rel="manifest" href="/images/manifest.json">
+
+
+  <meta name="msapplication-config" content="/images/browserconfig.xml" />
+
+
+
+  <meta name="keywords" content="Computer System,CS:APP," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件bomb，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来解除">
+<meta name="keywords" content="Computer System,CS:APP">
+<meta property="og:type" content="article">
+<meta property="og:title" content="深入理解计算机系统（CS:APP) - Bomb Lab详解">
+<meta property="og:url" content="http://www.viseator.com/2017/06/21/CS_APP_BombLab/index.html">
+<meta property="og:site_name" content="viseator&#39;s blog">
+<meta property="og:description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件bomb，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来解除">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab1.jpg">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab2.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab3.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab4.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab5.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab6.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab7.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab8.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab8.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab9.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab10.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab11.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab12.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab13.png">
+<meta property="og:image" content="http://www.viseator.com/images/bomblab14.png">
+<meta property="og:updated_time" content="2017-07-21T14:34:05.260Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="深入理解计算机系统（CS:APP) - Bomb Lab详解">
+<meta name="twitter:description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件bomb，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来解除">
+<meta name="twitter:image" content="http://www.viseator.com/images/bomblab1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://www.viseator.com/2017/06/21/CS_APP_BombLab/"/>
+
+
+
+
+
+  <title>深入理解计算机系统（CS:APP) - Bomb Lab详解 | viseator's blog</title>
+  
+
+
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+            (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+          m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-93455229-1', 'auto');
+  ga('send', 'pageview');
+</script>
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?825cced91f7243ff630582af2a1a81d7";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">viseator's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">吴迪的博客</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="/2017/03/25/resource_general" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-star"></i> <br />
+            
+            资源
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.viseator.com/2017/06/21/CS_APP_BombLab/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="viseator">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="viseator's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">深入理解计算机系统（CS:APP) - Bomb Lab详解</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-06-21T09:53:01+08:00">
+                2017-06-21
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Computer System</span>
+                  </a>
+                </span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-System/CS-APP/" itemprop="url" rel="index">
+                    <span itemprop="name">CS:APP</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2017/06/21/CS_APP_BombLab/" class="leancloud_visitors" data-flag-title="深入理解计算机系统（CS:APP) - Bomb Lab详解">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  10,059
+                </span>
+              
+
+              
+
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="Bomb-Lab"><a href="#Bomb-Lab" class="headerlink" title="Bomb Lab"></a>Bomb Lab</h2><p>实验代码见<a href="https://github.com/viseator/CS-APP-3e-labs" target="_blank" rel="external">GitHub</a></p>
+<h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件<code>bomb</code>，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来解除自己的炸弹（理论上每个人的炸弹答案都不同，但自学材料的答案都是一样的，本文针对的是自学材料）。</p>
+<a id="more"></a>
+<h3 id="所用工具"><a href="#所用工具" class="headerlink" title="所用工具"></a>所用工具</h3><p><code>objdump</code>-用于反汇编二进制对象文件</p>
+<p><code>VS Code</code>-用于查看反汇编后的结果与文本文件的编写</p>
+<p><code>gdb</code>-用于运行时单步调试与查看运行时内存与寄存器信息</p>
+<h3 id="解题过程"><a href="#解题过程" class="headerlink" title="解题过程"></a>解题过程</h3><h4 id="前期"><a href="#前期" class="headerlink" title="前期"></a>前期</h4><p>由于之前没有接触过类似的逆向工程问题，拿到问题以后第一时间很难马上开始解决。所以先查看我们能看到的文件信息。</p>
+<p>目录中提供了一个<code>bomb.c</code>文件，文件内容十分简单，有一份非常有趣的<code>LISENCE</code>:</p>
+<blockquote>
+<p>/<strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><em>*</em></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></p>
+<p>* Dr. Evil’s Insidious Bomb, Version 1.1</p>
+<p>* Copyright 2011, Dr. Evil Incorporated. All rights reserved.</p>
+<p>*</p>
+<p>* LICENSE:</p>
+<p>*</p>
+<p>* Dr. Evil Incorporated (the PERPETRATOR) hereby grants you (the</p>
+<p>* VICTIM) explicit permission to use this bomb (the BOMB).  This is a</p>
+<p>* time limited license, which expires on the death of the VICTIM.</p>
+<p>* The PERPETRATOR takes no responsibility for damage, frustration,</p>
+<p>* insanity, bug-eyes, carpal-tunnel syndrome, loss of sleep, or other</p>
+<p>* harm to the VICTIM.  Unless the PERPETRATOR wants to take credit,</p>
+<p>* that is.  The VICTIM may not distribute this bomb source code to</p>
+<p>* any enemies of the PERPETRATOR.  No VICTIM may debug,</p>
+<p>* reverse-engineer, run “strings” on, decompile, decrypt, or use any</p>
+<p>* other technique to gain knowledge of and defuse the BOMB.  BOMB</p>
+<p>* proof clothing may not be worn when handling this program.  The</p>
+<p>* PERPETRATOR will not apologize for the PERPETRATOR’s poor sense of</p>
+<p>* humor.  This license is null and void where the BOMB is prohibited</p>
+<p>* by law.</p>
+<p><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><strong><em>*</em></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong></strong>/</p>
+</blockquote>
+<p>接下来的部分就是<code>main</code>函数，从主函数中我们可以看到整个程序的结构与输入方式：可以从标准输入或文件中读取，一行作为一题的解，解出一个问题以后可以进入下一个问题，注意到返回前的一段注释：</p>
+<blockquote>
+<p>  ​    /* Wow, they got it!  But isn’t something… missing?  Perhaps</p>
+<p>  ​     * something they overlooked?  Mua ha ha ha ha! */</p>
+</blockquote>
+<p>暗示了我们隐藏问题的存在，除此之外再也没有任何关于这个炸弹的信息。</p>
+<p>下面我们使用<code>objdump</code>命令将炸弹文件反汇编出来：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">objdump <span class="_">-d</span> bomb &gt; bomb.asm</div></pre></td></tr></table></figure>
+<p>然后通过<code>VS Code</code>来查看反汇编的结果，<code>VS Code</code>有<a href="https://marketplace.visualstudio.com/items?itemName=13xforever.language-x86-64-assembly" target="_blank" rel="external">x86 and x86_64 Assembly</a>这个插件可以高亮汇编，看起来会舒服许多。</p>
+<p>反汇编出来的代码有近六千行，但是因为有符号表的存在，说明保留了调试所需的信息，我们可以通过<code>gdb</code>进行单步调试来查看程序的运行过程。</p>
+<p>在使用<code>gdb</code> 的时候，我们可以加上<code>-tui</code>命令并用<code>layout asm</code>命令切换到汇编指令模式，就可以在调试的时候查看对应的汇编代码了。界面如下：</p>
+<p><img src="/images/bomblab1.jpg" alt=""></p>
+<p>可以看到地址<code>0x400da0</code>就是<code>main</code>函数的地址。</p>
+<p>一直向下查看，我们就可以看到C文件中出现的<code>initialize_bomb</code>函数，然后就到了<code>phase_1</code>函数，我们可以推测这个函数就是判断是否通过的核心函数。</p>
+<p>这时候就要用到<code>gdb</code>的指令了，在汇编模式下的指令与普通模式有一些不同。我们可以使用<code>ni</code>(<code>next instruction</code>)和<code>si</code>(<code>step into</code>)来实现普通模式下的单步向下执行与步入操作。</p>
+<p>打断点需要使用<code>b &lt;func_name&gt;</code>或<code>b *&lt;address&gt;</code>来进行比如我们可以看到调用<code>phase_1</code>函数的<code>call</code>指令的地址是<code>0x400e3a</code>，所以我们可以使用<code>b phase_1</code>或<code>b *0x400e3a</code>来打断点的，这两条命令有一点不同就在于断在地址会停在地址 上也就是<code>call</code>指令的位置，断在函数名会进入函数中，相当于再进行了一次<code>si</code>操作。</p>
+<p>断点停后有可能出现字符重叠的情况，我们可以使用<code>refresh</code>命令刷新界面。</p>
+<p>下面把断点打在<code>phase_1</code>函数之后就可以使用<code>r</code>命令来运行指令了，程序会提示我们输入字符串，这个时候因为我们打了断点不用担心炸弹会爆炸，可以随意输入。执行后程序会停在<code>phase_1</code>函数的位置，我们可以看到函数内部的情况。</p>
+<p>下面就可以根据函数内部的逻辑来解决炸弹了。</p>
+<p>代码来自<code>objdump -d</code>反汇编出来的代码，与<code>gdb</code>的汇编模式下看到的代码是一样的。</p>
+<h4 id="主函数"><a href="#主函数" class="headerlink" title="主函数"></a>主函数</h4><p>主函数代码比较长，只贴我们需要分析的关键部分。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">400e32:	e8 67 06 00 00       	callq  40149e &lt;read_line&gt;</div><div class="line">400e37:	48 89 c7             	mov    %rax,%rdi</div></pre></td></tr></table></figure>
+<p>第一句调用了<code>read_line</code>函数，我们可以转到函数入口地址<code>40149e</code>去查看<code>read_line</code>的代码（事实上一开始我也这么做了），但是会发现代码中包含了许多对系统库函数的调用，仔细分析的难度比较大并且没有必要。从提供的C代码与函数名称，我们可以推测出这个函数的作用是读取一行输入。根据返回值一般存放在<code>rax</code>中的约定，<code>rax</code>中应该就是读入的数据的地址，第二句中我们把这个值复制到了<code>rdi</code>中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">400e3a:	e8 a1 00 00 00       	callq  400ee0 &lt;phase_1&gt;</div><div class="line">400e3f:	e8 80 07 00 00       	callq  4015c4 &lt;phase_defused&gt;</div></pre></td></tr></table></figure>
+<p>接下来两句分别开始调用<code>phase_1</code>与<code>phase_defused</code>，下面的五个阶段也是上面这样的模式。</p>
+<h4 id="阶段一"><a href="#阶段一" class="headerlink" title="阶段一"></a>阶段一</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">0000000000400ee0 &lt;phase_1&gt;:</div><div class="line">  400ee0:	48 83 ec 08          	sub    $0x8,%rsp</div><div class="line">  400ee4:	be 00 24 40 00       	mov    $0x402400,%esi</div><div class="line">  400ee9:	e8 4a 04 00 00       	callq  401338 &lt;strings_not_equal&gt;</div><div class="line">  400eee:	85 c0                	test   %eax,%eax</div><div class="line">  400ef0:	74 05                	je     400ef7 &lt;phase_1+0x17&gt;</div><div class="line">  400ef2:	e8 43 05 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">  400ef7:	48 83 c4 08          	add    $0x8,%rsp</div><div class="line">  400efb:	c3                   	retq</div></pre></td></tr></table></figure>
+<p>阶段一的代码比较短，第二行中把一个地址给了<code>esi</code>，接下来调用了<code>strings_not_equal</code>这个函数，我们可以跳到函数入口地址查看这个函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">40133c:	48 89 fb             	mov    %rdi,%rbx</div><div class="line">40133f:	48 89 f5             	mov    %rsi,%rbp</div><div class="line">401342:	e8 d4 ff ff ff       	callq  40131b &lt;string_length&gt;</div></pre></td></tr></table></figure>
+<p>函数中这两行分别把<code>rdi</code> <code>rsi</code>的值复制到了<code>rbx</code>与<code>rbp</code>，然后调用了<code>string_length</code>，这个时候就不用去看<code>string_length</code>函数了，我们可以直接猜测出<code>rbx</code>与<code>rbp</code>就是函数的参数。那么可以说明<code>rdi</code> <code>rsi</code>就是给<code>string_not_equal</code>的函数，那么<code>string_not_equal</code>的返回值是什么呢？</p>
+<p>看到<code>string_not_equal</code>返回后的5、6两句，测试了<code>eax</code>的值，在<code>eax</code>等于0时就跳转到<code>400ef7</code>，如果不为0，那么会继续向下执行，下面一句是调用<code>explode_bomb</code>函数，不用说这一定是触发炸弹的函数，所以我们需要令<code>string_not_equal</code>的返回值为0，那么从名字判断，我们需要令两个字符串相等，两个字符串之前说过存放在<code>rdi</code>与<code>rsi</code>中，<code>rdi</code>是我们读入的字符串，而<code>rsi</code>中存放的是<code>400ee4</code>复制的<code>0x402400</code>，这个时候用<code>gdb</code>去查看该地址中存放的字符串比较方便：</p>
+<p><img src="/images/bomblab2.png" alt=""></p>
+<p>这串字符就是第一阶段的答案。</p>
+<h4 id="阶段二"><a href="#阶段二" class="headerlink" title="阶段二"></a>阶段二</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">400efc:	55                   	push   %rbp</div><div class="line">400efd:	53                   	push   %rbx</div><div class="line">400efe:	48 83 ec 28          	sub    $0x28,%rsp</div><div class="line">400f02:	48 89 e6             	mov    %rsp,%rsi</div><div class="line">400f05:	e8 52 05 00 00       	callq  40145c &lt;read_six_numbers&gt;</div><div class="line">400f0a:	83 3c 24 01          	cmpl   $0x1,(%rsp)</div><div class="line">400f0e:	74 20                	je     400f30 &lt;phase_2+0x34&gt;</div><div class="line">400f10:	e8 25 05 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">400f15:	eb 19                	jmp    400f30 &lt;phase_2+0x34&gt;</div><div class="line">400f17:	8b 43 fc             	mov    -0x4(%rbx),%eax</div><div class="line">400f1a:	01 c0                	add    %eax,%eax</div><div class="line">400f1c:	39 03                	cmp    %eax,(%rbx)</div><div class="line">400f1e:	74 05                	je     400f25 &lt;phase_2+0x29&gt;</div><div class="line">400f20:	e8 15 05 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">400f25:	48 83 c3 04          	add    $0x4,%rbx</div><div class="line">400f29:	48 39 eb             	cmp    %rbp,%rbx</div><div class="line">400f2c:	75 e9                	jne    400f17 &lt;phase_2+0x1b&gt;</div><div class="line">400f2e:	eb 0c                	jmp    400f3c &lt;phase_2+0x40&gt;</div><div class="line">400f30:	48 8d 5c 24 04       	lea    0x4(%rsp),%rbx</div><div class="line">400f35:	48 8d 6c 24 18       	lea    0x18(%rsp),%rbp</div><div class="line">400f3a:	eb db                	jmp    400f17 &lt;phase_2+0x1b&gt;</div><div class="line">400f3c:	48 83 c4 28          	add    $0x28,%rsp</div><div class="line">400f40:	5b                   	pop    %rbx</div><div class="line">400f41:	5d                   	pop    %rbp</div><div class="line">400f42:	c3                   	retq</div></pre></td></tr></table></figure>
+<p>进入<code>phase_2</code>函数，观察它的代码，可以发现第5行调用了一个名为<code>read_six_numbers</code>这个函数，顾名思义，这个函数的作用应该是从输入中读取6个数字，那么问题来了，这6个数字是怎么返回的呢？我们注意到第4行中把<code>rsp</code>的值复制给了<code>rsi</code>，我们可以猜测这个函数是使用栈来返回读入的结果。</p>
+<p>当然只是猜测是不行的，我们需要用实验去验证我们的想法，我们在输入文件中设置<code>1 2 3 4 5 6</code>这一行输入，然后将断点打在<code>*400f0a</code>这个函数刚返回的位置（注意输入中应该含有第一阶段的答案，不然炸弹就炸在第一阶段了）。运行停在断点之后查看栈中的内容：</p>
+<p><img src="/images/bomblab3.png" alt=""></p>
+<p>我们打出了<code>rsp</code>开始32字节的内容，发现栈中依次存放了输入的6个数，之后就是返回的地址。那么我们可以确定读取的数值就是依次存放在栈中的。</p>
+<p>接下来看第6、7、8行，它将<code>rsp</code>中存放的值与1进行比较，如果相等则跳过第8行的引爆代码，说明我们需要输入的第一个数为1 。再看跳转到的位置（19、20行）将<code>rsp+0x4</code>与<code>rsp+0x18</code>的值分别存放到了<code>rbx</code>与<code>rbp</code>。下一行又进行了一次跳转，来到了第10行，第10行将<code>rbx</code>的地址减4中存放的内容复制到了<code>eax</code>中，<code>rbx</code>的地址减4也就意味着与<code>rsp</code>相等，它的值也就是第一个读入的值。下一行将<code>eax</code>的值乘二，接下来将乘二后的值与<code>rbx</code>也就是第二个值进行比较，如果相同则跳过引爆代码。上面这一系列操作总结起来就是如果第二个值是第一个值的两倍则不引爆。</p>
+<p>再往下就是把<code>rbx</code>的值加上4，因为一个<code>int</code>占4个字节，也就是把<code>rbx</code>指向了下一个读入的值。下一步将<code>rbx</code>与<code>rbp</code>的值进行比较，回想<code>rbp</code>的值为的<code>rsp+0x18</code>也就是 <code>rsp+24</code>，指向6个<code>int</code>值之后的位置，所以与它进行比较就是判断是否到达临界条件。如果没有到达临界条件，则跳到上一段中比较的部分继承进行。看到这里，我们已经可以判断出<code>phase_2</code>的要求是读入的6个数第一个数必为1，而后面的数字都是前面一个数字的两倍。</p>
+<p>所以阶段2的答案为<code>1 2 3 4 5 6</code>.</p>
+<h4 id="阶段三"><a href="#阶段三" class="headerlink" title="阶段三"></a>阶段三</h4><p>阶段三的代码比较长，我们分开来看：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line">0000000000400f43 &lt;phase_3&gt;:</div><div class="line">  400f43:	48 83 ec 18          	sub    $0x18,%rsp</div><div class="line">  400f47:	48 8d 4c 24 0c       	lea    0xc(%rsp),%rcx</div><div class="line">  400f4c:	48 8d 54 24 08       	lea    0x8(%rsp),%rdx</div><div class="line">  400f51:	be cf 25 40 00       	mov    $0x4025cf,%esi</div><div class="line">  400f56:	b8 00 00 00 00       	mov    $0x0,%eax</div><div class="line">  400f5b:	e8 90 fc ff ff       	callq  400bf0 &lt;__isoc99_sscanf@plt&gt;</div><div class="line">  400f60:	83 f8 01             	cmp    $0x1,%eax</div><div class="line">  400f63:	7f 05                	jg     400f6a &lt;phase_3+0x27&gt;</div><div class="line">  400f65:	e8 d0 04 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">  400f6a:	83 7c 24 08 07       	cmpl   $0x7,0x8(%rsp)</div><div class="line">  400f6f:	77 3c                	ja     400fad &lt;phase_3+0x6a&gt;</div><div class="line">  400f71:	8b 44 24 08          	mov    0x8(%rsp),%eax</div><div class="line">  400f75:	ff 24 c5 70 24 40 00 	jmpq   *0x402470(,%rax,8)</div></pre></td></tr></table></figure>
+<p>第3、4两行将<code>rsp+0xc</code>与<code>rsp+0x8</code>的值分别给<code>rcx</code>与<code>rdx</code>，下一行将一个地址值复制给了<code>esi</code>，接着将<code>eax</code>置为0，下一步调用了库函数<code>sscanf</code>，我们想到<code>sscanf</code>中的参数中需要一个格式化字符串，那么<code>esi</code>中的这个地址值就很有可能存放了这个字符串，我们同样使用<code>gdb</code>在运行时查看这个字符串：</p>
+<p><img src="/images/bomblab4.png" alt=""></p>
+<p>可以看到这就是格式化字符串，读入的是两个整型值。这两个值存放在哪里呢？我们想到之前把<code>rsp+0xc</code>与<code>rsp+0x8</code>的值分别给<code>rcx</code>与<code>rdx</code>，这是两个地址值，我们可以用之前的方法验证栈中存放的确实是我们读入的这两个值。</p>
+<p>下面第8行将<code>eax</code>与1进行比较，<code>eax</code>一般用于存放函数返回值，而<code>sscanf</code> 的返回值是成功读入的数值个数，也就是说这几行将成功读入的个数与1进行比较，如果大于1则跳过引爆的代码。</p>
+<p>下面第11行将<code>rsp+0x8</code>中存放的值与<code>0x7</code>进行比较，如果大于<code>0x7</code>则跳到<code>400fad</code>的位置，我们看这个地址的指令：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">400fad:	e8 88 04 00 00       	callq  40143a &lt;explode_bomb&gt;</div></pre></td></tr></table></figure>
+<p>引爆炸弹。</p>
+<p>下面的两行比较关键：第13行将<code>rsp+0x8</code>中存放的值复制入<code>eax</code>，第14行进行一个跳转，跳转到的地址为<code>0x402470(,%rax,8)</code>，这就是一个典型的<code>switch</code>语句的实现：直接跳转到索引*位移的指令位置。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div></pre></td><td class="code"><pre><div class="line">x = 0</div><div class="line">400f7c:	b8 cf 00 00 00       	mov    $0xcf,%eax</div><div class="line">400f81:	eb 3b                	jmp    400fbe &lt;phase_3+0x7b&gt;</div><div class="line">x = 2</div><div class="line">400f83:	b8 c3 02 00 00       	mov    $0x2c3,%eax</div><div class="line">400f88:	eb 34                	jmp    400fbe &lt;phase_3+0x7b&gt;</div><div class="line">x = 3</div><div class="line">400f8a:	b8 00 01 00 00       	mov    $0x100,%eax</div><div class="line">400f8f:	eb 2d                	jmp    400fbe &lt;phase_3+0x7b&gt;</div><div class="line">x = 4</div><div class="line">400f91:	b8 85 01 00 00       	mov    $0x185,%eax</div><div class="line">400f96:	eb 26                	jmp    400fbe &lt;phase_3+0x7b&gt;</div><div class="line">x = 5</div><div class="line">400f98:	b8 ce 00 00 00       	mov    $0xce,%eax</div><div class="line">400f9d:	eb 1f                	jmp    400fbe &lt;phase_3+0x7b&gt;</div><div class="line">x = 6</div><div class="line">400f9f:	b8 aa 02 00 00       	mov    $0x2aa,%eax</div><div class="line">400fa4:	eb 18                	jmp    400fbe &lt;phase_3+0x7b&gt;</div><div class="line">x = 7</div><div class="line">400fa6:	b8 47 01 00 00       	mov    $0x147,%eax</div><div class="line">400fab:	eb 11                	jmp    400fbe &lt;phase_3+0x7b&gt;</div><div class="line"></div><div class="line">400fad:	e8 88 04 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">400fb2:	b8 00 00 00 00       	mov    $0x0,%eax</div><div class="line">400fb7:	eb 05                	jmp    400fbe &lt;phase_3+0x7b&gt;</div><div class="line">x = 1</div><div class="line">400fb9:	b8 37 01 00 00       	mov    $0x137,%eax</div><div class="line">400fbe:	3b 44 24 0c          	cmp    0xc(%rsp),%eax</div><div class="line">400fc2:	74 05                	je     400fc9 &lt;phase_3+0x86&gt;</div><div class="line"></div><div class="line">400fc4:	e8 71 04 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">400fc9:	48 83 c4 18          	add    $0x18,%rsp</div><div class="line">400fcd:	c3                   	retq</div></pre></td></tr></table></figure>
+<p>上面的代码已经加了注释，假设读入的第一个数为x，看到所有分支最后都跳转到了<code>400fbe</code>这行判断中，将<code>eax</code>中的值与<code>rsp+0xc</code>也就是我们读入的第二个数进行判断，如果相等的话跳过引爆代码。</p>
+<p>而每个分支都将一个数复制到了<code>eax</code>中，也就是说我们只要根据不同的第一个参数的值读入对应的第二个参数就可以了，所以我们可以随意选择一个x值，这里我选择<code>x=1</code>，对应的第二个参数为<code>0x137</code>换成十进制是311，所以第3阶段的（一个）答案为：</p>
+<p><code>1 311</code></p>
+<h4 id="阶段四"><a href="#阶段四" class="headerlink" title="阶段四"></a>阶段四</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line">000000000040100c &lt;phase_4&gt;:</div><div class="line">  40100c:	48 83 ec 18          	sub    $0x18,%rsp</div><div class="line">  401010:	48 8d 4c 24 0c       	lea    0xc(%rsp),%rcx</div><div class="line">  401015:	48 8d 54 24 08       	lea    0x8(%rsp),%rdx</div><div class="line">  40101a:	be cf 25 40 00       	mov    $0x4025cf,%esi</div><div class="line">  40101f:	b8 00 00 00 00       	mov    $0x0,%eax</div><div class="line">  401024:	e8 c7 fb ff ff       	callq  400bf0 &lt;__isoc99_sscanf@plt&gt;</div><div class="line">  401029:	83 f8 02             	cmp    $0x2,%eax</div><div class="line">  40102c:	75 07                	jne    401035 &lt;phase_4+0x29&gt;</div><div class="line">  40102e:	83 7c 24 08 0e       	cmpl   $0xe,0x8(%rsp)</div><div class="line">  401033:	76 05                	jbe    40103a &lt;phase_4+0x2e&gt;</div><div class="line">  401035:	e8 00 04 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">  40103a:	ba 0e 00 00 00       	mov    $0xe,%edx</div><div class="line">  40103f:	be 00 00 00 00       	mov    $0x0,%esi</div><div class="line">  401044:	8b 7c 24 08          	mov    0x8(%rsp),%edi</div><div class="line">  401048:	e8 81 ff ff ff       	callq  400fce &lt;func4&gt;</div><div class="line">  40104d:	85 c0                	test   %eax,%eax</div><div class="line">  40104f:	75 07                	jne    401058 &lt;phase_4+0x4c&gt;</div></pre></td></tr></table></figure>
+<p>前面的代码比较熟悉，同样是调用了<code>sscanf</code>函数，我们查看格式字符串：</p>
+<p><img src="/images/bomblab5.png" alt=""></p>
+<p>也是读入两个参数存放在<code>rcx</code>与<code>rdx</code>中。</p>
+<p>同样对读入参数的个数进行了判断，要求成功读入参数的个数等于两个，第11、12行要求输入的第一个参数小于<code>0xe</code>。</p>
+<p>接下来把0xe赋给<code>edx</code>、0x0赋给<code>esi</code>，<code>rsp+0x8</code>的值赋给<code>edi</code>。接下来调用了<code>func4</code>函数。</p>
+<p>在去查看<code>func4</code>函数的代码之前，我们先查看函数返回后的代码，了解我们需要的结果。第17、18行测试了<code>eax</code>的值如果不为0，就跳转到引爆代码。</p>
+<p>所以我们的目标是返回时<code>eax</code>的值为0.下面进入<code>func4</code>函数。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">0000000000400fce &lt;func4&gt;:</div><div class="line">  400fce:	48 83 ec 08          	sub    $0x8,%rsp</div><div class="line">  400fd2:	89 d0                	mov    %edx,%eax</div><div class="line">  400fd4:	29 f0                	sub    %esi,%eax</div><div class="line">  400fd6:	89 c1                	mov    %eax,%ecx</div><div class="line">  400fd8:	c1 e9 1f             	shr    $0x1f,%ecx</div><div class="line">  400fdb:	01 c8                	add    %ecx,%eax</div><div class="line">  400fdd:	d1 f8                	sar    %eax</div><div class="line">  400fdf:	8d 0c 30             	lea    (%rax,%rsi,1),%ecx</div><div class="line">  400fe2:	39 f9                	cmp    %edi,%ecx</div><div class="line">  400fe4:	7e 0c                	jle    400ff2 &lt;func4+0x24&gt;</div><div class="line">  400fe6:	8d 51 ff             	lea    -0x1(%rcx),%edx</div><div class="line">  400fe9:	e8 e0 ff ff ff       	callq  400fce &lt;func4&gt;</div><div class="line">  400fee:	01 c0                	add    %eax,%eax</div><div class="line">  400ff0:	eb 15                	jmp    401007 &lt;func4+0x39&gt;</div><div class="line">  400ff2:	b8 00 00 00 00       	mov    $0x0,%eax</div><div class="line">  400ff7:	39 f9                	cmp    %edi,%ecx</div><div class="line">  400ff9:	7d 0c                	jge    401007 &lt;func4+0x39&gt;</div><div class="line">  400ffb:	8d 71 01             	lea    0x1(%rcx),%esi</div><div class="line">  400ffe:	e8 cb ff ff ff       	callq  400fce &lt;func4&gt;</div><div class="line">  401003:	8d 44 00 01          	lea    0x1(%rax,%rax,1),%eax</div><div class="line">  401007:	48 83 c4 08          	add    $0x8,%rsp</div><div class="line">  40100b:	c3                   	retq</div></pre></td></tr></table></figure>
+<p>这段代码之中我们调用了<code>func4</code>，这是一个递归的过程，像之间那样直接分析比较困难，这里我们就将这个代码逆向为C语言再来分析，下面是逆向出的C语言代码：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">fun</span><span class="params">(<span class="keyword">int</span> a1, <span class="keyword">int</span> a2, <span class="keyword">int</span> x)</span></span>&#123;</div><div class="line">    <span class="keyword">int</span> b = (a1 - a2) &gt;&gt; <span class="number">31</span>;</div><div class="line">    <span class="keyword">int</span> result = ((a1-a2) + b) &gt;&gt; <span class="number">1</span>;</div><div class="line">    b = result + a2;</div><div class="line">    <span class="keyword">if</span>(b == x) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    <span class="keyword">if</span>(b &lt; x) &#123;</div><div class="line">        result = fun(a1, b + <span class="number">1</span>, x);</div><div class="line">        <span class="keyword">return</span> result * <span class="number">2</span> + <span class="number">1</span>;</div><div class="line">    &#125;<span class="keyword">else</span>&#123;</div><div class="line">        result = fun(b - <span class="number">1</span>, a2, x);</div><div class="line">        <span class="keyword">return</span> result * <span class="number">2</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>这里的<code>a1``a2</code>初始值分别为之前的<code>0xe</code>与<code>0x0</code>。我们可以直接写个测试程序来跑出能返回0的输入值：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">void</span>)</span></span>&#123;</div><div class="line">    <span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt;= <span class="number">0xe</span>; i++)&#123;</div><div class="line">        <span class="keyword">if</span>(fun(<span class="number">0xe</span>,<span class="number">0</span>,i) == <span class="number">0</span>)&#123;</div><div class="line">            <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,i) ;</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> <span class="number">0</span>; </div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>得出允许的值有<code>0 1 3 7</code>.</p>
+<p>回到<code>phase_4</code>的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">401051:	83 7c 24 0c 00       	cmpl   $0x0,0xc(%rsp)</div><div class="line">401056:	74 05                	je     40105d &lt;phase_4+0x51&gt;</div><div class="line">401058:	e8 dd 03 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">40105d:	48 83 c4 18          	add    $0x18,%rsp</div><div class="line">401061:	c3                   	retq</div></pre></td></tr></table></figure>
+<p>第1、2行将输入的第二个参数与0进行比较，如果不为0就引爆炸弹。所以输入的第二个参数必为0。</p>
+<p>综上我们得出（一个）答案为：</p>
+<p><code>0 0</code></p>
+<h4 id="阶段五"><a href="#阶段五" class="headerlink" title="阶段五"></a>阶段五</h4><p>后面的阶段难度开始加大，我们分部分进行分析：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">0000000000401062 &lt;phase_5&gt;:</div><div class="line">  401062:	53                   	push   %rbx</div><div class="line">  401063:	48 83 ec 20          	sub    $0x20,%rsp</div><div class="line">  401067:	48 89 fb             	mov    %rdi,%rbx</div><div class="line">  40106a:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax</div><div class="line">  401071:	00 00</div><div class="line">  401073:	48 89 44 24 18       	mov    %rax,0x18(%rsp)</div></pre></td></tr></table></figure>
+<p>第4行把输入的地址<code>rdi</code>给<code>rbx</code>，第5、7行则是在栈中压入了一个哨兵变量。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">401078:	31 c0                	xor    %eax,%eax</div><div class="line">40107a:	e8 9c 02 00 00       	callq  40131b &lt;string_length&gt;</div><div class="line">40107f:	83 f8 06             	cmp    $0x6,%eax</div><div class="line">401082:	74 4e                	je     4010d2 &lt;phase_5+0x70&gt;</div><div class="line">401084:	e8 b1 03 00 00       	callq  40143a &lt;explode_bomb&gt;</div></pre></td></tr></table></figure>
+<p>第1行清空了<code>eax</code>，第2行中调用了<code>string_length</code>，我们想到之前的把输入放入<code>rbx</code>这个动作，可以推测这个函数是为了统计输入字符的个数，并存放在了<code>eax</code>中。</p>
+<p>下面将<code>eax</code>的值与<code>0x6</code>进行比较，等于则进行跳转避免引爆炸弹。我们进入跳转到的位置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">4010d2:	b8 00 00 00 00       	mov    $0x0,%eax</div><div class="line">4010d7:	eb b2                	jmp    40108b &lt;phase_5+0x29&gt;</div></pre></td></tr></table></figure>
+<p>把<code>eax</code>置为0后进行跳转。</p>
+<p>继续进入跳转到的位置：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">40108b:	0f b6 0c 03          	movzbl (%rbx,%rax,1),%ecx</div><div class="line"> 40108f:	88 0c 24             	mov    %cl,(%rsp)</div><div class="line"> 401092:	48 8b 14 24          	mov    (%rsp),%rdx</div><div class="line"> 401096:	83 e2 0f             	and    $0xf,%edx</div><div class="line"> 401099:	0f b6 92 b0 24 40 00 	movzbl 0x4024b0(%rdx),%edx</div><div class="line"> 4010a0:	88 54 04 10          	mov    %dl,0x10(%rsp,%rax,1)</div><div class="line"> 4010a4:	48 83 c0 01          	add    $0x1,%rax</div><div class="line"> 4010a8:	48 83 f8 06          	cmp    $0x6,%rax</div><div class="line"> 4010ac:	75 dd                	jne    40108b &lt;phase_5+0x29&gt;</div></pre></td></tr></table></figure>
+<p>第1行中<code>movzbl</code>命令将从<code>rbx</code>（输入）开始的<code>rax</code>位置的一个字节赋给<code>ecx</code>的低16位。</p>
+<p>接下来的两行先把<code>cl</code>中的值（上一步得到）复制到<code>rsp</code>处，再将<code>rsp</code>中的值复制到<code>rdx</code>中，第4行使用掩码<code>0xf</code>取<code>edx</code>的低4位。到这里我们总结一下上面的操作：取读入的字符串中<code>rax</code>位置处的字符，再取它的低4位放在<code>edx</code>中。</p>
+<p>下面第5行中，将地址<code>0x4024b0+rdx</code>中的一个字节放入<code>edx</code>的低16位中。第6行将这16位复制到了<code>rsp+0x10+rax</code>的位置中。</p>
+<p>接下来把<code>rax</code>加1，我们从前面可以看出来这个<code>rax</code>起的是一个索引的作用。第 8行与6进行比较，如果不等于6则跳到第1行重复这个过程。</p>
+<p>在这段之中，循环一共进行了6次，分别读取了输入的6个字符，记录这个6个字符的低6位作为索引<code>rdx</code>，从<code>0x4024b0+rdx</code>的位置复制一个字节到<code>rsp+0x10</code>开始的6字节中。结束之后，<code>rsp+0x10</code>开始存放了6个字符。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">4010ae:	c6 44 24 16 00       	movb   $0x0,0x16(%rsp)</div></pre></td></tr></table></figure>
+<p>接下来一行在<code>rsp+0x16</code>的位置也就是6个字符之后置上一个<code>0x0</code>也就是终止符<code>\0</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">4010b3:	be 5e 24 40 00       	mov    $0x40245e,%esi</div><div class="line">4010b8:	48 8d 7c 24 10       	lea    0x10(%rsp),%rdi</div><div class="line">4010bd:	e8 76 02 00 00       	callq  401338 &lt;strings_not_equal&gt;</div><div class="line">4010c2:	85 c0                	test   %eax,%eax</div><div class="line">4010c4:	74 13                	je     4010d9 &lt;phase_5+0x77&gt;</div><div class="line">4010c6:	e8 6f 03 00 00       	callq  40143a &lt;explode_bomb&gt;</div></pre></td></tr></table></figure>
+<p>接下来将<code>0x40245e</code>这个地址赋给<code>esi</code>，把<code>rsp+0x10</code>这个地址赋给<code>rdi</code>，接下来调用<code>strings_not_equal</code>这个函数，之前的经验告诉我们<code>esi</code>与<code>rdi</code>就是要比较的两个字符串的首地址。如果两个字符串不相同就引爆炸弹。</p>
+<p>我们先看<code>0x40245e</code>位置的字符串：</p>
+<p><img src="/images/bomblab6.png" alt=""></p>
+<p>这就是我们应该构造并存放在<code>rsp+0x10</code>处的字符串。</p>
+<p>接下来再查看我们复制到<code>rsp</code>中的字符来源也就是<code>0x4024b0</code>开始的字符：</p>
+<p><img src="/images/bomblab7.png" alt=""></p>
+<p>可以看到我们需要的字符<code>flyers</code>的索引分别为<code>9 15 14 5 6 7</code>。这个索引就是我们输入的字符的低4位，那我们只要找到低4位分别是以上数值的字符就可以了。</p>
+<p>所以阶段5的（一个）答案为：</p>
+<p><code>ionefg</code></p>
+<h4 id="阶段六"><a href="#阶段六" class="headerlink" title="阶段六"></a>阶段六</h4><p>阶段六可以说是最复杂的一个阶段，同样一步步分析：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">00000000004010f4 &lt;phase_6&gt;:</div><div class="line">  4010f4:	41 56                	push   %r14</div><div class="line">  4010f6:	41 55                	push   %r13</div><div class="line">  4010f8:	41 54                	push   %r12</div><div class="line">  4010fa:	55                   	push   %rbp</div><div class="line">  4010fb:	53                   	push   %rbx</div><div class="line">  4010fc:	48 83 ec 50          	sub    $0x50,%rsp</div><div class="line">  401100:	49 89 e5             	mov    %rsp,%r13</div><div class="line">  401103:	48 89 e6             	mov    %rsp,%rsi</div><div class="line">  401106:	e8 51 03 00 00       	callq  40145c &lt;read_six_numbers&gt;</div></pre></td></tr></table></figure>
+<p>读入6个数字，存放位置还是栈中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line">40110b:	49 89 e6             	mov    %rsp,%r14</div><div class="line">40110e:	41 bc 00 00 00 00    	mov    $0x0,%r12d</div><div class="line">401114:	4c 89 ed             	mov    %r13,%rbp</div><div class="line">401117:	41 8b 45 00          	mov    0x0(%r13),%eax</div><div class="line">40111b:	83 e8 01             	sub    $0x1,%eax</div><div class="line">40111e:	83 f8 05             	cmp    $0x5,%eax</div><div class="line">401121:	76 05                	jbe    401128 &lt;phase_6+0x34&gt;</div><div class="line">401123:	e8 12 03 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">401128:	41 83 c4 01          	add    $0x1,%r12d</div><div class="line">40112c:	41 83 fc 06          	cmp    $0x6,%r12d</div><div class="line">401130:	74 21                	je     401153 &lt;phase_6+0x5f&gt;</div><div class="line">401132:	44 89 e3             	mov    %r12d,%ebx</div><div class="line">401135:	48 63 c3             	movslq %ebx,%rax</div><div class="line">401138:	8b 04 84             	mov    (%rsp,%rax,4),%eax</div><div class="line">40113b:	39 45 00             	cmp    %eax,0x0(%rbp)</div><div class="line">40113e:	75 05                	jne    401145 &lt;phase_6+0x51&gt;</div><div class="line">401140:	e8 f5 02 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">401145:	83 c3 01             	add    $0x1,%ebx</div><div class="line">401148:	83 fb 05             	cmp    $0x5,%ebx</div><div class="line">40114b:	7e e8                	jle    401135 &lt;phase_6+0x41&gt;</div><div class="line">40114d:	49 83 c5 04          	add    $0x4,%r13</div><div class="line">401151:	eb c1                	jmp    401114 &lt;phase_6+0x20&gt;</div></pre></td></tr></table></figure>
+<p>前面是一系列的赋值操作，第5行将<code>eax</code>减1，<code>eax</code>中的值是<code>rsp</code>位置存放的值。第6、7两行将减一以后的值与5进行比较，小于等于5则跳过引爆代码。也就是说<code>rsp</code>中存放的第一个数必须小于等于6.</p>
+<p>之前将<code>r12d</code>置为0，第9行中将<code>r12d</code>的值增加1，下一行与6进行比较，如果相等则跳入下一个阶段。</p>
+<p>第12行中把<code>r12d</code>中的值复制给了<code>ebx</code>，下一步又赋给了<code>rax</code>，接下来的一行<code>mov</code>将<code>rsp+rax*4</code>中的值（也就是第rax+1个读入的<code>int</code>值）给了<code>eax</code>。</p>
+<p>下一步将<code>eax</code>中的值与<code>rbp</code>地址指向的值进行比较，如果不相同则跳过引爆代码。说明这两个值需要不同，再接下来将<code>ebx</code>中的值加1，再与5进行比较，如果小于等于5则跳到第13行中，更新<code>rax</code>的值，再去从栈中取下一个新的<code>int</code>值和<code>rbp</code>中的进行比较。到这里我们可以看出，从13行到20行相当于一个内循环，从<code>r12d</code>开始，到5结束，不断地取栈中的值与<code>rbp</code>的值比较，也就是要求<code>rbp</code>之后的值需要与<code>rbp</code>不同。</p>
+<p>第21、22行则是外循环，它更新了<code>r13</code>的值，令<code>r13</code>指向下一个<code>int</code>值。跳到第3行用<code>r13</code>的值更新<code>rbp</code>的值，也就是把比较的对象向后移一个。同样要求该值小于等于5。后面再进行内循环比较之后的值。</p>
+<p>这里我们就可以明白这段代码的作用：限制读入的6个数必须小于等于6并且互不相等。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">401153:	48 8d 74 24 18       	lea    0x18(%rsp),%rsi</div><div class="line">401158:	4c 89 f0             	mov    %r14,%rax</div><div class="line">40115b:	b9 07 00 00 00       	mov    $0x7,%ecx</div><div class="line">401160:	89 ca                	mov    %ecx,%edx</div><div class="line">401162:	2b 10                	sub    (%rax),%edx</div><div class="line">401164:	89 10                	mov    %edx,(%rax)</div><div class="line">401166:	48 83 c0 04          	add    $0x4,%rax</div><div class="line">40116a:	48 39 f0             	cmp    %rsi,%rax</div><div class="line">40116d:	75 f1                	jne    401160 &lt;phase_6+0x6c&gt;</div></pre></td></tr></table></figure>
+<p>第1行中将<code>rsp+0x18</code>的值赋给<code>rsi</code>。</p>
+<p>第2行将<code>r14</code>的值赋给<code>rax</code>，<code>r14</code>的值是之前保存的<code>rsp</code>。</p>
+<p>第3行将0x7赋给<code>ecx</code>，第4行又将<code>ecx</code>复制给<code>edx</code>。</p>
+<p>下一步将<code>edx</code>减去<code>rax</code>存放的地址指向的值，接下来又将<code>edx</code>的值赋回<code>rax</code>存放的地址指向的值。</p>
+<p>第7行将<code>rax</code>的值加4，也就是指向了下一个<code>int</code>值，接着与之前设定的<code>rsi</code>进行的比较，如果不相等则重复这个过程。<code>rsi</code>实际上指向的是6个<code>int</code>值之后的位置，作为一个标记使用。</p>
+<p>这段代码总结起来就是将栈中的6个值（假设为x）变为7-x。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">40116f:	be 00 00 00 00       	mov    $0x0,%esi</div><div class="line">401174:	eb 21                	jmp    401197 &lt;phase_6+0xa3&gt;</div><div class="line">401176:	48 8b 52 08          	mov    0x8(%rdx),%rdx</div><div class="line">40117a:	83 c0 01             	add    $0x1,%eax</div><div class="line">40117d:	39 c8                	cmp    %ecx,%eax</div><div class="line">40117f:	75 f5                	jne    401176 &lt;phase_6+0x82&gt;</div><div class="line">401181:	eb 05                	jmp    401188 &lt;phase_6+0x94&gt;</div><div class="line"></div><div class="line">401183:	ba d0 32 60 00       	mov    $0x6032d0,%edx</div><div class="line">401188:	48 89 54 74 20       	mov    %rdx,0x20(%rsp,%rsi,2)</div><div class="line">40118d:	48 83 c6 04          	add    $0x4,%rsi</div><div class="line">401191:	48 83 fe 18          	cmp    $0x18,%rsi</div><div class="line">401195:	74 14                	je     4011ab &lt;phase_6+0xb7&gt;</div><div class="line">401197:	8b 0c 34             	mov    (%rsp,%rsi,1),%ecx</div><div class="line">40119a:	83 f9 01             	cmp    $0x1,%ecx</div><div class="line">40119d:	7e e4                	jle    401183 &lt;phase_6+0x8f&gt;</div><div class="line"></div><div class="line">40119f:	b8 01 00 00 00       	mov    $0x1,%eax</div><div class="line">4011a4:	ba d0 32 60 00       	mov    $0x6032d0,%edx</div><div class="line">4011a9:	eb cb                	jmp    401176 &lt;phase_6+0x82&gt;</div></pre></td></tr></table></figure>
+<p>进入下一段代码，一开始先将<code>esi</code>归零，然后跳到第14行处执行。</p>
+<p>第14行中从<code>rsp+rsi</code>的位置（也就是栈中我们读入的位置）取出一个数赋给<code>ecx</code>，接下来对取出的这个值进行判断，如果它小于等于1则跳到第9行处。</p>
+<p>我们在这里假设这个数确实小于等于1。到第9行，将一个地址值赋给了<code>edx</code>，接下来将<code>edx</code>的值赋给了<code>rsp+2*rsi+0x20</code>的地址指向的值，这里我们可以知道<code>rsi</code>起到的是索引的作用，下面一行将<code>rsi</code>增加4，说明从<code>rsp+0x20</code>开始存放8个字节的数据。再将<code>rsi</code>的值与<code>0x18</code>作比较，说明整个过程要进行6次。接下来又到了第14行将下一个<code>int</code>值给<code>rcx</code>。</p>
+<p>那么如果<code>rcx</code>的值不小于等于1，继续往下走，第18行将<code>0x1</code>赋给<code>eax</code>，19行将<code>0x6032d0</code>这个地址赋给<code>edx</code>，接下来跳转到了第3行。第3-6行的代码是一起的，也是理解这个过程的关键。</p>
+<p>首先第3行的命令，把<code>edx+0x8</code>地址指向的值赋给了<code>edx</code>，这步操作一开始比较难以理解，我们需要先看看<code>edx</code>的初始状态是什么样的，使用<code>gdb</code>在运行时查看内存：</p>
+<p><img src="/images/bomblab8.png" alt=""></p>
+<p>我们可以从这个信息中看出，其实它就是一个链表的结构，首先名字就是<code>node</code>给了提示，再者每一个<code>node</code>中偏移8个字节中储存的都是下一个节点的地址，那么前面8个字节自然就是节点储存的数据。</p>
+<p>我们再回过头来看第3行的代码，就不难理解这个操作就是我们常用的<code>p = p -&gt; next</code>，也就是指向下一个节点。</p>
+<p>第4行把<code>eax</code>增1，再将<code>eax</code>与<code>ecx</code>进行比较，如果不等就再跳到第3步指向链表下一个节点，那么可以看出这4行代码的作用就是从<code>edx</code>这个初始位置开始向后移动<code>ecx-1</code>次，第7行跳过了第9行，把<code>edx</code>赋给了<code>rsp+0x20</code>开始的第<code>rsi</code>个8字节的位置。如果<code>rsi</code>达到<code>0x18</code>则跳出这部分代码。</p>
+<p>我们整理一下这个过程，其实就是依次从栈中读取存放的6个数放入<code>rcx</code>，再根据<code>rcx</code>的值找到链表中对应的节点，把节点的地址放入<code>rsp+0x20</code>开始的对应位置中。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">4011ab:	48 8b 5c 24 20       	mov    0x20(%rsp),%rbx</div><div class="line">4011b0:	48 8d 44 24 28       	lea    0x28(%rsp),%rax</div><div class="line">4011b5:	48 8d 74 24 50       	lea    0x50(%rsp),%rsi</div><div class="line">4011ba:	48 89 d9             	mov    %rbx,%rcx</div><div class="line">4011bd:	48 8b 10             	mov    (%rax),%rdx</div><div class="line">4011c0:	48 89 51 08          	mov    %rdx,0x8(%rcx)</div><div class="line">4011c4:	48 83 c0 08          	add    $0x8,%rax</div><div class="line">4011c8:	48 39 f0             	cmp    %rsi,%rax</div><div class="line">4011cb:	74 05                	je     4011d2 &lt;phase_6+0xde&gt;</div><div class="line">4011cd:	48 89 d1             	mov    %rdx,%rcx</div><div class="line">4011d0:	eb eb                	jmp    4011bd &lt;phase_6+0xc9&gt;</div><div class="line">4011d2:	48 c7 42 08 00 00 00 	movq   $0x0,0x8(%rdx)</div></pre></td></tr></table></figure>
+<p>这段代码前三行分别将<code>rsp+0x20</code>地址指向值、<code>rsp+0x28</code>的值、<code>rsp+0x50</code>的值赋给了<code>rbx</code> 、<code>rax</code>、<code>rsi</code>。第4行将<code>rbx</code>复制到<code>rcx</code>中，第5行将<code>rax</code>（<code>rsp+0x20</code>）中存放的地址复制入<code>rdx</code>，第6行将这个数据赋给了<code>rcx</code>（也就是<code>rbx</code>、<code>*(rsp+0x20)</code>）节点的指针域。下一步将<code>rax</code>增加8，指向栈中的下一个位置。再与<code>rsi</code>这个临界地址进行比较，如果<code>rax</code>超出末端则跳出这段代码到第12行的位置。</p>
+<p>下面把<code>rdx</code>中存放的地址值赋给<code>rcx</code>，跳转到第5行重复过程。</p>
+<p>仔细分析，这个过程其实就是按照链表节点在栈中的位置重新将链表连接起来。</p>
+<p>最后跳出的第12行则是把新的表尾的指针域赋为<code>NULL</code>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">4011d9:	00 </div><div class="line">4011da:	bd 05 00 00 00       	mov    $0x5,%ebp</div><div class="line">4011df:	48 8b 43 08          	mov    0x8(%rbx),%rax</div><div class="line">4011e3:	8b 00                	mov    (%rax),%eax</div><div class="line">4011e5:	39 03                	cmp    %eax,(%rbx)</div><div class="line">4011e7:	7d 05                	jge    4011ee &lt;phase_6+0xfa&gt;</div><div class="line">4011e9:	e8 4c 02 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">4011ee:	48 8b 5b 08          	mov    0x8(%rbx),%rbx</div><div class="line">4011f2:	83 ed 01             	sub    $0x1,%ebp</div><div class="line">4011f5:	75 e8                	jne    4011df &lt;phase_6+0xeb&gt;</div><div class="line">4011f7:	48 83 c4 50          	add    $0x50,%rsp</div><div class="line">4011fb:	5b                   	pop    %rbx</div><div class="line">4011fc:	5d                   	pop    %rbp</div><div class="line">4011fd:	41 5c                	pop    %r12</div><div class="line">4011ff:	41 5d                	pop    %r13</div><div class="line">401201:	41 5e                	pop    %r14</div><div class="line">401203:	c3                   	retq</div></pre></td></tr></table></figure>
+<p>第2行将<code>ebp</code>赋上<code>0x5</code>，第三行中<code>rbx</code>的值是之前的<code>rsp+0x20</code>，那么<code>rbx+0x8</code>这个地址中存放的值就是下一个节点的地址，赋给了<code>rax</code>。</p>
+<p>第4行将<code>rax</code>代表的节点的数据取出放入<code>eax</code>，再与<code>rbx</code>代表的节点的数据的值的低4位进行比较，如果前一个节点的数据的低4字节大于等于后一个节点的，则跳过引爆代码。</p>
+<p>第8行又是熟悉的操作：使<code>rbx</code>指向下一个节点。</p>
+<p>第9、10行减小<code>ebp</code>这个循环变量再进行判断，保证循环进行5次。</p>
+<p>也就是说，我们需要使新的链表中前一个节点存放的数据值的低4字节都大于后一个节点的。</p>
+<p>弄清楚了过程，下面就可以开始反推答案了：</p>
+<p>先找到正确的链表节点排列，根据图：</p>
+<p><img src="/images/bomblab8.png" alt=""></p>
+<p>数据由大到小的排列依次是<code>3 4 5 6 1 2</code>。</p>
+<p>由于有一步x = 7 - x，所以倒推回来的答案应该是：</p>
+<p><code>4 3 2 1 6 5</code></p>
+<h4 id="秘密阶段"><a href="#秘密阶段" class="headerlink" title="秘密阶段"></a>秘密阶段</h4><p>在之前C代码的暗示以及我们查看汇编代码的过程中都可以猜测出有一个秘密阶段的存在，<code>secret_phase</code>的代码就在<code>phase_6</code>后的<code>func7</code>之后。第一个问题是我们如何进入<code>secret_phase</code>。</p>
+<p>这里可以用一个简单的方法，直接在反汇编代码中搜索<code>secret_phase</code>的入口地址，很快就可以发现在每个阶段的<code>phase_x</code>之后都有一行<code>phase_defused</code>，就在这个函数里面存在<code>callq secret_phase</code>的代码。</p>
+<p>我们就开始分析这个<code>phase_defused</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div></pre></td><td class="code"><pre><div class="line">00000000004015c4 &lt;phase_defused&gt;:</div><div class="line">  4015c4:	48 83 ec 78          	sub    $0x78,%rsp</div><div class="line">  4015c8:	64 48 8b 04 25 28 00 	mov    %fs:0x28,%rax</div><div class="line">  4015cf:	00 00 </div><div class="line">  4015d1:	48 89 44 24 68       	mov    %rax,0x68(%rsp)</div><div class="line">  4015d6:	31 c0                	xor    %eax,%eax</div><div class="line">  4015d8:	83 3d 81 21 20 00 06 	cmpl   $0x6,0x202181(%rip)        # 603760 &lt;num_input_strings&gt;</div><div class="line">  4015df:	75 5e                	jne    40163f &lt;phase_defused+0x7b&gt;</div><div class="line">  4015e1:	4c 8d 44 24 10       	lea    0x10(%rsp),%r8</div><div class="line">  4015e6:	48 8d 4c 24 0c       	lea    0xc(%rsp),%rcx</div><div class="line">  4015eb:	48 8d 54 24 08       	lea    0x8(%rsp),%rdx</div><div class="line">  4015f0:	be 19 26 40 00       	mov    $0x402619,%esi</div><div class="line">  4015f5:	bf 70 38 60 00       	mov    $0x603870,%edi</div><div class="line">  4015fa:	e8 f1 f5 ff ff       	callq  400bf0 &lt;__isoc99_sscanf@plt&gt;</div><div class="line">  4015ff:	83 f8 03             	cmp    $0x3,%eax</div><div class="line">  401602:	75 31                	jne    401635 &lt;phase_defused+0x71&gt;</div><div class="line">  401604:	be 22 26 40 00       	mov    $0x402622,%esi</div><div class="line">  401609:	48 8d 7c 24 10       	lea    0x10(%rsp),%rdi</div><div class="line">  40160e:	e8 25 fd ff ff       	callq  401338 &lt;strings_not_equal&gt;</div><div class="line">  401613:	85 c0                	test   %eax,%eax</div><div class="line">  401615:	75 1e                	jne    401635 &lt;phase_defused+0x71&gt;</div><div class="line">  401617:	bf f8 24 40 00       	mov    $0x4024f8,%edi</div><div class="line">  40161c:	e8 ef f4 ff ff       	callq  400b10 &lt;puts@plt&gt;</div><div class="line">  401621:	bf 20 25 40 00       	mov    $0x402520,%edi</div><div class="line">  401626:	e8 e5 f4 ff ff       	callq  400b10 &lt;puts@plt&gt;</div><div class="line">  40162b:	b8 00 00 00 00       	mov    $0x0,%eax</div><div class="line">  401630:	e8 0d fc ff ff       	callq  401242 &lt;secret_phase&gt;</div><div class="line">  401635:	bf 58 25 40 00       	mov    $0x402558,%edi</div><div class="line">  40163a:	e8 d1 f4 ff ff       	callq  400b10 &lt;puts@plt&gt;</div><div class="line">  40163f:	48 8b 44 24 68       	mov    0x68(%rsp),%rax</div><div class="line">  401644:	64 48 33 04 25 28 00 	xor    %fs:0x28,%rax</div><div class="line">  40164b:	00 00 </div><div class="line">  40164d:	74 05                	je     401654 &lt;phase_defused+0x90&gt;</div><div class="line">  40164f:	e8 dc f4 ff ff       	callq  400b30 &lt;__stack_chk_fail@plt&gt;</div><div class="line">  401654:	48 83 c4 78          	add    $0x78,%rsp</div><div class="line">  401658:	c3                   	retq</div></pre></td></tr></table></figure>
+<p>可以看到第7行将函数<code>num_input_strings</code>的返回值与6进行比较，如果不等于6则的直接跳过中间代码到达最后的结束部分。</p>
+<p>从函数名我们可以推测这个函数的作用的是检测读取的字符串的数量，当读取了6个字符串时，就不会跳过中间的代码。我们继续看中间的代码：</p>
+<p>第9到14行又是熟悉的<code>sscanf</code>调用过程，我们已经知道<code>esi</code>指向的是格式化字符串的首地址，我们先来查看它的内容：</p>
+<p><img src="/images/bomblab9.png" alt=""></p>
+<p>读取两个整数和一个字符串。</p>
+<p>有所不同的是在12行之后又有一行给<code>edi</code>赋上了一个地址值，我们之前所有阶段中<code>edi</code>的值都是来自于我们<code>read_line</code>的地址，想到<code>sscanf</code> 参数中确实存在一个输入，我们可以推测这个<code>edi</code>中存放的是我们读取位置的首地址。</p>
+<p>那么我们就可以在运行时查看这个地址的内容，看是从哪里进行读取的：</p>
+<p><img src="/images/bomblab10.png" alt=""></p>
+<p>首先符号表告诉我们这段数据的名字叫做<code>input_strings</code>也就是我们输入的字符串，那么这个地址上的<code>0 0</code>代表的应该就是我们的第4行输入。两个整型数字正好与格式化字符串也是匹配的。现在我们知道，应该在这两个0之后再追加一个字符串作为输入。</p>
+<p>第15、16行对成功输入的数据个数进行了一个判断，如果不为3个则跳过调用<code>secret_phase</code>的代码。</p>
+<p>第17-19行是对<code>strings_not_equal</code>的调用，我们已经知道它的两个参数分别是<code>esi</code>与<code>edi</code>，<code>esi</code>被赋上了一个地址值，<code>edi</code>被赋上了<code>esp+0x10</code>，我们可以推测出<code>edi</code>的地址就是指向我们读入的第三个字符串的，那么需要比较的对象是什么呢？我们在运行时查看内存的内容：</p>
+<p><img src="/images/bomblab11.png" alt=""></p>
+<p>这就是我们需要的第三个参数。</p>
+<p>可以看到如果第三个参数与上面这个字符串相同的话就会调用两次<code>puts</code>输出提示信息，然后进入<code>secret_phase</code>阶段。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line">0000000000401242 &lt;secret_phase&gt;:</div><div class="line">  401242:	53                   	push   %rbx</div><div class="line">  401243:	e8 56 02 00 00       	callq  40149e &lt;read_line&gt;</div><div class="line">  401248:	ba 0a 00 00 00       	mov    $0xa,%edx</div><div class="line">  40124d:	be 00 00 00 00       	mov    $0x0,%esi</div><div class="line">  401252:	48 89 c7             	mov    %rax,%rdi</div><div class="line">  401255:	e8 76 f9 ff ff       	callq  400bd0 &lt;strtol@plt&gt;</div><div class="line">  40125a:	48 89 c3             	mov    %rax,%rbx</div><div class="line">  40125d:	8d 40 ff             	lea    -0x1(%rax),%eax</div><div class="line">  401260:	3d e8 03 00 00       	cmp    $0x3e8,%eax</div><div class="line">  401265:	76 05                	jbe    40126c &lt;secret_phase+0x2a&gt;</div><div class="line">  401267:	e8 ce 01 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">  40126c:	89 de                	mov    %ebx,%esi</div><div class="line">  40126e:	bf f0 30 60 00       	mov    $0x6030f0,%edi</div><div class="line">  401273:	e8 8c ff ff ff       	callq  401204 &lt;fun7&gt;</div><div class="line">  401278:	83 f8 02             	cmp    $0x2,%eax</div><div class="line">  40127b:	74 05                	je     401282 &lt;secret_phase+0x40&gt;</div><div class="line">  40127d:	e8 b8 01 00 00       	callq  40143a &lt;explode_bomb&gt;</div><div class="line">  401282:	bf 38 24 40 00       	mov    $0x402438,%edi</div><div class="line">  401287:	e8 84 f8 ff ff       	callq  400b10 &lt;puts@plt&gt;</div><div class="line">  40128c:	e8 33 03 00 00       	callq  4015c4 &lt;phase_defused&gt;</div><div class="line">  401291:	5b                   	pop    %rbx</div><div class="line">  401292:	c3                   	retq</div></pre></td></tr></table></figure>
+<p>可以看到第3行调用了<code>read_line</code>函数，接着把<code>read_line</code>的返回值赋给了<code>rdi</code>，并调用了<code>strtol</code>函数，这个标准库函数的作用是把一个字符串转换成对应的长整型数值。返回值还是存放在<code>rax</code>中，第8行将<code>rax</code>复制给了<code>rbx</code>，第9行将<code>rax</code>减1赋给<code>eax</code>，第十行与<code>0x3e8</code>进行比较，如果这个值小于等于<code>0x3e8</code>就跳过引爆代码。看到这里我们可以知道我们需要再加入一行数据，它应该是一个小于等于1001的数值。</p>
+<p>接下来将<code>ebx</code>赋给了<code>esi</code>，也就是我们一开始输入的<code>rax</code>值。第14行将一个地址值赋给了<code>edi</code>，15行调用了<code>fun7</code>函数。我们还是先往下了解一下我们需要得到的结果。</p>
+<p>函数返回后令返回值<code>eax</code>与<code>0x2</code>做了一个比较，如果相等则跳过引爆代码。</p>
+<p>所以我们需要返回2。</p>
+<p>下面查看<code>fun7</code>的代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">0000000000401204 &lt;fun7&gt;:</div><div class="line">  401204:	48 83 ec 08          	sub    $0x8,%rsp</div><div class="line">  401208:	48 85 ff             	test   %rdi,%rdi</div><div class="line">  40120b:	74 2b                	je     401238 &lt;fun7+0x34&gt;</div><div class="line">  40120d:	8b 17                	mov    (%rdi),%edx</div><div class="line">  40120f:	39 f2                	cmp    %esi,%edx</div><div class="line">  401211:	7e 0d                	jle    401220 &lt;fun7+0x1c&gt;</div><div class="line">  401213:	48 8b 7f 08          	mov    0x8(%rdi),%rdi</div><div class="line">  401217:	e8 e8 ff ff ff       	callq  401204 &lt;fun7&gt;</div><div class="line">  40121c:	01 c0                	add    %eax,%eax</div><div class="line">  40121e:	eb 1d                	jmp    40123d &lt;fun7+0x39&gt;</div><div class="line">  401220:	b8 00 00 00 00       	mov    $0x0,%eax</div><div class="line">  401225:	39 f2                	cmp    %esi,%edx</div><div class="line">  401227:	74 14                	je     40123d &lt;fun7+0x39&gt;</div><div class="line">  401229:	48 8b 7f 10          	mov    0x10(%rdi),%rdi</div><div class="line">  40122d:	e8 d2 ff ff ff       	callq  401204 &lt;fun7&gt;</div><div class="line">  401232:	8d 44 00 01          	lea    0x1(%rax,%rax,1),%eax</div><div class="line">  401236:	eb 05                	jmp    40123d &lt;fun7+0x39&gt;</div><div class="line">  401238:	b8 ff ff ff ff       	mov    $0xffffffff,%eax</div><div class="line">  40123d:	48 83 c4 08          	add    $0x8,%rsp</div><div class="line">  401241:	c3                   	retq</div></pre></td></tr></table></figure>
+<p>第3、4两行先对我们输入的这个数作一个判断，如果等于0直接跳到第19行，返回-1，这显然不是我们想要的结果。</p>
+<p>第5行将<code>rdi</code>的值读入到了<code>edx</code>中，第6行则将这个数与我们读入的数进行比较，如果这个数小于等于我们读入的数就跳至第12行，第12行将<code>eax</code>置0，再进行一次相同的比较，如果相等则跳至第20行返回。</p>
+<p>如果不等（也就是<code>edx</code>小于我们读入的数），则继续向下执行第15行，这行代码有些与之前的链表跳至下一个节点类似，到这里，我们就需要查看一下<code>rdi</code>这个地址里存放的是怎样一种数据结构：</p>
+<p><img src="/images/bomblab12.png" alt=""></p>
+<p>仔细观察可以发现这是一个二叉树的结构，每个节点第1个8字节存放数据，第2个8字节存放左子树地址，第3个8字节存放右子树位置。并且命令也有规律，<code>nab</code>，<code>a</code>代表层数，<code>b</code>代表从左至右第b个节点。</p>
+<p>根据这个结构，我们可以把树画出来以便我们进行分析。随意找了个工具表示一下：</p>
+<p><img src="/images/bomblab13.png" alt=""></p>
+<p>下面我们回到代码，现在我们知道第15行代码的作用是将<code>rdi</code>移到它的右子树的位置，接着调用<code>fun7</code>，在返回后令<code>eax = 2 * rax + 1</code>。</p>
+<p>如果第6行的比较中树节点的值大于我们读入的数呢？</p>
+<p>代码会进行到第8行，令<code>rdi</code>移到它的左子树的位置，接下来调用<code>fun7</code>在返回后令<code>eax = 2 * eax</code>。下面跳至返回处。</p>
+<p>总结上面的过程：<code>edi</code>指向一个树的节点，令<code>edi</code>节点的值与我们读入的值进行比较。</p>
+<ul>
+<li>如果两者相等：返回0</li>
+<li>如果前者大于后者：<code>rdi</code>移至左子树，返回<code>2 * rax</code></li>
+<li>如果后者大于前者：<code>rdi</code>移至右子树，返回<code>2 * rax + 1</code></li>
+</ul>
+<p>那么我们需要返回2，应该在最后一次调用返回0，倒数第二次调用返回<code>2 * rax + 1</code>，第一次调用返回<code>2 * rax</code>。换句话说，这个数应该在第三层，比父节点大且比根结节小。观察上图，唯一的答案是：</p>
+<p><code>0x16</code>（22）</p>
+<hr>
+<p>至此，炸弹全部解除：</p>
+<p><img src="/images/bomblab14.png" alt=""></p>
+<h3 id="实验小结"><a href="#实验小结" class="headerlink" title="实验小结"></a>实验小结</h3><p>整个实验包括秘密部分用时九个小时，引爆了3次炸弹（一次因为错误的尝试，两次因为将<code>ni</code>命令错打成<code>n</code>）。</p>
+<p>一开始拿到题目的时候会比较蒙，需要先去学习工具的使用与一些编译的基础知道（符号表、定址表等等）花费了一些时间。前几个阶段过于关注函数的具体实现而没有根据常识去推测一些明显函数的作用花费了一些时间。</p>
+<p>前4个阶段都算比较简单，考查了一些常用结构在汇编中的出现形式。第5、6与秘密阶段分别考察了堆、链表、二叉树这三个数据结构在内存中的结构与汇编级的使用，受益良多。</p>
+<p>这个实验需要细致的分析与大胆的猜测与实验验证，还需要小心操作，最重要的是耐心，面对非常晦涩的汇编代码如何一步步地弄清代码的作用很需要毅力。当然也可以通过自己写出等价的C代码来帮助自己理解。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Computer-System/" rel="tag"># Computer System</a>
+          
+            <a href="/tags/CS-APP/" rel="tag"># CS:APP</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/06/18/CS_APP_DataLab/" rel="next" title="深入理解计算机系统（CS:APP) - Data Lab详解">
+                <i class="fa fa-chevron-left"></i> 深入理解计算机系统（CS:APP) - Data Lab详解
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/02/arch_more/" rel="prev" title="ArchLinux你可能需要知道的操作与软件包推荐「持续更新」">
+                ArchLinux你可能需要知道的操作与软件包推荐「持续更新」 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="viseator" />
+            
+              <p class="site-author-name" itemprop="name">viseator</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">28</span>
+                  <span class="site-state-item-name">文章</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">18</span>
+                  <span class="site-state-item-name">分类</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">21</span>
+                  <span class="site-state-item-name">标签</span>
+                </a>
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/viseator" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:viseator@gmail.com" target="_blank" title="Email">
+                    
+                      <i class="fa fa-fw fa-envelope"></i>Email</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.hustunique.com/" title="UniqueStudio" target="_blank">UniqueStudio</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.hustmeituan.club/" title="HustMeituanClub" target="_blank">HustMeituanClub</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.duskdragon.com/" title="BlackDragon" target="_blank">BlackDragon</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://imzhwk.com/" title="imzhwk" target="_blank">imzhwk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://moe.petnakanojo.com/" title="PetnaKanojo" target="_blank">PetnaKanojo</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://alexandertang.cn/" title="Alexander" target="_blank">Alexander</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://qzwlecr.github.io/" title="qzwlecr" target="_blank">qzwlecr</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Bomb-Lab"><span class="nav-number">1.</span> <span class="nav-text">Bomb Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">1.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#所用工具"><span class="nav-number">1.2.</span> <span class="nav-text">所用工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解题过程"><span class="nav-number">1.3.</span> <span class="nav-text">解题过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#前期"><span class="nav-number">1.3.1.</span> <span class="nav-text">前期</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#主函数"><span class="nav-number">1.3.2.</span> <span class="nav-text">主函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段一"><span class="nav-number">1.3.3.</span> <span class="nav-text">阶段一</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段二"><span class="nav-number">1.3.4.</span> <span class="nav-text">阶段二</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段三"><span class="nav-number">1.3.5.</span> <span class="nav-text">阶段三</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段四"><span class="nav-number">1.3.6.</span> <span class="nav-text">阶段四</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段五"><span class="nav-number">1.3.7.</span> <span class="nav-text">阶段五</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#阶段六"><span class="nav-number">1.3.8.</span> <span class="nav-text">阶段六</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#秘密阶段"><span class="nav-number">1.3.9.</span> <span class="nav-text">秘密阶段</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验小结"><span class="nav-number">1.4.</span> <span class="nav-text">实验小结</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-rocket"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">viseator</span>
+
+  
+</div>
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261494271&web_id=1261494271" language="JavaScript"></script>
+  </div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('2');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz", "shxNGHkps7WDMLyCkIKIKSSM");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
