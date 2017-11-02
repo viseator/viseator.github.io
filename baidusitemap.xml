@@ -5,7 +5,7 @@
     
   <url>
     <loc>http://www.viseator.com/2017/11/02/android_event_3/</loc>
-    <lastmod>2017-11-02T11:13:09.797Z</lastmod>
+    <lastmod>2017-11-02T11:24:47.734Z</lastmod>
     <data>
         <display>
         <title>Android 消息机制（三）Native层消息机制</title>
@@ -22,6 +22,33 @@
           
              
               <breadCrumb title="Event" url="http://www.viseator.com/categories/Android/Event/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.viseator.com/2017/03/09/android_view_lifeCycle/</loc>
+    <lastmod>2017-11-02T11:18:36.740Z</lastmod>
+    <data>
+        <display>
+        <title>Android View绘制（一）生命周期总览</title>
+        <pubTime>2017-03-09T09:22:41.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+        <tag>LifeCycle</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
           
         </display>
     </data>
@@ -89,33 +116,6 @@
         <tag>Android</tag>
          
         <tag>View</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
-          
-             
-              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/03/09/android_view_lifeCycle/</loc>
-    <lastmod>2017-11-02T10:09:50.380Z</lastmod>
-    <data>
-        <display>
-        <title>Android View绘制（一） 生命周期总览</title>
-        <pubTime>2017-03-09T09:22:41.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-        <tag>LifeCycle</tag>
          
          
            

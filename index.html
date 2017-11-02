@@ -467,7 +467,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  1,943
+                  2,092
                 </span>
               
 
@@ -528,7 +528,7 @@
 <p>这段添加<code>MessageEnvelope</code>的代码不需要太多的解释。</p>
 <h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>现在我们看到，其实<code>Native</code>中的消息机制有两个方面，一方面是通过<code>addFd()</code>注册的自定义<code>fd</code>触发消息处理，通过<code>mRequests</code>保存的<code>request</code>对象中的<code>callback</code>进行消息处理。另一方面是通过与<code>java</code>层类似的<code>MessageEnvelop</code>消息对象进行处理，调用的是该对象<code>handler</code>域的<code>handleMessage()</code>方法，与<code>java</code>层非常类似。优先级是先处理<code>MessageEnvelop</code>再处理<code>request</code>。</p>
 <h2 id="一些思考"><a href="#一些思考" class="headerlink" title="一些思考"></a>一些思考</h2><p>现在消息机制全部内容分析下来，我们可以看到<code>android</code>的消息机制不算复杂，分为<code>native</code>与<code>java</code>两个部分，这两个部分分别有自己的消息处理机制，其中关键的超时与唤醒部分是借助了<code>linux</code>系统<code>epoll</code>机制来实现的。</p>
-<p>连接<code>java</code>与<code>native</code>层消息处理过程的是<code>next()</code>方法中的<code>nativePollOnce()</code>，<code>java</code>层消息处</p>
+<p>连接<code>java</code>与<code>native</code>层消息处理过程的是<code>next()</code>方法中的<code>nativePollOnce()</code>，<code>java</code>层消息循环先调用它，自身阻塞，进入<code>native</code>的消息处理，在<code>native</code>消息处理完毕后返回，再进行<code>java</code>层的消息处理，正是因为如此，如果我们在处理<code>java</code>层消息的时候执行了耗时或阻塞的任务（甚至阻塞了整个主线程），整个<code>java</code>层的消息循环就会阻塞，也无法进入<code>native</code>层的消息处理，也就无法响应例如触摸事件这样的消息，导致ANR的发生。这也就是我们不应在主线程中执行这类任务的原因。</p>
 
           
         
