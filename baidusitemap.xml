@@ -3,6 +3,133 @@
 
 
     
+  <url>
+    <loc>http://www.viseator.com/2017/11/02/android_event_3/</loc>
+    <lastmod>2017-11-02T11:13:09.797Z</lastmod>
+    <data>
+        <display>
+        <title>Android 消息机制（三）Native层消息机制</title>
+        <pubTime>2017-11-02T07:57:53.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Event</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="Event" url="http://www.viseator.com/categories/Android/Event/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.viseator.com/2017/03/12/android_view_onDraw_canvas/</loc>
+    <lastmod>2017-11-02T10:10:49.380Z</lastmod>
+    <data>
+        <display>
+        <title>Android View绘制（四）onDraw过程与Canvas Bitmap</title>
+        <pubTime>2017-03-12T08:29:40.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.viseator.com/2017/03/12/android_view_onLayout/</loc>
+    <lastmod>2017-11-02T10:10:27.860Z</lastmod>
+    <data>
+        <display>
+        <title>Android View绘制（三）layout过程</title>
+        <pubTime>2017-03-12T06:02:47.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.viseator.com/2017/03/10/android_view_onMeasure/</loc>
+    <lastmod>2017-11-02T10:10:16.607Z</lastmod>
+    <data>
+        <display>
+        <title>Android View绘制（二）measure过程</title>
+        <pubTime>2017-03-10T10:30:16.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.viseator.com/2017/03/09/android_view_lifeCycle/</loc>
+    <lastmod>2017-11-02T10:09:50.380Z</lastmod>
+    <data>
+        <display>
+        <title>Android View绘制（一） 生命周期总览</title>
+        <pubTime>2017-03-09T09:22:41.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+        <tag>LifeCycle</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
   <url>
     <loc>http://www.viseator.com/2017/10/24/android_event_2/</loc>
@@ -461,31 +588,6 @@
 
     
   <url>
-    <loc>http://www.viseator.com/2017/03/12/android_view_onDraw_canvas/</loc>
-    <lastmod>2017-03-16T08:43:57.961Z</lastmod>
-    <data>
-        <display>
-        <title>Android View绘制之onDraw过程与Canvas Bitmap</title>
-        <pubTime>2017-03-12T08:29:40.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
-          
-             
-              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>http://www.viseator.com/2017/02/14/DiffInGeneric/</loc>
     <lastmod>2017-03-15T06:02:05.248Z</lastmod>
     <data>
@@ -499,31 +601,6 @@
            
              
               <breadCrumb title="Java" url="http://www.viseator.com/categories/Java/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/03/10/android_view_onMeasure/</loc>
-    <lastmod>2017-03-15T06:01:39.057Z</lastmod>
-    <data>
-        <display>
-        <title>Android View绘制之measure过程</title>
-        <pubTime>2017-03-10T10:30:16.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
-          
-             
-              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
           
         </display>
     </data>
@@ -626,58 +703,6 @@
           
              
               <breadCrumb title="LeetCode" url="http://www.viseator.com/categories/Algorithm/LeetCode/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/03/12/android_view_onLayout/</loc>
-    <lastmod>2017-03-15T05:56:29.688Z</lastmod>
-    <data>
-        <display>
-        <title>Android View绘制之layout过程</title>
-        <pubTime>2017-03-12T06:02:47.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
-          
-             
-              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/03/09/android_view_lifeCycle/</loc>
-    <lastmod>2017-03-15T05:56:07.091Z</lastmod>
-    <data>
-        <display>
-        <title>Android View绘制生命周期总览</title>
-        <pubTime>2017-03-09T09:22:41.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-        <tag>LifeCycle</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
-          
-             
-              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
           
         </display>
     </data>

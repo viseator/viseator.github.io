@@ -2,6 +2,41 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.viseator.com/2017/11/02/android_event_3/</loc>
+    
+    <lastmod>2017-11-02T11:13:09.797Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.viseator.com/2017/03/12/android_view_onDraw_canvas/</loc>
+    
+    <lastmod>2017-11-02T10:10:49.380Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.viseator.com/2017/03/12/android_view_onLayout/</loc>
+    
+    <lastmod>2017-11-02T10:10:27.860Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.viseator.com/2017/03/10/android_view_onMeasure/</loc>
+    
+    <lastmod>2017-11-02T10:10:16.607Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://www.viseator.com/2017/03/09/android_view_lifeCycle/</loc>
+    
+    <lastmod>2017-11-02T10:09:50.380Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.viseator.com/images/manifest.json</loc>
     
     <lastmod>2017-11-02T01:45:02.000Z</lastmod>
@@ -163,23 +198,9 @@
   </url>
   
   <url>
-    <loc>http://www.viseator.com/2017/03/12/android_view_onDraw_canvas/</loc>
-    
-    <lastmod>2017-03-16T08:43:57.961Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>http://www.viseator.com/2017/02/14/DiffInGeneric/</loc>
     
     <lastmod>2017-03-15T06:02:05.248Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.viseator.com/2017/03/10/android_view_onMeasure/</loc>
-    
-    <lastmod>2017-03-15T06:01:39.057Z</lastmod>
     
   </url>
   
@@ -208,20 +229,6 @@
     <loc>http://www.viseator.com/2017/02/05/LeetCode/</loc>
     
     <lastmod>2017-03-15T05:58:57.906Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.viseator.com/2017/03/12/android_view_onLayout/</loc>
-    
-    <lastmod>2017-03-15T05:56:29.688Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.viseator.com/2017/03/09/android_view_lifeCycle/</loc>
-    
-    <lastmod>2017-03-15T05:56:07.091Z</lastmod>
     
   </url>
   
