@@ -143,7 +143,7 @@
 <meta property="og:image" content="http://www.viseator.com/images/arch18.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch22.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch19.jpg">
-<meta property="og:updated_time" content="2017-11-05T15:05:49.865Z">
+<meta property="og:updated_time" content="2017-11-05T15:15:49.868Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="以官方Wiki的方式安装ArchLinux">
 <meta name="twitter:description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
@@ -488,7 +488,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  5,958
+                  6,090
                 </span>
               
 
@@ -708,7 +708,7 @@
 <p>  提示：输入路径时可以用<code>Tab</code>键补全</p>
 </blockquote>
 <p><img src="/images/arch09.jpg" alt=""></p>
-<p>找到标有<code>China</code>的镜像源，<code>normal</code>模式下按下<code>dd</code>可以剪切光标下的行，按<code>gg</code>回到文件首，按<code>p</code>将行粘贴到文件最前面的位置（优先级最高）。</p>
+<p>找到标有<code>China</code>的镜像源，<code>normal</code>模式下按下<code>dd</code>可以剪切光标下的行，按<code>gg</code>回到文件首，按<code>P</code>（注意是大写的）将行粘贴到文件最前面的位置（优先级最高）。</p>
 <p>当然也可以直接手工输入。</p>
 <p>这里推荐使用清华、浙大源：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Server = http://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch</div><div class="line">Server = http://mirrors.zju.edu.cn/archlinux/$repo/os/$arch</div></pre></td></tr></table></figure>
@@ -729,7 +729,7 @@
 <p>执行如下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">arch-chroot /mnt</div></pre></td></tr></table></figure>
 <hr>
-<p>这里顺便说一下，如果以后我们的系统出现了问题，只要插入U盘并启动， 将我们的系统根分区挂载到了<code>/mnt</code>下，再通过这条命令就可以进入我们的系统进行修复操作。</p>
+<p>这里顺便说一下，如果以后我们的系统出现了问题，只要插入U盘并启动， 将我们的系统根分区挂载到了<code>/mnt</code>下（如果有<code>efi</code>分区也要挂载到<code>/mnt/boot</code>下），再通过这条命令就可以进入我们的系统进行修复操作。</p>
 <hr>
 <h4 id="设置时区"><a href="#设置时区" class="headerlink" title="设置时区"></a>设置时区</h4><p>依次执行如下命令设置我们的时区为上海并生成相关文件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</div><div class="line">hwclock --systohc</div></pre></td></tr></table></figure>
@@ -842,7 +842,12 @@
 <h2 id="安装后配置"><a href="#安装后配置" class="headerlink" title="安装后配置"></a>安装后配置</h2><p>虽然系统安装好了，但是还没有进行基本配置和安装图形界面，所以接下来我们要进行一些必须的配置和图形界面的安装。</p>
 <p>请见下一篇文章：<a href="http://www.viseator.com/2017/05/19/arch_setup/">ArchLinux安装后的必须配置与图形界面安装教程</a></p>
 <h2 id="特别感谢"><a href="#特别感谢" class="headerlink" title="特别感谢"></a>特别感谢</h2><p>评论区中<code>Senrey_Song</code>、<code>YKun</code>、<code>imzhwk</code>、<code>haonan mao</code>、<code>Lichen Zhang</code>对于本教程内容的指正。</p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>如果觉得</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>如果觉得这篇教程对你有帮助，可以移步我的知乎回答：</p>
+<blockquote>
+<p>  Arch Linux 怎么安装？ - viseator的回答 - 知乎<br>  <a href="https://www.zhihu.com/question/21427410/answer/171867330" target="_blank" rel="external">https://www.zhihu.com/question/21427410/answer/171867330</a></p>
+</blockquote>
+<p>下点个赞，让更多的人可以看到这篇教程，你的支持是我最大的动力。</p>
+<p>如果安装过程中遇到问题，可以直接在下方评论区留言或邮件viseator@gmail.com（尽量附上错误信息），我会尽力回复解决。</p>
 
       
     </div>
