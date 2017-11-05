@@ -4,6 +4,56 @@
 
     
   <url>
+    <loc>http://www.viseator.com/2017/05/19/arch_setup/</loc>
+    <lastmod>2017-11-05T15:10:07.128Z</lastmod>
+    <data>
+        <display>
+        <title>ArchLinux安装后的必须配置与图形界面安装教程</title>
+        <pubTime>2017-05-19T13:38:57.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>Arch</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="http://www.viseator.com/categories/Linux/"/>
+          
+             
+              <breadCrumb title="Arch" url="http://www.viseator.com/categories/Linux/Arch/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://www.viseator.com/2017/05/17/arch_install/</loc>
+    <lastmod>2017-11-05T15:05:49.865Z</lastmod>
+    <data>
+        <display>
+        <title>以官方Wiki的方式安装ArchLinux</title>
+        <pubTime>2017-05-17T15:26:29.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>Arch</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="http://www.viseator.com/categories/Linux/"/>
+          
+             
+              <breadCrumb title="Arch" url="http://www.viseator.com/categories/Linux/Arch/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://www.viseator.com/2017/11/02/android_view_event_3/</loc>
     <lastmod>2017-11-04T12:48:31.723Z</lastmod>
     <data>
@@ -411,56 +461,6 @@
            
              
               <breadCrumb title="Summary" url="http://www.viseator.com/categories/Summary/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/05/17/arch_install/</loc>
-    <lastmod>2017-07-04T13:18:58.554Z</lastmod>
-    <data>
-        <display>
-        <title>以官方Wiki的方式安装ArchLinux</title>
-        <pubTime>2017-05-17T15:26:29.000Z</pubTime>
-        
-        <tag>Linux</tag>
-         
-        <tag>Arch</tag>
-         
-         
-           
-             
-              <breadCrumb title="Linux" url="http://www.viseator.com/categories/Linux/"/>
-          
-             
-              <breadCrumb title="Arch" url="http://www.viseator.com/categories/Linux/Arch/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/05/19/arch_setup/</loc>
-    <lastmod>2017-07-04T13:09:10.374Z</lastmod>
-    <data>
-        <display>
-        <title>ArchLinux安装后的必须配置与图形界面安装教程</title>
-        <pubTime>2017-05-19T13:38:57.000Z</pubTime>
-        
-        <tag>Linux</tag>
-         
-        <tag>Arch</tag>
-         
-         
-           
-             
-              <breadCrumb title="Linux" url="http://www.viseator.com/categories/Linux/"/>
-          
-             
-              <breadCrumb title="Arch" url="http://www.viseator.com/categories/Linux/Arch/"/>
           
         </display>
     </data>
