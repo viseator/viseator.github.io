@@ -143,7 +143,7 @@
 <meta property="og:image" content="http://www.viseator.com/images/arch18.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch22.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch19.jpg">
-<meta property="og:updated_time" content="2017-11-05T15:15:49.868Z">
+<meta property="og:updated_time" content="2017-11-07T11:53:14.776Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="以官方Wiki的方式安装ArchLinux">
 <meta name="twitter:description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
@@ -488,7 +488,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  6,090
+                  6,176
                 </span>
               
 
@@ -657,7 +657,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fdisk /dev/sdx （请将sdx替换成你要操作的磁盘如sdb sdc等）</div></pre></td></tr></table></figure>
 <p>下面你就进入了<code>fdisk</code>的操作环境， 输入<code>m</code>并回车可以查看各命令的作用。</p>
 <ol>
-<li><p>如果你是一块全新的硬盘，输入<code>g</code>来创建一个全新的gpt分区表。</p>
+<li><p><strong>如果你是一块全新的硬盘</strong>，输入<code>g</code>来创建一个全新的gpt分区表。</p>
 </li>
 <li><p>输入<code>n</code>创建一个新的分区，首先会让你选择起始扇区，一般直接回车使用默认数值即可，然后可以输入结束扇区或是分区大小，这里我们输入<code>+512M</code>来创建一个512M的引导分区。</p>
 </li>
@@ -675,7 +675,12 @@
 <h5 id="创建根分区"><a href="#创建根分区" class="headerlink" title="创建根分区"></a>创建根分区</h5><p>输入命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fdisk /dev/sdx （请将sdx替换成你要操作的磁盘如sdb sdc等）</div></pre></td></tr></table></figure>
 <ol>
-<li><p>如果你是一块全新的硬盘，输入<code>o</code>来创建一个新的MBR分区表。</p>
+<li><p><strong>如果你是一块全新的硬盘</strong></p>
+<ol>
+<li><strong>如果你是<code>BIOS/MBR</code>引导方式</strong>，输入<code>o</code>来创建一个全新的<code>MBR</code>分区表。</li>
+<li><strong>如果你在上一步新建了分区表并创建了引导分区</strong>，直接进行步骤2。</li>
+<li><strong>如果你在另一块硬盘中已经有引导分区</strong>，输入<code>g</code>来创建一个全新的<code>gpt</code>分区表。</li>
+</ol>
 </li>
 <li><p>输入<code>n</code>创建一个新的分区，首先会让你选择起始扇区，一般直接回车使用默认数值即可，然后可以输入结束扇区或是分区大小，如果我们想要使创建的分区完全占满空闲的空间，可以直接回车使用默认结束扇区。</p>
 </li>
@@ -737,7 +742,7 @@
 <h4 id="提前安装必须软件包"><a href="#提前安装必须软件包" class="headerlink" title="提前安装必须软件包"></a>提前安装必须软件包</h4><p>因为我们现在已经<code>Chroot</code>到了新的系统中，只有一些最基本的包（组件），这时候我们就需要自己安装新的包了，下面就要介绍一下<code>ArchLinux</code>下非常强大的包管理工具<code>pacman</code>，大部分情况下，一行命令就可以搞定包与依赖的问题。</p>
 <p>安装包的命令格式为<code>pacman -S 包名</code>，<code>pacman</code>会自动检查这个包所需要的其他包（即为依赖）并一起装上。下面我们就通过<code>pacman</code>来安装一些包，这些包在之后会用上，在这里先提前装好。</p>
 <p>执行如下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacman -S vim dialog wpa_supplicant ntfs-3g</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">pacman -S vim dialog wpa_supplicant ntfs-3g networkmanager</div></pre></td></tr></table></figure>
 <p>一路确认之后包就被成功装上了。</p>
 <p><img src="/images/arch12.jpg" alt=""></p>
 <p>图中只安装了<code>Vim</code>和它的依赖。</p>
@@ -842,6 +847,7 @@
 <h2 id="安装后配置"><a href="#安装后配置" class="headerlink" title="安装后配置"></a>安装后配置</h2><p>虽然系统安装好了，但是还没有进行基本配置和安装图形界面，所以接下来我们要进行一些必须的配置和图形界面的安装。</p>
 <p>请见下一篇文章：<a href="http://www.viseator.com/2017/05/19/arch_setup/">ArchLinux安装后的必须配置与图形界面安装教程</a></p>
 <h2 id="特别感谢"><a href="#特别感谢" class="headerlink" title="特别感谢"></a>特别感谢</h2><p>评论区中<code>Senrey_Song</code>、<code>YKun</code>、<code>imzhwk</code>、<code>haonan mao</code>、<code>Lichen Zhang</code>对于本教程内容的指正。</p>
+<p><code>leccesg</code>通过邮件提供的宝贵建议。</p>
 <h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>如果觉得这篇教程对你有帮助，可以移步我的知乎回答：</p>
 <blockquote>
 <p>  Arch Linux 怎么安装？ - viseator的回答 - 知乎<br>  <a href="https://www.zhihu.com/question/21427410/answer/171867330" target="_blank" rel="external">https://www.zhihu.com/question/21427410/answer/171867330</a></p>
