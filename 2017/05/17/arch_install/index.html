@@ -143,7 +143,7 @@
 <meta property="og:image" content="http://www.viseator.com/images/arch18.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch22.jpg">
 <meta property="og:image" content="http://www.viseator.com/images/arch19.jpg">
-<meta property="og:updated_time" content="2017-11-07T11:57:32.956Z">
+<meta property="og:updated_time" content="2017-11-17T14:27:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="以官方Wiki的方式安装ArchLinux">
 <meta name="twitter:description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
@@ -488,7 +488,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  6,176
+                  6,193
                 </span>
               
 
@@ -657,7 +657,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fdisk /dev/sdx （请将sdx替换成你要操作的磁盘如sdb sdc等）</div></pre></td></tr></table></figure>
 <p>下面你就进入了<code>fdisk</code>的操作环境， 输入<code>m</code>并回车可以查看各命令的作用。</p>
 <ol>
-<li><p><strong>如果你是一块全新的硬盘</strong>：输入<code>g</code>来创建一个全新的gpt分区表。</p>
+<li><p><strong>如果你是一块全新的硬盘</strong>：输入<code>g</code>来创建一个全新的gpt分区表，<strong>否则直接进行第2步</strong>。</p>
 </li>
 <li><p>输入<code>n</code>创建一个新的分区，首先会让你选择起始扇区，一般直接回车使用默认数值即可，然后可以输入结束扇区或是分区大小，这里我们输入<code>+512M</code>来创建一个512M的引导分区。</p>
 </li>
@@ -668,14 +668,14 @@
 <li><p>输入<code>w</code>来将之前所有的操作写入磁盘生效，在这之前可以输入<code>p</code>来确认自己的分区表没有错误。</p>
 </li>
 <li><p>输入以下命令来格式化刚刚创建的引导分区：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkfs.fat -F32 /dev/sdxY （请将的sdxY替换为刚创建的分区）</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">mkfs.fat -F32 /dev/sdxY （请将sdxY替换为刚创建的分区）</div></pre></td></tr></table></figure>
 </li>
 </ol>
 <p>现在引导分区就创建好了。</p>
 <h5 id="创建根分区"><a href="#创建根分区" class="headerlink" title="创建根分区"></a>创建根分区</h5><p>输入命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">fdisk /dev/sdx （请将sdx替换成你要操作的磁盘如sdb sdc等）</div></pre></td></tr></table></figure>
 <ol>
-<li><p><strong>如果你是一块全新的硬盘</strong>：</p>
+<li><p><strong>如果你是一块全新的硬盘</strong>（<strong>否则直接进行第2步</strong>）：</p>
 <ol>
 <li><strong>如果你是<code>BIOS/MBR</code>引导方式</strong>：输入<code>o</code>来创建一个全新的<code>MBR</code>分区表。</li>
 <li><strong>如果你在上一步新建了分区表并创建了引导分区</strong>：直接进行步骤2。</li>
