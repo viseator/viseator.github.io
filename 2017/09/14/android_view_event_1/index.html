@@ -114,7 +114,7 @@
 
 
 
-<meta name="description" content="写在前面本文基于Android 7.1.1 (API 25)的源码分析编写 安卓是基于触摸操作进行交互的系统，几乎所有的操作都由对屏幕的一次次触摸完成，如何正确处理触摸事件关乎整个应用的操作体验。因此安卓对于触摸事件的分发与处理机制也是我们学习安卓开发的重中之重。同时几乎每一个安卓技术博客中都会对触摸分发机制这一块进行详解，例如比较早期也是最为出名的郭霖（《第一行代码》的作者）。现在网络上对于这一">
+<meta name="description" content="写在前面本文基于Android 7.1.1 (API 25)的源码分析编写 安卓是基于触摸操作进行交互的系统，几乎所有的操作都由对屏幕的一次次触摸完成，如何正确处理触摸事件关乎整个应用的操作体验。因此安卓对于触摸事件的分发与处理机制也是我们学习安卓开发的重中之重。同时几乎每一个安卓技术博客中都会对触摸分发机制这一块进行">
 <meta name="keywords" content="Android,View">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 触摸事件分发机制（一）从内核到应用 一切的开始">
@@ -499,7 +499,7 @@
 
       
         <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p><strong>本文基于<code>Android 7.1.1 (API 25)</code>的源码分析编写</strong></p>
-<p>安卓是基于触摸操作进行交互的系统，几乎所有的操作都由对屏幕的一次次触摸完成，如何正确处理触摸事件关乎整个应用的操作体验。因此安卓对于触摸事件的分发与处理机制也是我们学习安卓开发的重中之重。同时几乎每一个安卓技术博客中都会对触摸分发机制这一块进行详解，例如比较早期也是最为出名的<a href="http://blog.csdn.net/guolin_blog/article/details/9097463/" target="_blank" rel="external">郭霖</a>（《第一行代码》的作者）。现在网络上对于这一块的分析也已经比较详尽了，基本上一篇博客中遗漏的部分都可以在其他博客中找到答案。</p>
+<p>安卓是基于触摸操作进行交互的系统，几乎所有的操作都由对屏幕的一次次触摸完成，如何正确处理触摸事件关乎整个应用的操作体验。因此安卓对于触摸事件的分发与处理机制也是我们学习安卓开发的重中之重。同时几乎每一个安卓技术博客中都会对触摸分发机制这一块进行详解，例如比较早期也是最为出名的<a href="http://blog.csdn.net/guolin_blog/article/details/9097463/" target="_blank" rel="noopener">郭霖</a>（《第一行代码》的作者）。现在网络上对于这一块的分析也已经比较详尽了，基本上一篇博客中遗漏的部分都可以在其他博客中找到答案。</p>
 <p>但是无论别人的文章讲得多好，多么详细，我们都需要自己去打开源码仔细分析好好体会，一是这样一个比较复杂的过程不经历自己的思考很难完全理解，二是随着<code>api</code>版本的推进这部分源码也会发生很多变化，虽然大致思路相同，但是接触到新的内容总是一件好事。</p>
 <p>这也就是我写这篇博文的原因：记录自己思考与分析的过程。</p>
 <a id="more"></a>
@@ -507,7 +507,7 @@
 <h3 id="从硬件到内核"><a href="#从硬件到内核" class="headerlink" title="从硬件到内核"></a>从硬件到内核</h3><p>我们从头开始，从触摸事件最初最初的来源开始，我们知道内核是以处理中断的方式处理用户的输入的，触摸事件作为一种特殊的输入事件，自然也需要这种方式进行处理，只不过触摸事件的提供的信息要稍微复杂一些。</p>
 <p>触摸事件来自于我们对硬件的操作，最初的来源当然是硬件引起的中断。而处理特定中断的代码则来自于对应硬件的驱动：</p>
 <p><img src="/images/event1_1.png" alt=""></p>
-<p><a href="http://newandroidbook.com/files/AndroidInput.pdf" target="_blank" rel="external">图片来源</a>（以下系列图片来源相同，不作标注）</p>
+<p><a href="http://newandroidbook.com/files/AndroidInput.pdf" target="_blank" rel="noopener">图片来源</a>（以下系列图片来源相同，不作标注）</p>
 <p>当一个输入设备的驱动模块被首次载入内核的时候，会检测它应该管理的硬件设备，如果检测成功，驱动模块会调用<code>include/linux/input.h</code>中的<code>input_register_device(…)</code>函数设置一个<code>/dev/input/eventX</code>（<code>X</code>为整数）来代表这个输入设备。驱动模块同时也会通过<code>include/linux/interrupt.h</code>的<code>request_irq(…)</code>函数注册一个函数去处理这个硬件引发的中断，注册成功以后，当设备因用户交互而产生中断的时候就会交给对应的驱动模块进行处理。</p>
 <p>驱动模块处理的细节各不相同，但最终都会将数据处理后存放进对应的<code>/dev/input/eventX</code>文件中。</p>
 <p><img src="/images/event1_2.png" alt=""></p>
@@ -517,7 +517,7 @@
 <p><img src="/images/event1_4.png" alt=""></p>
 <p>系统服务由三个组件构成：<code>EventHub</code>、<code>InputReader</code>、<code>InputDispatcher</code>，关于它们的作用的详细分析在：</p>
 <blockquote>
-<p>  <a href="http://gityuan.com/2016/12/31/input-ipc/" target="_blank" rel="external">http://gityuan.com/2016/12/31/input-ipc/</a></p>
+<p>  <a href="http://gityuan.com/2016/12/31/input-ipc/" target="_blank" rel="noopener">http://gityuan.com/2016/12/31/input-ipc/</a></p>
 </blockquote>
 <p>下面对这个过程作简单介绍。</p>
 <h4 id="EventHub"><a href="#EventHub" class="headerlink" title="EventHub"></a>EventHub</h4><p>文件在<code>frameworks/native/services/inputflinger/EventHub.cpp</code></p>
@@ -525,7 +525,7 @@
 <h4 id="InputReader"><a href="#InputReader" class="headerlink" title="InputReader"></a>InputReader</h4><p>文件在<code>frameworks/native/services/inputflinger/InputReader.cpp</code></p>
 <p><code>InputReader</code>运行在一个单独的进程中，这个进程由<code>InputManagerService</code>的初始化而新建，具体内容请见：</p>
 <blockquote>
-<p>  <a href="http://gityuan.com/2016/12/10/input-manager/" target="_blank" rel="external">http://gityuan.com/2016/12/10/input-manager/</a></p>
+<p>  <a href="http://gityuan.com/2016/12/10/input-manager/" target="_blank" rel="noopener">http://gityuan.com/2016/12/10/input-manager/</a></p>
 </blockquote>
 <p>它会在内部不断地循环调用<code>loopOnce()</code>方法来不断读取事件：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">void</span> InputReader::loopOnce() &#123;</div><div class="line">    ...</div><div class="line">    <span class="keyword">size_t</span> count = mEventHub-&gt;getEvents(timeoutMillis, mEventBuffer, EVENT_BUFFER_SIZE);</div><div class="line">    ...</div><div class="line">    <span class="keyword">if</span> (count) &#123;</div><div class="line">        processEventsLocked(mEventBuffer, count);</div><div class="line">    &#125;</div><div class="line">    ...</div><div class="line">&#125;</div></pre></td></tr></table></figure>
@@ -626,7 +626,7 @@
 <hr>
 <h3 id="InputChannel连接建立过程"><a href="#InputChannel连接建立过程" class="headerlink" title="InputChannel连接建立过程"></a>InputChannel连接建立过程</h3><p>本段内容主要参考了</p>
 <blockquote>
-<p>  <a href="http://gityuan.com/2016/12/24/input-ui/" target="_blank" rel="external">Gityuan的博客</a></p>
+<p>  <a href="http://gityuan.com/2016/12/24/input-ui/" target="_blank" rel="noopener">Gityuan的博客</a></p>
 </blockquote>
 <p>详细分析及代码请移步上面链接。</p>
 <p>连接的建立是在一个<code>Activity</code>启动时进行的。</p>

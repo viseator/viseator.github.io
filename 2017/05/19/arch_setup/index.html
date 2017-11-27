@@ -114,7 +114,7 @@
 
 
 
-<meta name="description" content="ArchLinux安装后的必须配置在上一篇教程中，我们成功地安装了ArchLinux，这时系统处于一个非常精简的状态，为了日常使用，我们必须进行一些配置、安装一些需要的组件，来扩展我们的系统功能，开源的组件相互协同工作也是Linux的迷人之处之一。 下面的教程部分参考了官方General recommendations。">
+<meta name="description" content="ArchLinux安装后的必须配置在上一篇教程中，我们成功地安装了ArchLinux，这时系统处于一个非常精简的状态，为了日常使用，我们必须进行一些配置、安装一些需要的组件，来扩展我们的系统功能，开源的组件相互协同工作也是Linux的迷人之处之一。 下面的教程部分参考了官方General recommendations">
 <meta name="keywords" content="Linux,Arch">
 <meta property="og:type" content="article">
 <meta property="og:title" content="ArchLinux安装后的必须配置与图形界面安装教程">
@@ -495,7 +495,7 @@
 
       
         <h2 id="ArchLinux安装后的必须配置"><a href="#ArchLinux安装后的必须配置" class="headerlink" title="ArchLinux安装后的必须配置"></a>ArchLinux安装后的必须配置</h2><p>在<a href="http://www.viseator.com/2017/05/17/arch_install/">上一篇教程</a>中，我们成功地安装了<code>ArchLinux</code>，这时系统处于一个非常精简的状态，为了日常使用，我们必须进行一些配置、安装一些需要的组件，来扩展我们的系统功能，开源的组件相互协同工作也是<code>Linux</code>的迷人之处之一。</p>
-<p>下面的教程部分参考了官方<a href="https://wiki.archlinux.org/index.php/General_recommendations" target="_blank" rel="external">General recommendations</a>。</p>
+<p>下面的教程部分参考了官方<a href="https://wiki.archlinux.org/index.php/General_recommendations" target="_blank" rel="noopener">General recommendations</a>。</p>
 <a id="more"></a>
 <h3 id="连接网络"><a href="#连接网络" class="headerlink" title="连接网络"></a>连接网络</h3><p>现在我们是在新安装的系统上进行操作，所以我们要重新联网，我们在之前安装系统时已经提前装好了相关的包。所以现在只要跟之前一样：</p>
 <ul>
@@ -566,7 +566,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pacman -S xf86-video-intel</div></pre></td></tr></table></figure>
 <p>提示：<code>Nvidia</code>的独显驱动如非必要，建议只装集成显卡的驱动（省电，如果同时装也会默认使用集成显卡），不容易出现冲突问题。相反，如果集成显卡驱动有问题无法装上，可以装独显驱动，具体的版本请到下面的链接查询：</p>
 <blockquote>
-<p>  <a href="https://wiki.archlinux.org/index.php/Xorg#Driver_installation" target="_blank" rel="external">https://wiki.archlinux.org/index.php/Xorg#Driver_installation</a></p>
+<p>  <a href="https://wiki.archlinux.org/index.php/Xorg#Driver_installation" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/Xorg#Driver_installation</a></p>
 </blockquote>
 <h3 id="安装Xorg"><a href="#安装Xorg" class="headerlink" title="安装Xorg"></a>安装Xorg</h3><p><code>Xorg</code>是<code>Linux</code>下的一个著名的开源图形服务，我们的桌面环境需要<code>Xorg</code>的支持。</p>
 <p>执行如下命令安装<code>Xorg</code>及相关组件：</p>
@@ -575,7 +575,7 @@
 <p>在这里我们选择笔者使用的<code>Xfce</code>和非常流行的<code>KDE(Plasma)</code>作为示范，当然你也可以把它们全部装上换着用……因为<code>Linux</code>的模块化，这样完全没有问题。</p>
 <p>更多桌面环境的安装指南请见下面的链接：</p>
 <blockquote>
-<p>  <a href="https://wiki.archlinux.org/index.php/Desktop_environment#List_of_desktop_environments" target="_blank" rel="external">https://wiki.archlinux.org/index.php/Desktop_environment#List_of_desktop_environments</a></p>
+<p>  <a href="https://wiki.archlinux.org/index.php/Desktop_environment#List_of_desktop_environments" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/Desktop_environment#List_of_desktop_environments</a></p>
 </blockquote>
 <h4 id="安装Xfce"><a href="#安装Xfce" class="headerlink" title="安装Xfce"></a>安装Xfce</h4><p>直接安装软件包组（包含了很多软件包）即可：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pacman -S xfce4 xfce4-goodies</div></pre></td></tr></table></figure>
@@ -600,7 +600,7 @@
 <p><a href="http://www.viseator.com/2017/07/02/arch_more/">下一篇文章</a>介绍了一些实用的配置（如中文输入法的安装）与软件包等。</p>
 <h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>如果觉得这篇教程对你有帮助，可以移步我的知乎回答：</p>
 <blockquote>
-<p>  Arch Linux 怎么安装？ - viseator的回答 - 知乎<br>  <a href="https://www.zhihu.com/question/21427410/answer/171867330" target="_blank" rel="external">https://www.zhihu.com/question/21427410/answer/171867330</a></p>
+<p>  Arch Linux 怎么安装？ - viseator的回答 - 知乎<br>  <a href="https://www.zhihu.com/question/21427410/answer/171867330" target="_blank" rel="noopener">https://www.zhihu.com/question/21427410/answer/171867330</a></p>
 </blockquote>
 <p>下点个赞，让更多的人可以看到这篇教程，你的支持是我最大的动力。</p>
 <p>如果安装过程中遇到问题，可以直接在下方评论区留言或邮件viseator@gmail.com（尽量附上错误信息），我会尽力回复解决。</p>

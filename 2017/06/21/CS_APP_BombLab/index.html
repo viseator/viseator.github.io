@@ -114,7 +114,7 @@
 
 
 
-<meta name="description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件bomb，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来解除">
+<meta name="description" content="Bomb Lab实验代码见GitHub 简介BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件bomb，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我">
 <meta name="keywords" content="Computer System,CS:APP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解计算机系统（CS:APP) - Bomb Lab详解">
@@ -507,7 +507,7 @@
       
 
       
-        <h2 id="Bomb-Lab"><a href="#Bomb-Lab" class="headerlink" title="Bomb Lab"></a>Bomb Lab</h2><p>实验代码见<a href="https://github.com/viseator/CS-APP-3e-labs" target="_blank" rel="external">GitHub</a></p>
+        <h2 id="Bomb-Lab"><a href="#Bomb-Lab" class="headerlink" title="Bomb Lab"></a>Bomb Lab</h2><p>实验代码见<a href="https://github.com/viseator/CS-APP-3e-labs" target="_blank" rel="noopener">GitHub</a></p>
 <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件<code>bomb</code>，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来解除自己的炸弹（理论上每个人的炸弹答案都不同，但自学材料的答案都是一样的，本文针对的是自学材料）。</p>
 <a id="more"></a>
 <h3 id="所用工具"><a href="#所用工具" class="headerlink" title="所用工具"></a>所用工具</h3><p><code>objdump</code>-用于反汇编二进制对象文件</p>
@@ -546,7 +546,7 @@
 <p>暗示了我们隐藏问题的存在，除此之外再也没有任何关于这个炸弹的信息。</p>
 <p>下面我们使用<code>objdump</code>命令将炸弹文件反汇编出来：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">objdump <span class="_">-d</span> bomb &gt; bomb.asm</div></pre></td></tr></table></figure>
-<p>然后通过<code>VS Code</code>来查看反汇编的结果，<code>VS Code</code>有<a href="https://marketplace.visualstudio.com/items?itemName=13xforever.language-x86-64-assembly" target="_blank" rel="external">x86 and x86_64 Assembly</a>这个插件可以高亮汇编，看起来会舒服许多。</p>
+<p>然后通过<code>VS Code</code>来查看反汇编的结果，<code>VS Code</code>有<a href="https://marketplace.visualstudio.com/items?itemName=13xforever.language-x86-64-assembly" target="_blank" rel="noopener">x86 and x86_64 Assembly</a>这个插件可以高亮汇编，看起来会舒服许多。</p>
 <p>反汇编出来的代码有近六千行，但是因为有符号表的存在，说明保留了调试所需的信息，我们可以通过<code>gdb</code>进行单步调试来查看程序的运行过程。</p>
 <p>在使用<code>gdb</code> 的时候，我们可以加上<code>-tui</code>命令并用<code>layout asm</code>命令切换到汇编指令模式，就可以在调试的时候查看对应的汇编代码了。界面如下：</p>
 <p><img src="/images/bomblab1.jpg" alt=""></p>

@@ -114,7 +114,7 @@
 
 
 
-<meta name="description" content="之前的两篇文章讲解了java层消息机制的过程以及使用，中间省略了比较多的代码就是在native层实现的消息机制中使用的。这篇文章就对这一部分进行讲解。 起点我们从第一篇文章知道，Looper.loop()方法被调用后，会启动一个无限循环，而在这个循环中，调用了MessageQueue的next()方法以获取下一条消息，而next()方法中会首先调用nativePollOnce()方法，这个方法的作">
+<meta name="description" content="之前的两篇文章讲解了java层消息机制的过程以及使用，中间省略了比较多的代码就是在native层实现的消息机制中使用的。这篇文章就对这一部分进行讲解。 起点我们从第一篇文章知道，Looper.loop()方法被调用后，会启动一个无限循环，而在这个循环中，调用了MessageQueue的next()方法以获取下一条消息，">
 <meta name="keywords" content="Android,Event">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 消息机制（三）Native层消息机制">

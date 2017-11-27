@@ -114,7 +114,7 @@
 
 
 
-<meta name="description" content="回顾在上一篇文章中，我们探索了从内核触摸事件传递到InputDispatcher线程，再与应用线程之间建立InputChannel的过程，并且我们已经看到一个最原始的触摸事件被封装成一个msg并通过InputChannel建立的socket通过sendMessage()方法跨线程通信发送给了应用的UI线程。 这篇文章将会看到应用UI线程的消息队列是如何读取传递过来的触摸事件并进行处理、分发的。">
+<meta name="description" content="回顾在上一篇文章中，我们探索了从内核触摸事件传递到InputDispatcher线程，再与应用线程之间建立InputChannel的过程，并且我们已经看到一个最原始的触摸事件被封装成一个msg并通过InputChannel建立的socket通过sendMessage()方法跨线程通信发送给了应用的UI线程。 这篇文章将">
 <meta name="keywords" content="Android,View">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始">
@@ -497,7 +497,7 @@
         <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>在<a href="http://www.viseator.com/2017/09/14/android_view_event_1/">上一篇文章</a>中，我们探索了从内核触摸事件传递到<code>InputDispatcher</code>线程，再与应用线程之间建立<code>InputChannel</code>的过程，并且我们已经看到一个最原始的触摸事件被封装成一个<code>msg</code>并通过<code>InputChannel</code>建立的<code>socket</code>通过<code>sendMessage()</code>方法跨线程通信发送给了应用的UI线程。</p>
 <p>这篇文章将会看到应用UI线程的消息队列是如何读取传递过来的触摸事件并进行处理、分发的。</p>
 <a id="more"></a>
-<p>本篇文章主要参考了<a href="http://gityuan.com/2016/12/31/input-ipc/" target="_blank" rel="external">Gityuan的文章</a></p>
+<p>本篇文章主要参考了<a href="http://gityuan.com/2016/12/31/input-ipc/" target="_blank" rel="noopener">Gityuan的文章</a></p>
 <h2 id="消息循环"><a href="#消息循环" class="headerlink" title="消息循环"></a>消息循环</h2><p><code>Android</code>的消息机制的具体内容在只简单描述，详细内容请见：</p>
 <blockquote>
 <p><a href="http://www.viseator.com/2017/10/22/android_event_1/">http://www.viseator.com/2017/10/22/android_event_1/</a></p>
@@ -585,7 +585,7 @@
 <p>判断目标是否是<code>mCapturingView</code>，一般情况下目标就是<code>mView</code>（也就是当前<code>Window</code>的根<code>View</code>也就是<code>DecorView</code>），然后调用了它的<code>dispatchPointerEvent()</code>方法（继承自<code>View</code>）：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">dispatchPointerEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (event.isTouchEvent()) &#123;</div><div class="line">        <span class="keyword">return</span> dispatchTouchEvent(event);</div><div class="line">    &#125; <span class="keyword">else</span> &#123;</div><div class="line">        <span class="keyword">return</span> dispatchGenericMotionEvent(event);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>到这里，我们终于看到了熟悉的<code>dispatchTouchEvent()</code>方法，同时这也是一般触摸事件分发机制分析的开始。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>现在，我们了解了从原始事件的产生地点到某个应用<code>UI</code>线程事件循环再到根<code>view</code>的<code>dispatchTouchEvent()</code>的整个流程。分析这个过程还是要再次感谢<a href="http://gityuan.com/" target="_blank" rel="external">Gityuan的博客</a>，这个过程找得到的资料只有他的文章，省了许多功夫。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>现在，我们了解了从原始事件的产生地点到某个应用<code>UI</code>线程事件循环再到根<code>view</code>的<code>dispatchTouchEvent()</code>的整个流程。分析这个过程还是要再次感谢<a href="http://gityuan.com/" target="_blank" rel="noopener">Gityuan的博客</a>，这个过程找得到的资料只有他的文章，省了许多功夫。</p>
 <p>下一篇文章开始就要讲解一般触摸事件分发分析的过程，也是参考资料比较多的部分。</p>
 
       

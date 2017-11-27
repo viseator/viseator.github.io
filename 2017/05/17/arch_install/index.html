@@ -114,7 +114,7 @@
 
 
 
-<meta name="description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
+<meta name="description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到">
 <meta name="keywords" content="Linux,Arch">
 <meta property="og:type" content="article">
 <meta property="og:title" content="以官方Wiki的方式安装ArchLinux">
@@ -522,7 +522,7 @@
 <ul>
 <li>没有图形界面的引导：<code>Arch</code>只给我们提供了一个最小的环境，所有的安装操作都需要在命令行中完成，这对于不习惯命令行操作的人来说是最难以跨越的一个坎。许多发行版之所以可以流行开来就是因为他们提供了友好的、流程化的安装过程，这帮很多人解决了学习<code>Linux</code>的第一步：安装一个<code>Linux</code>。</li>
 <li>预备知识的不足与缺乏查找并解决问题的能力：一些对于安装系统比较重要的知识例如系统引导、配置文件的编辑、简单的命令行操作等没有接触过，所以操作时往往摸不着头脑，一旦自己的操作结果与教程不符便不知道如何去解决遇到的问题。</li>
-<li>缺乏合适的教程：安装Arch最好的也是最完备的教程就是官方的<a href="https://wiki.archlinux.org/index.php/installation_guide" target="_blank" rel="external">Installation guide</a>与<a href="https://wiki.archlinux.org/" target="_blank" rel="external">Wiki</a>，虽然部分内容有中文版，但是中文的翻译有些时候会落后于英文版，不推荐完全依赖于中文Wiki。并且官方Wiki的写作方式更偏向于文档，没有我们所习惯的按步骤编排的安装过程，给不熟悉这种写作方式的同学造成了阅读与使用上的困难。国内的可以找到的教程往往都是时间比较久远，或是没有提及或是忽略了一些新手容易犯错误的地方。</li>
+<li>缺乏合适的教程：安装Arch最好的也是最完备的教程就是官方的<a href="https://wiki.archlinux.org/index.php/installation_guide" target="_blank" rel="noopener">Installation guide</a>与<a href="https://wiki.archlinux.org/" target="_blank" rel="noopener">Wiki</a>，虽然部分内容有中文版，但是中文的翻译有些时候会落后于英文版，不推荐完全依赖于中文Wiki。并且官方Wiki的写作方式更偏向于文档，没有我们所习惯的按步骤编排的安装过程，给不熟悉这种写作方式的同学造成了阅读与使用上的困难。国内的可以找到的教程往往都是时间比较久远，或是没有提及或是忽略了一些新手容易犯错误的地方。</li>
 </ul>
 <blockquote>
 <p>  <strong>本篇教程致力于与现有的Wiki保持一致，并且适当地加入一些适合初学者学习的链接，希望可以让阅读了这篇教程的同学可以提高自己利用现有及以后可能出现的新的Wiki内容的能力。</strong></p>
@@ -533,17 +533,17 @@
 <p>下面就正式开始我们的教程。</p>
 <h2 id="安装教程"><a href="#安装教程" class="headerlink" title="安装教程"></a>安装教程</h2><h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><h4 id="安装介质"><a href="#安装介质" class="headerlink" title="安装介质"></a>安装介质</h4><p>在安装之前我们先要准备一个安装介质，在这里只推荐U盘作为安装介质。</p>
 <ol>
-<li><p>到<a href="https://www.archlinux.org/download/" target="_blank" rel="external">https://www.archlinux.org/download/</a>页面下方的中国镜像源中下载<code>archlinux-**-x86_64.iso</code>这个<code>iso</code>文件。 </p>
+<li><p>到<a href="https://www.archlinux.org/download/" target="_blank" rel="noopener">https://www.archlinux.org/download/</a>页面下方的中国镜像源中下载<code>archlinux-**-x86_64.iso</code>这个<code>iso</code>文件。 </p>
 </li>
 <li><ul>
 <li><p>如果是<code>Linux</code>系统下制作安装介质，推荐使用<code>dd</code>命令，教程：</p>
 <blockquote>
-<p>  <a href="http://www.runoob.com/linux/linux-comm-dd.html" target="_blank" rel="external">http://www.runoob.com/linux/linux-comm-dd.html</a></p>
+<p>  <a href="http://www.runoob.com/linux/linux-comm-dd.html" target="_blank" rel="noopener">http://www.runoob.com/linux/linux-comm-dd.html</a></p>
 </blockquote>
 </li>
 <li><p>如果是<code>windows</code>系统下制作安装介质，推荐使用<code>usbwriter</code>这款轻量级的工具，下载链接：</p>
 <blockquote>
-<p>  <a href="https://sourceforge.net/projects/usbwriter/" target="_blank" rel="external">https://sourceforge.net/projects/usbwriter/</a></p>
+<p>  <a href="https://sourceforge.net/projects/usbwriter/" target="_blank" rel="noopener">https://sourceforge.net/projects/usbwriter/</a></p>
 </blockquote>
 </li>
 </ul>
@@ -563,7 +563,7 @@
 </li>
 <li><p>在<code>linux</code>下分出一块区域安装：使用<code>fdisk</code>进行，教程请见链接中的删除分区：</p>
 <blockquote>
-<p>  <a href="http://www.liusuping.com/ubuntu-linux/linux-fdisk-disk.html" target="_blank" rel="external">http://www.liusuping.com/ubuntu-linux/linux-fdisk-disk.html</a></p>
+<p>  <a href="http://www.liusuping.com/ubuntu-linux/linux-fdisk-disk.html" target="_blank" rel="noopener">http://www.liusuping.com/ubuntu-linux/linux-fdisk-disk.html</a></p>
 </blockquote>
 </li>
 <li><p>空闲的磁盘（新磁盘）：不需要进行任何操作。</p>
@@ -573,7 +573,7 @@
 <h4 id="设置启动顺序"><a href="#设置启动顺序" class="headerlink" title="设置启动顺序"></a>设置启动顺序</h4><p>这一步在不同品牌的电脑上都不一样，所以需要大家自行搜索<strong>自己电脑品牌+启动顺序</strong>这个关键词来进行设置。</p>
 <p>例如我的电脑搜索神舟 启动顺序可以得到如下的结果：</p>
 <blockquote>
-<p>  <a href="https://zhidao.baidu.com/question/170954184.html" target="_blank" rel="external">https://zhidao.baidu.com/question/170954184.html</a></p>
+<p>  <a href="https://zhidao.baidu.com/question/170954184.html" target="_blank" rel="noopener">https://zhidao.baidu.com/question/170954184.html</a></p>
 </blockquote>
 <p>一般来说现在的主板都可以不用进入BIOS而快速地切换启动顺序，只要找到相应的快捷键就可以了。</p>
 <h4 id="进入U盘下的Linux系统"><a href="#进入U盘下的Linux系统" class="headerlink" title="进入U盘下的Linux系统"></a>进入U盘下的Linux系统</h4><ol>
@@ -592,10 +592,10 @@
 </li>
 </ol>
 <hr>
-<p>下面进行的过程是按照官方<a href="https://wiki.archlinux.org/index.php/installation_guide" target="_blank" rel="external">Installation guide</a>为依据进行的，出现的任何问题都可以到链接中的相应部分查找原文找到解决方式。</p>
+<p>下面进行的过程是按照官方<a href="https://wiki.archlinux.org/index.php/installation_guide" target="_blank" rel="noopener">Installation guide</a>为依据进行的，出现的任何问题都可以到链接中的相应部分查找原文找到解决方式。</p>
 <h4 id="检查引导方式"><a href="#检查引导方式" class="headerlink" title="检查引导方式"></a>检查引导方式</h4><p>目前的引导方式主要分为EFI引导+GPT分区表与BIOS(LEGACY)引导+MBR分区表两种，几乎比较新的机器都采用了EFI/GPT引导的方式。关于这部分的内容如果有兴趣可以通过这个链接进行了解：</p>
 <blockquote>
-<p>  <a href="http://www.chinaz.com/server/2016/1017/595444.shtml" target="_blank" rel="external">http://www.chinaz.com/server/2016/1017/595444.shtml</a></p>
+<p>  <a href="http://www.chinaz.com/server/2016/1017/595444.shtml" target="_blank" rel="noopener">http://www.chinaz.com/server/2016/1017/595444.shtml</a></p>
 </blockquote>
 <p>如果你不知道自己的引导方式，请在命令提示符下执行以下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ls /sys/firmware/efi/efivars</div></pre></td></tr></table></figure>
@@ -629,7 +629,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wifi-menu</div></pre></td></tr></table></figure>
 <p>这是一个实用的命令行下联网工具，有字符形式的图形化界面，利用它可以方便地联网，如果它没能起作用，需要进入以下页面查找解决方式：</p>
 <blockquote>
-<p>  <a href="https://wiki.archlinux.org/index.php/Wireless_network_configuration" target="_blank" rel="external">https://wiki.archlinux.org/index.php/Wireless_network_configuration</a></p>
+<p>  <a href="https://wiki.archlinux.org/index.php/Wireless_network_configuration" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/Wireless_network_configuration</a></p>
 </blockquote>
 <p>连接以后同样可以通过上面的<code>ping</code>命令来进行测试。</p>
 </li>
@@ -703,7 +703,7 @@
 <hr>
 <h4 id="选择镜像源"><a href="#选择镜像源" class="headerlink" title="选择镜像源"></a>选择镜像源</h4><p>因为从这步开始，需要进行一些编辑配置文件的操作，所以需要掌握一些命令行下非常著名的一款编辑器<code>Vim</code>的基本操作，在这里推荐学习下面这个链接中的存活部分，可以完成编辑、复制粘贴与保存工作即可。</p>
 <blockquote>
-<p>  <a href="http://coolshell.cn/articles/5426.html" target="_blank" rel="external">http://coolshell.cn/articles/5426.html</a></p>
+<p>  <a href="http://coolshell.cn/articles/5426.html" target="_blank" rel="noopener">http://coolshell.cn/articles/5426.html</a></p>
 </blockquote>
 <hr>
 <p>镜像源是我们下载的软件包的来源，我们需要根据自己的地区选择不同的源来加快下载的速度。</p>
@@ -802,7 +802,7 @@
 </ul>
 <p><img src="/images/arch18.jpg" alt=""></p>
 <p><strong>如果你没有看到如图所示的提示信息，请仔细检查是否正确完成上面的过程。</strong></p>
-<p>如果报<code>warning failed to connect to lvmetad，falling back to device scanning.</code>错误。参照<a href="https://www.pckr.co.uk/arch-grub-mkconfig-lvmetad-failures-inside-chroot-install/" target="_blank" rel="external">这篇文章</a>，简单的方法是编辑<code>/etc/lvm/lvm.conf</code>这个文件，找到<code>use_lvmetad = 1</code>将<code>1</code>修改为<code>0</code>，保存，重新配置grub。</p>
+<p>如果报<code>warning failed to connect to lvmetad，falling back to device scanning.</code>错误。参照<a href="https://www.pckr.co.uk/arch-grub-mkconfig-lvmetad-failures-inside-chroot-install/" target="_blank" rel="noopener">这篇文章</a>，简单的方法是编辑<code>/etc/lvm/lvm.conf</code>这个文件，找到<code>use_lvmetad = 1</code>将<code>1</code>修改为<code>0</code>，保存，重新配置grub。</p>
 <hr>
 <h5 id="如果为EFI-GPT引导方式："><a href="#如果为EFI-GPT引导方式：" class="headerlink" title="如果为EFI/GPT引导方式："></a><strong>如果为EFI/GPT引导方式：</strong></h5><ul>
 <li><p>安装<code>grub</code>与<code>efibootmgr</code>两个包：</p>
@@ -816,7 +816,7 @@
 </li>
 </ul>
 <p><strong>提示信息应与上面的图类似，如果你发现错误，请仔细检查是否正确完成上面的过程。</strong></p>
-<p>如果报<code>warning failed to connect to lvmetad，falling back to device scanning.</code>错误。参照<a href="https://www.pckr.co.uk/arch-grub-mkconfig-lvmetad-failures-inside-chroot-install/" target="_blank" rel="external">这篇文章</a>，简单的方法是编辑<code>/etc/lvm/lvm.conf</code>这个文件，找到<code>use_lvmetad = 1</code>将<code>1</code>修改为<code>0</code>，保存，重新配置grub。</p>
+<p>如果报<code>warning failed to connect to lvmetad，falling back to device scanning.</code>错误。参照<a href="https://www.pckr.co.uk/arch-grub-mkconfig-lvmetad-failures-inside-chroot-install/" target="_blank" rel="noopener">这篇文章</a>，简单的方法是编辑<code>/etc/lvm/lvm.conf</code>这个文件，找到<code>use_lvmetad = 1</code>将<code>1</code>修改为<code>0</code>，保存，重新配置grub。</p>
 <p>如果报<code>grub-probe: error: cannot find a GRUB drive for /dev/sdb1, check your device.map</code>类似错误，并且<code>sdb1</code>这个地方是你的u盘，这是u盘<code>uefi</code>分区造成的错误，对我们的正常安装没有影响，可以不用理会这条错误。</p>
 <hr>
 <h5 id="安装后检查"><a href="#安装后检查" class="headerlink" title="安装后检查"></a>安装后检查</h5><p><strong>如果你是多系统，请注意上面一节中对<code>os-prober</code>这个包的安装。</strong></p>
@@ -833,7 +833,7 @@
 <p><strong>你目前处的U盘安装环境下有可能无法检测到其他系统的入口，请在下一步中重启登陆之后重新运行</strong>：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">grub-mkconfig -o /boot/grub/grub.cfg</div></pre></td></tr></table></figure></p>
 <p>如果还没有生成其他系统的入口，请参照：</p>
 <blockquote>
-<p>  <a href="https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Combining_the_use_of_UUIDs_and_basic_scripting" target="_blank" rel="external">https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Combining_the_use_of_UUIDs_and_basic_scripting</a> </p>
+<p>  <a href="https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Combining_the_use_of_UUIDs_and_basic_scripting" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Combining_the_use_of_UUIDs_and_basic_scripting</a> </p>
 </blockquote>
 <p>编辑配置文件手动添加引导的分区入口。</p>
 <hr>
@@ -850,7 +850,7 @@
 <p><code>leccesg</code>通过邮件提供的宝贵建议。</p>
 <h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>如果觉得这篇教程对你有帮助，可以移步我的知乎回答：</p>
 <blockquote>
-<p>  Arch Linux 怎么安装？ - viseator的回答 - 知乎<br>  <a href="https://www.zhihu.com/question/21427410/answer/171867330" target="_blank" rel="external">https://www.zhihu.com/question/21427410/answer/171867330</a></p>
+<p>  Arch Linux 怎么安装？ - viseator的回答 - 知乎<br>  <a href="https://www.zhihu.com/question/21427410/answer/171867330" target="_blank" rel="noopener">https://www.zhihu.com/question/21427410/answer/171867330</a></p>
 </blockquote>
 <p>下点个赞，让更多的人可以看到这篇教程，你的支持是我最大的动力。</p>
 <p>如果安装过程中遇到问题，可以直接在下方评论区留言或邮件viseator@gmail.com（尽量附上错误信息），我会尽力回复解决。</p>

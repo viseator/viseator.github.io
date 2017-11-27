@@ -114,7 +114,7 @@
 
 
 
-<meta name="description" content="前言GitHub完整代码 上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。 目标是自定义一个View，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：">
+<meta name="description" content="前言GitHub完整代码 上篇博客简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对Animator的几个回调方法进行讲解。 目标是自定义一个View，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个">
 <meta name="keywords" content="Android,UI,Animation">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android PropertyAnimation 属性动画（二）弹跳小球实例">
@@ -494,7 +494,7 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://github.com/viseator/AndroidAnimatorBounceBallDemo" target="_blank" rel="external">GitHub完整代码</a></p>
+        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://github.com/viseator/AndroidAnimatorBounceBallDemo" target="_blank" rel="noopener">GitHub完整代码</a></p>
 <p><a href="http://www.viseator.com/2017/03/26/android_property_animation_1/">上篇博客</a>简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对<code>Animator</code>的几个回调方法进行讲解。</p>
 <p>目标是自定义一个<code>View</code>，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：</p>
 <p><img src="/images/android_animator.gif" alt=""></p>
@@ -540,7 +540,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onClick</span><span class="params">(View v)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (animator != <span class="keyword">null</span>) &#123;</div><div class="line">        animator.end();</div><div class="line">    &#125;</div><div class="line">    init(radius, canvasHeight);</div><div class="line">    animationHeight = canvasHeight + radius;</div><div class="line">    isDown = <span class="keyword">true</span>;</div><div class="line">    animator.start();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>这里第3-5行让如果存在的<code>animator</code>停止，否则新动画无法启动。</p>
 <p>下篇博客将会从源码角度继续探索<code>animator</code>的实现原理和更高级的一些特性。</p>
-<p><a href="https://github.com/viseator/AndroidAnimatorBounceBallDemo" target="_blank" rel="external">GitHub完整代码</a></p>
+<p><a href="https://github.com/viseator/AndroidAnimatorBounceBallDemo" target="_blank" rel="noopener">GitHub完整代码</a></p>
 
       
     </div>

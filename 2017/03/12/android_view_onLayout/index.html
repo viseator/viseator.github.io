@@ -114,7 +114,7 @@
 
 
 
-<meta name="description" content="经过上一篇介绍的measure过程之后，各个View的尺寸信息已经存储在了每个View中，下面是layout过程，layout过程的目的是根据上一步中计算出的尺寸来正确设置各个View及其后代的位置。这个过程首先被调用的是View的layout()方法，layout()的方法签名是public void layout(int l, int t, int r, int b)，四个参数分别为左边界距父">
+<meta name="description" content="经过上一篇介绍的measure过程之后，各个View的尺寸信息已经存储在了每个View中，下面是layout过程，layout过程的目的是根据上一步中计算出的尺寸来正确设置各个View及其后代的位置。这个过程首先被调用的是View的layout()方法，layout()的方法签名是public void layout(">
 <meta name="keywords" content="Android,View">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android View绘制（三）layout过程">
@@ -491,7 +491,7 @@
       
 
       
-        <p>经过<a href="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/" target="_blank" rel="external">上一篇</a>介绍的<code>measure</code>过程之后，各个<code>View</code>的尺寸信息已经存储在了每个<code>View</code>中，下面是<code>layout</code>过程，<code>layout</code>过程的目的是根据上一步中计算出的尺寸来正确设置各个<code>View</code>及其后代的位置。这个过程首先被调用的是<code>View</code>的<code>layout()</code>方法，<code>layout()</code>的方法签名是<code>public void layout(int l, int t, int r, int b)</code>，四个参数分别为左边界距父<code>View</code>左边界的距离，上边界距父<code>View</code>上边界的距离，右边界距父<code>View</code>左边界的距离，下边界距父<code>View</code>上边界的距离。</p>
+        <p>经过<a href="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/" target="_blank" rel="noopener">上一篇</a>介绍的<code>measure</code>过程之后，各个<code>View</code>的尺寸信息已经存储在了每个<code>View</code>中，下面是<code>layout</code>过程，<code>layout</code>过程的目的是根据上一步中计算出的尺寸来正确设置各个<code>View</code>及其后代的位置。这个过程首先被调用的是<code>View</code>的<code>layout()</code>方法，<code>layout()</code>的方法签名是<code>public void layout(int l, int t, int r, int b)</code>，四个参数分别为左边界距父<code>View</code>左边界的距离，上边界距父<code>View</code>上边界的距离，右边界距父<code>View</code>左边界的距离，下边界距父<code>View</code>上边界的距离。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">boolean</span> changed = isLayoutModeOptical(mParent) ?</div><div class="line">        setOpticalFrame(l, t, r, b) : setFrame(l, t, r, b);</div></pre></td></tr></table></figure>
 <p><code>changed</code>是用于传递给<code>onLayout()</code>方法的参数，它指示了布局是否被改变。</p>
 <p>后面的表达式查看了父<code>View</code>的布局模式是否需要显示边框，如需要，调用的是<code>setOpticalFrame()</code>方法：</p>

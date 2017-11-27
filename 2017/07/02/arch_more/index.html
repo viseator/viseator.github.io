@@ -496,7 +496,7 @@
       
         <h2 id="你可能需要知道的操作与软件包推荐"><a href="#你可能需要知道的操作与软件包推荐" class="headerlink" title="你可能需要知道的操作与软件包推荐"></a>你可能需要知道的操作与软件包推荐</h2><p>在<a href="http://www.viseator.com/2017/05/17/arch_install/">第一篇教程</a>中介绍了<code>ArchLinux</code>的基本安装，<a href="http://www.viseator.com/2017/05/19/arch_setup/">第二篇教程</a>中介绍了必须的设置与图形界面的安装，这篇文章并不是教程，只是推荐一些自己日常使用的操作与软件包。写这篇文章时没有重新安装，所以不会有详细的过程，只是简单地列举应该装的软件包或者是基础的配置，更加细节的内容请查阅相关<code>wiki</code>。</p>
 <a id="more"></a>
-<h3 id="安装Yaourt"><a href="#安装Yaourt" class="headerlink" title="安装Yaourt"></a>安装Yaourt</h3><p>在之前我们管理软件包都是使用官方为我们提供的<code>pacman</code>，软件包的来源都是官方。但是<code>Arch</code>拥有一个强大的用户库<code>AUR</code>即<a href="https://wiki.archlinux.org/index.php/Arch_User_Repository" target="_blank" rel="external">Arch User Repository</a>，为我们提供了官方包之外的各种软件包，一些闭源的软件包也可以在上面找到，可以说<code>AUR</code>极大地丰富了软件包的种类与数量，并可以配合<code>yaourt</code>这样的工具为用户省下大量安装、更新软件包的时间。</p>
+<h3 id="安装Yaourt"><a href="#安装Yaourt" class="headerlink" title="安装Yaourt"></a>安装Yaourt</h3><p>在之前我们管理软件包都是使用官方为我们提供的<code>pacman</code>，软件包的来源都是官方。但是<code>Arch</code>拥有一个强大的用户库<code>AUR</code>即<a href="https://wiki.archlinux.org/index.php/Arch_User_Repository" target="_blank" rel="noopener">Arch User Repository</a>，为我们提供了官方包之外的各种软件包，一些闭源的软件包也可以在上面找到，可以说<code>AUR</code>极大地丰富了软件包的种类与数量，并可以配合<code>yaourt</code>这样的工具为用户省下大量安装、更新软件包的时间。</p>
 <p><code>yaourt</code>实际上也是一个软件包，我们可以把它看成是对<code>pacman</code>的包装，它兼容<code>pacman</code>的所有操作，最大的不同是我们可以用它方便地安装与管理<code>AUR</code>中的包，下面的许多软件包都是在<code>AUR</code>库中的，也都是使用<code>AUR</code>来安装的。</p>
 <h4 id="安装yaourt"><a href="#安装yaourt" class="headerlink" title="安装yaourt"></a>安装<code>yaourt</code></h4><p>以<code>root</code>权限打开编译<code>/etc/pacman.conf</code>，将下面这三行加入到文件末尾并保存：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[archlinuxcn]</div><div class="line">SigLevel = Never</div><div class="line">Server   =  http://repo.archlinuxcn.org/<span class="variable">$arch</span></div></pre></td></tr></table></figure>
@@ -504,7 +504,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo pacman -Sy yaourt fakeroot</div></pre></td></tr></table></figure>
 <h4 id="yaourt使用"><a href="#yaourt使用" class="headerlink" title="yaourt使用"></a><code>yaourt</code>使用</h4><p>请见</p>
 <blockquote>
-<p>  <a href="https://www.linuxdashen.com/arch-linux%E4%BD%BF%E7%94%A8yaourt%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E8%BD%BB%E6%9D%BE%E5%AE%89%E8%A3%85aur%E8%BD%AF%E4%BB%B6%E5%8C%85" target="_blank" rel="external">https://www.linuxdashen.com/arch-linux%E4%BD%BF%E7%94%A8yaourt%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E8%BD%BB%E6%9D%BE%E5%AE%89%E8%A3%85aur%E8%BD%AF%E4%BB%B6%E5%8C%85</a></p>
+<p>  <a href="https://www.linuxdashen.com/arch-linux%E4%BD%BF%E7%94%A8yaourt%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E8%BD%BB%E6%9D%BE%E5%AE%89%E8%A3%85aur%E8%BD%AF%E4%BB%B6%E5%8C%85" target="_blank" rel="noopener">https://www.linuxdashen.com/arch-linux%E4%BD%BF%E7%94%A8yaourt%E5%8C%85%E7%AE%A1%E7%90%86%E5%99%A8%E8%BD%BB%E6%9D%BE%E5%AE%89%E8%A3%85aur%E8%BD%AF%E4%BB%B6%E5%8C%85</a></p>
 </blockquote>
 <h3 id="滚动更新"><a href="#滚动更新" class="headerlink" title="滚动更新"></a>滚动更新</h3><p><code>ArchLinux</code>的更新机制是非常激进的滚动更新，也就是说<code>ArchLinux</code>的软件与内核会时刻与稳定版本保持一致，你所用的系统总是时刻保持最新的。</p>
 <p>这个机制给很多<code>Arch</code>教徒带来了强大的快感，可以第一时间体验到新的软件与新 的内核，但是也存在着日常滚炸这样的问题。虽然滚动更新的包可能因为没有经过完善的测试会导致系统不能工作种种问题，但是绝大部分情况下的更新都不会导致太大的问题。修复滚炸的系统和提交Bug信息也是<code>ArchLinux</code>用户的技能之一。</p>
@@ -529,7 +529,7 @@
 <p>先用命令行代理启动<code>chrome</code>：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">google-chrome-stable --proxy-server=<span class="string">"socks5://127.0.0.1:1080"</span></div></pre></td></tr></table></figure>
 <p><code>chromium</code>换下命令就可以。</p>
-<p>然后安装<a href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=en" target="_blank" rel="external">SwitchyOmega</a>这个插件，配置好<a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="external"><code>GFWList</code></a>和代理规则就可以自动代理了。之后的启动就不需要命令行了。</p>
+<p>然后安装<a href="https://chrome.google.com/webstore/detail/proxy-switchyomega/padekgcemlokbadohgkifijomclgjgif?hl=en" target="_blank" rel="noopener">SwitchyOmega</a>这个插件，配置好<a href="https://raw.githubusercontent.com/gfwlist/gfwlist/master/gfwlist.txt" target="_blank" rel="noopener"><code>GFWList</code></a>和代理规则就可以自动代理了。之后的启动就不需要命令行了。</p>
 <h3 id="命令行代理"><a href="#命令行代理" class="headerlink" title="命令行代理"></a>命令行代理</h3><p><strong>需先配置好本地<code>shadowsocks</code>代理</strong></p>
 <p>推荐使用<code>proxychains-ng</code>包进行命令行代理：</p>
 <p>安装<code>proxychains-ng</code>包后编辑<code>/etc/proxychains.conf</code>文件（需<code>root</code>权限）</p>
@@ -537,7 +537,7 @@
 <p><img src="/images/arch24.png" alt=""></p>
 <p>图为我的<code>socks5</code>配置，保存后退出。</p>
 <p>之后需要用代理运行的命令都可以通过在命令前加上<code>proxychains</code>来使用代理运行。</p>
-<h3 id="中文字体与中文输入法"><a href="#中文字体与中文输入法" class="headerlink" title="中文字体与中文输入法"></a>中文字体与中文输入法</h3><p>中文字体推荐安装官方源中<code>noto-fonts-cjk</code>，中文输入法需要安装<code>fcitx</code>包与<code>fcitx-im</code>集合包，再加上一个中文支持包，可以到<a href="https://wiki.archlinux.org/index.php/fcitx#Chinese" target="_blank" rel="external">https://wiki.archlinux.org/index.php/fcitx#Chinese</a>中挑选一个喜欢的包装上。</p>
+<h3 id="中文字体与中文输入法"><a href="#中文字体与中文输入法" class="headerlink" title="中文字体与中文输入法"></a>中文字体与中文输入法</h3><p>中文字体推荐安装官方源中<code>noto-fonts-cjk</code>，中文输入法需要安装<code>fcitx</code>包与<code>fcitx-im</code>集合包，再加上一个中文支持包，可以到<a href="https://wiki.archlinux.org/index.php/fcitx#Chinese" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/fcitx#Chinese</a>中挑选一个喜欢的包装上。</p>
 <p>装完以后需要修改<code>/etc/profile</code>文件，在文件开头加入三行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="built_in">export</span> XMODIFIERS=<span class="string">"@im=fcitx"</span></div><div class="line"><span class="built_in">export</span> GTK_IM_MODULE=<span class="string">"fcitx"</span></div><div class="line"><span class="built_in">export</span> QT_IM_MODULE=<span class="string">"fcitx"</span></div></pre></td></tr></table></figure>
 <p>可以解决一些软件无法调出<code>fcitx</code>的问题。</p>
@@ -546,7 +546,7 @@
 <p>设置<code>zsh</code>为默认<code>shell</code>：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo chsh <span class="_">-s</span> /bin/zsh username</div></pre></td></tr></table></figure>
 <p>推荐安装<code>AUR</code>中的<code>oh-my-zsh-git</code>这个包，可以帮助配置一些实用的功能。</p>
-<p>其他主题插件配置请见<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="external">oh-my-zsh</a>的配置介绍，分享一下我安装的插件：</p>
+<p>其他主题插件配置请见<a href="https://github.com/robbyrussell/oh-my-zsh" target="_blank" rel="noopener">oh-my-zsh</a>的配置介绍，分享一下我安装的插件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">plugins=(vim git sudo extract z wd archlinux zsh-autosuggestions zsh-syntax-highlighting)</div></pre></td></tr></table></figure>
 <p>注意后面两个插件需要安装相应的支持包并配置才能使用。</p>
 <h3 id="Synapse"><a href="#Synapse" class="headerlink" title="Synapse"></a>Synapse</h3><p><code>Synapse</code>是一个快速的软件启动器，可以方便地查找安装的软件，设置快捷键使用再也不用找软件入口了。</p>
@@ -556,7 +556,7 @@
 <p>安装官方源中的<code>yakuake</code>包。</p>
 <h3 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h3><p>有些时候需要使用<code>windows</code>而不想切换系统或干脆没有<code>windows</code>的情况下，我们可以使用<code>windows</code>虚拟机来代替。当然虚拟机的用处不止于此。</p>
 <p><code>Arch</code>下的虚拟机首先开源的<code>VirtualBox</code>，安装官方源的<code>virtualbox</code> <code>virtualbox-ext-vnc</code> <code>virtualbox-guest-iso</code> <code>virtualbox-host-modules-arch</code>这几个包。</p>
-<p>再去<a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="external">官网</a>下载<strong>Oracle VM VirtualBox Extension Pack</strong> ，在设置中导入使用。安装<code>windows</code>的过程不在这里讲解，记得安装之后在<code>windows</code>内安装扩展客户端软件即可。</p>
+<p>再去<a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="noopener">官网</a>下载<strong>Oracle VM VirtualBox Extension Pack</strong> ，在设置中导入使用。安装<code>windows</code>的过程不在这里讲解，记得安装之后在<code>windows</code>内安装扩展客户端软件即可。</p>
 
       
     </div>

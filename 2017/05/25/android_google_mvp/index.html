@@ -114,7 +114,7 @@
 
 
 
-<meta name="description" content="写在前面关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：    https://segmentfault.com/a/1190000003927200  本文的重点是对Google官方写的一个MVP架构实现的Demo进行简单的分析来看看谷歌实现的Android MVP架构是怎么搭建的。 谷歌官方的架构Demo地址：    https://github.com/googlesamples/an">
+<meta name="description" content="写在前面关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：    https://segmentfault.com/a/1190000003927200  本文的重点是对Google官方写的一个MVP架构实现的Demo进行简单的分析来看看谷歌实现的Android MVP架构是怎么搭建的。 谷歌官方的架构Demo地址">
 <meta name="keywords" content="Android,MVP,Architecture">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Google官方MVP架构分析">
@@ -495,16 +495,16 @@
       
         <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：</p>
 <blockquote>
-<p>  <a href="https://segmentfault.com/a/1190000003927200" target="_blank" rel="external">https://segmentfault.com/a/1190000003927200</a></p>
+<p>  <a href="https://segmentfault.com/a/1190000003927200" target="_blank" rel="noopener">https://segmentfault.com/a/1190000003927200</a></p>
 </blockquote>
 <p>本文的重点是对Google官方写的一个MVP架构实现的Demo进行简单的分析来看看谷歌实现的Android MVP架构是怎么搭建的。</p>
 <p>谷歌官方的架构Demo地址：</p>
 <blockquote>
-<p>  <a href="https://github.com/googlesamples/android-architecture" target="_blank" rel="external">https://github.com/googlesamples/android-architecture</a></p>
+<p>  <a href="https://github.com/googlesamples/android-architecture" target="_blank" rel="noopener">https://github.com/googlesamples/android-architecture</a></p>
 </blockquote>
 <p>本文所讲解的为：</p>
 <blockquote>
-<p>  <a href="https://github.com/googlesamples/android-architecture/tree/todo-mvp" target="_blank" rel="external">https://github.com/googlesamples/android-architecture/tree/todo-mvp</a></p>
+<p>  <a href="https://github.com/googlesamples/android-architecture/tree/todo-mvp" target="_blank" rel="noopener">https://github.com/googlesamples/android-architecture/tree/todo-mvp</a></p>
 </blockquote>
 <p>需要读者参照源码查看本文。</p>
 <p>我将这个todo应用的框架提炼出来（同时也意味着丢失了很多的实现细节，但可以将架构看得更加清晰），制作了一张伪<code>UML</code>图（为了简化，没有遵循<code>UML</code>的规范），下面我们参照着表中的内容进行分析：</p>
@@ -521,7 +521,7 @@
 <p><code>TaskActivity</code>在初始化时会先创建<code>TasksFragment</code>实例，再将其作为构造参数传递给<code>TaskPresenter</code>，<code>TaskPresenter</code>在构造方法中又会调用<code>TasksFragment</code>的<code>setPresenter</code>方法将自身传递给<code>TasksFragment</code>。这样<code>Presenter</code>与<code>View</code>就分别存有了一份对方的引用。</p>
 <p>构造完成后，当用户与UI进行交互，<code>View</code>一律调用<code>Presenter</code>的相关方法来进行交互事件的处理或请求数据更新。如果有新的内容需要呈现在UI上，则由<code>Presenter</code>调用<code>View</code>的相关方法来进行更新。<code>Presenter</code>则负责与上一级的数据存储池进行交互来更新数据或是获取新的数据。</p>
 <p>可以看到<code>Presenter</code>充当了一个“中介”，<code>View</code>的所有请求都将交由<code>Presenter</code>进行处理，而<code>View</code>现在需要做的只有提供相应方法供<code>Presenter</code>进行调用，避免了将大量业务逻辑写在<code>View</code>中。同时也避免了<code>View</code>与数据的直接交互，而是由<code>Presenter</code>“单线操作”，降低了耦合度。</p>
-<h2 id="Data包"><a href="#Data包" class="headerlink" title="Data包"></a>Data包</h2><h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>这里的<code>Task</code>是一个<a href="https://en.wikipedia.org/wiki/Plain_old_Java_object" target="_blank" rel="external"><code>POJO</code></a>类，用于表示储存的数据。</p>
+<h2 id="Data包"><a href="#Data包" class="headerlink" title="Data包"></a>Data包</h2><h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>这里的<code>Task</code>是一个<a href="https://en.wikipedia.org/wiki/Plain_old_Java_object" target="_blank" rel="noopener"><code>POJO</code></a>类，用于表示储存的数据。</p>
 <h3 id="source包"><a href="#source包" class="headerlink" title="source包"></a>source包</h3><h4 id="TaskDataSource接口"><a href="#TaskDataSource接口" class="headerlink" title="TaskDataSource接口"></a>TaskDataSource接口</h4><p><code>TaskDataSource</code>接口定义了所有可以的用于操作数据的对象的方法，换句话说，无论数据的来源是什么，我们都可以通过调用实现了这个接口的对象的方法来操纵数据。</p>
 <h4 id="GetTaskCallback与LoadTasksCallback"><a href="#GetTaskCallback与LoadTasksCallback" class="headerlink" title="GetTaskCallback与LoadTasksCallback"></a>GetTaskCallback与LoadTasksCallback</h4><p>注意到用于获取数据的方法的参数都利用了<code>callback</code>进行回调来传递数据。这样做主要因为数据的获取有可能是异步的，使用回调机制可以避免线程因为等待数据而阻塞。</p>
 <h4 id="local包与remote包"><a href="#local包与remote包" class="headerlink" title="local包与remote包"></a>local包与remote包</h4><p>这两个包分别存放着一个实现了<code>TaskDataSource</code>接口的类，他们就代表了从本地缓存获取数据与从远端获取数据。当然与获取数据有关的其他类也应该放在这个包下。</p>
