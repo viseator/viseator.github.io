@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html class="theme-next mist use-motion" lang="zh-CN">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -152,7 +152,7 @@
 <meta property="og:url" content="http://www.viseator.com/2017/09/14/android_view_event_1/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="写在前面本文基于Android 7.1.1 (API 25)的源码分析编写 安卓是基于触摸操作进行交互的系统，几乎所有的操作都由对屏幕的一次次触摸完成，如何正确处理触摸事件关乎整个应用的操作体验。因此安卓对于触摸事件的分发与处理机制也是我们学习安卓开发的重中之重。同时几乎每一个安卓技术博客中都会对触摸分发机制这一块进行详解，例如比较早期也是最为出名的郭霖（《第一行代码》的作者）。现在网络上对于这一">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://www.viseator.com/images/event1_1.png">
 <meta property="og:image" content="http://www.viseator.com/images/event1_2.png">
 <meta property="og:image" content="http://www.viseator.com/images/event1_3.png">
@@ -238,7 +238,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -283,37 +283,37 @@
         
         <li class="menu-item menu-item-home">
           <a href="/" rel="section">
-            Home</a>
+            首页</a>
         </li>
       
         
         <li class="menu-item menu-item-categories">
           <a href="/categories" rel="section">
-            Categories</a>
+            分类</a>
         </li>
       
         
         <li class="menu-item menu-item-archives">
           <a href="/archives" rel="section">
-            Archives</a>
+            归档</a>
         </li>
       
         
         <li class="menu-item menu-item-tags">
           <a href="/tags" rel="section">
-            Tags</a>
+            标签</a>
         </li>
       
         
         <li class="menu-item menu-item-resource">
           <a href="/2017/03/25/resource_general" rel="section">
-            Resource</a>
+            资源</a>
         </li>
       
         
         <li class="menu-item menu-item-about">
           <a href="/about" rel="section">
-            About</a>
+            关于</a>
         </li>
       
 
@@ -322,7 +322,7 @@
           
             <a href="javascript:;" class="popup-trigger">
           
-            Search</a>
+            搜索</a>
         </li>
       
     </ul>
@@ -341,7 +341,7 @@
     </span>
     <div class="local-search-input-wrapper">
       <input autocomplete="off"
-             placeholder="Searching..." spellcheck="false"
+             placeholder="搜索..." spellcheck="false"
              type="text" id="local-search-input">
     </div>
   </div>
@@ -425,9 +425,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2017-09-14T11:20:38+08:00">2017-09-14</time>
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-09-14T11:20:38+08:00">2017-09-14</time>
             
 
             
@@ -445,14 +445,14 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
 
                 
                 
-                  , 
+                  ， 
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/View/" itemprop="url" rel="index"><span itemprop="name">View</span></a></span>
@@ -475,7 +475,7 @@
                  <i class="fa fa-eye"></i>
                </span>
                
-                 <span class="post-meta-item-text">Visitors&#58;</span>
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
                
                  <span class="leancloud-visitors-count"></span>
              </span>
@@ -697,13 +697,13 @@
       <div>
         <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>Post author:</strong>viseator(吴迪)</li>
+    <strong>本文作者：</strong>viseator(吴迪)</li>
   <li class="post-copyright-link">
-    <strong>Post link:</strong>
+    <strong>本文链接：</strong>
     <a href="http://www.viseator.com/2017/09/14/android_view_event_1/" title="Android 触摸事件分发机制（一）从内核到应用 一切的开始">http://www.viseator.com/2017/09/14/android_view_event_1/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>Copyright Notice: </strong>All articles in this blog are licensed under CC BY-NC-SA 4.0 unless stating additionally.</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 CC BY-NC-SA 4.0 许可协议。转载请注明出处！</li>
 </ul>
 
       </div>
@@ -796,10 +796,10 @@
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            站点概览
           </li>
         </ul>
       
@@ -824,7 +824,7 @@
                   <a href="/archives">
                 
                     <span class="site-state-item-count">30</span>
-                    <span class="site-state-item-name">posts</span>
+                    <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
               
@@ -873,7 +873,7 @@
                       
                     
                     <span class="site-state-item-count">17</span>
-                    <span class="site-state-item-name">categories</span>
+                    <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
               
@@ -928,7 +928,7 @@
                       
                     
                     <span class="site-state-item-count">21</span>
-                    <span class="site-state-item-name">tags</span>
+                    <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
               
@@ -1061,7 +1061,7 @@
 
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" rel="external nofollow" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" rel="external nofollow" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
 
 
@@ -1069,7 +1069,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" rel="external nofollow" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a></div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" rel="external nofollow" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a></div>
 
 
 
