@@ -114,7 +114,7 @@
 
 
 
-<meta name="description" content="回顾在上一篇文章中，我们探索了从内核触摸事件传递到InputDispatcher线程，再与应用线程之间建立InputChannel的过程，并且我们已经看到一个最原始的触摸事件被封装成一个msg并通过InputChannel建立的socket通过sendMessage()方法跨线程通信发送给了应用的UI线程。 这篇文章将">
+<meta name="description" content="回顾在上一篇文章中，我们探索了从内核触摸事件传递到InputDispatcher线程，再与应用线程之间建立InputChannel的过程，并且我们已经看到一个最原始的触摸事件被封装成一个msg并通过InputChannel建立的socket通过sendMessage()方法跨线程通信发送给了应用的UI线程。 这篇文章将会看到应用UI线程的消息队列是如何读取传递过来的触摸事件并进行处理、分发的。">
 <meta name="keywords" content="Android,View">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始">
@@ -124,7 +124,7 @@
 <meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://www.viseator.com/images/event2_1.png">
 <meta property="og:image" content="http://www.viseator.com/images/event2_2.png">
-<meta property="og:updated_time" content="2017-10-31T12:21:01.000Z">
+<meta property="og:updated_time" content="2018-02-02T01:19:07.534Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始">
 <meta name="twitter:description" content="回顾在上一篇文章中，我们探索了从内核触摸事件传递到InputDispatcher线程，再与应用线程之间建立InputChannel的过程，并且我们已经看到一个最原始的触摸事件被封装成一个msg并通过InputChannel建立的socket通过sendMessage()方法跨线程通信发送给了应用的UI线程。 这篇文章将会看到应用UI线程的消息队列是如何读取传递过来的触摸事件并进行处理、分发的。">
@@ -874,7 +874,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2017</span>
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
