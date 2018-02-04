@@ -3,6 +3,31 @@
 
 
     
+  <url>
+    <loc>http://www.viseator.com/2017/11/02/android_view_event_3/</loc>
+    <lastmod>2018-02-04T04:09:54.510Z</lastmod>
+    <data>
+        <display>
+        <title>Android 触摸事件分发机制（三）View触摸事件分发机制</title>
+        <pubTime>2017-11-02T13:33:31.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
     
     
     
@@ -273,31 +298,6 @@
           
              
               <breadCrumb title="CS:APP" url="http://www.viseator.com/categories/Computer-System/CS-APP/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://www.viseator.com/2017/11/02/android_view_event_3/</loc>
-    <lastmod>2018-02-02T01:19:07.643Z</lastmod>
-    <data>
-        <display>
-        <title>Android 触摸事件分发机制（三）View触摸事件分发机制</title>
-        <pubTime>2017-11-02T13:33:31.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="http://www.viseator.com/categories/Android/"/>
-          
-             
-              <breadCrumb title="View" url="http://www.viseator.com/categories/Android/View/"/>
           
         </display>
     </data>
