@@ -1,0 +1,1562 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#F5F5F5">
+
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Aladin:300,300italic,400,400italic,700,700italicPT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.0.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=6.0.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=6.0.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.0.3" color="#F5F5F5">
+
+
+  <link rel="manifest" href="/images/manifest.json">
+
+
+  <meta name="msapplication-config" content="/images/browserconfig.xml" />
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.0.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  
+  <meta name="keywords" content="Android,Test," />
+
+
+<meta name="description" content="写在前面在官方文档关于测试一节中，介绍了测试金字塔这一概念：即我们应该包括三个层次的测试：小型、中型、与大型：  小型测试是单元测试，即可以独立运行在每个模块上的测试。它们通常模拟了每个主要的组件并且应该快速地运行。 中型测试是介于大型与小型测试之间的综合测试，它们集成了数个组件并且运行在模拟器或实机上。 大型测试是以模拟UI工作流方式进行的综合UI测试，它们保证了关键的终端用户的使用可">
+<meta name="keywords" content="Android,Test">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Android UI自动化测试技术选择与踩坑">
+<meta property="og:url" content="http://www.viseator.com/2018/02/09/android_ui_test/index.html">
+<meta property="og:site_name" content="viseator&#39;s blog">
+<meta property="og:description" content="写在前面在官方文档关于测试一节中，介绍了测试金字塔这一概念：即我们应该包括三个层次的测试：小型、中型、与大型：  小型测试是单元测试，即可以独立运行在每个模块上的测试。它们通常模拟了每个主要的组件并且应该快速地运行。 中型测试是介于大型与小型测试之间的综合测试，它们集成了数个组件并且运行在模拟器或实机上。 大型测试是以模拟UI工作流方式进行的综合UI测试，它们保证了关键的终端用户的使用可">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://www.viseator.com/images/ui_test_1.png">
+<meta property="og:image" content="http://www.viseator.com/images/ui_test_2.png">
+<meta property="og:updated_time" content="2018-02-09T10:30:16.791Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Android UI自动化测试技术选择与踩坑">
+<meta name="twitter:description" content="写在前面在官方文档关于测试一节中，介绍了测试金字塔这一概念：即我们应该包括三个层次的测试：小型、中型、与大型：  小型测试是单元测试，即可以独立运行在每个模块上的测试。它们通常模拟了每个主要的组件并且应该快速地运行。 中型测试是介于大型与小型测试之间的综合测试，它们集成了数个组件并且运行在模拟器或实机上。 大型测试是以模拟UI工作流方式进行的综合UI测试，它们保证了关键的终端用户的使用可">
+<meta name="twitter:image" content="http://www.viseator.com/images/ui_test_1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="http://www.viseator.com/2018/02/09/android_ui_test/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+  <title>Android UI自动化测试技术选择与踩坑 | viseator's blog</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-93455229-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?825cced91f7243ff630582af2a1a81d7";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> <div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">viseator's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <h1 class="site-subtitle" itemprop="description">吴迪的博客</h1>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            首页</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            分类</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            归档</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            标签</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resource">
+          <a href="/2017/03/25/resource_general" rel="section">
+            资源</a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            关于</a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+  
+
+
+
+ </div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/viseator" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#F5F5F5; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://www.viseator.com/2018/02/09/android_ui_test/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="viseator(吴迪)">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="viseator's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Android UI自动化测试技术选择与踩坑</h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-09T17:56:57+08:00">2018-02-09</time>
+            
+
+            
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+                  ， 
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/Test/" itemprop="url" rel="index"><span itemprop="name">Test</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/02/09/android_ui_test/" class="leancloud_visitors" data-flag-title="Android UI自动化测试技术选择与踩坑">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>在<a href="https://developer.android.com/training/testing/fundamentals.html" target="_blank" rel="noopener">官方文档关于测试一节</a>中，介绍了测试金字塔这一概念：<br><img src="/images/ui_test_1.png" alt=""><br>即我们应该包括三个层次的测试：小型、中型、与大型：</p>
+<ul>
+<li>小型测试是单元测试，即可以独立运行在每个模块上的测试。它们通常模拟了每个主要的组件并且应该快速地运行。</li>
+<li>中型测试是介于大型与小型测试之间的综合测试，它们集成了数个组件并且运行在模拟器或实机上。</li>
+<li>大型测试是以模拟UI工作流方式进行的综合UI测试，它们保证了关键的终端用户的使用可以符合我们的预期。<br>虽然小型测试迅速并且专注，可以让我们很快地发现错误，但它们同样是低仿真且自成一体的，这使得我们很难保证通过了所有的单元测试就可以成功地让App运行。而大型测试的优缺点恰恰与上述相反。<br>由于每个层次的测试的角色各不相同，我们应该进行所有这三个层次的测试，尽管各个层次使用比例需要根据App的使用特点，通常建议三个测试的比例为1:2:7。<br>UI自动化测试即属于上面说的大型测试。<a id="more"></a>
+<h2 id="测试框架功能对比"><a href="#测试框架功能对比" class="headerlink" title="测试框架功能对比"></a>测试框架功能对比</h2><h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3>参考：</li>
+<li><a href="https://stackoverflow.com/questions/20046021/google-espresso-or-robotium" target="_blank" rel="noopener">https://stackoverflow.com/questions/20046021/google-espresso-or-robotium</a><br><img src="/images/ui_test_2.png" alt=""><h3 id="实际测试编写体验"><a href="#实际测试编写体验" class="headerlink" title="实际测试编写体验"></a>实际测试编写体验</h3>实际的编写中，主要的步骤可以总结为三步：</li>
+</ul>
+<ol>
+<li>如何定位想要操作的<code>View</code></li>
+<li>如何施加想要进行操作</li>
+<li>如何判断App的行为符合我们预期<br>三种框架都为我们提供了一系列方法，但细节与效果略有不同：</li>
+</ol>
+<ul>
+<li>Espresso<ul>
+<li>白盒测试，体现在可以直接拿到显示中的<code>View</code>实例，拿到<code>WebView</code> <code>DOM</code>树中的<code>Element</code></li>
+<li>一般场景下，区分度较为明显的<code>View</code>(有唯一的<code>id</code> <code>tag</code>)等，可以通过多种途径定位，较为便捷</li>
+<li>面对特殊场景：如<code>TabLayout</code>中的<code>Tab</code>时，由于它们拥有相同的类型与<code>id</code>，难以定位<code>view</code></li>
+<li>出现多窗口情况（如<code>dialog</code>），可以正常处理</li>
+<li>不能触发按返回键、改变屏幕方向等操作</li>
+</ul>
+</li>
+<li>UI Automator<ul>
+<li>黑盒测试，体现在无法拿到具体的<code>View</code>，只能拿到基类(<code>LinearLayout</code>等)，无法看到<code>WebView</code>的<code>DOM</code>树</li>
+<li>一般场景下，定位<code>View</code>没有差别</li>
+<li>面对特殊场景，可以通过找出所有符合条件的<code>View</code>再按索引找到想要的<code>View</code></li>
+<li>出现多窗口情况：处理出现异常</li>
+</ul>
+</li>
+<li>Robotium<ul>
+<li>集合了上述框架的优点，既可以拿到显示中的<code>View</code>实例与<code>WebView</code>的<code>DOM</code>树</li>
+<li>对上述框架的接口进行了统一，调用比较方便<h3 id="最终框架选择"><a href="#最终框架选择" class="headerlink" title="最终框架选择"></a>最终框架选择</h3>通过上述比较，可以看到Robotium在满足我们要求的同时统一了接口，故选择Robotium作为使用的框架。<h2 id="使用过程中踩的一些大坑"><a href="#使用过程中踩的一些大坑" class="headerlink" title="使用过程中踩的一些大坑"></a>使用过程中踩的一些大坑</h2><h3 id="变量必须使用static"><a href="#变量必须使用static" class="headerlink" title="变量必须使用static"></a>变量必须使用static</h3>在<code>AndroidTest</code>类中，期望使用一个<code>boolean</code>标志来判断是否已经登陆过（避免重复检查登陆状态），发现在<code>login()</code>方法中置标志为true后进入下一个测试时这个值仍为<code>false</code>，推测运行测试方法时各个方法的运行是独立的，故不使用静态变量则无法保存状态。<h3 id="等待引发的问题"><a href="#等待引发的问题" class="headerlink" title="等待引发的问题"></a>等待引发的问题</h3><h4 id="等待？"><a href="#等待？" class="headerlink" title="等待？"></a>等待？</h4>在我们对<code>View</code>进行一个操作以后，框架会自动处理下一步动作触发的时机，比如点击一个<code>Tab</code>后，会自动等待下一个页面出现再执行下面的操作。这个等待判断的原理没有看过源码不能确定，但是实际中遇到比如<code>WebView</code>加载页这样等待时间较长的页面，就会触发下一个操作的执行。<br>那么问题就出现了，如果想要进行这样的测试：点击打开一个文档，等待文档打开完毕以后检查标题是否是我们打开的文档，如果在文档没有加载完的时候就执行检查步骤，就会产生<code>Element not found</code>的错误。<h4 id="解决方法"><a href="#解决方法" class="headerlink" title="解决方法"></a>解决方法</h4></li>
+</ul>
+</li>
+<li>强行设置等待时间<br>利用<code>SystemClock.sleep()</code>方法强行让测试暂停一段时间，这个方法比较暴力也不优雅，不到万不得已不要使用。</li>
+<li>使用<code>Robotium</code>提供的各种<code>wait</code>方法，通过设置退出条件来等待：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">waitForWebView</span><span class="params">()</span> </span>&#123;</div><div class="line">    assertTrue(mSolo.waitForCondition(<span class="keyword">new</span> Condition() &#123;</div><div class="line">        <span class="meta">@Override</span></div><div class="line">        <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">isSatisfied</span><span class="params">()</span> </span>&#123;</div><div class="line">            View loading = <span class="keyword">null</span>;</div><div class="line">            <span class="keyword">try</span> &#123;</div><div class="line">                loading = mSolo.getView(R.id.loading);</div><div class="line">            &#125; <span class="keyword">catch</span> (AssertionFailedError e) &#123;</div><div class="line">                Log.e(TAG, e.getMessage());</div><div class="line">            &#125;</div><div class="line">            <span class="keyword">return</span> <span class="keyword">null</span> == loading || View.GONE == loading.getVisibility();</div><div class="line">        &#125;</div><div class="line">    &#125;, DOC_LOAD_TIMEOUT));</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在解决上面的问题的时候就使用了上面的代码来等待<code>WebView</code>文档加载完毕，返回<code>true</code>时条件满足，退出等待，若超时，则方法返回<code>false</code>，<code>assert</code>失败表示<code>doc</code>加载超时。此处的判断方法是等待<code>loading</code>隐藏。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">waitForActivity</span><span class="params">(Class&lt;? extends Activity&gt; activity)</span> </span>&#123;</div><div class="line">    <span class="keyword">if</span> (mSolo.getCurrentActivity().getClass() == activity) &#123;</div><div class="line">        <span class="keyword">return</span>;</div><div class="line">    &#125;</div><div class="line">    assertTrue(mSolo.waitForActivity(activity));</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>上述代码是为了等待<code>activity</code>启动，可以用于判断新的<code>activity</code>是否正常启动。</p>
+<h3 id="跨进程引发的问题"><a href="#跨进程引发的问题" class="headerlink" title="跨进程引发的问题"></a>跨进程引发的问题</h3><p>在应用中，打开的文档运行在一个新的进程中，在使用<code>Espresso</code>的时候就遇到了问题：无法拿到新进程中<code>WebView</code>的信息，原因没有仔细分析，但可以确定是跨进程的问题。在<code>Robotium</code>中这个问题同样存在。<br>不但如此，多进程还会导致当前<code>activity</code>的判断出错，本应判断在<code>DocActivity</code>中，但实际上得到的是在原进程的<code>activity</code>中。<br>在多种方法尝试无果后，只能暂时修改源码，将<code>doc</code>放在同进程打开。</p>
+<h3 id="View获取的问题"><a href="#View获取的问题" class="headerlink" title="View获取的问题"></a>View获取的问题</h3><p>获取想要的<code>View</code>是编写用例最主要的难点所在，在获取<code>View</code>的时候也遇到了不少的坑：</p>
+<h4 id="重复出现的View"><a href="#重复出现的View" class="headerlink" title="重复出现的View"></a>重复出现的View</h4><p><strong>实际上通过<code>getCurrentViews()</code>获取到的View对象包括所有<code>activity</code>的所有<code>View</code></strong>，比如主页面有3个<code>tab</code>，每个<code>tab</code>中有一个<code>RecyclerView</code>，<strong>这三个RecyclerView都是可以被获取到的（而不是想象中的只获取到当前可见的这个），甚至在打开新的<code>activity</code>后，后台的<code>activity</code>中的<code>RecyclerView</code>还是可以被获取到的。但是使用<code>getView()</code>方法获取的范围是当前<code>activity</code>。</strong><br>这意味着什么呢？如果这些<code>RecyclerView</code>有相同的<code>id</code>，使用<code>getView(int id)</code>方法获取到的只是第一个，即使切到了第二个<code>tab</code>，获取到的还是第一个<code>tab</code>中的<code>RecyclerView</code>。<br>面对这个情况我们可以用三种方法：</p>
+<ul>
+<li>如果它们<code>id</code>不同，使用<code>getView(int id)</code>就可以拿到特定的。如果<code>id</code>相同，可以传入第二个<code>index</code>参数来获取同<code>id</code>的第n个实例</li>
+<li>使用<code>getView(类名, int index)</code>拿到该类所有实例中的第n个，因为各个<code>RecyclerView</code>加载的顺序是相对固定的，所以每次运行拿到的<code>RecyclerView</code>是同一个。拿上面的例子来说，如果要拿到第二个<code>tab</code>中的<code>RecyclerView</code>，要获取的应该是第2个。</li>
+<li>先获取它的任意一个<code>ParentView</code>，然后通过<code>getCurrentViews(类名，ViewGroup)</code>方法拿到<code>List</code>，如果<code>ViewGroup</code>是唯一的，这个<code>List</code>中应该只会有我们想要的那个，也可以用<code>ViewGroup</code>来缩小我们搜索的范围。<h4 id="View获取的技巧"><a href="#View获取的技巧" class="headerlink" title="View获取的技巧"></a>View获取的技巧</h4>总结一下</li>
+<li>定位<code>View</code>最为方便的就是使用<code>getView(int id/类名)</code>这个方式，如果<code>id</code>/类名的实例唯一，就可以直接拿到。</li>
+<li>如果同<code>id</code>/类名有很多个<code>view</code>存在，要使用<code>getView(int id/类名, int index)</code>，拿到第n个<code>view</code>实例。</li>
+<li>如果该<code>view</code>所处的<strong>任一个<code>ViewGroup</code>很好获取（有唯一id/类名）</strong>，可以通过<code>getCurrentViews(类名, ViewGroup)</code>这个方式迅速缩小范围，拿到想要的<code>View</code>。<h4 id="RecyclerView中获取ViewHolder"><a href="#RecyclerView中获取ViewHolder" class="headerlink" title="RecyclerView中获取ViewHolder"></a>RecyclerView中获取ViewHolder</h4><code>Robotium</code>允许我们直接拿到<code>View</code>对象，所以我们可以直接使用<code>RecyclerView</code>的<code>findViewHolderForAdapterPosition()</code>方法去拿<code>ViewHolder</code>，但是事情并没有这么简单，我们知道<code>RecyclerView</code>的特点是没有在屏幕上显示的<code>ViewHolder</code>是没有被实例化的，这样拿到的会是<code>null</code>，所以为了拿到所有<code>ViewHolder</code>我们还需要使用<br><code>scrollDownRecyclerView()</code>方法让<code>RecyclerView</code>滚动起来，但是使用这个方法还会有问题，有时候它会失效（怀疑是没有完成滚动就执行了下一条语句），<strong>所以还需要在调用这个方法之后设一个延迟（100ms就行）</strong>，样例代码如下：<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; listAdapter.getItemCount(); i++) &#123;</div><div class="line">    RecyclerView.ViewHolder viewHolder = recyclerView.findViewHolderForAdapterPosition(i);</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">null</span> == viewHolder) &#123;</div><div class="line">        mSolo.scrollDownRecyclerView(<span class="number">0</span>);</div><div class="line">        SystemClock.sleep(<span class="number">100</span>);</div><div class="line">        viewHolder = recyclerView.findViewHolderForAdapterPosition(i);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">if</span> (testAction.test(listAdapter, viewHolder, i)) &#123;</div><div class="line">        <span class="keyword">break</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="WebView中的WebElement获取需要延迟"><a href="#WebView中的WebElement获取需要延迟" class="headerlink" title="WebView中的WebElement获取需要延迟"></a>WebView中的WebElement获取需要延迟</h3><p>之前介绍了等待<code>WebView</code>加载的方法，但是实际上这个方法返回后通过<code>getWebElements()</code>拿到的<code>WebElements</code>是空的，实际上想要拿到<code>WebElement</code>还要等待几秒种的时间。</p>
+<h3 id="输入字符的问题"><a href="#输入字符的问题" class="headerlink" title="输入字符的问题"></a>输入字符的问题</h3><h4 id="直接输入字符的方法"><a href="#直接输入字符的方法" class="headerlink" title="直接输入字符的方法"></a>直接输入字符的方法</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">inputString</span><span class="params">(String text)</span> </span>&#123;</div><div class="line">    InstrumentationRegistry.getInstrumentation().sendStringSync(text);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>会把<code>string</code>拆分成按键序列输入。</p>
+<h4 id="丢失字符的问题"><a href="#丢失字符的问题" class="headerlink" title="丢失字符的问题"></a>丢失字符的问题</h4><p>调用上面的方法输入的字符过长的时候会偶发出现字符丢失的问题，暂时不知道解决方法，只能输入短一点的字符。</p>
+<h3 id="方法调用顺序的问题"><a href="#方法调用顺序的问题" class="headerlink" title="方法调用顺序的问题"></a>方法调用顺序的问题</h3><p>写在<code>AndroidTest</code>文件夹下同一个测试类中的各个方法的调用顺序是未知的，而且没有找到好的办法可以直接在内部决定它们的调用顺序，本来这并不是一个大问题，但是在写测试的过程中出现了一个比较致命的问题：连续打开<code>WebView</code>会导致<code>WebView</code>无法加载。这个问题应该是由于复用了<code>WebView</code>或者<code>loading view</code>的判断出了问题导致的。单独单次地运行单个测试方法并不会出现这个问题，所以考虑转而使用手写测试脚本 的方式来决定方法的调用顺序并且单次地运行单个测试方法。同时脚本还应该支持重新编译测试Apk并且安装到手机，并且可以指定测试的方法与执行顺序。<br>最终编写完成的脚本如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#!/bin/bash</span></div><div class="line"><span class="keyword">function</span> <span class="function"><span class="title">rebuild_install</span></span>() &#123;</div><div class="line">    ./gradlew --build-cache :app:assemblePublishxxxDebug :app:assemblePublishxxxDebugAndroidTest</div><div class="line">    adb push app/build/outputs/apk/publishxxx/debug/app-publish-xxx-debug.apk /data/<span class="built_in">local</span>/tmp/com.xxx.xx.xxxx</div><div class="line">    adb shell pm install -t -r <span class="string">"/data/local/tmp/com.xxx.xx.xxxx"</span></div><div class="line">    adb push app/build/outputs/apk/androidTest/publishxxx/debug/app-publish-xxx-debug-androidTest.apk /data/<span class="built_in">local</span>/tmp/com.xxx.xx.xxxx</div><div class="line">    adb shell pm install -t -r <span class="string">"/data/local/tmp/com.xxx.xx.xxxx"</span></div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="built_in">cd</span> ..</div><div class="line"><span class="keyword">if</span> <span class="built_in">test</span> -z <span class="string">"<span class="variable">$1</span>"</span></div><div class="line"><span class="keyword">then</span></div><div class="line">    <span class="built_in">echo</span> Not Rebuild</div><div class="line"><span class="keyword">else</span></div><div class="line">    <span class="keyword">if</span> [ <span class="string">"<span class="variable">$1</span>"</span>=<span class="string">"rebuild"</span> ]</div><div class="line">    <span class="keyword">then</span></div><div class="line">        rebuild_install</div><div class="line">    <span class="keyword">fi</span></div><div class="line"><span class="keyword">fi</span></div><div class="line"></div><div class="line">test_funcs=($(awk <span class="string">'&#123;print $0&#125;'</span> ui_test/funtion_names.txt))</div><div class="line"><span class="keyword">for</span> funcs <span class="keyword">in</span> <span class="variable">$&#123;test_funcs[@]&#125;</span></div><div class="line"><span class="keyword">do</span></div><div class="line">    <span class="built_in">echo</span> ┌--------------------------------------</div><div class="line">    <span class="built_in">echo</span> Start <span class="variable">$funcs</span></div><div class="line">    adb shell am force-stop com.xxx.xx.xxxx</div><div class="line">    adb shell am instrument -w -r   <span class="_">-e</span> debug <span class="literal">false</span> <span class="_">-e</span> class com.xxx.xx.xxxx.MainInstrumentedTest<span class="comment">#$funcs com.xxx.xx.xxxx.test/android.support.test.runner.AndroidJUnitRunner | sed -En -e '/There was/,/FAILURES/p;/OK/p'</span></div><div class="line">    <span class="built_in">echo</span> └--------------------------------------</div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure></p>
+<p>需要测试的方法按顺序放在funtion_names.txt文件中：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">checkLogout</div><div class="line">checkNewDoc</div><div class="line">checkCreateDoc</div><div class="line">checkOpenShare</div></pre></td></tr></table></figure></p>
+<p>在使用时可以传入<code>rebuild</code>参数来重新构建并安装，未传入可以直接开始测试：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">./test.sh rebuild // 重新构建并安装</div><div class="line">./test.sh //直接测试</div></pre></td></tr></table></figure></p>
+<p>运行结果示例：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line">Not Rebuild</div><div class="line">┌--------------------------------------</div><div class="line">Start checkLogout</div><div class="line">OK (1 test)</div><div class="line">└--------------------------------------</div><div class="line">┌--------------------------------------</div><div class="line">Start checkNewDoc</div><div class="line">OK (1 test)</div><div class="line">└--------------------------------------</div><div class="line">┌--------------------------------------</div><div class="line">Start checkCreateDoc</div><div class="line">OK (1 test)</div><div class="line">└--------------------------------------</div><div class="line">┌--------------------------------------</div><div class="line">Start checkOpenShare</div><div class="line">OK (1 test)</div><div class="line">└--------------------------------------</div></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者：</strong>viseator(吴迪)</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="http://www.viseator.com/2018/02/09/android_ui_test/" title="Android UI自动化测试技术选择与踩坑">http://www.viseator.com/2018/02/09/android_ui_test/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 CC BY-NC-SA 4.0 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Test/" rel="tag"># Test</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/11/02/android_view_event_3/" rel="next" title="Android 触摸事件分发机制（三）View触摸事件分发机制">
+                <i class="fa fa-chevron-left"></i> Android 触摸事件分发机制（三）View触摸事件分发机制
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="viseator(吴迪)" />
+            
+              <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">18</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/viseator" target="_blank" title="GitHub" rel="external nofollow"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:viseator@gmail.com" target="_blank" title="Email" rel="external nofollow"><i class="fa fa-fw fa-envelope"></i>Email</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.hustunique.com/" title="UniqueStudio" target="_blank">UniqueStudio</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.hustmeituan.club/" title="HustMeituanClub" target="_blank">HustMeituanClub</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.codedragon.tech/" title="BlackDragon" target="_blank">BlackDragon</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://imzhwk.com/" title="imzhwk" target="_blank">imzhwk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://moe.petnakanojo.com/" title="PetnaKanojo" target="_blank">PetnaKanojo</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://alexandertang.cn/" title="Alexander" target="_blank">Alexander</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://qzwlecr.github.io/" title="qzwlecr" target="_blank">qzwlecr</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.kurokoi.moe/" title="Kurokoi" target="_blank">Kurokoi</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试框架功能对比"><span class="nav-number">2.</span> <span class="nav-text">测试框架功能对比</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#概览"><span class="nav-number">2.1.</span> <span class="nav-text">概览</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实际测试编写体验"><span class="nav-number">2.2.</span> <span class="nav-text">实际测试编写体验</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#最终框架选择"><span class="nav-number">2.3.</span> <span class="nav-text">最终框架选择</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用过程中踩的一些大坑"><span class="nav-number">3.</span> <span class="nav-text">使用过程中踩的一些大坑</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量必须使用static"><span class="nav-number">3.1.</span> <span class="nav-text">变量必须使用static</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#等待引发的问题"><span class="nav-number">3.2.</span> <span class="nav-text">等待引发的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#等待？"><span class="nav-number">3.2.1.</span> <span class="nav-text">等待？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#解决方法"><span class="nav-number">3.2.2.</span> <span class="nav-text">解决方法</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#跨进程引发的问题"><span class="nav-number">3.3.</span> <span class="nav-text">跨进程引发的问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#View获取的问题"><span class="nav-number">3.4.</span> <span class="nav-text">View获取的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#重复出现的View"><span class="nav-number">3.4.1.</span> <span class="nav-text">重复出现的View</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#View获取的技巧"><span class="nav-number">3.4.2.</span> <span class="nav-text">View获取的技巧</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#RecyclerView中获取ViewHolder"><span class="nav-number">3.4.3.</span> <span class="nav-text">RecyclerView中获取ViewHolder</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#WebView中的WebElement获取需要延迟"><span class="nav-number">3.5.</span> <span class="nav-text">WebView中的WebElement获取需要延迟</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#输入字符的问题"><span class="nav-number">3.6.</span> <span class="nav-text">输入字符的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#直接输入字符的方法"><span class="nav-number">3.6.1.</span> <span class="nav-text">直接输入字符的方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#丢失字符的问题"><span class="nav-number">3.6.2.</span> <span class="nav-text">丢失字符的问题</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#方法调用顺序的问题"><span class="nav-number">3.7.</span> <span class="nav-text">方法调用顺序的问题</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-rocket"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
+
+  
+
+  
+</div>
+
+
+  
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" rel="external nofollow" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" rel="external nofollow" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a></div>
+
+
+
+  <div class="footer-custom">永远欣赏那些可以行我所不能行之事的人</div>
+
+
+        
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261494271&web_id=1261494271" language="JavaScript"></script>
+  </div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.0.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.0.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.0.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.3"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('2');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz", "shxNGHkps7WDMLyCkIKIKSSM");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
