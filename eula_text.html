@@ -1566,10 +1566,6 @@ if(-1<b.indexOf("MSIE")){var c=-1<b.indexOf("MSIE 6")?" lt-ie10 lt-ie9 lt-ie8 lt
                     <a href="http://www.kurokoi.moe/" title="Kurokoi" target="_blank">Kurokoi</a>
                   </li>
                 
-                  <li class="links-of-blogroll-item">
-                    <a href="http://hustdanielhu.com/" title="DanielHu" target="_blank">DanielHu</a>
-                  </li>
-                
               </ul>
             </div>
           
@@ -2175,24 +2171,35 @@ if(-1<b.indexOf("MSIE")){var c=-1<b.indexOf("MSIE 6")?" lt-ie10 lt-ie9 lt-ie8 lt
             var counter = results[0];
             counter.fetchWhenSave(true);
             counter.increment("time");
-            
-              var $element = $(document.getElementById(url));
-              $element.find('.leancloud-visitors-count').text(counter.get('time'));
-            
             counter.save(null, {
               success: function(counter) {
-                
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
               },
               error: function(counter, error) {
                 console.log('Failed to save Visitor num, with error message: ' + error.message);
               }
             });
           } else {
-            
-              var $element = $(document.getElementById(url));
-              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
-              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set 'security' option to 'false'.');
-            
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
           }
         },
         error: function(error) {
