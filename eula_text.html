@@ -2176,11 +2176,11 @@ if(-1<b.indexOf("MSIE")){var c=-1<b.indexOf("MSIE 6")?" lt-ie10 lt-ie9 lt-ie8 lt
             counter.fetchWhenSave(true);
             counter.increment("time");
             
-              var $element = $(document.getElementById(url));
-              $element.find('.leancloud-visitors-count').text(counter.get('time'));
-            
             counter.save(null, {
               success: function(counter) {
+                
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(counter.get('time'));
                 
               },
               error: function(counter, error) {
