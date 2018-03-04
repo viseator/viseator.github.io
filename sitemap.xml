@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://www.viseator.com/about/index.html</loc>
+    
+    <lastmod>2018-03-04T04:36:58.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://www.viseator.com/2018/02/09/android_ui_test/</loc>
     
     <lastmod>2018-02-11T06:45:20.636Z</lastmod>
@@ -47,13 +54,6 @@
     <loc>http://www.viseator.com/images/manifest.json</loc>
     
     <lastmod>2018-02-02T01:19:10.642Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://www.viseator.com/about/index.html</loc>
-    
-    <lastmod>2018-02-02T01:19:07.741Z</lastmod>
     
   </url>
   
