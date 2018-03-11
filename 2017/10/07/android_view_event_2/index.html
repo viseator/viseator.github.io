@@ -149,24 +149,24 @@
 <meta name="keywords" content="Android,View">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始">
-<meta property="og:url" content="http://www.viseator.com/2017/10/07/android_view_event_2/index.html">
+<meta property="og:url" content="https://www.viseator.com/2017/10/07/android_view_event_2/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="回顾在上一篇文章中，我们探索了从内核触摸事件传递到InputDispatcher线程，再与应用线程之间建立InputChannel的过程，并且我们已经看到一个最原始的触摸事件被封装成一个msg并通过InputChannel建立的socket通过sendMessage()方法跨线程通信发送给了应用的UI线程。 这篇文章将会看到应用UI线程的消息队列是如何读取传递过来的触摸事件并进行处理、分发的。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:image" content="http://www.viseator.com/images/event2_1.png">
-<meta property="og:image" content="http://www.viseator.com/images/event2_2.png">
+<meta property="og:image" content="https://www.viseator.com/images/event2_1.png">
+<meta property="og:image" content="https://www.viseator.com/images/event2_2.png">
 <meta property="og:updated_time" content="2018-02-02T01:19:07.534Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始">
 <meta name="twitter:description" content="回顾在上一篇文章中，我们探索了从内核触摸事件传递到InputDispatcher线程，再与应用线程之间建立InputChannel的过程，并且我们已经看到一个最原始的触摸事件被封装成一个msg并通过InputChannel建立的socket通过sendMessage()方法跨线程通信发送给了应用的UI线程。 这篇文章将会看到应用UI线程的消息队列是如何读取传递过来的触摸事件并进行处理、分发的。">
-<meta name="twitter:image" content="http://www.viseator.com/images/event2_1.png">
+<meta name="twitter:image" content="https://www.viseator.com/images/event2_1.png">
 
 
 
 
 
 
-  <link rel="canonical" href="http://www.viseator.com/2017/10/07/android_view_event_2/"/>
+  <link rel="canonical" href="https://www.viseator.com/2017/10/07/android_view_event_2/"/>
 
 
 
@@ -400,7 +400,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://www.viseator.com/2017/10/07/android_view_event_2/">
+    <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/10/07/android_view_event_2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="viseator(吴迪)">
@@ -616,7 +616,7 @@
     <strong>本文作者： </strong>viseator(吴迪)</li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="http://www.viseator.com/2017/10/07/android_view_event_2/" title="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始">http://www.viseator.com/2017/10/07/android_view_event_2/</a>
+    <a href="https://www.viseator.com/2017/10/07/android_view_event_2/" title="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始">https://www.viseator.com/2017/10/07/android_view_event_2/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
