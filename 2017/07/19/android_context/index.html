@@ -87,19 +87,19 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=6.0.6">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=6.2.0">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=6.0.6">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=6.2.0">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=6.0.6">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=6.2.0">
 
 
-  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#F5F5F5">
+  <link rel="mask-icon" href="/images/logo.svg?v=6.2.0" color="#F5F5F5">
 
 
   <link rel="manifest" href="/images/manifest.json">
@@ -118,7 +118,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    version: '6.0.6',
+    version: '6.2.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false},
     fancybox: false,
     fastclick: false,
@@ -241,9 +241,7 @@
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"> 
-
-<div class="site-brand-wrapper">
+      <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
@@ -268,76 +266,64 @@
   </div>
 </div>
 
-<nav class="site-nav">
-  
 
+
+
+<nav class="site-nav">
   
     <ul id="menu" class="menu">
       
         
         
-          
-  <li class="menu-item menu-item-home">
-    <a href="/" rel="section">
-      首页</a>
-</li>
-
-      
-        
         
           
-  <li class="menu-item menu-item-categories">
-    <a href="/categories" rel="section">
-      分类</a>
-</li>
-
-      
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">首页</a>
+  </li>
+        
         
         
           
-  <li class="menu-item menu-item-archives">
-    <a href="/archives" rel="section">
-      归档</a>
-</li>
-
-      
+          <li class="menu-item menu-item-categories">
+    <a href="/categories" rel="section">分类</a>
+  </li>
+        
         
         
           
-  <li class="menu-item menu-item-tags">
-    <a href="/tags" rel="section">
-      标签</a>
-</li>
-
-      
+          <li class="menu-item menu-item-archives">
+    <a href="/archives" rel="section">归档</a>
+  </li>
+        
         
         
           
-  <li class="menu-item menu-item-resource">
-    <a href="/2017/03/25/resource_general" rel="section">
-      资源</a>
-</li>
-
-      
+          <li class="menu-item menu-item-tags">
+    <a href="/tags" rel="section">标签</a>
+  </li>
+        
         
         
           
-  <li class="menu-item menu-item-arch">
-    <a href="/categories/Linux/" rel="section">
-      Arch安装</a>
-</li>
-
-      
+          <li class="menu-item menu-item-resource">
+    <a href="/2017/03/25/resource_general" rel="section">资源</a>
+  </li>
+        
         
         
           
-  <li class="menu-item menu-item-about">
-    <a href="/about" rel="section">
-      关于</a>
-</li>
+          <li class="menu-item menu-item-arch">
+    <a href="/categories/Linux/" rel="section">Arch安装</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about" rel="section">关于</a>
+  </li>
 
       
-
       
         <li class="menu-item menu-item-search">
           
@@ -351,34 +337,6 @@
 
   
     
-
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 
   
 
@@ -409,11 +367,12 @@
 </nav>
 
 
+
   
 
 
 
- </div>
+</div>
     </header>
 
     
@@ -470,11 +429,19 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">Android Context理解与陷阱</h2>
+          <h2 class="post-title" itemprop="name headline">Android Context理解与陷阱
+              
+            
+          </h2>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -482,12 +449,30 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-07-19T19:07:42+08:00">2017-07-19</time>
+
+              
+                
+              
+
+              <time title="创建时间：2017-07-19 19:07:42" itemprop="dateCreated datePublished" datetime="2017-07-19T19:07:42+08:00">2017-07-19</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
+              
             
           </span>
 
@@ -516,6 +501,17 @@
           
 
           
+          
+             <span id="/2017/07/19/android_context/" class="leancloud_visitors" data-flag-title="Android Context理解与陷阱">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -563,17 +559,17 @@
 <p><code>Context</code>就是系统为我们提供上述功能的一个接口，我们需要使用它去完成与系统的信息交换。</p>
 <h2 id="Context从哪里来"><a href="#Context从哪里来" class="headerlink" title="Context从哪里来"></a>Context从哪里来</h2><p><code>Context</code>作为一个依赖于系统的类，<code>SDK</code>中只给了我们一个抽象类，具体的实现由系统完成，下文举例使用的<code>ContextImpl</code>就是<code>AOSP</code>中安卓源码对于<code>Context</code>的一个实现。</p>
 <h2 id="Context的作用"><a href="#Context的作用" class="headerlink" title="Context的作用"></a>Context的作用</h2><h3 id="Context中封装的信息"><a href="#Context中封装的信息" class="headerlink" title="Context中封装的信息"></a>Context中封装的信息</h3><p>我们可以看看<code>Context</code>里面包含了哪些东西（部分）。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> String mBasePackageName; </div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> String mOpPackageName; <span class="comment">//软件包名</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> Resources mResources;</div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> ResourcesManager mResourcesManager; <span class="comment">//用于管理资源文件</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> Display mDisplay; <span class="comment">//为View填充等提供屏幕尺寸、像素密度等信息</span></div><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> DisplayAdjustments mDisplayAdjustments = <span class="keyword">new</span> DisplayAdjustments();</div><div class="line"><span class="keyword">private</span> Resources.Theme mTheme = <span class="keyword">null</span>; <span class="comment">//主题信息</span></div><div class="line"><span class="keyword">private</span> File mCacheDir;</div><div class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</div><div class="line"><span class="keyword">private</span> File mCodeCacheDir;</div><div class="line">...</div><div class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</div><div class="line"><span class="keyword">private</span> File[] mExternalObbDirs;</div><div class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</div><div class="line"><span class="keyword">private</span> File[] mExternalFilesDirs;</div><div class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</div><div class="line"><span class="keyword">private</span> File[] mExternalCacheDirs;</div><div class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</div><div class="line"><span class="keyword">private</span> File[] mExternalMediaDirs; <span class="comment">//各种文件路径</span></div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> String mBasePackageName; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> String mOpPackageName; <span class="comment">//软件包名</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Resources mResources;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> ResourcesManager mResourcesManager; <span class="comment">//用于管理资源文件</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Display mDisplay; <span class="comment">//为View填充等提供屏幕尺寸、像素密度等信息</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> DisplayAdjustments mDisplayAdjustments = <span class="keyword">new</span> DisplayAdjustments();</span><br><span class="line"><span class="keyword">private</span> Resources.Theme mTheme = <span class="keyword">null</span>; <span class="comment">//主题信息</span></span><br><span class="line"><span class="keyword">private</span> File mCacheDir;</span><br><span class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</span><br><span class="line"><span class="keyword">private</span> File mCodeCacheDir;</span><br><span class="line">...</span><br><span class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</span><br><span class="line"><span class="keyword">private</span> File[] mExternalObbDirs;</span><br><span class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</span><br><span class="line"><span class="keyword">private</span> File[] mExternalFilesDirs;</span><br><span class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</span><br><span class="line"><span class="keyword">private</span> File[] mExternalCacheDirs;</span><br><span class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</span><br><span class="line"><span class="keyword">private</span> File[] mExternalMediaDirs; <span class="comment">//各种文件路径</span></span><br></pre></td></tr></table></figure>
 <p>这些域的存在为功能提供了必要的信息，例如在<code>LayoutInflater</code>填充<code>View</code>时需要一个<code>context</code>作为参数，我们查看这个<code>context</code>如何被使用：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">final</span> XmlResourceParser childParser = context.getResources().getLayout(layout);</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> XmlResourceParser childParser = context.getResources().getLayout(layout);</span><br></pre></td></tr></table></figure>
 <p>我们传入的<code>ResourceId</code>最终会被通过<code>context</code>的<code>getResource()</code>方法获取的<code>Resource</code>对象的<code>getLayout()</code>方法定位到对应的<code>xml</code>文件提供给<code>Inflater</code>进行解析。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// Apply a theme wrapper, if allowed and one is specified.</span></div><div class="line"><span class="keyword">if</span> (!ignoreThemeAttr) &#123;</div><div class="line">    <span class="keyword">final</span> TypedArray ta = context.obtainStyledAttributes(attrs, ATTRS_THEME);</div><div class="line">    <span class="keyword">final</span> <span class="keyword">int</span> themeResId = ta.getResourceId(<span class="number">0</span>, <span class="number">0</span>);</div><div class="line">    <span class="keyword">if</span> (themeResId != <span class="number">0</span>) &#123;</div><div class="line">        context = <span class="keyword">new</span> ContextThemeWrapper(context, themeResId);</div><div class="line">    &#125;</div><div class="line">    ta.recycle();</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Apply a theme wrapper, if allowed and one is specified.</span></span><br><span class="line"><span class="keyword">if</span> (!ignoreThemeAttr) &#123;</span><br><span class="line">    <span class="keyword">final</span> TypedArray ta = context.obtainStyledAttributes(attrs, ATTRS_THEME);</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> themeResId = ta.getResourceId(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (themeResId != <span class="number">0</span>) &#123;</span><br><span class="line">        context = <span class="keyword">new</span> ContextThemeWrapper(context, themeResId);</span><br><span class="line">    &#125;</span><br><span class="line">    ta.recycle();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在这里调用了<code>context</code>的<code>obtainStyledAttributes()</code>方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> TypedArray <span class="title">obtainStyledAttributes</span><span class="params">(</span></span></div><div class="line">        AttributeSet set, @StyleableRes <span class="keyword">int</span>[] attrs) &#123;</div><div class="line">    <span class="keyword">return</span> getTheme().obtainStyledAttributes(set, attrs, <span class="number">0</span>, <span class="number">0</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> TypedArray <span class="title">obtainStyledAttributes</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        AttributeSet set, @StyleableRes <span class="keyword">int</span>[] attrs)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> getTheme().obtainStyledAttributes(set, attrs, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最终使用了<code>context</code>中存放的主题信息为填充的<code>view</code>设置属性。</p>
 <p>现在我们知道，我们存放在<code>res</code>文件夹下的内容（布局文件、字符串文件、图片、主题……）都需要通过一个<code>context</code>去向系统获取。</p>
 <p>那么为什么在启动<code>activity</code>、启动<code>service</code>、发送广播时都需要使用<code>context</code>呢？因为这些操作与系统是紧密相关的，我们知道启动这些东西都需要使用一个叫<code>intent</code>的东西（关于<code>intent</code>的内容会在另外的文章讲），以<code>startActivity()</code>方法为例，我们一路向上追溯，可以发现启动<code>activity</code>最终是由<code>AcitivityManagerNative.getDefault()</code>的本地方法<code>startActivity()</code>执行的：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> &#123;</div><div class="line">    intent.migrateExtraStreamToClipData();</div><div class="line">    intent.prepareToLeaveProcess();</div><div class="line">    <span class="keyword">int</span> result = ActivityManagerNative.getDefault().startActivity(</div><div class="line">        whoThread, who.getBasePackageName(), intent,</div><div class="line">        intent.resolveTypeIfNeeded(who.getContentResolver()), token,</div><div class="line">        target != <span class="keyword">null</span> ? target.mEmbeddedID : <span class="keyword">null</span>, requestCode, <span class="number">0</span>, <span class="keyword">null</span>, options);</div><div class="line">    checkStartActivityResult(result, intent);</div><div class="line">&#125; <span class="keyword">catch</span> (RemoteException e) &#123;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    intent.migrateExtraStreamToClipData();</span><br><span class="line">    intent.prepareToLeaveProcess();</span><br><span class="line">    <span class="keyword">int</span> result = ActivityManagerNative.getDefault().startActivity(</span><br><span class="line">        whoThread, who.getBasePackageName(), intent,</span><br><span class="line">        intent.resolveTypeIfNeeded(who.getContentResolver()), token,</span><br><span class="line">        target != <span class="keyword">null</span> ? target.mEmbeddedID : <span class="keyword">null</span>, requestCode, <span class="number">0</span>, <span class="keyword">null</span>, options);</span><br><span class="line">    checkStartActivityResult(result, intent);</span><br><span class="line">&#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这个时候我们发现，传入的<code>context</code>已经变成了上面代码中的<code>who</code>，利用这个 <code>context</code>获取了包名与方法的第四个参数<code>who.getContentResolver()</code>。它的作用是提供信息来解析<code>intent</code>的<a href="https://en.wikipedia.org/wiki/Media_type" target="_blank" rel="noopener"><code>MIME type</code></a>，帮助系统决定<code>intent</code>的目标。</p>
 <p>可以看到<code>context</code>在这里同样起到了一个提供必要信息的作用。</p>
 <h3 id="Context的作用-1"><a href="#Context的作用-1" class="headerlink" title="Context的作用"></a>Context的作用</h3><p>在这里再重复一遍上面说过的话，配合之前的例子，是不是可以更好地理解了呢？</p>
@@ -595,10 +591,10 @@
 <h3 id="使用Context时的陷阱"><a href="#使用Context时的陷阱" class="headerlink" title="使用Context时的陷阱"></a>使用<code>Context</code>时的陷阱</h3><p>现在我们知道<code>Context</code>的几种分类，其实上面的分类也就是我们获取它的方式。着重标出的内容说明了它们被提供的来源，也暗指了它们的生命周期。</p>
 <p>我们常常会在类中保存对<code>Context</code>的引用，但是我们要考虑生命周期的问题：如果被引用的这个<code>Context</code>是一个<code>Acitivity</code>，<strong>如果存放这个引用的类的生命周期大于<code>Activity</code>的生命周期，那么<code>Activity</code>在停止使用之后还被这个类引用着，就会引致无法被GC，造成事实上的内存泄露。</strong></p>
 <p>举一个例子，如果使用下面的一个单例来保存<code>Context</code>的引用来加载资源：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomManager</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> CustomManager sInstance;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CustomManager <span class="title">getInstance</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</div><div class="line">            sInstance = <span class="keyword">new</span> CustomManager(context);</div><div class="line">        &#125;</div><div class="line"> </div><div class="line">        <span class="keyword">return</span> sInstance;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="keyword">private</span> Context mContext;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">CustomManager</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        mContext = context;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomManager</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> CustomManager sInstance;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CustomManager <span class="title">getInstance</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            sInstance = <span class="keyword">new</span> CustomManager(context);</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> sInstance;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> Context mContext;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">CustomManager</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        mContext = context;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这段程序的问题在于不知道传入的<code>Context</code>会是什么类型的，可能在初始化的时候传入的是一个<code>Activity</code>/<code>Serivce</code>，那么几乎可以肯定的是，这个<code>Activity</code>/<code>Service</code>将不会在结束以后被垃圾回收。如果是一个<code>Activity</code>，那么这意味着与它相关联的<code>View</code>或是其他庞大的类都将留在内存中而不会被回收。</p>
 <p>为了避免这样的问题，我们可以改正这个单例：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomManager</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> CustomManager sInstance;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CustomManager <span class="title">getInstance</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="comment">//Always pass in the Application Context</span></div><div class="line">            sInstance = <span class="keyword">new</span> CustomManager(context.getApplicationContext());</div><div class="line">        &#125;</div><div class="line"> </div><div class="line">        <span class="keyword">return</span> sInstance;</div><div class="line">    &#125;</div><div class="line"> </div><div class="line">    <span class="keyword">private</span> Context mContext;</div><div class="line"> </div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="title">CustomManager</span><span class="params">(Context context)</span> </span>&#123;</div><div class="line">        mContext = context;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomManager</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> CustomManager sInstance;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> CustomManager <span class="title">getInstance</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (sInstance == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="comment">//Always pass in the Application Context</span></span><br><span class="line">            sInstance = <span class="keyword">new</span> CustomManager(context.getApplicationContext());</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        <span class="keyword">return</span> sInstance;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    <span class="keyword">private</span> Context mContext;</span><br><span class="line"> </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="title">CustomManager</span><span class="params">(Context context)</span> </span>&#123;</span><br><span class="line">        mContext = context;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们只修改了一处，第7行中我们使用<code>context.getApplicationContext()</code>这个方法来获取<code>Application</code>这个单例，而不是直接保存<code>context</code>本身，这样就可以保证不会出现某<code>context</code>因为被这个单例引用而不能回收的情况。而<code>Application</code>本身是单例这个特性保证了生命周期的一致，不会造成内存的浪费。</p>
 <h3 id="为什么不总是使用application作为context"><a href="#为什么不总是使用application作为context" class="headerlink" title="为什么不总是使用application作为context"></a>为什么不总是使用<code>application</code>作为<code>context</code></h3><p>既然它是一个单例，那么我们为什么不直接在任何地方都只使用它呢？</p>
 <p>这是因为各种<code>context</code>的能力有所不同：</p>
@@ -991,7 +987,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
-  <span class="with-love">
+  <span class="with-love" id="animate">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
@@ -1006,7 +1002,7 @@
 
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" rel="external nofollow" href="https://hexo.io">Hexo</a> 强力驱动</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" rel="external nofollow" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
 
 
 
@@ -1014,7 +1010,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" rel="external nofollow" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a></div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" rel="external nofollow" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.2.0</div>
 
 
 
@@ -1103,25 +1099,25 @@
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
 
 
 
   
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
 
 
 
@@ -1492,6 +1488,102 @@
   
 
   
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz", "shxNGHkps7WDMLyCkIKIKSSM");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
 
   
 <script>
@@ -1513,6 +1605,8 @@
   
 
   
+  
+
   
 
   

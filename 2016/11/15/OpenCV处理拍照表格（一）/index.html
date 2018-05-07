@@ -87,19 +87,19 @@
 
 <link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
 
-<link href="/css/main.css?v=6.0.6" rel="stylesheet" type="text/css" />
+<link href="/css/main.css?v=6.2.0" rel="stylesheet" type="text/css" />
 
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=6.0.6">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=6.2.0">
 
 
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=6.0.6">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=6.2.0">
 
 
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=6.0.6">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=6.2.0">
 
 
-  <link rel="mask-icon" href="/images/logo.svg?v=6.0.6" color="#F5F5F5">
+  <link rel="mask-icon" href="/images/logo.svg?v=6.2.0" color="#F5F5F5">
 
 
   <link rel="manifest" href="/images/manifest.json">
@@ -118,7 +118,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    version: '6.0.6',
+    version: '6.2.0',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false},
     fancybox: false,
     fastclick: false,
@@ -247,9 +247,7 @@
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"> 
-
-<div class="site-brand-wrapper">
+      <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
 
@@ -274,76 +272,64 @@
   </div>
 </div>
 
-<nav class="site-nav">
-  
 
+
+
+<nav class="site-nav">
   
     <ul id="menu" class="menu">
       
         
         
-          
-  <li class="menu-item menu-item-home">
-    <a href="/" rel="section">
-      首页</a>
-</li>
-
-      
-        
         
           
-  <li class="menu-item menu-item-categories">
-    <a href="/categories" rel="section">
-      分类</a>
-</li>
-
-      
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">首页</a>
+  </li>
+        
         
         
           
-  <li class="menu-item menu-item-archives">
-    <a href="/archives" rel="section">
-      归档</a>
-</li>
-
-      
+          <li class="menu-item menu-item-categories">
+    <a href="/categories" rel="section">分类</a>
+  </li>
+        
         
         
           
-  <li class="menu-item menu-item-tags">
-    <a href="/tags" rel="section">
-      标签</a>
-</li>
-
-      
+          <li class="menu-item menu-item-archives">
+    <a href="/archives" rel="section">归档</a>
+  </li>
+        
         
         
           
-  <li class="menu-item menu-item-resource">
-    <a href="/2017/03/25/resource_general" rel="section">
-      资源</a>
-</li>
-
-      
+          <li class="menu-item menu-item-tags">
+    <a href="/tags" rel="section">标签</a>
+  </li>
+        
         
         
           
-  <li class="menu-item menu-item-arch">
-    <a href="/categories/Linux/" rel="section">
-      Arch安装</a>
-</li>
-
-      
+          <li class="menu-item menu-item-resource">
+    <a href="/2017/03/25/resource_general" rel="section">资源</a>
+  </li>
+        
         
         
           
-  <li class="menu-item menu-item-about">
-    <a href="/about" rel="section">
-      关于</a>
-</li>
+          <li class="menu-item menu-item-arch">
+    <a href="/categories/Linux/" rel="section">Arch安装</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about" rel="section">关于</a>
+  </li>
 
       
-
       
         <li class="menu-item menu-item-search">
           
@@ -357,34 +343,6 @@
 
   
     
-
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 
   
 
@@ -415,11 +373,12 @@
 </nav>
 
 
+
   
 
 
 
- </div>
+</div>
     </header>
 
     
@@ -476,11 +435,19 @@
 
         
         
-          <h2 class="post-title" itemprop="name headline">OpenCV处理拍照表格（一）</h2>
+          <h2 class="post-title" itemprop="name headline">OpenCV处理拍照表格（一）
+              
+            
+          </h2>
         
 
         <div class="post-meta">
           <span class="post-time">
+
+            
+            
+            
+
             
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
@@ -488,12 +455,30 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2016-11-15T21:09:28+08:00">2016-11-15</time>
+
+              
+                
+              
+
+              <time title="创建时间：2016-11-15 21:09:28" itemprop="dateCreated datePublished" datetime="2016-11-15T21:09:28+08:00">2016-11-15</time>
             
 
             
-            
+              
 
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
+              
             
           </span>
 
@@ -513,7 +498,7 @@
 
                 
                 
-                  ， 
+                  ，
                 
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Java/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a></span>
@@ -529,6 +514,17 @@
           
 
           
+          
+             <span id="/2016/11/15/OpenCV处理拍照表格（一）/" class="leancloud_visitors" data-flag-title="OpenCV处理拍照表格（一）">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
           
 
           
@@ -552,8 +548,8 @@
       
         <h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p><a href="https://www.learn2crack.com/2016/03/setup-opencv-sdk-android-studio.html" target="_blank" rel="noopener">https://www.learn2crack.com/2016/03/setup-opencv-sdk-android-studio.html</a></p>
 <p>非常新的一篇在AS中安装<code>OpenCV</code>的教程，按教程装好了环境并测试通过。</p>
-<p>注意教程中没有讲到的是想要使用<code>OpenCV</code>的相关功能，需要安装下载包中apk目录下的对应处理器的<code>OpenCV manager</code>。并在使用<code>OpenCV</code>的活动中加入以下内容：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> BaseLoaderCallback mLoaderCallback = <span class="keyword">new</span> BaseLoaderCallback(<span class="keyword">this</span>) &#123;</div><div class="line"></div><div class="line">    <span class="comment">//Connect to OpenCV manager service and initialize</span></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onManagerConnected</span><span class="params">(<span class="keyword">int</span> status)</span> </span>&#123;</div><div class="line">        <span class="keyword">switch</span> (status)&#123;</div><div class="line">            <span class="keyword">case</span> BaseLoaderCallback.SUCCESS:</div><div class="line">                Log.i(TAG, <span class="string">"OpenCV Success"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">            <span class="keyword">default</span>:</div><div class="line">                <span class="keyword">super</span>.onManagerConnected(status);</div><div class="line">                Log.i(TAG, <span class="string">"OpenCV Fail"</span>);</div><div class="line">                <span class="keyword">break</span>;</div><div class="line">        &#125;</div><div class="line"></div><div class="line">    &#125;</div><div class="line">&#125;;</div></pre></td></tr></table></figure></p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//Initialize at every resume</span></div><div class="line"><span class="meta">@Override</span></div><div class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</div><div class="line">    <span class="keyword">super</span>.onResume();</div><div class="line">    OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, getApplicationContext(), mLoaderCallback);</div><div class="line">    Log.d(TAG, <span class="string">"On Resume OK"</span>);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>注意教程中没有讲到的是想要使用<code>OpenCV</code>的相关功能，需要安装下载包中apk目录下的对应处理器的<code>OpenCV manager</code>。并在使用<code>OpenCV</code>的活动中加入以下内容：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> BaseLoaderCallback mLoaderCallback = <span class="keyword">new</span> BaseLoaderCallback(<span class="keyword">this</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Connect to OpenCV manager service and initialize</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onManagerConnected</span><span class="params">(<span class="keyword">int</span> status)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (status)&#123;</span><br><span class="line">            <span class="keyword">case</span> BaseLoaderCallback.SUCCESS:</span><br><span class="line">                Log.i(TAG, <span class="string">"OpenCV Success"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">super</span>.onManagerConnected(status);</span><br><span class="line">                Log.i(TAG, <span class="string">"OpenCV Fail"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Initialize at every resume</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onResume();</span><br><span class="line">    OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, getApplicationContext(), mLoaderCallback);</span><br><span class="line">    Log.d(TAG, <span class="string">"On Resume OK"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
 <blockquote>
 <p><a href="http://docs.opencv.org/java/3.1.0/" target="_blank" rel="noopener">http://docs.opencv.org/java/3.1.0/</a>&gt;<br>opencv的官方文档。<br><strong>更正：上面的3.1版的文档并没有详细的方法解释！</strong></p>
@@ -602,7 +598,7 @@
 <p>可以想到，在去噪后，部分笔画也随之缩小甚至细的地方会直接消失，所以腐蚀之后要再进行一步膨胀，即把图案的边缘扩大。</p>
 <p>因为噪点已经消失，所以也不会因扩大而回来，但笔画依然存在，就会膨胀而得到弥补，也顺便可以补一下残缺的地方。</p>
 <p>原理大概就是这样，<strong>但是由于OpenCV的这两个操作针对的是图像中的亮点（白色的地方被认为是亮点），而我们的表格又是白底黑字的，实际上黑色的部分是我们想要处理的部分，所以我将这两步交换了，相当于是对黑色的地方先腐蚀后膨胀。</strong></p>
-<p>下面是代码实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Mat kernelDilate = Imgproc.getStructuringElement(Imgproc.MORPH_DILATE, <span class="keyword">new</span> Size(<span class="number">2</span>, <span class="number">2</span>));</div><div class="line">Imgproc.dilate(srcPic, srcPic, kernelDilate);</div><div class="line">Imgcodecs.imwrite(<span class="string">"/storage/sdcard/pic/test/afterErode.jpg"</span>, srcPic);</div><div class="line">Mat kernelErode = Imgproc.getStructuringElement(Imgproc.MORPH_ERODE, <span class="keyword">new</span> Size(<span class="number">2</span>, <span class="number">2</span>));</div><div class="line">Imgproc.erode(srcPic, srcPic, kernelErode);</div><div class="line">Imgcodecs.imwrite(<span class="string">"/storage/sdcard/pic/test/afterDilate.jpg"</span>, srcPic);</div></pre></td></tr></table></figure></p>
+<p>下面是代码实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Mat kernelDilate = Imgproc.getStructuringElement(Imgproc.MORPH_DILATE, <span class="keyword">new</span> Size(<span class="number">2</span>, <span class="number">2</span>));</span><br><span class="line">Imgproc.dilate(srcPic, srcPic, kernelDilate);</span><br><span class="line">Imgcodecs.imwrite(<span class="string">"/storage/sdcard/pic/test/afterErode.jpg"</span>, srcPic);</span><br><span class="line">Mat kernelErode = Imgproc.getStructuringElement(Imgproc.MORPH_ERODE, <span class="keyword">new</span> Size(<span class="number">2</span>, <span class="number">2</span>));</span><br><span class="line">Imgproc.erode(srcPic, srcPic, kernelErode);</span><br><span class="line">Imgcodecs.imwrite(<span class="string">"/storage/sdcard/pic/test/afterDilate.jpg"</span>, srcPic);</span><br></pre></td></tr></table></figure></p>
 <p>参数中有一个<code>Kernel</code>，这个就是处理图像的核，具体的内容不展开，我们利用<code>getStructuringElement</code>函数可以构建特定的处理核，这个函数第一个参数是构建的核的类型，除了用于代码中用到的膨胀和腐蚀的类型，还有<code>ract</code>、<code>cross</code>、<code>ellipse</code>等不同的形状，后面的<code>size</code>就是我们设置的重点了，指的是核的大小，可以理解成检测的范围，对于大的噪点自然需要大的范围，但是也意味着笔画细节丢失也更加严重。对于膨胀操作，则可以理解成膨胀的像素数，这个数值越大，最后的结果中的笔画也就越粗。</p>
 <p>下面是上述代码的结果对比：</p>
 <p><img src="/images/QQ截图20161115205922-300x188.png" alt="qq%e6%88%aa%e5%9b%be20161115205922">之前</p>
@@ -977,7 +973,7 @@
     <footer id="footer" class="footer">
       <div class="footer-inner">
         <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
-  <span class="with-love">
+  <span class="with-love" id="animate">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
@@ -992,7 +988,7 @@
 
 
 
-  <div class="powered-by">由 <a class="theme-link" target="_blank" rel="external nofollow" href="https://hexo.io">Hexo</a> 强力驱动</div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" rel="external nofollow" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
 
 
 
@@ -1000,7 +996,7 @@
 
 
 
-  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" rel="external nofollow" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a></div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" rel="external nofollow" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.2.0</div>
 
 
 
@@ -1089,25 +1085,25 @@
   
 
 
-  <script type="text/javascript" src="/js/src/utils.js?v=6.0.6"></script>
+  <script type="text/javascript" src="/js/src/utils.js?v=6.2.0"></script>
 
-  <script type="text/javascript" src="/js/src/motion.js?v=6.0.6"></script>
-
-
-
-  
-  
-
-  
-  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.0.6"></script>
-<script type="text/javascript" src="/js/src/post-details.js?v=6.0.6"></script>
+  <script type="text/javascript" src="/js/src/motion.js?v=6.2.0"></script>
 
 
 
   
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.2.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.2.0"></script>
 
 
-  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.0.6"></script>
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.2.0"></script>
 
 
 
@@ -1478,6 +1474,102 @@
   
 
   
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz", "shxNGHkps7WDMLyCkIKIKSSM");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text('Counter not initialized! See more at console err msg.');
+              console.error('ATTENTION! LeanCloud counter has security bug, see here how to solve it: https://github.com/theme-next/hexo-leancloud-counter-security. \n But you also can use LeanCloud without security, by set \'security\' option to \'false\'.');
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
 
   
 <script>
@@ -1499,6 +1591,8 @@
   
 
   
+  
+
   
 
   
