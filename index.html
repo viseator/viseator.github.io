@@ -410,6 +410,221 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2018/07/02/80x86_asm_c/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="viseator(吴迪)">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="viseator's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/07/02/80x86_asm_c/" itemprop="url">
+                  80x86下汇编与C语言的混合编程
+                </a>
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-07-02 17:30:05" itemprop="dateCreated datePublished" datetime="2018-07-02T17:30:05+08:00">2018-07-02</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-07-03 00:23:38" itemprop="dateModified" datetime="2018-07-03T00:23:38+08:00">2018-07-03</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Assembly/" itemprop="url" rel="index"><span itemprop="name">Assembly</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/07/02/80x86_asm_c/" class="leancloud_visitors" data-flag-title="80x86下汇编与C语言的混合编程">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>在汇编课程中的实验中要求了我们在80x86下实现C语言与汇编代码的混合编程，虽然80x86时代离现代有些久远，但现代的汇编语言还是演化自当年的，基础的原理并没有改变，我们可以把80x86当作x86的一个简化版本来学习一些重要的概念。</p>
+<h2 id="从一个例子开始"><a href="#从一个例子开始" class="headerlink" title="从一个例子开始"></a>从一个例子开始</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;stdio.h&gt;</span><br><span class="line">extern int test_fun(void *param);</span><br><span class="line">extern int var_from_asm;</span><br><span class="line">int global_init = 10;</span><br><span class="line">int global;</span><br><span class="line">static int static_init = 1000;</span><br><span class="line">static int static_var;</span><br><span class="line">char *string = &quot;test string&quot;;</span><br><span class="line">int main() &#123;</span><br><span class="line">    int value = 666;</span><br><span class="line">    test_fun(&amp;value);</span><br><span class="line">    printf(&quot;var from asm:%d\n&quot;, var_from_asm);</span><br><span class="line">    printf(&quot;assign from asm:%d\n&quot;, global);</span><br><span class="line">    printf(&quot;value passed by stack:%d\n&quot;, global_init);</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到我们在C语言中分别定义了几种类型的变量：初始化过的全局变量、未初始化的全局变量、初始化过的静态变量、未初始化的静态变量与字符串。定义这些变量是为了查看编译后各变量所处的数据段与存放形式。</p>
+<p>同时也声明了一个外部函数<code>test_fun()</code>与一个外部变量<code>var_from_asm</code>，用来测试C语言对<code>asm</code>声明的符号的引用。</p>
+<p>现在我们编译这个C语言文件到汇编文件，使用<code>TC2.0</code>的命令行工具<code>tcc</code>，使用<code>-S</code>参数，即可在同目录生成同名的<code>ASM</code>文件：</p>
+<p><img src="/images/8086asmc1.png" alt=""></p>
+<p>我们打开文件，删除一些debug信息后的结果如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line">_TEXT	segment byte public &apos;CODE&apos;</span><br><span class="line">_TEXT	ends</span><br><span class="line">DGROUP	group	_DATA,_BSS</span><br><span class="line">	assume	cs:_TEXT,ds:DGROUP</span><br><span class="line">_DATA	segment word public &apos;DATA&apos;</span><br><span class="line">_DATA	ends</span><br><span class="line">_BSS	segment word public &apos;BSS&apos;</span><br><span class="line">_BSS	ends</span><br><span class="line">_DATA	segment word public &apos;DATA&apos;</span><br><span class="line">_global_init	label	word</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">static_init	label	word</span><br><span class="line">	db	232</span><br><span class="line">	db	3</span><br><span class="line">_string	label	word</span><br><span class="line">	dw	DGROUP:s@</span><br><span class="line">_DATA	ends</span><br><span class="line">_TEXT	segment byte public &apos;CODE&apos;</span><br><span class="line">   ;	</span><br><span class="line">   ;	int main() &#123;</span><br><span class="line">   ;	</span><br><span class="line">	assume	cs:_TEXT</span><br><span class="line">_main	proc	near</span><br><span class="line">	push	bp</span><br><span class="line">	mov	bp,sp</span><br><span class="line">	sub	sp,2</span><br><span class="line">   ;	</span><br><span class="line">   ;	    int value = 666;</span><br><span class="line">   ;	</span><br><span class="line">	mov	word ptr [bp-2],666</span><br><span class="line">   ;	</span><br><span class="line">   ;	    test_fun(&amp;value);</span><br><span class="line">   ;	</span><br><span class="line">	lea	ax,word ptr [bp-2]</span><br><span class="line">	push	ax</span><br><span class="line">	call	near ptr _test_fun</span><br><span class="line">	pop	cx</span><br><span class="line">   ;	</span><br><span class="line">   ;	    printf(&quot;var from asm:%d\n&quot;, var_from_asm);</span><br><span class="line">   ;	</span><br><span class="line">	push	word ptr DGROUP:_var_from_asm</span><br><span class="line">	mov	ax,offset DGROUP:s@+12</span><br><span class="line">	push	ax</span><br><span class="line">	call	near ptr _printf</span><br><span class="line">	pop	cx</span><br><span class="line">	pop	cx</span><br><span class="line">   ;	</span><br><span class="line">   ;	    printf(&quot;assign from asm:%d\n&quot;, global);</span><br><span class="line">   ;	</span><br><span class="line">	push	word ptr DGROUP:_global</span><br><span class="line">	mov	ax,offset DGROUP:s@+29</span><br><span class="line">	push	ax</span><br><span class="line">	call	near ptr _printf</span><br><span class="line">	pop	cx</span><br><span class="line">	pop	cx</span><br><span class="line">   ;	</span><br><span class="line">   ;	    printf(&quot;value passed by stack:%d\n&quot;, global_init);</span><br><span class="line">   ;	</span><br><span class="line">	push	word ptr DGROUP:_global_init</span><br><span class="line">	mov	ax,offset DGROUP:s@+49</span><br><span class="line">	push	ax</span><br><span class="line">	call	near ptr _printf</span><br><span class="line">	pop	cx</span><br><span class="line">	pop	cx</span><br><span class="line">   ;	</span><br><span class="line">   ;	    return 0;</span><br><span class="line">   ;	</span><br><span class="line">	xor	ax,ax</span><br><span class="line">	jmp	short @1@58</span><br><span class="line">@1@58:</span><br><span class="line">   ;	</span><br><span class="line">   ;	&#125;</span><br><span class="line">   ;	</span><br><span class="line">	mov	sp,bp</span><br><span class="line">	pop	bp</span><br><span class="line">	ret	</span><br><span class="line">_main	endp</span><br><span class="line">_TEXT	ends</span><br><span class="line">_BSS	segment word public &apos;BSS&apos;</span><br><span class="line">static_var	label	word</span><br><span class="line">	db	2 dup (?)</span><br><span class="line">_global	label	word</span><br><span class="line">	db	2 dup (?)</span><br><span class="line">_BSS	ends</span><br><span class="line">_DATA	segment word public &apos;DATA&apos;</span><br><span class="line">s@	label	byte</span><br><span class="line">	db	&apos;test string&apos;</span><br><span class="line">	db	0</span><br><span class="line">	db	&apos;var from asm:%d&apos;</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">	db	&apos;assign from asm:%d&apos;</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">	db	&apos;value passed by stack:%d&apos;</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">_DATA	ends</span><br><span class="line">_TEXT	segment byte public &apos;CODE&apos;</span><br><span class="line">_TEXT	ends</span><br><span class="line">	public	_main</span><br><span class="line">	public	_string</span><br><span class="line">_static_var	equ	static_var</span><br><span class="line">_static_init	equ	static_init</span><br><span class="line">	public	_global</span><br><span class="line">	public	_global_init</span><br><span class="line">	extrn	_var_from_asm:word</span><br><span class="line">	extrn	_test_fun:near</span><br><span class="line">	extrn	_printf:near</span><br><span class="line">_s@	equ	s@</span><br><span class="line">	end</span><br></pre></td></tr></table></figure>
+<p>首先可以发现几个数据段：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">_TEXT	segment byte public &apos;CODE&apos;</span><br><span class="line">_DATA	segment word public &apos;DATA&apos;</span><br><span class="line">_BSS	segment word public &apos;BSS&apos;</span><br></pre></td></tr></table></figure>
+<p>是不是很熟悉？虽然是<code>80386</code>，但是现代<code>ELF</code>中仍可以见到这几个节的身影。<br><code>DGROUP    group    _DATA,_BSS
+DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号。<br>分析这几个段中的内容，可以发现<code>_TEXT</code>段即运行时的CS段，存放着代码。<br><code>_DATA</code>段中存放着下列内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">_global_init	label	word</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">static_init	label	word</span><br><span class="line">	db	232</span><br><span class="line">	db	3</span><br><span class="line">_string	label	word</span><br><span class="line">	dw	DGROUP:s@</span><br></pre></td></tr></table></figure>
+<p>前两个即已经初始化的全局变量与静态变量。第三个是一个别名，找到它的定义：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">s@	label	byte</span><br><span class="line">	db	&apos;test string&apos;</span><br><span class="line">	db	0</span><br><span class="line">	db	&apos;var from asm:%d&apos;</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">	db	&apos;assign from asm:%d&apos;</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">	db	&apos;value passed by stack:%d&apos;</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br></pre></td></tr></table></figure>
+<p>我们不但在s@处发现了字符串常量test string，而且发现这里存放着printf中使用的格式化字符串。</p>
+<p><code>_BSS</code>（意为<code>Block Started by Symbol</code>）中存放着为尚未初始化或初始化为零的全局或静态变量预留的空间，在这里，它存放着如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">static_var	label	word</span><br><span class="line">	db	2 dup (?)</span><br><span class="line">_global	label	word</span><br><span class="line">	db	2 dup (?)</span><br></pre></td></tr></table></figure>
+<p>你可能已经发现，我们在C语言中定义的变量在生成的汇编代码中被加上了下划线前缀，其实不光是变量名，函数名也会被编译器做相同的处理：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">_main	proc	near</span><br></pre></td></tr></table></figure>
+<p>在文件的末尾还有如下内容：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">	public	_main</span><br><span class="line">	public	_string</span><br><span class="line">_static_var	equ	static_var</span><br><span class="line">_static_init	equ	static_init</span><br><span class="line">	public	_global</span><br><span class="line">	public	_global_init</span><br><span class="line">	extrn	_var_from_asm:word</span><br><span class="line">	extrn	_test_fun:near</span><br><span class="line">	extrn	_printf:near</span><br><span class="line">_s@	equ	s@</span><br></pre></td></tr></table></figure>
+<p>可以看到使用<code>public</code>关键字声明了全局变量<code>string</code>、<code>global</code>、<code>global_init</code>与函数<code>main</code>，以便外部去引用他们。同时也使用<code>extrn</code>关键字声明了外部定义的<code>_var_from_asm</code>、<code>_test_fun</code>、<code>_printf</code>，在链接时会解析这些标记完成偏移地址的修改。</p>
+<p>到这里我们已经分析完了<code>test.c</code>编译后的内容。</p>
+<p>下面是测试使用的汇编程序<code>t.asm</code>：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">public _test_fun</span><br><span class="line">public _var_from_asm</span><br><span class="line">extrn _global:byte, _global_init:byte</span><br><span class="line"></span><br><span class="line">_DATA	segment use16 word public &apos;DATA&apos;</span><br><span class="line">    _var_from_asm label word</span><br><span class="line">        db 10</span><br><span class="line">        db 0</span><br><span class="line">_DATA ends</span><br><span class="line"></span><br><span class="line">_TEXT segment use16 byte public &apos;CODE&apos;</span><br><span class="line">    assume CS:_TEXT, DS:_DATA</span><br><span class="line"></span><br><span class="line">_test_fun proc near</span><br><span class="line">    push bp</span><br><span class="line">    mov bp, sp</span><br><span class="line">    push di</span><br><span class="line">    mov ax, 6[bp]</span><br><span class="line">    mov word ptr _global_init, ax</span><br><span class="line">    mov word ptr _global, 100</span><br><span class="line">    pop di</span><br><span class="line">    pop bp</span><br><span class="line">    ret</span><br><span class="line">_test_fun endp</span><br><span class="line">_TEXT ends</span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<p>程序比较简单，在头部同样地声明了对外的符号与引用的外部的符号。</p>
+<p>同时，为了实现与C程序的相互引用，我们使用相同的标识定义了<code>_DATA</code>段与<code>_TEXT</code>段，为了使C语言可以以<code>var_from_asm</code>的形式使用汇编中定义的变量，所以在<code>_DATA</code>段中使用<code>_var_from_asm</code>声明了两个字节并初始化为<code>10</code>的空间。</p>
+<p>同理，在<code>_TEXT</code>段中使用<code>_test_fun</code>作为子程序名定义了函数<code>test_fun</code>。</p>
+<p>而在<code>test_fun</code>中，我们先将<code>bp</code>入栈，将<code>sp</code>赋给<code>bp</code>后，将<code>bp+6</code>位置的值赋给了<code>ax</code>，在函数调用的时候，会先将参数入栈，然后将<code>CS</code>与<code>IP</code>入栈，占用了<code>4</code>个字节的栈空间，函数内调用<code>push bp</code>又占用了<code>2</code>个字节的栈空间，所以传入的参数应该在<code>bp+6</code>的位置上。我们将这个参数值写回到C语言定义的全局变量<code>_global_init</code>中，下一行将<code>_global</code>赋上了<code>100</code>。</p>
+<p>现在，就可以进行编译链接步骤了。</p>
+<p>一般地，我们可以使用C编译器编译<code>test.c</code>生成目标文件，使用<code>TASM</code>汇编编译器编译<code>t.asm</code>生成目标文件，再使用<code>tlink</code>将生成的目标文件与库提供的目标文件进行链接，但是这样做略显麻烦，<code>tcc</code>会调用<code>TASM</code>编译汇编文件，也会将生成的目标文件和库文件一起链接并生成最后的可执行文件，所以我们只要简单地执行<code>tcc test.c t.asm</code>就可以了。</p>
+<p><img src="/images/8086asmc2.png" alt=""></p>
+<p>直接运行生成的test.exe，查看结果：</p>
+<p><img src="/images/8086asmc3.png" alt=""></p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2018/02/09/android_ui_test/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1756,198 +1971,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/09/05/mr12u_openwrt_mentohust/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="viseator(吴迪)">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="viseator's blog">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h2 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2017/09/05/mr12u_openwrt_mentohust/" itemprop="url">
-                  TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）
-                </a>
-              
-            
-          </h2>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2017-09-05 20:06:16" itemprop="dateCreated datePublished" datetime="2017-09-05T20:06:16+08:00">2017-09-05</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/openwrt/" itemprop="url" rel="index"><span itemprop="name">openwrt</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-             <span id="/2017/09/05/mr12u_openwrt_mentohust/" class="leancloud_visitors" data-flag-title="TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）">
-               <span class="post-meta-divider">|</span>
-               <span class="post-meta-item-icon">
-                 <i class="fa fa-eye"></i>
-               </span>
-               
-                 <span class="post-meta-item-text">阅读次数：</span>
-               
-                 <span class="leancloud-visitors-count"></span>
-             </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>开学学校启用了有线网，由于校园网存在只能单一设备登陆的限制与无线登陆限速，所以想通过路由器刷<code>openwrt</code>再使用<code>mentohust</code>进行校园网的锐捷认证来实现多设备与不限速使用。</p>
-<p>在选择路由器时考虑了如下因素：</p>
-<ol>
-<li>可刷<code>openwrt</code>：只有特定的处理器支持<code>openwrt</code>，支持的路由器型号在官网有一个<a href="https://wiki.openwrt.org/toh/start" target="_blank" rel="noopener">列表</a>，直接参照这个列表选就可以了。</li>
-<li>有电源/usb供电：在寝室使用的话因为有段时间断电但不断网，所以需要自带电源或可用移动电源usb供电。</li>
-<li>性价比高：因为只用于转发校园网，所以可以买便宜一些的。</li>
-</ol>
-<p>最终选择了<code>TP-Link mr12u</code>这款路由器，在闲鱼上找了一家同城二手的，45元人民币拿下。</p>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2017/09/05/mr12u_openwrt_mentohust/#更多" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -1999,7 +2022,7 @@
                 
                   <a href="/archives">
                 
-                    <span class="site-state-item-count">31</span>
+                    <span class="site-state-item-count">32</span>
                     <span class="site-state-item-name">文章</span>
                   </a>
                 </div>
