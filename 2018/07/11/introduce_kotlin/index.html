@@ -1,0 +1,1853 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-CN">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2"/>
+<meta name="theme-color" content="#F5F5F5">
+
+
+
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+    
+
+    
+  
+
+  
+    
+
+    
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Aladin:300,300italic,400,400italic,700,700italicPT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=6.3.0" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=6.3.0">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=6.3.0">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.3.0" color="#F5F5F5">
+
+
+  <link rel="manifest" href="/images/manifest.json">
+
+
+  <meta name="msapplication-config" content="/images/browserconfig.xml" />
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '6.3.0',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false},
+    fancybox: false,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="Backgroud/Target由Jetbrains在圣彼得堡的团队开发，得名于附近的一个Kotlin的小岛。 Jetbrains有多年的Java平台开发经验，他们认为Java编程语言有一定的局限性，而且由于需要向后兼容，它们很难得到解决。因此，他们创建了Kotlin项目，主要目标包括：  兼容Java 编译速度至少同Java一样快 比Java更安全 比Java更简洁 比最成熟的竞争者Scala">
+<meta name="keywords" content="Android,Kotlin">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Kotlin优势浅析 我们为什么应该使用Kotlin开发新项目">
+<meta property="og:url" content="https://www.viseator.com/2018/07/11/introduce_kotlin/index.html">
+<meta property="og:site_name" content="viseator&#39;s blog">
+<meta property="og:description" content="Backgroud/Target由Jetbrains在圣彼得堡的团队开发，得名于附近的一个Kotlin的小岛。 Jetbrains有多年的Java平台开发经验，他们认为Java编程语言有一定的局限性，而且由于需要向后兼容，它们很难得到解决。因此，他们创建了Kotlin项目，主要目标包括：  兼容Java 编译速度至少同Java一样快 比Java更安全 比Java更简洁 比最成熟的竞争者Scala">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://www.viseator.com/images/introduce_kotlin1.png">
+<meta property="og:image" content="https://www.viseator.com/images/introduce_kotlin2.png">
+<meta property="og:image" content="https://www.viseator.com/images/introduce_kotlin3.png">
+<meta property="og:image" content="https://www.viseator.com/images/introduce_kotlin4.jpg">
+<meta property="og:image" content="https://www.viseator.com/images/introduce_kotlin5.png">
+<meta property="og:image" content="https://www.viseator.com/images/introduce_kotlin6.png">
+<meta property="og:updated_time" content="2018-07-11T06:37:44.854Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Kotlin优势浅析 我们为什么应该使用Kotlin开发新项目">
+<meta name="twitter:description" content="Backgroud/Target由Jetbrains在圣彼得堡的团队开发，得名于附近的一个Kotlin的小岛。 Jetbrains有多年的Java平台开发经验，他们认为Java编程语言有一定的局限性，而且由于需要向后兼容，它们很难得到解决。因此，他们创建了Kotlin项目，主要目标包括：  兼容Java 编译速度至少同Java一样快 比Java更安全 比Java更简洁 比最成熟的竞争者Scala">
+<meta name="twitter:image" content="https://www.viseator.com/images/introduce_kotlin1.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://www.viseator.com/2018/07/11/introduce_kotlin/"/>
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>Kotlin优势浅析 我们为什么应该使用Kotlin开发新项目 | viseator's blog</title>
+  
+
+
+
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-93455229-1');
+</script>
+
+
+
+  <script type="text/javascript">
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?825cced91f7243ff630582af2a1a81d7";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">viseator's blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+      
+        <h1 class="site-subtitle" itemprop="description">吴迪的博客</h1>
+      
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories" rel="section">分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives" rel="section">归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags" rel="section">标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-resource">
+    <a href="/2017/03/25/resource_general" rel="section">资源</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-arch">
+    <a href="/categories/Linux/" rel="section">Arch安装</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about" rel="section">关于</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+  
+  
+  
+    
+      
+    
+    <a href="https://github.com/viseator" class="github-corner" target="_blank" title="Follow me on GitHub" aria-label="Follow me on GitHub"><svg width="80" height="80" viewBox="0 0 250 250" style="fill:#F5F5F5; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg>
+    
+      </a>
+    
+
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2018/07/11/introduce_kotlin/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="viseator(吴迪)">
+      <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="viseator's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h2 class="post-title" itemprop="name headline">Kotlin优势浅析 我们为什么应该使用Kotlin开发新项目
+              
+            
+          </h2>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-07-11 11:38:35 / 修改时间：14:37:44" itemprop="dateCreated datePublished" datetime="2018-07-11T11:38:35+08:00">2018-07-11</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
+
+                
+                
+                  ，
+                
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/Kotlin/" itemprop="url" rel="index"><span itemprop="name">Kotlin</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2018/07/11/introduce_kotlin/" class="leancloud_visitors" data-flag-title="Kotlin优势浅析 我们为什么应该使用Kotlin开发新项目">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数：</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p><img src="/images/introduce_kotlin1.png" alt=""></p>
+<h2 id="Backgroud-Target"><a href="#Backgroud-Target" class="headerlink" title="Backgroud/Target"></a>Backgroud/Target</h2><p>由Jetbrains在圣彼得堡的团队开发，得名于附近的一个Kotlin的小岛。</p>
+<p>Jetbrains有多年的Java平台开发经验，他们认为Java编程语言有一定的局限性，而且由于需要向后兼容，它们很难得到解决。因此，他们创建了Kotlin项目，主要目标包括：</p>
+<ul>
+<li>兼容Java</li>
+<li>编译速度至少同Java一样快</li>
+<li>比Java更安全</li>
+<li>比Java更简洁</li>
+<li>比最成熟的竞争者Scala还简单</li>
+</ul>
+<p>与其他JVM上的语言一样，编译成Java字节码</p>
+<blockquote>
+<p><a href="https://www.kotlincn.net/docs/tutorials/" target="_blank" rel="noopener">https://www.kotlincn.net/docs/tutorials/</a> 中文文档</p>
+<p><a href="https://kotlinlang.org/docs/reference/comparison-to-java.html" target="_blank" rel="noopener">https://kotlinlang.org/docs/reference/comparison-to-java.html</a> 英文文档中对比Java的索引</p>
+</blockquote>
+<h2 id="为什么要使用"><a href="#为什么要使用" class="headerlink" title="为什么要使用"></a>为什么要使用</h2><h3 id="非语言层面"><a href="#非语言层面" class="headerlink" title="非语言层面"></a>非语言层面</h3><ul>
+<li>Jetbrains自己用于开发桌面IDE</li>
+<li>谷歌钦定，不用担心跑路没支持</li>
+<li>谷歌Demo和很多开源项目开始全面采用，不学看不懂了</li>
+<li>Android Studio支持完善</li>
+</ul>
+<h3 id="语言层面"><a href="#语言层面" class="headerlink" title="语言层面"></a>语言层面</h3><p>对下文中提到的Kotlin做出的语言上的改进做一个总结：</p>
+<ul>
+<li>通过语法层面的改进规范了一些行为</li>
+<li>“消灭”了NPE</li>
+<li>语法更加灵活清晰/减少冗杂的代码</li>
+<li>变量声明更加符合直觉</li>
+<li>代码逻辑更加收敛/符合直觉</li>
+<li>减少样板代码的使用</li>
+<li>更舒服的lambda</li>
+</ul>
+<p>最终归在一点：<strong>集中精力 提高效率 减少错误</strong></p>
+<a id="more"></a>
+<h2 id="Kotlin做出的改变"><a href="#Kotlin做出的改变" class="headerlink" title="Kotlin做出的改变"></a>Kotlin做出的改变</h2><h3 id="变量-类型"><a href="#变量-类型" class="headerlink" title="变量/类型"></a>变量/类型</h3><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 只读变量声明(更友好） 想想final</span></span><br><span class="line"><span class="keyword">val</span> a: <span class="built_in">Int</span> = <span class="number">1</span> <span class="comment">// 后置类型声明</span></span><br><span class="line"><span class="comment">// 一般利用类型推断，思维更加顺畅，不用再关心参数是什么类型的问题</span></span><br><span class="line"><span class="keyword">val</span> a = <span class="number">5</span></span><br><span class="line"><span class="keyword">val</span> s = String()</span><br><span class="line"><span class="keyword">val</span> clazz = s.getClass()</span><br><span class="line"><span class="keyword">val</span> method = clazz.getDeclaredMethod(<span class="string">"name"</span>, <span class="literal">null</span>)  </span><br><span class="line"><span class="comment">// 可变变量声明</span></span><br><span class="line"><span class="keyword">var</span> x = <span class="number">5</span></span><br></pre></td></tr></table></figure>
+<p>不再有基本类型的概念，但运行时仍是基本类型表示（除了<code>Int?</code>…这类<code>nullable</code>变量，是包装类型）。</p>
+<p>数组用<code>Array&lt;&gt;</code>类型表示，现在数组也是不可协变的了。</p>
+<h3 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h3><p><code>if else</code>语句除了与java一致的用法外，还取代了条件运算符<code>?:</code></p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> max = <span class="keyword">if</span> (a &gt; b) a <span class="keyword">else</span> b <span class="comment">// int max = (a &gt; b) ? a : b;</span></span><br></pre></td></tr></table></figure>
+<p>但用法更加灵活：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> <span class="keyword">if</span> (a &gt; b) &#123;</span><br><span class="line">    print(<span class="string">"return a"</span>)</span><br><span class="line">    a</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    print(<span class="string">"return b"</span>)</span><br><span class="line">    b</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>for</code>的语法糖：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> array.indices) &#123;</span><br><span class="line">    println(array[i])</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> ((index, value) <span class="keyword">in</span> array.withIndex()) &#123;</span><br><span class="line">    println(<span class="string">"the element at <span class="subst">$index</span> is <span class="subst">$value</span>"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">1.</span><span class="number">.3</span>) &#123;</span><br><span class="line">    println(i)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">for</span> (i <span class="keyword">in</span> <span class="number">6</span> downTo <span class="number">0</span> step <span class="number">2</span>) &#123;</span><br><span class="line">    println(i)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p><code>when</code>取代<code>switch</code>，更加强大的分支：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">when</span> (x) &#123;</span><br><span class="line">    <span class="number">0</span>, <span class="number">1</span> -&gt; print(<span class="string">"x == 0 or x == 1"</span>)</span><br><span class="line">    <span class="keyword">else</span> -&gt; print(<span class="string">"otherwise"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">when</span> (x) &#123;</span><br><span class="line">    <span class="keyword">in</span> <span class="number">1.</span><span class="number">.10</span> -&gt; print(<span class="string">"x is in the range"</span>)</span><br><span class="line">    !<span class="keyword">in</span> <span class="number">10.</span><span class="number">.20</span> -&gt; print(<span class="string">"x is outside the range"</span>)</span><br><span class="line">    <span class="keyword">else</span> -&gt; print(<span class="string">"none of the above"</span>)</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// 有返回值</span></span><br><span class="line"><span class="keyword">val</span> hasPrefix = <span class="keyword">when</span>(x) &#123;</span><br><span class="line">    <span class="keyword">is</span> String -&gt; x.startsWith(<span class="string">"prefix"</span>)</span><br><span class="line">    <span class="keyword">else</span> -&gt; <span class="literal">false</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">when</span> &#123;</span><br><span class="line">    x.isOdd() -&gt; print(<span class="string">"x is odd"</span>)</span><br><span class="line">    x.isEven() -&gt; print(<span class="string">"x is even"</span>)</span><br><span class="line">    <span class="keyword">else</span> -&gt; print(<span class="string">"x is funny"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h3 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h3><p>引入属性的概念，隐式的<code>getter</code>与<code>setter</code>：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">0</span> <span class="comment">// has setter and getter</span></span><br><span class="line">    <span class="keyword">val</span> b = <span class="number">1</span> <span class="comment">// just has getter</span></span><br><span class="line">    <span class="keyword">private</span> c = <span class="number">2</span> <span class="comment">// no setter and getter</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> test = Test()</span><br><span class="line">test.a = test.b <span class="comment">// test.setA(test.getB())</span></span><br></pre></td></tr></table></figure></p>
+<p>再也不用写<code>setter/getter</code>逻辑了：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> stringRepresentation: String</span><br><span class="line">    <span class="keyword">get</span>() = <span class="keyword">this</span>.toString()</span><br><span class="line">    <span class="keyword">set</span>(value) &#123;</span><br><span class="line">        setDataFromString(value)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相当于</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span> String getStringRepresentation() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.toString();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> void setStringRepresentation(String value) &#123;</span><br><span class="line">    setDataFromString(value)  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>java中已有的<code>getter/setter</code>会被“转换”成kotlin属性的形式</p>
+<p><img src="/images/introduce_kotlin2.png" alt=""></p>
+<h3 id="Null安全"><a href="#Null安全" class="headerlink" title="Null安全"></a>Null安全</h3><p><img src="/images/introduce_kotlin3.png" alt=""></p>
+<p>图灵奖得主托尼·霍尔把<code>Null</code>这个设计称为十亿美元错误：“它导致了数不清的错误、漏洞和系统崩溃，可能在之后 40 年中造成了十亿美元的损失”</p>
+<p>Java中，引入了<code>@NonNull</code>和<code>@Nullable</code>注解辅助进行静态检查，有局限性。</p>
+<p>Java8引入<code>Optional&lt;&gt;</code>来解决这个问题，写起来比较恶心，难以推广。</p>
+<p>Kotlin希望在语言层面去解决这个问题-&gt;引入<code>Nullable</code>类型概念：</p>
+<ul>
+<li>声明为非空的变量永远都不会为空</li>
+<li>声明为可空的变量使用时必须判空</li>
+<li>利用推断来提高效率<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> nonnull: String = <span class="string">"must be inited with object"</span></span><br><span class="line"><span class="keyword">var</span> nullable: String? = <span class="literal">null</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>在语法层面做了诸多改进：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> l = s?.length <span class="comment">// s != null, l = s.length else l = null, l: Int?</span></span><br><span class="line"><span class="keyword">val</span> l = s!!.length <span class="comment">// same as l = s.length in java, l: Int</span></span><br><span class="line"><span class="keyword">val</span> l = s?.length ?: <span class="number">0</span> <span class="comment">//  s != null, l = s.length else l = 0, l: Int</span></span><br><span class="line"><span class="keyword">return</span> myValue ?: <span class="number">-1</span></span><br><span class="line"><span class="comment">// 链式使用：</span></span><br><span class="line">bob?.department?.head?.name <span class="comment">// 任一为null不执行</span></span><br></pre></td></tr></table></figure></p>
+<p>推断的作用（智能转换）：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// b: String?</span></span><br><span class="line"><span class="keyword">if</span> (b != <span class="literal">null</span> &amp;&amp; b.length &gt; <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="comment">// b: String here</span></span><br><span class="line">    print(<span class="string">"length <span class="subst">$&#123;b.length&#125;</span>"</span>)</span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    print(<span class="string">"Empty string"</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">getStringLength</span><span class="params">(obj: <span class="type">Any</span>)</span></span>: <span class="built_in">Int</span>? &#123;</span><br><span class="line">    <span class="keyword">if</span> (obj <span class="keyword">is</span> String) &#123;</span><br><span class="line">        <span class="comment">// automatically cast to `String`</span></span><br><span class="line">        <span class="keyword">return</span> obj.length</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// `obj` is still of type `Any` outside of the type-checked branch</span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>如果被Java调用，由于Java无法保证非空（除非已经使用<code>@NonNull</code>注解注明），从Java接收的参数必须是可空的。</p>
+<p>实际使用中，使得定义变量时必须要考虑是否可为空的问题，在一开始时如果不适应这种思维，可能会滥用可空类型，给调用带来麻烦。</p>
+<p>举个例子：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyFragment</span> : <span class="type">Fragment</span></span>() &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">var</span> manager: MyAPIManager? = <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> void onCreate(savedInstanceState: Bundle?) &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line"></span><br><span class="line">        manager = MyAPIManager(context)</span><br><span class="line">        manager.authorize()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>这里第二行中，由于Kotlin要求我们必须为属性赋予一个初值，但这里的初始化需要用到后面传入的<code>context</code>，按照Java的思维习惯，这个地方很容易就直接把类型改成可空的，然后给了个<code>null</code>的初值，但是这其实违背了Kotlin提供的特性：</p>
+<ul>
+<li>我们知道其实这个<code>manager</code>对象一旦被初始化之后就不会再为空，所以这应当是个非空类型</li>
+<li>同时我们为了后面去初始化它把它设成了<code>var</code>，实际上它并不应当被重新赋值，所以这应当是个<code>val</code>对象</li>
+</ul>
+<p>Kotlin为我们提供了解决问题的方法：</p>
+<h4 id="懒属性（Lazy-Property）"><a href="#懒属性（Lazy-Property）" class="headerlink" title="懒属性（Lazy Property）"></a>懒属性（Lazy Property）</h4><p>当这个属性第一次被使用前再执地初始化代码，代码如下：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyFragment</span> : <span class="type">Fragment</span></span>() &#123;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">val</span> manager: MyAPIManager <span class="keyword">by</span> lazy &#123;</span><br><span class="line">        MyAPIManager(context)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> void onCreate(savedInstanceState: Bundle?) &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line"></span><br><span class="line">        manager.authorize()</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h4 id="懒初始化属性（Lateinit-Property）"><a href="#懒初始化属性（Lateinit-Property）" class="headerlink" title="懒初始化属性（Lateinit Property）"></a>懒初始化属性（Lateinit Property）</h4><p>在随后某个确定的时刻初始化，如果在使用时尚未被初始化，会抛出一个未初始化的运行时错误（与NPE略微不同），代码如下：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">MyFragment</span> : <span class="type">Fragment</span></span>() &#123;</span><br><span class="line">    lateinit <span class="keyword">var</span> manager: MyAPIManager</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> void onCreate(savedInstanceState: Bundle?) &#123;</span><br><span class="line">        <span class="keyword">super</span>.onCreate(savedInstanceState)</span><br><span class="line"></span><br><span class="line">        manager = MyAPIManager(context)</span><br><span class="line">        manager.authorize()</span><br><span class="line">   &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>但这时<code>manager</code>仍是一个<code>var</code>，美中不足。</p>
+<p>使用这样的机制可以确保这个对象的可空性满足我们的预期，也就是说经过这样的处理的对象，在Kotlin中永远不会报<code>NPE</code>。而确实可为空的对象，我们利用<code>?</code>表达式结合合适的默认值，是可以把<code>NPE</code>消灭的。</p>
+<p>但没有<code>NPE</code>是一件好事吗？错误可能会因默认值变得隐含，虽然不会导致Crash，但给定位bug增加了一定难度。</p>
+<p>Kotlin也提供了报<code>NPE</code>的办法：使用<code>!!</code>。</p>
+<h4 id="何时用，用哪个？"><a href="#何时用，用哪个？" class="headerlink" title="何时用，用哪个？"></a>何时用，用哪个？</h4><ol>
+<li><code>lateinit</code>只用于<code>var</code>，而<code>lazy</code>只用于<code>val</code>。如果是值可修改的变量（即在之后的使用中可能被重新赋值），使用<code>lateinit</code>模式</li>
+<li>如果变量的初始化取决于外部对象（例如需要一些外部变量参与初始化），使用<code>lateinit</code>模式。这种情况下，<code>lazy</code>模式也可行但并不直接适用。</li>
+<li>如果变量仅仅初始化一次并且全局共享，且更多的是内部使用（依赖于类内部的变量），请使用<code>lazy</code>模式。从实现的角度来看，<code>lateinit</code>模式仍然可用，但<code>lazy</code>模式更有利于封装初始化代码。</li>
+<li>不考虑对变量值是否可变的控制，<code>lateinit</code>模式是<code>lazy</code>模式的超集，你可以在任何使用<code>lazy</code>模式的地方用<code>lateinit</code>模式替代, 反之不然。<code>lateinit</code>模式在函数中暴露了太多的逻辑代码，使得代码更加混乱,所以推荐使用<code>lazy</code>，更好的封装了细节，更加安全。</li>
+</ol>
+<blockquote>
+<p><a href="https://kotlinlang.org/docs/reference/null-safety.html" target="_blank" rel="noopener">https://kotlinlang.org/docs/reference/null-safety.html</a></p>
+<p><a href="https://dev.to/adammc331/understanding-nullability-in-kotlin" target="_blank" rel="noopener">https://dev.to/adammc331/understanding-nullability-in-kotlin</a></p>
+<p><a href="https://stackoverflow.com/questions/35723226/how-to-use-kotlins-with-expression-for-nullable-types" target="_blank" rel="noopener">https://stackoverflow.com/questions/35723226/how-to-use-kotlins-with-expression-for-nullable-types</a></p>
+<p><a href="https://medium.com/@agrawalsuneet/safe-calls-vs-null-checks-in-kotlin-f7c56623ab30" target="_blank" rel="noopener">https://medium.com/@agrawalsuneet/safe-calls-vs-null-checks-in-kotlin-f7c56623ab30</a></p>
+</blockquote>
+<h3 id="函数、扩展方法、Lambda表达式"><a href="#函数、扩展方法、Lambda表达式" class="headerlink" title="函数、扩展方法、Lambda表达式"></a>函数、扩展方法、Lambda表达式</h3><h4 id="函数像其他函数式语言一样，成为了“一等公民”"><a href="#函数像其他函数式语言一样，成为了“一等公民”" class="headerlink" title="函数像其他函数式语言一样，成为了“一等公民”"></a>函数像其他函数式语言一样，成为了“一等公民”</h4><ul>
+<li>函数可以在任意地方声明（类外部，甚至是在函数内部）</li>
+<li>函数可以像对象一样通过参数传递：<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">dfs</span><span class="params">()</span></span> &#123;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">val</span> f = ::dfs</span><br><span class="line">f(graph)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>函数参数终于可以有缺省值了（不用<code>Builder</code>了）：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">reformat</span><span class="params">(str: <span class="type">String</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             normalizeCase: <span class="type">Boolean</span> = <span class="literal">true</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             upperCaseFirstLetter: <span class="type">Boolean</span> = <span class="literal">true</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             divideByCamelHumps: <span class="type">Boolean</span> = <span class="literal">false</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">             wordSeparator: <span class="type">Char</span> = <span class="string">' '</span>)</span></span> &#123;</span><br><span class="line">    <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br><span class="line">reformat(str)</span><br><span class="line">reformat(str, wordSeparator = <span class="string">' '</span>) <span class="comment">// 可以使用参数的名字给缺省参数赋值</span></span><br><span class="line"><span class="comment">// 可以通过@JvmOverloads注解生成Java的重载形式便于Java来调用</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="扩展方法"><a href="#扩展方法" class="headerlink" title="扩展方法"></a>扩展方法</h4><p>比如说，给别人的<code>View</code>加一个功能，给定一个资源<code>Id</code>，去取得它对应的资源：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 写一个Util类，作为参数传进去</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ViewUtils</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> static int findColor(View view, int resId) &#123;</span><br><span class="line">        <span class="keyword">return</span> view.getResources().getColor(resId);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">ViewUtils.findColor(view, resId);</span><br></pre></td></tr></table></figure></p>
+<p>通过扩展方法来解决：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> View.<span class="title">findColor</span><span class="params">(id: <span class="type">Int</span>)</span></span> : <span class="built_in">Int</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.resources.getColor(id)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">view.findColor(resId)</span><br></pre></td></tr></table></figure></p>
+<p>一系列这种类型的Java工具类在Kotlin中被“改造”成了扩展方法例如：</p>
+<p><code>Collection.sort(list)</code>在Kotlin中直接<code>list.sort()</code>就可以了。</p>
+<p>可以完全取代以往的<code>Util</code>类。</p>
+<h4 id="Kotlin提供的作用域扩展函数"><a href="#Kotlin提供的作用域扩展函数" class="headerlink" title="Kotlin提供的作用域扩展函数"></a>Kotlin提供的作用域扩展函数</h4><p>语法简洁，逻辑连贯的最主要体现。</p>
+<ul>
+<li><code>let/run</code><ul>
+<li>对象作为参数传入<code>lambda</code>（<code>run</code>则作为<code>this</code>）</li>
+<li>返回值为<code>lambda</code>表达式的返回值</li>
+<li>常见场景：<ul>
+<li>转换类型</li>
+<li>处理<code>nullable</code>类型</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> length = s?.let &#123;</span><br><span class="line">    doSomething(it) </span><br><span class="line">    it.length</span><br><span class="line">&#125; ?: <span class="number">0</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// if...else...写法</span></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">testIfElse</span><span class="params">()</span></span>: Object? &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">if</span> (a !== <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">val</span> b = handleA(a)</span><br><span class="line">        <span class="keyword">if</span> (b !== <span class="literal">null</span>) &#123;</span><br><span class="line">            handleB(b)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="literal">null</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// ?.let写法</span></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">testLet</span><span class="params">()</span></span>: Object? &#123;</span><br><span class="line">    <span class="keyword">return</span> a?.let &#123; handleA(it) &#125;?.let &#123; handleB(it) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>apply</code><ul>
+<li>对象作为<code>this</code>传入<code>lambda</code></li>
+<li>返回值为对象本身</li>
+<li>常见场景：<ul>
+<li>初始化对象<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// old way of building an object</span></span><br><span class="line"><span class="keyword">val</span> andre = Person()</span><br><span class="line">andre.name = <span class="string">"andre"</span></span><br><span class="line">andre.company = <span class="string">"Viacom"</span></span><br><span class="line">andre.hobby = <span class="string">"losing in ping pong"</span></span><br><span class="line"><span class="comment">// after applying 'apply' (pun very much intended)</span></span><br><span class="line"><span class="keyword">val</span> andre = Person().apply &#123;</span><br><span class="line">    name = <span class="string">"Andre"</span></span><br><span class="line">    company = <span class="string">"Viacom"</span></span><br><span class="line">    hobby = <span class="string">"losing in ping pong"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">return</span> itemView.animation_like.apply &#123;</span><br><span class="line">    imageAssetsFolder = <span class="string">"images_feedcell/"</span></span><br><span class="line">    loop(<span class="literal">false</span>)</span><br><span class="line">    setAnimation(<span class="string">"like_small.json"</span>)</span><br><span class="line">    setOnClickListener(onClickListener)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p><code>also</code></p>
+<ul>
+<li>对象作为参数传入<code>lambda</code></li>
+<li>返回值为对象本身</li>
+<li>常见场景：<ul>
+<li>链式调用中的副作用<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// transforming data from api with intermediary variable</span></span><br><span class="line"><span class="keyword">val</span> rawData = api.getData()</span><br><span class="line">Log.debug(rawData)</span><br><span class="line">rawData.map &#123;  <span class="comment">/** other stuff */</span>  &#125;</span><br><span class="line"><span class="comment">// use 'also' to stay in the method chains</span></span><br><span class="line">api.getData()</span><br><span class="line">    .also &#123; Log.debug(it) &#125;</span><br><span class="line">    .map &#123; <span class="comment">/** other stuff */</span> &#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li><p><code>takeIf/takeUnless</code></p>
+<ul>
+<li>对象作为参数传入<code>lambda</code></li>
+<li>返回值为对象本身或<code>null</code>（根据<code>lambda</code>中语句的<code>true or false</code>）</li>
+<li>常见场景：<ul>
+<li>链式调用形式的条件判断<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">val</span> outFile </span><br><span class="line">   = File(outputDir.path).takeIf &#123; it.exists() &#125; ?: <span class="keyword">return</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>混合使用举例：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// if...else...写法</span></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">testIfElse</span><span class="params">()</span></span>: Object? &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">if</span> (a !== <span class="literal">null</span>) &#123;</span><br><span class="line">        <span class="keyword">val</span> b = handleA(a)</span><br><span class="line">        <span class="keyword">if</span> (b !== <span class="literal">null</span>) &#123;</span><br><span class="line">            handleB(b)</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="literal">null</span></span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// ?.let写法</span></span><br><span class="line"><span class="keyword">private</span> <span class="function"><span class="keyword">fun</span> <span class="title">testLet</span><span class="params">()</span></span>: Object? &#123;</span><br><span class="line">    <span class="keyword">return</span> a?.let &#123; handleA(it) &#125;?.let &#123; handleB(it) &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>简洁，避免大量判空<code>if</code>的使用<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">File(url).takeIf &#123; it.exists() &#125;</span><br><span class="line">        ?.let &#123;</span><br><span class="line">            JSONObject(NetworkUtils.postFile(<span class="number">20</span> * <span class="number">1024</span>, <span class="string">"http://i.snssdk.com/2/data/upload_image/"</span>, <span class="string">"image"</span>, url))</span><br><span class="line">        &#125;?.takeIf &#123; it.optString(<span class="string">"message"</span>) == <span class="string">"success"</span> &#125;</span><br><span class="line">        ?.let &#123;</span><br><span class="line">            post(content, contact, it.optJSONObject(<span class="string">"data"</span>)?.optString(<span class="string">"web_uri"</span>))</span><br><span class="line">        &#125; ?: mHandler.post &#123; view?.onFail() &#125;</span><br></pre></td></tr></table></figure></p>
+<p>可以将逻辑划分清楚，直观，避免判空打断思路。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">getMessages</span><span class="params">(context: <span class="type">Context</span>, cursor: <span class="type">Int</span>, direction: <span class="type">Int</span>)</span></span>: ModelResult&lt;MessageResponse&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> UrlBuilder(LOAD_NOTIFY)</span><br><span class="line">            .apply &#123;</span><br><span class="line">                addParam(<span class="string">"cursor"</span>, cursor)</span><br><span class="line">                addParam(<span class="string">"direction"</span>, direction)</span><br><span class="line">            &#125;.let &#123;</span><br><span class="line">                queryDataFromServer(it.build())</span><br><span class="line">            &#125;?.let &#123;</span><br><span class="line">                <span class="keyword">val</span> statusCode = it.optInt(<span class="string">"status_code"</span>, <span class="number">-1</span>)</span><br><span class="line">                <span class="keyword">val</span> statusMessage = it.optString(<span class="string">"status_message"</span>)</span><br><span class="line">                <span class="keyword">if</span> (statusCode == <span class="number">0</span>) &#123;</span><br><span class="line">                    MessageParser.parseMessageList(it.optString(<span class="string">"data"</span>))</span><br><span class="line">                            ?.let &#123;</span><br><span class="line">                                ModelResult(<span class="literal">true</span>, statusMessage, it)</span><br><span class="line">                            &#125;</span><br><span class="line">                            ?: ModelResult&lt;MessageResponse&gt;()</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            ?: ModelResult&lt;MessageResponse&gt;())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>同样是划分逻辑，更加清晰？（需要适应）</p>
+<p>附图一张：</p>
+<p><img src="/images/introduce_kotlin4.jpg" alt=""></p>
+<blockquote>
+<p><a href="https://medium.com/@elye.project/using-kotlin-takeif-or-takeunless-c9eeb7099c22" target="_blank" rel="noopener">https://medium.com/@elye.project/using-kotlin-takeif-or-takeunless-c9eeb7099c22</a></p>
+<p><a href="https://proandroiddev.com/the-tldr-on-kotlins-let-apply-also-with-and-run-functions-6253f06d152b" target="_blank" rel="noopener">https://proandroiddev.com/the-tldr-on-kotlins-let-apply-also-with-and-run-functions-6253f06d152b</a></p>
+<p><a href="https://proandroiddev.com/the-difference-between-kotlins-functions-let-apply-with-run-and-else-ca51a4c696b8" target="_blank" rel="noopener">https://proandroiddev.com/the-difference-between-kotlins-functions-let-apply-with-run-and-else-ca51a4c696b8</a></p>
+</blockquote>
+<h4 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h4><p>本质上是一个匿名方法（单方法接口）<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">isGreaterThanZero</span><span class="params">(n: <span class="type">Int</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> n &gt; <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">collection.filter(::isGreaterThanZero)</span><br><span class="line"><span class="comment">// 使用Lambda</span></span><br><span class="line">collection.filter&#123; i: <span class="built_in">Int</span> -&gt; i &gt; <span class="number">0</span> &#125;</span><br><span class="line">collection.filter&#123; i -&gt; i &gt; <span class="number">0</span> &#125;</span><br><span class="line">collection.filter&#123; it &gt; <span class="number">0</span> &#125;</span><br></pre></td></tr></table></figure></p>
+<p>单方法接口都可以传<code>Lambda</code>：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">button.setOnClickListener(new View.OnClickListener() &#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="keyword">public</span> void onClick(View v) &#123;</span><br><span class="line">        showToast();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line">button.setOnClickListener&#123; showToast() &#125;</span><br></pre></td></tr></table></figure></p>
+<p>内置常用的流处理<code>Lambda</code>：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">names</span><br><span class="line">        .filter&#123; it.startsWith(<span class="string">"A"</span>) &#125;</span><br><span class="line">        .sortedBy&#123; it &#125;</span><br><span class="line">        .map&#123; it.toUpperCase() &#125;</span><br><span class="line">        .forEach&#123; print(it) &#125;</span><br></pre></td></tr></table></figure></p>
+<p>配合<code>Rxjava</code>使用更佳（也有<code>Rxkotlin</code>）。</p>
+<h3 id="在Android上"><a href="#在Android上" class="headerlink" title="在Android上"></a>在Android上</h3><p>官方提供的扩展</p>
+<h4 id="View-Binding"><a href="#View-Binding" class="headerlink" title="View Binding"></a>View Binding</h4><p>全自动，无需声明，无需<code>findViewById</code>，直接使用<code>layout id</code>就行<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">text_view.text = <span class="string">"text"</span></span><br></pre></td></tr></table></figure></p>
+<h4 id="Parcelable-注解"><a href="#Parcelable-注解" class="headerlink" title="@Parcelable 注解"></a>@Parcelable 注解</h4><p>一个注解自动实现<code>Parcelable</code>， 仍在实验阶段</p>
+<h4 id="异步"><a href="#异步" class="headerlink" title="异步"></a>异步</h4><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// uiThread如果是Activity isFinish = true是不会调用的</span></span><br><span class="line">doAsync &#123;</span><br><span class="line">    print(<span class="string">"其他线程"</span>)</span><br><span class="line">    uiThread &#123; </span><br><span class="line">        print(<span class="string">"UI线程"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Gradle-DSL"><a href="#Gradle-DSL" class="headerlink" title="Gradle DSL"></a>Gradle DSL</h4><blockquote>
+<p><a href="https://docs.gradle.org/current/dsl/index.html" target="_blank" rel="noopener">https://docs.gradle.org/current/dsl/index.html</a></p>
+</blockquote>
+<h3 id="其他黑科技"><a href="#其他黑科技" class="headerlink" title="其他黑科技"></a>其他黑科技</h3><ul>
+<li>没有必检异常了</li>
+<li>支持运算符重载（<code>String</code>的比较可以用<code>==</code>了）</li>
+<li>接口可以有缺省方法</li>
+<li><code>Object Class</code>单例</li>
+<li><code>Data Class</code>数据类型，自动实现<code>equals/hashCode/toString</code></li>
+<li>协程（没用过）</li>
+<li>伴生对象</li>
+<li><code>Anko</code>扩展</li>
+</ul>
+<blockquote>
+<p><a href="https://www.jianshu.com/p/9f720b9ccdea" target="_blank" rel="noopener">https://www.jianshu.com/p/9f720b9ccdea</a></p>
+<p><a href="https://www.tuicool.com/articles/aEbeayN" target="_blank" rel="noopener">https://www.tuicool.com/articles/aEbeayN</a></p>
+<p><a href="https://github.com/android/android-ktx" target="_blank" rel="noopener">https://github.com/android/android-ktx</a></p>
+<p><a href="https://github.com/adisonhuang/awesome-kotlin-android" target="_blank" rel="noopener">https://github.com/adisonhuang/awesome-kotlin-android</a> 其他开源库</p>
+</blockquote>
+<h2 id="与Java协作"><a href="#与Java协作" class="headerlink" title="与Java协作"></a>与Java协作</h2><p>结论：100%协同，Kotlin调Java没有问题，Java调Kotlin会有些绕，但不会出问题。</p>
+<h2 id="性能对比"><a href="#性能对比" class="headerlink" title="性能对比"></a>性能对比</h2><h3 id="运行性能"><a href="#运行性能" class="headerlink" title="运行性能"></a>运行性能</h3><p>来源：<a href="https://blog.dreamtobe.cn/kotlin-performance/" target="_blank" rel="noopener">https://blog.dreamtobe.cn/kotlin-performance/</a></p>
+<ul>
+<li>性能相比Java更差相关<ul>
+<li>对<code>varargs</code>参数展开，Kotlin比Java慢1倍，主要原因是在Kotlin在展开<code>varargs</code>前需要全量拷贝整个数组，这个是非常高的性能开销。</li>
+<li>对<code>Delegated Properties</code>的应用，Kotlin相比Java慢10%。</li>
+</ul>
+</li>
+<li>性能相比Java更优相关<ul>
+<li>对<code>Lambda</code>的使用，Kotlin相比Java快30%，而对用例中的<code>transaction</code>添加<code>inline</code>关键字配置内联后，发现其反而慢了一点点(约1.14%)。</li>
+<li>Kotlin对<code>companion object</code>的访问相比Java中的静态变量的访问，Kotlin与Java差不多快或更快一点。</li>
+<li>Kotlin对局部函数(<code>Local Functions</code>)的访问相比Java中的局部函数的访问，Kotlin与Java差不多快或更快一点。</li>
+<li>Kotlin的非空参数的使用相比没有使用空检查的Java，Kotlin与Java差不多快或更快一点。</li>
+</ul>
+</li>
+<li>Kotlin自身比较<ul>
+<li>对于基本类型范围的使用，无论是否使用常量引用还是直接的范围速度都差不多。</li>
+<li>对于非基本类型范围的使用，常量引用相比直接的范围会快3%左右。</li>
+<li>对于范围遍历方式中，<code>for</code>循环方式无论有没有使用<code>step</code>速度都差不多，但是如果对范围直接进行<code>.foreach</code>速度会比它们慢3倍，因此避免对范围直接使用<code>.foreach</code>。</li>
+<li>在遍历中使用<code>lastIndex</code>会比使用<code>indices</code>快2%左右。</li>
+</ul>
+</li>
+</ul>
+<h3 id="包大小"><a href="#包大小" class="headerlink" title="包大小"></a>包大小</h3><p>标准库大小<code>100k</code>左右。</p>
+<p>新建标准工程（不带Kotlin支持），开启混淆，打release包。</p>
+<p>将这个工程文件转为Kotlin实现，引入Kotlin支持，打release包，对比大小：</p>
+<p><img src="/images/introduce_kotlin5.png" alt=""></p>
+<p>增加了约<code>109k</code></p>
+<p>将某应用一个module转换为Kotlin实现（直接使用AS的工具转换），对比编译生成的所有<code>class</code>文件大小：</p>
+<p><img src="/images/introduce_kotlin6.png" alt=""></p>
+<p>增加了约2%的体积。</p>
+<blockquote>
+<p><a href="https://discuss.kotlinlang.org/t/kotlin-generated-class-file-out-of-kt-is-bigger-than-java-file/1520/4" target="_blank" rel="noopener">https://discuss.kotlinlang.org/t/kotlin-generated-class-file-out-of-kt-is-bigger-than-java-file/1520/4</a></p>
+<p><a href="https://blog.dreamtobe.cn/2016/11/30/kotlin/" target="_blank" rel="noopener">https://blog.dreamtobe.cn/2016/11/30/kotlin/</a></p>
+</blockquote>
+<h3 id="编译速度"><a href="#编译速度" class="headerlink" title="编译速度"></a>编译速度</h3><p>冷编译会慢一些，由于增量编译的存在，热编译速度比Java快。</p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+      <div>
+        <ul class="post-copyright">
+  <li class="post-copyright-author">
+    <strong>本文作者： </strong>viseator(吴迪)</li>
+  <li class="post-copyright-link">
+    <strong>本文链接：</strong>
+    <a href="https://www.viseator.com/2018/07/11/introduce_kotlin/" title="Kotlin优势浅析 我们为什么应该使用Kotlin开发新项目">https://www.viseator.com/2018/07/11/introduce_kotlin/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="external nofollow" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明出处！</li>
+</ul>
+
+      </div>
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/Kotlin/" rel="tag"># Kotlin</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/07/02/80x86_asm_c/" rel="next" title="80x86下汇编与C语言的混合编程">
+                <i class="fa fa-chevron-left"></i> 80x86下汇编与C语言的混合编程
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
+    </div>
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="viseator(吴迪)" />
+            
+              <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
+              <p class="site-description motion-element" itemprop="description">永远欣赏那些可以行我所不能行之事的人</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives">
+                
+                    <span class="site-state-item-count">33</span>
+                    <span class="site-state-item-name">文章</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">19</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">23</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/viseator" target="_blank" title="GitHub" rel="external nofollow"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:viseator@gmail.com" target="_blank" title="Email" rel="external nofollow"><i class="fa fa-fw fa-envelope"></i>Email</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+            <div class="cc-license motion-element" itemprop="license">
+              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" class="cc-opacity" target="_blank" rel="external nofollow">
+                <img src="/images/cc-by-nc-sa.svg" alt="Creative Commons" />
+              </a>
+            </div>
+          
+
+          
+          
+            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+              <div class="links-of-blogroll-title">
+                <i class="fa  fa-fw fa-link"></i>
+                Links
+              </div>
+              <ul class="links-of-blogroll-list">
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://www.hustunique.com/" title="UniqueStudio" target="_blank">UniqueStudio</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://blog.codedragon.tech/" title="BlackDragon" target="_blank">BlackDragon</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://imzhwk.com/" title="imzhwk" target="_blank">imzhwk</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://moe.petnakanojo.com/" title="PetnaKanojo" target="_blank">PetnaKanojo</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://alexandertang.cn/" title="Alexander" target="_blank">Alexander</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="https://qzwlecr.github.io/" title="qzwlecr" target="_blank">qzwlecr</a>
+                  </li>
+                
+                  <li class="links-of-blogroll-item">
+                    <a href="http://www.kurokoi.moe/" title="Kurokoi" target="_blank">Kurokoi</a>
+                  </li>
+                
+              </ul>
+            </div>
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Backgroud-Target"><span class="nav-number">1.</span> <span class="nav-text">Backgroud/Target</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么要使用"><span class="nav-number">2.</span> <span class="nav-text">为什么要使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#非语言层面"><span class="nav-number">2.1.</span> <span class="nav-text">非语言层面</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语言层面"><span class="nav-number">2.2.</span> <span class="nav-text">语言层面</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Kotlin做出的改变"><span class="nav-number">3.</span> <span class="nav-text">Kotlin做出的改变</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#变量-类型"><span class="nav-number">3.1.</span> <span class="nav-text">变量/类型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#控制流"><span class="nav-number">3.2.</span> <span class="nav-text">控制流</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#类和对象"><span class="nav-number">3.3.</span> <span class="nav-text">类和对象</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Null安全"><span class="nav-number">3.4.</span> <span class="nav-text">Null安全</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#懒属性（Lazy-Property）"><span class="nav-number">3.4.1.</span> <span class="nav-text">懒属性（Lazy Property）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#懒初始化属性（Lateinit-Property）"><span class="nav-number">3.4.2.</span> <span class="nav-text">懒初始化属性（Lateinit Property）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#何时用，用哪个？"><span class="nav-number">3.4.3.</span> <span class="nav-text">何时用，用哪个？</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#函数、扩展方法、Lambda表达式"><span class="nav-number">3.5.</span> <span class="nav-text">函数、扩展方法、Lambda表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#函数像其他函数式语言一样，成为了“一等公民”"><span class="nav-number">3.5.1.</span> <span class="nav-text">函数像其他函数式语言一样，成为了“一等公民”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#扩展方法"><span class="nav-number">3.5.2.</span> <span class="nav-text">扩展方法</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Kotlin提供的作用域扩展函数"><span class="nav-number">3.5.3.</span> <span class="nav-text">Kotlin提供的作用域扩展函数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Lambda表达式"><span class="nav-number">3.5.4.</span> <span class="nav-text">Lambda表达式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#在Android上"><span class="nav-number">3.6.</span> <span class="nav-text">在Android上</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#View-Binding"><span class="nav-number">3.6.1.</span> <span class="nav-text">View Binding</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Parcelable-注解"><span class="nav-number">3.6.2.</span> <span class="nav-text">@Parcelable 注解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#异步"><span class="nav-number">3.6.3.</span> <span class="nav-text">异步</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Gradle-DSL"><span class="nav-number">3.6.4.</span> <span class="nav-text">Gradle DSL</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他黑科技"><span class="nav-number">3.7.</span> <span class="nav-text">其他黑科技</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#与Java协作"><span class="nav-number">4.</span> <span class="nav-text">与Java协作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#性能对比"><span class="nav-number">5.</span> <span class="nav-text">性能对比</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#运行性能"><span class="nav-number">5.1.</span> <span class="nav-text">运行性能</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#包大小"><span class="nav-number">5.2.</span> <span class="nav-text">包大小</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#编译速度"><span class="nav-number">5.3.</span> <span class="nav-text">编译速度</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; 2016 &mdash; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-rocket"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
+
+  
+
+  
+</div>
+
+
+  
+
+
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" rel="external nofollow" href="https://hexo.io">Hexo</a> 强力驱动 v3.7.1</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" rel="external nofollow" href="https://github.com/theme-next/hexo-theme-next">NexT.Mist</a> v6.3.0</div>
+
+
+
+  <div class="footer-custom">永远欣赏那些可以行我所不能行之事的人</div>
+
+
+        
+
+
+
+
+
+
+
+
+  <div style="display: none;">
+    <script src="//s95.cnzz.com/z_stat.php?id=1261494271&web_id=1261494271" language="JavaScript"></script>
+  </div>
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.3.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.3.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.3.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.3.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.3.0"></script>
+
+
+
+  
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('2');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+  <script>AV.initialize("AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz", "shxNGHkps7WDMLyCkIKIKSSM");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            
+              var $element = $(document.getElementById(url));
+              $element.find('.leancloud-visitors-count').text(counter.get('time'));
+            
+            counter.save(null, {
+              success: function(counter) {
+                
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            
+              var newcounter = new Counter();
+              /* Set ACL */
+              var acl = new AV.ACL();
+              acl.setPublicReadAccess(true);
+              acl.setPublicWriteAccess(true);
+              newcounter.setACL(acl);
+              /* End Set ACL */
+              newcounter.set("title", title);
+              newcounter.set("url", url);
+              newcounter.set("time", 1);
+              newcounter.save(null, {
+                success: function(newcounter) {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+                },
+                error: function(newcounter, error) {
+                  console.log('Failed to create');
+                }
+              });
+            
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+<script>
+(function(){
+    var bp = document.createElement('script');
+    var curProtocol = window.location.protocol.split(':')[0];
+    if (curProtocol === 'https') {
+        bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';        
+    }
+    else {
+        bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+    }
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>

@@ -3,6 +3,126 @@
 
 
     
+  <url>
+    <loc>https://www.viseator.com/2018/07/11/introduce_kotlin/</loc>
+    <lastmod>2018-07-11T06:37:44.854Z</lastmod>
+    <data>
+        <display>
+        <title>Kotlin优势浅析 我们为什么应该使用Kotlin开发新项目</title>
+        <pubTime>2018-07-11T03:38:35.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>Kotlin</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="https://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="Kotlin" url="https://www.viseator.com/categories/Android/Kotlin/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.viseator.com/2018/07/02/80x86_asm_c/</loc>
+    <lastmod>2018-07-02T16:42:20.668Z</lastmod>
+    <data>
+        <display>
+        <title>80x86下汇编与C语言的混合编程</title>
+        <pubTime>2018-07-02T09:30:05.000Z</pubTime>
+        
+        <tag>Assembly</tag>
+         
+         
+           
+             
+              <breadCrumb title="Assembly" url="https://www.viseator.com/categories/Assembly/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.viseator.com/2017/06/21/CS_APP_BombLab/</loc>
+    <lastmod>2018-07-01T04:52:14.358Z</lastmod>
+    <data>
+        <display>
+        <title>深入理解计算机系统（CS:APP) - Bomb Lab详解</title>
+        <pubTime>2017-06-21T01:53:01.000Z</pubTime>
+        
+        <tag>Computer System</tag>
+         
+        <tag>CS:APP</tag>
+         
+         
+           
+             
+              <breadCrumb title="Computer System" url="https://www.viseator.com/categories/Computer-System/"/>
+          
+             
+              <breadCrumb title="CS:APP" url="https://www.viseator.com/categories/Computer-System/CS-APP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>https://www.viseator.com/2017/06/18/CS_APP_DataLab/</loc>
+    <lastmod>2018-06-28T08:27:29.452Z</lastmod>
+    <data>
+        <display>
+        <title>深入理解计算机系统（CS:APP) - Data Lab详解</title>
+        <pubTime>2017-06-18T07:01:01.000Z</pubTime>
+        
+        <tag>Computer System</tag>
+         
+        <tag>CS:APP</tag>
+         
+         
+           
+             
+              <breadCrumb title="Computer System" url="https://www.viseator.com/categories/Computer-System/"/>
+          
+             
+              <breadCrumb title="CS:APP" url="https://www.viseator.com/categories/Computer-System/CS-APP/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+    
+  <url>
+    <loc>https://www.viseator.com/2017/11/02/android_view_event_3/</loc>
+    <lastmod>2018-05-24T11:59:03.104Z</lastmod>
+    <data>
+        <display>
+        <title>Android 触摸事件分发机制（三）View触摸事件分发机制</title>
+        <pubTime>2017-11-02T13:33:31.000Z</pubTime>
+        
+        <tag>Android</tag>
+         
+        <tag>View</tag>
+         
+         
+           
+             
+              <breadCrumb title="Android" url="https://www.viseator.com/categories/Android/"/>
+          
+             
+              <breadCrumb title="View" url="https://www.viseator.com/categories/Android/View/"/>
+          
+        </display>
+    </data>
+    </url>
+
     
   <url>
     <loc>https://www.viseator.com/2018/02/09/android_ui_test/</loc>
@@ -23,31 +143,6 @@
           
              
               <breadCrumb title="Test" url="https://www.viseator.com/categories/Android/Test/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.viseator.com/2017/11/02/android_view_event_3/</loc>
-    <lastmod>2018-02-04T04:09:54.510Z</lastmod>
-    <data>
-        <display>
-        <title>Android 触摸事件分发机制（三）View触摸事件分发机制</title>
-        <pubTime>2017-11-02T13:33:31.000Z</pubTime>
-        
-        <tag>Android</tag>
-         
-        <tag>View</tag>
-         
-         
-           
-             
-              <breadCrumb title="Android" url="https://www.viseator.com/categories/Android/"/>
-          
-             
-              <breadCrumb title="View" url="https://www.viseator.com/categories/Android/View/"/>
           
         </display>
     </data>
@@ -305,31 +400,6 @@
 
     
   <url>
-    <loc>https://www.viseator.com/2017/06/18/CS_APP_DataLab/</loc>
-    <lastmod>2018-02-02T01:19:07.652Z</lastmod>
-    <data>
-        <display>
-        <title>深入理解计算机系统（CS:APP) - Data Lab详解</title>
-        <pubTime>2017-06-18T07:01:01.000Z</pubTime>
-        
-        <tag>Computer System</tag>
-         
-        <tag>CS:APP</tag>
-         
-         
-           
-             
-              <breadCrumb title="Computer System" url="https://www.viseator.com/categories/Computer-System/"/>
-          
-             
-              <breadCrumb title="CS:APP" url="https://www.viseator.com/categories/Computer-System/CS-APP/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
     <loc>https://www.viseator.com/2017/03/12/android_view_onLayout/</loc>
     <lastmod>2018-02-02T01:19:07.631Z</lastmod>
     <data>
@@ -436,31 +506,6 @@
         <display>
         <title>深入理解计算机系统（CS:APP) - Attack Lab详解</title>
         <pubTime>2017-07-18T05:47:01.000Z</pubTime>
-        
-        <tag>Computer System</tag>
-         
-        <tag>CS:APP</tag>
-         
-         
-           
-             
-              <breadCrumb title="Computer System" url="https://www.viseator.com/categories/Computer-System/"/>
-          
-             
-              <breadCrumb title="CS:APP" url="https://www.viseator.com/categories/Computer-System/CS-APP/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.viseator.com/2017/06/21/CS_APP_BombLab/</loc>
-    <lastmod>2018-02-02T01:19:07.590Z</lastmod>
-    <data>
-        <display>
-        <title>深入理解计算机系统（CS:APP) - Bomb Lab详解</title>
-        <pubTime>2017-06-21T01:53:01.000Z</pubTime>
         
         <tag>Computer System</tag>
          
