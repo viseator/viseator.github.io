@@ -556,6 +556,8 @@
 <p>与其他JVM上的语言一样，编译成Java字节码</p>
 <blockquote>
 <p><a href="https://www.kotlincn.net/docs/tutorials/" target="_blank" rel="noopener">https://www.kotlincn.net/docs/tutorials/</a> 中文文档</p>
+</blockquote>
+<blockquote>
 <p><a href="https://kotlinlang.org/docs/reference/comparison-to-java.html" target="_blank" rel="noopener">https://kotlinlang.org/docs/reference/comparison-to-java.html</a> 英文文档中对比Java的索引</p>
 </blockquote>
 <h2 id="为什么要使用"><a href="#为什么要使用" class="headerlink" title="为什么要使用"></a>为什么要使用</h2><h3 id="非语言层面"><a href="#非语言层面" class="headerlink" title="非语言层面"></a>非语言层面</h3><ul>
@@ -624,8 +626,14 @@
 </ol>
 <blockquote>
 <p><a href="https://kotlinlang.org/docs/reference/null-safety.html" target="_blank" rel="noopener">https://kotlinlang.org/docs/reference/null-safety.html</a></p>
+</blockquote>
+<blockquote>
 <p><a href="https://dev.to/adammc331/understanding-nullability-in-kotlin" target="_blank" rel="noopener">https://dev.to/adammc331/understanding-nullability-in-kotlin</a></p>
+</blockquote>
+<blockquote>
 <p><a href="https://stackoverflow.com/questions/35723226/how-to-use-kotlins-with-expression-for-nullable-types" target="_blank" rel="noopener">https://stackoverflow.com/questions/35723226/how-to-use-kotlins-with-expression-for-nullable-types</a></p>
+</blockquote>
+<blockquote>
 <p><a href="https://medium.com/@agrawalsuneet/safe-calls-vs-null-checks-in-kotlin-f7c56623ab30" target="_blank" rel="noopener">https://medium.com/@agrawalsuneet/safe-calls-vs-null-checks-in-kotlin-f7c56623ab30</a></p>
 </blockquote>
 <h3 id="函数、扩展方法、Lambda表达式"><a href="#函数、扩展方法、Lambda表达式" class="headerlink" title="函数、扩展方法、Lambda表达式"></a>函数、扩展方法、Lambda表达式</h3><h4 id="函数像其他函数式语言一样，成为了“一等公民”"><a href="#函数像其他函数式语言一样，成为了“一等公民”" class="headerlink" title="函数像其他函数式语言一样，成为了“一等公民”"></a>函数像其他函数式语言一样，成为了“一等公民”</h4><ul>
@@ -699,7 +707,11 @@
 <p><img src="/images/introduce_kotlin4.jpg" alt=""></p>
 <blockquote>
 <p><a href="https://medium.com/@elye.project/using-kotlin-takeif-or-takeunless-c9eeb7099c22" target="_blank" rel="noopener">https://medium.com/@elye.project/using-kotlin-takeif-or-takeunless-c9eeb7099c22</a></p>
+</blockquote>
+<blockquote>
 <p><a href="https://proandroiddev.com/the-tldr-on-kotlins-let-apply-also-with-and-run-functions-6253f06d152b" target="_blank" rel="noopener">https://proandroiddev.com/the-tldr-on-kotlins-let-apply-also-with-and-run-functions-6253f06d152b</a></p>
+</blockquote>
+<blockquote>
 <p><a href="https://proandroiddev.com/the-difference-between-kotlins-functions-let-apply-with-run-and-else-ca51a4c696b8" target="_blank" rel="noopener">https://proandroiddev.com/the-difference-between-kotlins-functions-let-apply-with-run-and-else-ca51a4c696b8</a></p>
 </blockquote>
 <h4 id="Lambda表达式"><a href="#Lambda表达式" class="headerlink" title="Lambda表达式"></a>Lambda表达式</h4><p>本质上是一个匿名方法（单方法接口）<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">isGreaterThanZero</span><span class="params">(n: <span class="type">Int</span>)</span></span>: <span class="built_in">Boolean</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> n &gt; <span class="number">0</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">collection.filter(::isGreaterThanZero)</span><br><span class="line"><span class="comment">// 使用Lambda</span></span><br><span class="line">collection.filter&#123; i: <span class="built_in">Int</span> -&gt; i &gt; <span class="number">0</span> &#125;</span><br><span class="line">collection.filter&#123; i -&gt; i &gt; <span class="number">0</span> &#125;</span><br><span class="line">collection.filter&#123; it &gt; <span class="number">0</span> &#125;</span><br></pre></td></tr></table></figure></p>
@@ -725,8 +737,14 @@
 </ul>
 <blockquote>
 <p><a href="https://www.jianshu.com/p/9f720b9ccdea" target="_blank" rel="noopener">https://www.jianshu.com/p/9f720b9ccdea</a></p>
+</blockquote>
+<blockquote>
 <p><a href="https://www.tuicool.com/articles/aEbeayN" target="_blank" rel="noopener">https://www.tuicool.com/articles/aEbeayN</a></p>
+</blockquote>
+<blockquote>
 <p><a href="https://github.com/android/android-ktx" target="_blank" rel="noopener">https://github.com/android/android-ktx</a></p>
+</blockquote>
+<blockquote>
 <p><a href="https://github.com/adisonhuang/awesome-kotlin-android" target="_blank" rel="noopener">https://github.com/adisonhuang/awesome-kotlin-android</a> 其他开源库</p>
 </blockquote>
 <h2 id="与Java协作"><a href="#与Java协作" class="headerlink" title="与Java协作"></a>与Java协作</h2><p>结论：100%协同，Kotlin调Java没有问题，Java调Kotlin会有些绕，但不会出问题。</p>
@@ -762,6 +780,8 @@
 <p>增加了约2%的体积。</p>
 <blockquote>
 <p><a href="https://discuss.kotlinlang.org/t/kotlin-generated-class-file-out-of-kt-is-bigger-than-java-file/1520/4" target="_blank" rel="noopener">https://discuss.kotlinlang.org/t/kotlin-generated-class-file-out-of-kt-is-bigger-than-java-file/1520/4</a></p>
+</blockquote>
+<blockquote>
 <p><a href="https://blog.dreamtobe.cn/2016/11/30/kotlin/" target="_blank" rel="noopener">https://blog.dreamtobe.cn/2016/11/30/kotlin/</a></p>
 </blockquote>
 <h3 id="编译速度"><a href="#编译速度" class="headerlink" title="编译速度"></a>编译速度</h3><p>冷编译会慢一些，由于增量编译的存在，热编译速度比Java快。</p>

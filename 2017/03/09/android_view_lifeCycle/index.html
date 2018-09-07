@@ -557,7 +557,9 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(@LayoutRes <span class="keyword">int</span> layoutResID)</span> </span>&#123;</span><br><span class="line">    getDelegate().setContentView(layoutResID);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(View view)</span> </span>&#123;</span><br><span class="line">    getDelegate().setContentView(view);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setContentView</span><span class="params">(View view, ViewGroup.LayoutParams params)</span> </span>&#123;</span><br><span class="line">    getDelegate().setContentView(view, params);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>可以看到<code>setContentView</code>拥有三种形式，可以直接传入<code>View</code>、传入一个<code>layout</code>资源文件，或传入一个<code>View</code>文件和一个用于提供参数的<code>LayoutParams</code>对象。</p>
 <p>整个过程将从这个根<code>View</code>开始，并遍历它的子<code>View</code>来逐一绘制，每个<code>ViewGroup</code>承担了要求它的子<code>View</code>进行绘制的责任，每个<code>View</code>承担了绘制自身的责任。并且父<code>View</code>会在子<code>View</code>完成绘制之前进行绘制，同级的<code>View</code>将以它们出现在树中的顺序进行绘制。</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h2><p>首先调用的当然是<code>View</code>的构造函数，构造函数分为两种，一种供代码创建的<code>View</code>使用，另一种是由<code>layout</code>文件生成的<code>View</code>使用，区别在于后者会从<code>layout</code>文件中读入所有的属性，前者的属性则需要在代码中设置。</p>
+<a id="more"></a>
+<hr>
+<p>首先调用的当然是<code>View</code>的构造函数，构造函数分为两种，一种供代码创建的<code>View</code>使用，另一种是由<code>layout</code>文件生成的<code>View</code>使用，区别在于后者会从<code>layout</code>文件中读入所有的属性，前者的属性则需要在代码中设置。</p>
 <p>另外后者在所有的子<code>View</code>都生成完毕之后会回调<code>onFinishInflate</code>方法。</p>
 <hr>
 <p>在正式绘制之前要进行两个过程（布局机制[layout mechanism]）：</p>
@@ -688,17 +690,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -915,22 +908,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       

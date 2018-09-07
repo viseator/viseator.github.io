@@ -556,7 +556,9 @@
 <p>再通过完整包名的方法在<code>xml</code>布局文件中创建我们的<code>View</code>就可以直接显示了。</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">com.viseator.viewtest.VView</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_width</span>=<span class="string">"100dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:layout_height</span>=<span class="string">"100dp"</span></span></span><br><span class="line"><span class="tag">    <span class="attr">android:background</span>=<span class="string">"@color/Gray"</span></span></span><br><span class="line"><span class="tag">    /&gt;</span></span><br></pre></td></tr></table></figure>
 <p>这里给了<code>TextView</code>一个背景颜色便于后面的观察。</p>
-<h2 id=""><a href="#" class="headerlink" title=""></a><a id="more"></a></h2><p>下面就开始分析<code>measure</code>过程。</p>
+<a id="more"></a>
+<hr>
+<p>下面就开始分析<code>measure</code>过程。</p>
 <p><code>measure</code>是一个自顶向下的过程，即父<code>View</code>会依次调用它的子<code>View</code>的<code>measure()</code>方法来对它的子<code>View</code>进行测量。</p>
 <p><code>View</code>的<code>measure()</code>方法最终会调用<code>onMeasure()</code>，真正的尺寸信息就是在<code>onMeasure()</code>方法中最终确定的。所以我们需要做的就是在自定义<code>View</code>中重写<code>onMeasure()</code>方法。</p>
 <p>那么子<code>View</code>根据什么来确定自己应该具有的尺寸呢？当然不可能让子<code>View</code>自由地决定自己的大小，父<code>View</code>必然需要向子<code>View</code>传递信息来帮助子<code>View</code>来确定尺寸，而子<code>View</code>则必须满足父<code>View</code>的要求。查看<code>measure()</code>的方法签名：</p>
@@ -699,17 +701,8 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            文章目录
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            站点概览
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
@@ -926,22 +919,6 @@
         </div>
       </section>
 
-      
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#"><span class="nav-number">1.</span> <span class="nav-text"></span></a></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
       
 
       
