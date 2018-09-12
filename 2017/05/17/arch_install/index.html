@@ -174,12 +174,12 @@
 <meta property="og:image" content="https://www.viseator.com/images/arch13.jpg">
 <meta property="og:image" content="https://www.viseator.com/images/arch14.jpg">
 <meta property="og:image" content="https://www.viseator.com/images/arch15.jpg">
-<meta property="og:image" content="https://www.viseator.com/images/arch16.jpg">
+<meta property="og:image" content="https://www.viseator.com/images/arch16.png">
 <meta property="og:image" content="https://www.viseator.com/images/arch17.jpg">
 <meta property="og:image" content="https://www.viseator.com/images/arch18.jpg">
 <meta property="og:image" content="https://www.viseator.com/images/arch22.jpg">
 <meta property="og:image" content="https://www.viseator.com/images/arch19.jpg">
-<meta property="og:updated_time" content="2018-02-02T01:19:07.625Z">
+<meta property="og:updated_time" content="2018-09-12T08:37:45.604Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="以官方Wiki的方式安装ArchLinux">
 <meta name="twitter:description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
@@ -505,7 +505,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
+                <time title="修改时间：2018-09-12 16:37:45" itemprop="dateModified" datetime="2018-09-12T16:37:45+08:00">2018-09-12</time>
               
             
           </span>
@@ -695,6 +695,7 @@
 <p>连接以后同样可以通过上面的<code>ping</code>命令来进行测试。</p>
 </li>
 </ul>
+<p><strong>注意</strong>：由于部分无线网卡驱动的支持并不完善，所以在这里可能会遇到问题，并且各机型的解决方法都不同，如果不幸遇到无线连不上的问题，可以插有线联网先把系统装好再去慢慢解决。解决问题可以参照：<a href="https://wiki.archlinux.org/index.php/Network_configuration" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/Network_configuration</a></p>
 <h4 id="更新系统时间"><a href="#更新系统时间" class="headerlink" title="更新系统时间"></a>更新系统时间</h4><p>执行如下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl <span class="built_in">set</span>-ntp <span class="literal">true</span></span><br></pre></td></tr></table></figure>
 <blockquote>
@@ -826,9 +827,9 @@
 <p>保存并退出。</p>
 <p>编辑<code>/etc/hosts</code>文件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
-<p>作如下修改（将<code>myhostname</code>替换成你自己设定的主机名）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1	localhost.localdomain	localhost</span><br><span class="line">::1		localhost.localdomain	localhost</span><br><span class="line">127.0.1.1	myhostname.localdomain	myhostname</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch16.jpg" alt=""></p>
+<p>在文件末添加如下内容（将<code>myhostname</code>替换成你自己设定的主机名）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1	localhost</span><br><span class="line">::1		localhost</span><br><span class="line">127.0.1.1	myhostname.localdomain	myhostname</span><br></pre></td></tr></table></figure>
+<p><img src="/images/arch16.png" alt=""></p>
 <p>这里我设置的是<code>viseator</code>。</p>
 <p>保存并退出。</p>
 <h4 id="设置Root密码"><a href="#设置Root密码" class="headerlink" title="设置Root密码"></a>设置Root密码</h4><p><code>Root</code>是<code>Linux</code>中具有最高权限帐户，有些敏感的操作必须通过<code>Root</code>用户进行，比如使用<code>pacman</code>，我们之前进行所有的操作也都是以<code>Root</code>用户进行的，也正是因为<code>Root</code>的权限过高，如果使用不当会造成安全问题，所以我们之后会新建一个普通用户来进行日常的操作。在这里我们需要为<code>Root</code>帐户设置一个密码：</p>

@@ -2,6 +2,20 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.viseator.com/2017/05/19/arch_setup/</loc>
+    
+    <lastmod>2018-09-12T08:39:49.587Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/05/17/arch_install/</loc>
+    
+    <lastmod>2018-09-12T08:37:45.604Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.viseator.com/2017/07/02/arch_more/</loc>
     
     <lastmod>2018-09-12T07:38:36.236Z</lastmod>
@@ -173,20 +187,6 @@
     <loc>https://www.viseator.com/2017/03/12/android_view_onLayout/</loc>
     
     <lastmod>2018-02-02T01:19:07.631Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/05/17/arch_install/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.625Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/05/19/arch_setup/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.615Z</lastmod>
     
   </url>
   
