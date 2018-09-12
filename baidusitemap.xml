@@ -4,6 +4,31 @@
 
     
   <url>
+    <loc>https://www.viseator.com/2017/07/02/arch_more/</loc>
+    <lastmod>2018-09-12T07:38:36.236Z</lastmod>
+    <data>
+        <display>
+        <title>ArchLinux你可能需要知道的操作与软件包推荐「持续更新」</title>
+        <pubTime>2017-07-02T02:26:58.000Z</pubTime>
+        
+        <tag>Linux</tag>
+         
+        <tag>Arch</tag>
+         
+         
+           
+             
+              <breadCrumb title="Linux" url="https://www.viseator.com/categories/Linux/"/>
+          
+             
+              <breadCrumb title="Arch" url="https://www.viseator.com/categories/Linux/Arch/"/>
+          
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>https://www.viseator.com/2018/09/07/android_JSBridge/</loc>
     <lastmod>2018-09-07T09:44:50.355Z</lastmod>
     <data>
@@ -570,31 +595,6 @@
           
              
               <breadCrumb title="Event" url="https://www.viseator.com/categories/Android/Event/"/>
-          
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>https://www.viseator.com/2017/07/02/arch_more/</loc>
-    <lastmod>2018-02-02T01:19:07.542Z</lastmod>
-    <data>
-        <display>
-        <title>ArchLinux你可能需要知道的操作与软件包推荐「持续更新」</title>
-        <pubTime>2017-07-02T02:26:58.000Z</pubTime>
-        
-        <tag>Linux</tag>
-         
-        <tag>Arch</tag>
-         
-         
-           
-             
-              <breadCrumb title="Linux" url="https://www.viseator.com/categories/Linux/"/>
-          
-             
-              <breadCrumb title="Arch" url="https://www.viseator.com/categories/Linux/Arch/"/>
           
         </display>
     </data>
