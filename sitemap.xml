@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.viseator.com/about/index.html</loc>
+    
+    <lastmod>2019-08-16T06:13:43.009Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.viseator.com/2018/07/02/80x86_asm_c/</loc>
     
     <lastmod>2019-03-19T02:23:38.000Z</lastmod>
@@ -58,13 +65,6 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/about/index.html</loc>
-    
-    <lastmod>2018-05-29T03:52:43.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.viseator.com/2017/11/02/android_view_event_3/</loc>
     
     <lastmod>2018-05-24T11:59:03.000Z</lastmod>
@@ -93,14 +93,14 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/googleplayprivacy/index.html</loc>
+    <loc>https://www.viseator.com/tags/index.html</loc>
     
     <lastmod>2018-02-02T01:19:16.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.viseator.com/tags/index.html</loc>
+    <loc>https://www.viseator.com/googleplayprivacy/index.html</loc>
     
     <lastmod>2018-02-02T01:19:16.000Z</lastmod>
     
@@ -121,6 +121,13 @@
   </url>
   
   <url>
+    <loc>https://www.viseator.com/2017/04/02/android_property_animation_2/</loc>
+    
+    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.viseator.com/2017/05/11/android_lan_messages/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
@@ -135,13 +142,6 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/04/02/android_property_animation_2/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.viseator.com/2017/02/05/LeetCode/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
@@ -149,14 +149,14 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/03/12/android_view_onDraw_canvas/</loc>
+    <loc>https://www.viseator.com/2017/03/25/resource_general/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/03/25/resource_general/</loc>
+    <loc>https://www.viseator.com/2017/03/12/android_view_onDraw_canvas/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
