@@ -248,7 +248,7 @@ blockquote {
   border-left: 4px solid #ddd;
 }
 blockquote p {
-  font-family: STKaiti, KaiTi, 'Aladin', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: STKaiti, KaiTi, "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 blockquote cite::before {
   content: "-";
@@ -1173,7 +1173,7 @@ pre .javascript .function {
   line-height: 1.5;
   font-size: 1.375em;
   font-weight: normal;
-  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: 'Aladin', "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 .site-subtitle {
   margin-top: 10px;
@@ -1265,7 +1265,7 @@ pre .javascript .function {
 .post-body {
   overflow-wrap: break-word;
   word-wrap: break-word;
-  font-family: 'Aladin', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
 }
 .post-body span.exturl .fa {
   font-size: 0.875em;
@@ -1405,7 +1405,7 @@ pre .javascript .function {
 .posts-expand .post-meta {
   margin: 3px 0 60px 0;
   color: #999;
-  font-family: 'Aladin', "PingFang SC", "Microsoft YaHei", sans-serif;
+  font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
   text-align: center;
 }
 .posts-expand .post-meta .post-description {
@@ -1649,7 +1649,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #71226e;
+  background: #a2cd32;
 }
 .feed-link,
 .chat {
@@ -2683,21 +2683,6 @@ hr {
 }
 .post-button a:hover {
   border-bottom-color: #222;
-}
-.sidebar {
-  right: auto;
-  left: 0;
-}
-.sidebar-toggle,
-.back-to-top {
-  right: auto;
-  left: 30px;
-}
-@media (max-width: 991px) {
-  .sidebar-toggle,
-  .back-to-top {
-    left: 20px;
-  }
 }
 .links-of-blogroll-inline .links-of-blogroll-item {
   display: inline-block;

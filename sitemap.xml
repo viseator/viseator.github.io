@@ -86,6 +86,13 @@
   </url>
   
   <url>
+    <loc>https://www.viseator.com/categories/index.html</loc>
+    
+    <lastmod>2018-02-02T01:19:16.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.viseator.com/googleplayprivacy/index.html</loc>
     
     <lastmod>2018-02-02T01:19:16.000Z</lastmod>
@@ -100,13 +107,6 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/categories/index.html</loc>
-    
-    <lastmod>2018-02-02T01:19:16.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.viseator.com/images/manifest.json</loc>
     
     <lastmod>2018-02-02T01:19:10.000Z</lastmod>
@@ -114,7 +114,7 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/11/02/android_event_3/</loc>
+    <loc>https://www.viseator.com/2017/10/24/android_event_2/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
@@ -128,14 +128,14 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/03/26/android_property_animation_1/</loc>
+    <loc>https://www.viseator.com/2017/04/02/android_property_animation_2/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/04/02/android_property_animation_2/</loc>
+    <loc>https://www.viseator.com/2017/03/26/android_property_animation_1/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
@@ -268,7 +268,7 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/10/24/android_event_2/</loc>
+    <loc>https://www.viseator.com/2017/11/02/android_event_3/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
