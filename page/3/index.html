@@ -4,108 +4,26 @@
 
 
 
-
-
-
-
-
-
-
-  
-
-
 <html class="theme-next mist use-motion" lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hexo 3.8.0">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-
-
-
-
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-    
-
-    
-  
-
-  
-    
-
-    
-  
-
-  
-    
-    
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Aladin:300,300italic,400,400italic,700,700italicPT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
-  
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.1.2">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=7.1.2">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=7.1.2">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=7.1.2">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#F5F5F5">
-
-
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
-
-
   <meta name="msapplication-config" content="/images/browserconfig.xml">
 
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
 
-
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
 
 
 <script id="hexo.configurations">
@@ -113,30 +31,35 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    version: '7.1.2',
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
-    back2top: true,
-    back2top_sidebar: false,
+    version: '7.3.0',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
     fancybox: false,
-    fastclick: false,
+    mediumzoom: false,
     lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    pangu: false,
     algolia: {
       applicationID: 'HYRROWXF5U',
       apiKey: '24035990f7a74ccf1ec2cf8d264b6207',
       indexName: 'vir',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":2,"unescape":true,"preload":false},
+    search: {
+      root: '/',
+      path: 'search.xml'
+    },
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
-
-
-  
-
-
-
 
   <meta name="description" content="永远欣赏那些可以行我所不能行之事的人">
 <meta name="keywords" content="吴迪,博客,viseator,blog">
@@ -149,15 +72,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="viseator&#39;s blog">
 <meta name="twitter:description" content="永远欣赏那些可以行我所不能行之事的人">
-
-
-
-
-
-  
-  
   <link rel="canonical" href="https://www.viseator.com/page/3/">
-
 
 
 <script id="page.configurations">
@@ -166,12 +81,8 @@
   };
 </script>
 
-  <title>viseator's blog – 吴迪的博客</title>
+  <title>viseator's blog - 吴迪的博客</title>
   
-
-
-
-
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
   <script>
     var host = window.location.hostname;
@@ -184,7 +95,6 @@
   </script>
 
 
-
   <script>
     var _hmt = _hmt || [];
     (function() {
@@ -194,7 +104,6 @@
       s.parentNode.insertBefore(hm, s);
     })();
   </script>
-
 
 
 
@@ -228,21 +137,14 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-right page-home">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
-    
 
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
@@ -251,12 +153,8 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-    
-      
         <h1 class="site-subtitle" itemprop="description">吴迪的博客</h1>
       
-    
-    
   </div>
 
   <div class="site-nav-toggle">
@@ -271,20 +169,12 @@
 
 
 <nav class="site-nav">
-  
     <ul id="menu" class="menu">
-      
         
         
         
           
           <li class="menu-item menu-item-home">
-
-    
-    
-    
-
-    
 
     <a href="/" rel="section">首页</a>
 
@@ -295,12 +185,6 @@
           
           <li class="menu-item menu-item-categories">
 
-    
-    
-    
-
-    
-
     <a href="/categories" rel="section">分类</a>
 
   </li>
@@ -309,12 +193,6 @@
         
           
           <li class="menu-item menu-item-archives">
-
-    
-    
-    
-
-    
 
     <a href="/archives" rel="section">归档</a>
 
@@ -325,12 +203,6 @@
           
           <li class="menu-item menu-item-tags">
 
-    
-    
-    
-
-    
-
     <a href="/tags" rel="section">标签</a>
 
   </li>
@@ -339,12 +211,6 @@
         
           
           <li class="menu-item menu-item-resource">
-
-    
-    
-    
-
-    
 
     <a href="/2017/03/25/resource_general" rel="section">资源</a>
 
@@ -355,12 +221,6 @@
           
           <li class="menu-item menu-item-arch">
 
-    
-    
-    
-
-    
-
     <a href="/categories/Linux/" rel="section">Arch安装</a>
 
   </li>
@@ -370,68 +230,42 @@
           
           <li class="menu-item menu-item-about">
 
-    
-    
-    
-
-    
-
     <a href="/about" rel="section">关于</a>
 
   </li>
-
-      
-      
         <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            搜索</a>
+          <a href="javascript:;" class="popup-trigger">
+          搜索</a>
         </li>
       
     </ul>
-  
-
-  
     
 
-  
-
-  
     <div class="site-search">
       
-  
   <div class="algolia-popup popup search-popup">
-    <div class="algolia-search">
-      <div class="algolia-search-input-icon">
-        <i class="fa fa-search"></i>
-      </div>
-      <div class="algolia-search-input" id="algolia-search-input"></div>
+  <div class="algolia-search">
+    <div class="algolia-search-input-icon">
+      <i class="fa fa-search"></i>
     </div>
-
-    <div class="algolia-results">
-      <div id="algolia-stats"></div>
-      <div id="algolia-hits"></div>
-      <div id="algolia-pagination" class="algolia-pagination"></div>
-    </div>
-
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
+    <div class="algolia-search-input" id="algolia-search-input"></div>
   </div>
 
+  <div class="algolia-results">
+    <div id="algolia-stats"></div>
+    <div id="algolia-hits"></div>
+    <div id="algolia-pagination" class="algolia-pagination"></div>
+  </div>
+
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
 
 
 
     </div>
-  
 </nav>
-
-
-
-  
-
-
 
 </div>
     </header>
@@ -442,20 +276,10 @@
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
-    
       
-
-  
-
-  
-  
-  
-
-  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
@@ -473,11 +297,8 @@
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h2 class="post-title" itemprop="name headline">
                 
@@ -489,13 +310,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -508,16 +323,12 @@
               
 
               <time title="创建时间：2017-05-25 20:54:08" itemprop="dateCreated datePublished" datetime="2017-05-25T20:54:08+08:00">2017-05-25</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -525,15 +336,10 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -557,14 +363,7 @@
           
 
           
-            
-            
-          
-
-          
-          
-            <span id="/2017/05/25/android_google_mvp/" class="leancloud_visitors" data-flag-title="Android Google官方MVP架构分析">
-              <span class="post-meta-divider">|</span>
+            <span id="/2017/05/25/android_google_mvp/" class="post-meta-item leancloud_visitors" data-flag-title="Android Google官方MVP架构分析">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -573,17 +372,10 @@
               
                 <span class="leancloud-visitors-count"></span>
             </span>
-          
-
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
@@ -591,10 +383,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：</p>
 <blockquote>
 <p>  <a href="https://segmentfault.com/a/1190000003927200" target="_blank" rel="noopener">https://segmentfault.com/a/1190000003927200</a></p>
@@ -624,31 +412,11 @@
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
         <div class="post-eof"></div>
-      
     </footer>
   </div>
   
@@ -656,17 +424,8 @@
   
   </article>
 
-
     
       
-
-  
-
-  
-  
-  
-
-  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
@@ -684,11 +443,8 @@
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h2 class="post-title" itemprop="name headline">
                 
@@ -700,13 +456,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -719,16 +469,12 @@
               
 
               <time title="创建时间：2017-05-19 21:38:57" itemprop="dateCreated datePublished" datetime="2017-05-19T21:38:57+08:00">2017-05-19</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -736,15 +482,10 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2018-10-14 16:32:51" itemprop="dateModified" datetime="2018-10-14T16:32:51+08:00">2018-10-14</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -768,14 +509,7 @@
           
 
           
-            
-            
-          
-
-          
-          
-            <span id="/2017/05/19/arch_setup/" class="leancloud_visitors" data-flag-title="ArchLinux安装后的必须配置与图形界面安装教程">
-              <span class="post-meta-divider">|</span>
+            <span id="/2017/05/19/arch_setup/" class="post-meta-item leancloud_visitors" data-flag-title="ArchLinux安装后的必须配置与图形界面安装教程">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -784,17 +518,10 @@
               
                 <span class="leancloud-visitors-count"></span>
             </span>
-          
-
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
@@ -802,10 +529,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="ArchLinux安装后的必须配置"><a href="#ArchLinux安装后的必须配置" class="headerlink" title="ArchLinux安装后的必须配置"></a>ArchLinux安装后的必须配置</h2><p>在<a href="http://www.viseator.com/2017/05/17/arch_install/">上一篇教程</a>中，我们成功地安装了<code>ArchLinux</code>，这时系统处于一个非常精简的状态，为了日常使用，我们必须进行一些配置、安装一些需要的组件，来扩展我们的系统功能，开源的组件相互协同工作也是<code>Linux</code>的迷人之处之一。</p>
 <p>下面的教程部分参考了官方<a href="https://wiki.archlinux.org/index.php/General_recommendations" target="_blank" rel="noopener">General recommendations</a>。</p>
 <p>上述链接中还有很多本文未提及的可以配置的东西，感兴趣的同学可以阅读其中的内容对系统进行更加完善的配置。</p>
@@ -823,31 +546,11 @@
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
         <div class="post-eof"></div>
-      
     </footer>
   </div>
   
@@ -855,17 +558,8 @@
   
   </article>
 
-
     
       
-
-  
-
-  
-  
-  
-
-  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
@@ -883,11 +577,8 @@
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h2 class="post-title" itemprop="name headline">
                 
@@ -899,13 +590,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -918,16 +603,12 @@
               
 
               <time title="创建时间：2017-05-17 23:26:29" itemprop="dateCreated datePublished" datetime="2017-05-17T23:26:29+08:00">2017-05-17</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -935,15 +616,10 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2018-10-22 23:04:03" itemprop="dateModified" datetime="2018-10-22T23:04:03+08:00">2018-10-22</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -967,14 +643,7 @@
           
 
           
-            
-            
-          
-
-          
-          
-            <span id="/2017/05/17/arch_install/" class="leancloud_visitors" data-flag-title="以官方Wiki的方式安装ArchLinux">
-              <span class="post-meta-divider">|</span>
+            <span id="/2017/05/17/arch_install/" class="post-meta-item leancloud_visitors" data-flag-title="以官方Wiki的方式安装ArchLinux">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -983,17 +652,10 @@
               
                 <span class="leancloud-visitors-count"></span>
             </span>
-          
-
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
@@ -1001,10 +663,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><blockquote>
 <p>  <strong>这可能是你能找到的最适合你的中文<code>ArchLinux</code>安装教程。</strong></p>
 </blockquote>
@@ -1023,31 +681,11 @@
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
         <div class="post-eof"></div>
-      
     </footer>
   </div>
   
@@ -1055,17 +693,8 @@
   
   </article>
 
-
     
       
-
-  
-
-  
-  
-  
-
-  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
@@ -1083,11 +712,8 @@
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h2 class="post-title" itemprop="name headline">
                 
@@ -1099,13 +725,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1118,16 +738,12 @@
               
 
               <time title="创建时间：2017-05-11 15:58:06" itemprop="dateCreated datePublished" datetime="2017-05-11T15:58:06+08:00">2017-05-11</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1135,15 +751,10 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1160,14 +771,7 @@
           
 
           
-            
-            
-          
-
-          
-          
-            <span id="/2017/05/11/android_lan_messages/" class="leancloud_visitors" data-flag-title="Android利用UDP、TCP进行局域网数据传输">
-              <span class="post-meta-divider">|</span>
+            <span id="/2017/05/11/android_lan_messages/" class="post-meta-item leancloud_visitors" data-flag-title="Android利用UDP、TCP进行局域网数据传输">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -1176,17 +780,10 @@
               
                 <span class="leancloud-visitors-count"></span>
             </span>
-          
-
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
@@ -1194,10 +791,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>在团队内部的hackweek中实现了一个在局域网环境中（同一个wifi下）进行的卡片收发小游戏，踩了一些关于局域网内通信的坑，这篇博文就用来整理一下整个过程的思路，<a href="https://github.com/viseator/AnonymousCard" target="_blank" rel="noopener">完整代码地址</a>。</p>
 <h2 id="实现思路"><a href="#实现思路" class="headerlink" title="实现思路"></a>实现思路</h2><p>在整个过程中利用到了UDP与TCP两种传输层协议，两者的特性决定了使用上的不同。</p>
 <p>简单地说，UDP非面向连接，不需要先与目标建立连接，所以UDP不提供可靠的数据传输，也不能保证数据准确无误地到达目的地，但UDP的优势在于它可以迅速传送大量信息，传输性能比较好。</p>
@@ -1217,31 +810,11 @@
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
         <div class="post-eof"></div>
-      
     </footer>
   </div>
   
@@ -1249,17 +822,8 @@
   
   </article>
 
-
     
       
-
-  
-
-  
-  
-  
-
-  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
@@ -1277,11 +841,8 @@
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h2 class="post-title" itemprop="name headline">
                 
@@ -1293,13 +854,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1312,16 +867,12 @@
               
 
               <time title="创建时间：2017-04-10 20:44:49" itemprop="dateCreated datePublished" datetime="2017-04-10T20:44:49+08:00">2017-04-10</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1329,15 +880,10 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1354,14 +900,7 @@
           
 
           
-            
-            
-          
-
-          
-          
-            <span id="/2017/04/10/assembly_wang_lab_9/" class="leancloud_visitors" data-flag-title="王爽汇编语言第三版实验9 双循环实现">
-              <span class="post-meta-divider">|</span>
+            <span id="/2017/04/10/assembly_wang_lab_9/" class="post-meta-item leancloud_visitors" data-flag-title="王爽汇编语言第三版实验9 双循环实现">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -1370,17 +909,10 @@
               
                 <span class="leancloud-visitors-count"></span>
             </span>
-          
-
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
@@ -1388,10 +920,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <p>编程：在屏幕中间分别显示绿色、绿底红色、白底蓝色的字符串<code>welcome to masm!</code>。</p>
 <p>效果图：</p>
 <p><img src="/images/assembly_9.jpg" alt=""></p>
@@ -1414,31 +942,11 @@
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
         <div class="post-eof"></div>
-      
     </footer>
   </div>
   
@@ -1446,17 +954,8 @@
   
   </article>
 
-
     
       
-
-  
-
-  
-  
-  
-
-  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
@@ -1474,11 +973,8 @@
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h2 class="post-title" itemprop="name headline">
                 
@@ -1490,13 +986,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1509,16 +999,12 @@
               
 
               <time title="创建时间：2017-04-02 10:08:31" itemprop="dateCreated datePublished" datetime="2017-04-02T10:08:31+08:00">2017-04-02</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1526,15 +1012,10 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1558,14 +1039,7 @@
           
 
           
-            
-            
-          
-
-          
-          
-            <span id="/2017/04/02/android_property_animation_2/" class="leancloud_visitors" data-flag-title="Android PropertyAnimation 属性动画（二）弹跳小球实例">
-              <span class="post-meta-divider">|</span>
+            <span id="/2017/04/02/android_property_animation_2/" class="post-meta-item leancloud_visitors" data-flag-title="Android PropertyAnimation 属性动画（二）弹跳小球实例">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -1574,17 +1048,10 @@
               
                 <span class="leancloud-visitors-count"></span>
             </span>
-          
-
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
@@ -1592,10 +1059,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://github.com/viseator/AndroidAnimatorBounceBallDemo" target="_blank" rel="noopener">GitHub完整代码</a></p>
 <p><a href="http://www.viseator.com/2017/03/26/android_property_animation_1/">上篇博客</a>简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对<code>Animator</code>的几个回调方法进行讲解。</p>
 <p>目标是自定义一个<code>View</code>，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：</p>
@@ -1614,31 +1077,11 @@
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
         <div class="post-eof"></div>
-      
     </footer>
   </div>
   
@@ -1646,17 +1089,8 @@
   
   </article>
 
-
     
       
-
-  
-
-  
-  
-  
-
-  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
@@ -1674,11 +1108,8 @@
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h2 class="post-title" itemprop="name headline">
                 
@@ -1690,13 +1121,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1709,16 +1134,12 @@
               
 
               <time title="创建时间：2017-03-26 14:14:45" itemprop="dateCreated datePublished" datetime="2017-03-26T14:14:45+08:00">2017-03-26</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1726,15 +1147,10 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1758,14 +1174,7 @@
           
 
           
-            
-            
-          
-
-          
-          
-            <span id="/2017/03/26/android_property_animation_1/" class="leancloud_visitors" data-flag-title="Android PropertyAnimation 属性动画（一）初探">
-              <span class="post-meta-divider">|</span>
+            <span id="/2017/03/26/android_property_animation_1/" class="post-meta-item leancloud_visitors" data-flag-title="Android PropertyAnimation 属性动画（一）初探">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -1774,17 +1183,10 @@
               
                 <span class="leancloud-visitors-count"></span>
             </span>
-          
-
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
@@ -1792,10 +1194,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>相对于静态的页面，动画往往能更直观地表达所需的信息，在UI开发过程中起着相当大的作用。</p>
 <p>Android为我们提供了一系列实现动画效果的方法，<code>PropertyAnimaiton</code>是最常见也是最实用的一种，如同它的名字一样，它的实现方式是通过改变对象的一系列属性值来改变对象的状态， 例如动态地改变绘制的位置就可以实现绘制物体的移动效果，动态地改变对象的显示状态可以实现闪烁效果。</p>
 <h2 id="Animator概览"><a href="#Animator概览" class="headerlink" title="Animator概览"></a>Animator概览</h2><p>Android提供的实现属性动画的工具是<code>android.animation.Animator</code>这个类，它的使用需要配合<code>animation</code>包下的其他工具类，这个类的功能是什么，我们要如何使用它来实现属性动画呢？</p>
@@ -1813,31 +1211,11 @@
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
         <div class="post-eof"></div>
-      
     </footer>
   </div>
   
@@ -1845,17 +1223,8 @@
   
   </article>
 
-
     
       
-
-  
-
-  
-  
-  
-
-  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
@@ -1873,11 +1242,8 @@
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h2 class="post-title" itemprop="name headline">
                 
@@ -1889,13 +1255,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1908,16 +1268,12 @@
               
 
               <time title="创建时间：2017-03-25 23:43:06" itemprop="dateCreated datePublished" datetime="2017-03-25T23:43:06+08:00">2017-03-25</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1925,15 +1281,10 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1950,14 +1301,7 @@
           
 
           
-            
-            
-          
-
-          
-          
-            <span id="/2017/03/25/resource_general/" class="leancloud_visitors" data-flag-title="学习资源收集">
-              <span class="post-meta-divider">|</span>
+            <span id="/2017/03/25/resource_general/" class="post-meta-item leancloud_visitors" data-flag-title="学习资源收集">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -1966,17 +1310,10 @@
               
                 <span class="leancloud-visitors-count"></span>
             </span>
-          
-
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
@@ -1984,10 +1321,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <hr>
           <!--noindex-->
           
@@ -2003,38 +1336,17 @@
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
         <div class="post-eof"></div>
-      
     </footer>
   </div>
   
   
   
   </article>
-
 
     
   </section>
@@ -2045,12 +1357,10 @@
   </nav>
 
 
-
           </div>
           
 
         </div>
-        
           
   
   <div class="sidebar-toggle">
@@ -2064,266 +1374,225 @@
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
 
-      
-
-      
-
       <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
+
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="viseator(吴迪)">
-            
-              <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
-              <div class="site-description motion-element" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
-          </div>
+    <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="viseator(吴迪)">
+  <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
+  <div class="site-description motion-element" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/viseator" title="GitHub &rarr; https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:viseator@gmail.com" title="Email &rarr; mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
+      </span>
+    
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives">
-                
-                    <span class="site-state-item-count">34</span>
-                    <span class="site-state-item-name">文章</span>
-                  </a>
-                </div>
-              
 
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  
-                    
-                      <a href="/categories">
-                    
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">20</span>
-                    <span class="site-state-item-name">分类</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  
-                    
-                      <a href="/tags">
-                    
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">25</span>
-                    <span class="site-state-item-name">标签</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/viseator" title="GitHub &rarr; https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="mailto:viseator@gmail.com" title="Email &rarr; mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
-                </span>
-              
-            </div>
-          
-
-          
-             <div class="cc-license motion-element" itemprop="license">
-              
-              
-                
-              
-              
-              
-              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
-             </div>
-          
-
-          
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                Links
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
-                  </li>
-                
-              </ul>
-            </div>
-          
-
-          
-            
-          
-          
+  <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
+        </li>
+      
+    </ul>
+  </div>
 
         </div>
       </div>
 
-      
-
-      
-
     </div>
   </aside>
-  
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
@@ -2334,33 +1603,12 @@
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
-
-  
-
-  
 </div>
-
-
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
-
-
-
   <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.2</div>
-
-
-
-  <div class="footer-custom">永远欣赏那些可以行我所不能行之事的人</div>
-
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
 
         
-
-
-
-
 
 
   <div style="display: none;">
@@ -2369,94 +1617,36 @@
 
 
 
+
+
+
         
       </div>
     </footer>
-
-    
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
-        
       </div>
-    
 
     
 
-    
-
-    
   </div>
 
   
-
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
+  <script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
 
   
-
-
-  <script src="/js/utils.js?v=7.1.2"></script>
-
-  <script src="/js/motion.js?v=7.1.2"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/schemes/muse.js?v=7.1.2"></script>
-
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
 
 
 
   
 
-  
-
-
-  <script src="/js/next-boot.js?v=7.1.2"></script>
-
-
-  
+  <script src="/js/next-boot.js?v=7.3.0"></script>
 
   
 
@@ -2465,29 +1655,29 @@
   
 
 
-
-  
-
-
-
-  
-  
-  
-  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
-
-  
-  
-  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
-  
-
-  <script src="/js/algolia-search.js?v=7.1.2"></script>
-
-
-
-  
   
   <script>
-    
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script>
     function showTime(Counter) {
       var entries = [];
       var $visitors = $('.leancloud_visitors');
@@ -2523,7 +1713,7 @@
           }
         })
         .fail(function ({ responseJSON }) {
-          console.log('LeanCloud Counter Error: ' + responseJSON.code + ' ' + responseJSON.error);
+          console.log(`LeanCloud Counter Error: ${responseJSON.code} ${responseJSON.error}`);
         });
     }
     
@@ -2534,7 +1724,7 @@
           var Counter = function(method, url, data) {
             return $.ajax({
               method: method,
-              url: 'https://' + api_server + '/1.1' + url,
+              url: `https://${api_server}/1.1${url}`,
               headers: {
                 'X-LC-Id': 'AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz',
                 'X-LC-Key': 'shxNGHkps7WDMLyCkIKIKSSM',
@@ -2543,7 +1733,6 @@
               data: data
             });
           };
-          
             if ($('.post-title-link').length >= 1) {
               showTime(Counter);
             }
@@ -2554,76 +1743,37 @@
 
 
 
-  
 
-  
 
-  
 
-  
 
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
+
+
+
 
 
   
-
-  
-
-  
-
-  
-
-  
-
-  
-<script>
-  $('.highlight').not('.gist .highlight').each(function(i, e) {
-    var $wrap = $('<div>').addClass('highlight-wrap');
-    $(e).after($wrap);
-    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
-      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
-        return $(e).text();
-      }).toArray().join('\n');
-      var ta = document.createElement('textarea');
-      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
-      ta.style.top = yPosition + 'px'; // Prevent page scroll
-      ta.style.position = 'absolute';
-      ta.style.opacity = '0';
-      ta.readOnly = true;
-      ta.value = code;
-      document.body.appendChild(ta);
-      ta.select();
-      ta.setSelectionRange(0, code.length);
-      ta.readOnly = false;
-      var result = document.execCommand('copy');
-      
-        if (result) $(this).text('复制成功');
-        else $(this).text('复制失败');
-      
-      ta.blur(); // For iOS
-      $(this).blur();
-    })).on('mouseleave', function(e) {
-      var $b = $(this).find('.copy-btn');
-      setTimeout(function() {
-        $b.text('复制');
-      }, 300);
-    }).append(e);
-  })
-</script>
+<link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+<script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
 
 
-  
+<script src="/js/algolia-search.js?v=7.3.0"></script>
 
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
 
 </body>
 </html>

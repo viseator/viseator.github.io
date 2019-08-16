@@ -4,108 +4,26 @@
 
 
 
-
-
-
-
-
-
-
-  
-
-
 <html class="theme-next mist use-motion" lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head>
   <meta charset="UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hexo 3.8.0">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-
-
-
-
-  
-  
-    
-    
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  
-  
-  
-
-  
-
-  
-
-  
-
-  
-    
-
-    
-  
-
-  
-    
-
-    
-  
-
-  
-    
-    
-    <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Aladin:300,300italic,400,400italic,700,700italicPT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext">
-  
-
-
-
-
-
-
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2">
-
-<link rel="stylesheet" href="/css/main.css?v=7.1.2">
-
-
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=7.1.2">
-
-
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=7.1.2">
-
-
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=7.1.2">
-
-
-  <link rel="mask-icon" href="/images/logo.svg?v=7.1.2" color="#F5F5F5">
-
-
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
-
-
   <meta name="msapplication-config" content="/images/browserconfig.xml">
 
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
 
-
+<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
 
 
 <script id="hexo.configurations">
@@ -113,30 +31,35 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    version: '7.1.2',
-    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false,"dimmer":false},
-    back2top: true,
-    back2top_sidebar: false,
+    version: '7.3.0',
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    copycode: {"enable":true,"show_result":true,"style":null},
     fancybox: false,
-    fastclick: false,
+    mediumzoom: false,
     lazyload: false,
-    tabs: true,
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    pangu: false,
     algolia: {
       applicationID: 'HYRROWXF5U',
       apiKey: '24035990f7a74ccf1ec2cf8d264b6207',
       indexName: 'vir',
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":2,"unescape":true,"preload":false},
+    search: {
+      root: '/',
+      path: 'search.xml'
+    },
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
-
-
-  
-
-
-
 
   <meta name="description" content="永远欣赏那些可以行我所不能行之事的人">
 <meta name="keywords" content="吴迪,博客,viseator,blog">
@@ -149,15 +72,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="viseator&#39;s blog">
 <meta name="twitter:description" content="永远欣赏那些可以行我所不能行之事的人">
-
-
-
-
-
-  
-  
   <link rel="canonical" href="https://www.viseator.com/page/2/">
-
 
 
 <script id="page.configurations">
@@ -166,12 +81,8 @@
   };
 </script>
 
-  <title>viseator's blog – 吴迪的博客</title>
+  <title>viseator's blog - 吴迪的博客</title>
   
-
-
-
-
   <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
   <script>
     var host = window.location.hostname;
@@ -184,7 +95,6 @@
   </script>
 
 
-
   <script>
     var _hmt = _hmt || [];
     (function() {
@@ -194,7 +104,6 @@
       s.parentNode.insertBefore(hm, s);
     })();
   </script>
-
 
 
 
@@ -228,21 +137,14 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
-  
-  
-    
-  
-
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-right page-home">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
-    
 
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
@@ -251,12 +153,8 @@
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
-    
-      
         <h1 class="site-subtitle" itemprop="description">吴迪的博客</h1>
       
-    
-    
   </div>
 
   <div class="site-nav-toggle">
@@ -271,20 +169,12 @@
 
 
 <nav class="site-nav">
-  
     <ul id="menu" class="menu">
-      
         
         
         
           
           <li class="menu-item menu-item-home">
-
-    
-    
-    
-
-    
 
     <a href="/" rel="section">首页</a>
 
@@ -295,12 +185,6 @@
           
           <li class="menu-item menu-item-categories">
 
-    
-    
-    
-
-    
-
     <a href="/categories" rel="section">分类</a>
 
   </li>
@@ -309,12 +193,6 @@
         
           
           <li class="menu-item menu-item-archives">
-
-    
-    
-    
-
-    
 
     <a href="/archives" rel="section">归档</a>
 
@@ -325,12 +203,6 @@
           
           <li class="menu-item menu-item-tags">
 
-    
-    
-    
-
-    
-
     <a href="/tags" rel="section">标签</a>
 
   </li>
@@ -339,12 +211,6 @@
         
           
           <li class="menu-item menu-item-resource">
-
-    
-    
-    
-
-    
 
     <a href="/2017/03/25/resource_general" rel="section">资源</a>
 
@@ -355,12 +221,6 @@
           
           <li class="menu-item menu-item-arch">
 
-    
-    
-    
-
-    
-
     <a href="/categories/Linux/" rel="section">Arch安装</a>
 
   </li>
@@ -370,68 +230,42 @@
           
           <li class="menu-item menu-item-about">
 
-    
-    
-    
-
-    
-
     <a href="/about" rel="section">关于</a>
 
   </li>
-
-      
-      
         <li class="menu-item menu-item-search">
-          
-            <a href="javascript:;" class="popup-trigger">
-          
-            搜索</a>
+          <a href="javascript:;" class="popup-trigger">
+          搜索</a>
         </li>
       
     </ul>
-  
-
-  
     
 
-  
-
-  
     <div class="site-search">
       
-  
   <div class="algolia-popup popup search-popup">
-    <div class="algolia-search">
-      <div class="algolia-search-input-icon">
-        <i class="fa fa-search"></i>
-      </div>
-      <div class="algolia-search-input" id="algolia-search-input"></div>
+  <div class="algolia-search">
+    <div class="algolia-search-input-icon">
+      <i class="fa fa-search"></i>
     </div>
-
-    <div class="algolia-results">
-      <div id="algolia-stats"></div>
-      <div id="algolia-hits"></div>
-      <div id="algolia-pagination" class="algolia-pagination"></div>
-    </div>
-
-    <span class="popup-btn-close">
-      <i class="fa fa-times-circle"></i>
-    </span>
+    <div class="algolia-search-input" id="algolia-search-input"></div>
   </div>
 
+  <div class="algolia-results">
+    <div id="algolia-stats"></div>
+    <div id="algolia-hits"></div>
+    <div id="algolia-pagination" class="algolia-pagination"></div>
+  </div>
+
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
 
 
 
     </div>
-  
 </nav>
-
-
-
-  
-
-
 
 </div>
     </header>
@@ -442,20 +276,10 @@
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          
           <div id="content" class="content">
             
   <section id="posts" class="posts-expand">
-    
       
-
-  
-
-  
-  
-  
-
-  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
@@ -473,11 +297,8 @@
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h2 class="post-title" itemprop="name headline">
                 
@@ -489,13 +310,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -508,16 +323,12 @@
               
 
               <time title="创建时间：2017-10-07 13:00:00" itemprop="dateCreated datePublished" datetime="2017-10-07T13:00:00+08:00">2017-10-07</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -525,15 +336,10 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -557,14 +363,7 @@
           
 
           
-            
-            
-          
-
-          
-          
-            <span id="/2017/10/07/android_view_event_2/" class="leancloud_visitors" data-flag-title="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始">
-              <span class="post-meta-divider">|</span>
+            <span id="/2017/10/07/android_view_event_2/" class="post-meta-item leancloud_visitors" data-flag-title="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -573,17 +372,10 @@
               
                 <span class="leancloud-visitors-count"></span>
             </span>
-          
-
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
@@ -591,10 +383,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>在<a href="http://www.viseator.com/2017/09/14/android_view_event_1/">上一篇文章</a>中，我们探索了从内核触摸事件传递到<code>InputDispatcher</code>线程，再与应用线程之间建立<code>InputChannel</code>的过程，并且我们已经看到一个最原始的触摸事件被封装成一个<code>msg</code>并通过<code>InputChannel</code>建立的<code>socket</code>通过<code>sendMessage()</code>方法跨线程通信发送给了应用的UI线程。</p>
 <p>这篇文章将会看到应用UI线程的消息队列是如何读取传递过来的触摸事件并进行处理、分发的。</p>
           <!--noindex-->
@@ -611,31 +399,11 @@
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
         <div class="post-eof"></div>
-      
     </footer>
   </div>
   
@@ -643,17 +411,8 @@
   
   </article>
 
-
     
       
-
-  
-
-  
-  
-  
-
-  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
@@ -671,11 +430,8 @@
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h2 class="post-title" itemprop="name headline">
                 
@@ -687,13 +443,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -706,16 +456,12 @@
               
 
               <time title="创建时间：2017-09-14 11:20:38" itemprop="dateCreated datePublished" datetime="2017-09-14T11:20:38+08:00">2017-09-14</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -723,15 +469,10 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -755,14 +496,7 @@
           
 
           
-            
-            
-          
-
-          
-          
-            <span id="/2017/09/14/android_view_event_1/" class="leancloud_visitors" data-flag-title="Android 触摸事件分发机制（一）从内核到应用 一切的开始">
-              <span class="post-meta-divider">|</span>
+            <span id="/2017/09/14/android_view_event_1/" class="post-meta-item leancloud_visitors" data-flag-title="Android 触摸事件分发机制（一）从内核到应用 一切的开始">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -771,17 +505,10 @@
               
                 <span class="leancloud-visitors-count"></span>
             </span>
-          
-
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
@@ -789,10 +516,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p><strong>本文基于<code>Android 7.1.1 (API 25)</code>的源码分析编写</strong></p>
 <p>安卓是基于触摸操作进行交互的系统，几乎所有的操作都由对屏幕的一次次触摸完成，如何正确处理触摸事件关乎整个应用的操作体验。因此安卓对于触摸事件的分发与处理机制也是我们学习安卓开发的重中之重。同时几乎每一个安卓技术博客中都会对触摸分发机制这一块进行详解，例如比较早期也是最为出名的<a href="http://blog.csdn.net/guolin_blog/article/details/9097463/" target="_blank" rel="noopener">郭霖</a>（《第一行代码》的作者）。现在网络上对于这一块的分析也已经比较详尽了，基本上一篇博客中遗漏的部分都可以在其他博客中找到答案。</p>
 <p>但是无论别人的文章讲得多好，多么详细，我们都需要自己去打开源码仔细分析好好体会，一是这样一个比较复杂的过程不经历自己的思考很难完全理解，二是随着<code>api</code>版本的推进这部分源码也会发生很多变化，虽然大致思路相同，但是接触到新的内容总是一件好事。</p>
@@ -811,31 +534,11 @@
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
         <div class="post-eof"></div>
-      
     </footer>
   </div>
   
@@ -843,17 +546,8 @@
   
   </article>
 
-
     
       
-
-  
-
-  
-  
-  
-
-  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
@@ -871,11 +565,8 @@
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h2 class="post-title" itemprop="name headline">
                 
@@ -887,13 +578,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -906,16 +591,12 @@
               
 
               <time title="创建时间：2017-09-05 20:06:16" itemprop="dateCreated datePublished" datetime="2017-09-05T20:06:16+08:00">2017-09-05</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -923,15 +604,10 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -948,14 +624,7 @@
           
 
           
-            
-            
-          
-
-          
-          
-            <span id="/2017/09/05/mr12u_openwrt_mentohust/" class="leancloud_visitors" data-flag-title="TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）">
-              <span class="post-meta-divider">|</span>
+            <span id="/2017/09/05/mr12u_openwrt_mentohust/" class="post-meta-item leancloud_visitors" data-flag-title="TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -964,17 +633,10 @@
               
                 <span class="leancloud-visitors-count"></span>
             </span>
-          
-
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
@@ -982,10 +644,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>开学学校启用了有线网，由于校园网存在只能单一设备登陆的限制与无线登陆限速，所以想通过路由器刷<code>openwrt</code>再使用<code>mentohust</code>进行校园网的锐捷认证来实现多设备与不限速使用。</p>
 <p>在选择路由器时考虑了如下因素：</p>
 <ol>
@@ -1008,31 +666,11 @@
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
         <div class="post-eof"></div>
-      
     </footer>
   </div>
   
@@ -1040,17 +678,8 @@
   
   </article>
 
-
     
       
-
-  
-
-  
-  
-  
-
-  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
@@ -1068,11 +697,8 @@
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h2 class="post-title" itemprop="name headline">
                 
@@ -1084,13 +710,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1103,16 +723,12 @@
               
 
               <time title="创建时间：2017-07-19 19:07:42" itemprop="dateCreated datePublished" datetime="2017-07-19T19:07:42+08:00">2017-07-19</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1120,15 +736,10 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1145,14 +756,7 @@
           
 
           
-            
-            
-          
-
-          
-          
-            <span id="/2017/07/19/android_context/" class="leancloud_visitors" data-flag-title="Android Context理解与陷阱">
-              <span class="post-meta-divider">|</span>
+            <span id="/2017/07/19/android_context/" class="post-meta-item leancloud_visitors" data-flag-title="Android Context理解与陷阱">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -1161,17 +765,10 @@
               
                 <span class="leancloud-visitors-count"></span>
             </span>
-          
-
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
@@ -1179,10 +776,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="Context"><a href="#Context" class="headerlink" title="Context?"></a>Context?</h2><p><code>Context</code>在安卓开发时是一个非常常见的组件，我们会在许多地方使用它，举一些例子：</p>
 <ul>
 <li>启动新的<code>Activity</code> <code>Service</code></li>
@@ -1212,31 +805,11 @@
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
         <div class="post-eof"></div>
-      
     </footer>
   </div>
   
@@ -1244,17 +817,8 @@
   
   </article>
 
-
     
       
-
-  
-
-  
-  
-  
-
-  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
@@ -1272,11 +836,8 @@
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h2 class="post-title" itemprop="name headline">
                 
@@ -1288,13 +849,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1307,16 +862,12 @@
               
 
               <time title="创建时间：2017-07-18 13:47:01" itemprop="dateCreated datePublished" datetime="2017-07-18T13:47:01+08:00">2017-07-18</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1324,15 +875,10 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1356,14 +902,7 @@
           
 
           
-            
-            
-          
-
-          
-          
-            <span id="/2017/07/18/CS_APP_AttackLab/" class="leancloud_visitors" data-flag-title="深入理解计算机系统（CS:APP) - Attack Lab详解">
-              <span class="post-meta-divider">|</span>
+            <span id="/2017/07/18/CS_APP_AttackLab/" class="post-meta-item leancloud_visitors" data-flag-title="深入理解计算机系统（CS:APP) - Attack Lab详解">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -1372,17 +911,10 @@
               
                 <span class="leancloud-visitors-count"></span>
             </span>
-          
-
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
@@ -1390,10 +922,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="Attack-Lab"><a href="#Attack-Lab" class="headerlink" title="Attack Lab"></a>Attack Lab</h2><p>实验代码见<a href="https://github.com/viseator/CS-APP-3e-labs" target="_blank" rel="noopener">GitHub</a></p>
 <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p><code>Attack Lab</code>的内容针对的是<code>CS-APP</code>中第三章中关于程序安全性描述中的栈溢出攻击。在这个<code>Lab</code>中，我们需要针对不同的目的编写攻击字符串来填充一个有漏洞的程序的栈来达到执行攻击代码的目的，攻击方式分为代码注入攻击与返回导向编程攻击。本实验也是对旧版本中<code>IA32</code>编写的<code>Buffer Lab</code>的替代。</p>
 <p>我们可以从<a href="http://csapp.cs.cmu.edu/3e/labs.html" target="_blank" rel="noopener"><code>CMU</code>的<code>lab</code>主页</a>来获取自学者版本与实验讲义(Writeup)，讲义中包含了必要的提示、建议与被禁止的操作，从这个<code>lab</code>开始之后的<code>lab</code>对讲义中内容的依赖还是很强的。</p>
@@ -1414,31 +942,11 @@
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
         <div class="post-eof"></div>
-      
     </footer>
   </div>
   
@@ -1446,17 +954,8 @@
   
   </article>
 
-
     
       
-
-  
-
-  
-  
-  
-
-  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
@@ -1474,11 +973,8 @@
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h2 class="post-title" itemprop="name headline">
                 
@@ -1490,13 +986,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1509,16 +999,12 @@
               
 
               <time title="创建时间：2017-07-02 10:26:58" itemprop="dateCreated datePublished" datetime="2017-07-02T10:26:58+08:00">2017-07-02</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1526,15 +1012,10 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2018-09-12 15:38:36" itemprop="dateModified" datetime="2018-09-12T15:38:36+08:00">2018-09-12</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1558,14 +1039,7 @@
           
 
           
-            
-            
-          
-
-          
-          
-            <span id="/2017/07/02/arch_more/" class="leancloud_visitors" data-flag-title="ArchLinux你可能需要知道的操作与软件包推荐「持续更新」">
-              <span class="post-meta-divider">|</span>
+            <span id="/2017/07/02/arch_more/" class="post-meta-item leancloud_visitors" data-flag-title="ArchLinux你可能需要知道的操作与软件包推荐「持续更新」">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -1574,17 +1048,10 @@
               
                 <span class="leancloud-visitors-count"></span>
             </span>
-          
-
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
@@ -1592,10 +1059,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="你可能需要知道的操作与软件包推荐"><a href="#你可能需要知道的操作与软件包推荐" class="headerlink" title="你可能需要知道的操作与软件包推荐"></a>你可能需要知道的操作与软件包推荐</h2><p>在<a href="http://www.viseator.com/2017/05/17/arch_install/">第一篇教程</a>中介绍了<code>ArchLinux</code>的基本安装，<a href="http://www.viseator.com/2017/05/19/arch_setup/">第二篇教程</a>中介绍了必须的设置与图形界面的安装，这篇文章并不是教程，只是推荐一些自己日常使用的操作与软件包。写这篇文章时没有重新安装，所以不会有详细的过程，只是简单地列举应该装的软件包或者是基础的配置，更加细节的内容请查阅相关<code>wiki</code>。</p>
           <!--noindex-->
           
@@ -1611,31 +1074,11 @@
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
         <div class="post-eof"></div>
-      
     </footer>
   </div>
   
@@ -1643,17 +1086,8 @@
   
   </article>
 
-
     
       
-
-  
-
-  
-  
-  
-
-  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
@@ -1671,11 +1105,8 @@
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h2 class="post-title" itemprop="name headline">
                 
@@ -1687,13 +1118,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1706,16 +1131,12 @@
               
 
               <time title="创建时间：2017-06-21 09:53:01" itemprop="dateCreated datePublished" datetime="2017-06-21T09:53:01+08:00">2017-06-21</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1723,15 +1144,10 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2018-07-01 12:52:14" itemprop="dateModified" datetime="2018-07-01T12:52:14+08:00">2018-07-01</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1755,14 +1171,7 @@
           
 
           
-            
-            
-          
-
-          
-          
-            <span id="/2017/06/21/CS_APP_BombLab/" class="leancloud_visitors" data-flag-title="深入理解计算机系统（CS:APP) - Bomb Lab详解">
-              <span class="post-meta-divider">|</span>
+            <span id="/2017/06/21/CS_APP_BombLab/" class="post-meta-item leancloud_visitors" data-flag-title="深入理解计算机系统（CS:APP) - Bomb Lab详解">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -1771,17 +1180,10 @@
               
                 <span class="leancloud-visitors-count"></span>
             </span>
-          
-
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
@@ -1789,10 +1191,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="Bomb-Lab"><a href="#Bomb-Lab" class="headerlink" title="Bomb Lab"></a>Bomb Lab</h2><p>实验代码见<a href="https://github.com/viseator/CS-APP-3e-labs" target="_blank" rel="noopener">GitHub</a></p>
 <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p>BombLab是CS:APP中对应第三章内容：程序的机器级表示的lab。主要内容为提供一个二进制对象文件<code>bomb</code>，当运行时，它会要求用户输入六个字符串，如果其中的任何一个不正确，炸弹就会爆炸，输出一行错误信息并向计分服务器提交（自学所用的材料不会向服务器提交信息，但这不代表我们可以随意让炸弹爆炸），学生必须通过反汇编和逆向工程来找到六个正确的字符串来解除自己的炸弹（理论上每个人的炸弹答案都不同，但自学材料的答案都是一样的，本文针对的是自学材料）。</p>
           <!--noindex-->
@@ -1809,31 +1207,11 @@
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
         <div class="post-eof"></div>
-      
     </footer>
   </div>
   
@@ -1841,17 +1219,8 @@
   
   </article>
 
-
     
       
-
-  
-
-  
-  
-  
-
-  
 
   <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
   
@@ -1869,11 +1238,8 @@
     <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
-
-    
       <header class="post-header">
 
-        
         
           <h2 class="post-title" itemprop="name headline">
                 
@@ -1885,13 +1251,7 @@
         
 
         <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
@@ -1904,16 +1264,12 @@
               
 
               <time title="创建时间：2017-06-18 15:01:01" itemprop="dateCreated datePublished" datetime="2017-06-18T15:01:01+08:00">2017-06-18</time>
+            </span>
+          
             
 
             
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
+              <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
@@ -1921,15 +1277,10 @@
                   <span class="post-meta-item-text">更新于</span>
                 
                 <time title="修改时间：2018-06-28 16:27:29" itemprop="dateModified" datetime="2018-06-28T16:27:29+08:00">2018-06-28</time>
-              
+              </span>
             
-          </span>
-
           
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
+            <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
@@ -1953,14 +1304,7 @@
           
 
           
-            
-            
-          
-
-          
-          
-            <span id="/2017/06/18/CS_APP_DataLab/" class="leancloud_visitors" data-flag-title="深入理解计算机系统（CS:APP) - Data Lab详解">
-              <span class="post-meta-divider">|</span>
+            <span id="/2017/06/18/CS_APP_DataLab/" class="post-meta-item leancloud_visitors" data-flag-title="深入理解计算机系统（CS:APP) - Data Lab详解">
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
               </span>
@@ -1969,17 +1313,10 @@
               
                 <span class="leancloud-visitors-count"></span>
             </span>
-          
-
-          
-
-          
-
-          
+          <br>
 
         </div>
       </header>
-    
 
     
     
@@ -1987,10 +1324,6 @@
     <div class="post-body" itemprop="articleBody">
 
       
-      
-
-      
-        
           <h2 id="关于CS-APP"><a href="#关于CS-APP" class="headerlink" title="关于CS:APP"></a>关于CS:APP</h2><p>《深入理解计算机系统》(Computer Systems: A Programmer’s Perspective;CS:APP)这本书作为CMU核心课程的核心教材，一直被众人所推崇。这本书的主要内容就如它的英文名称那样：以一个程序员的视角看待计算机系统（现在的中文书名翻译给人一种这本书非常精深的错觉）。实际上这本书的内容并没有太过于深入，并且一直都作为计算机科学与技术专业低年级的计算机基础课来开设。所需要的前置知识也不是很多，一般来说学习过C语言之后就可以看了，并不需要提前学习汇编（本书第三章会讲解汇编的基础内容）。但个人感觉在学习过王爽的8086汇编以后学习本书的汇编会顺利不少。</p>
 <p>我在三月份时得知本书第三版的英文版即将出版就早早预订了（第三版中文翻译版早已出版），苦苦等待一个月以后终于如愿成为了这版CS:APP的第一批读者。</p>
 <p>读这本书的感受第一就是非常地爽，可以说这本书可以引领你从表层的程序一直深入到计算机内部的运作方式中，里面对于一些概念的理解也是给人一种前所未有的透彻感觉（溢出的图形表示、补码的权值理解等等）都切中了问题的本质。</p>
@@ -2009,38 +1342,17 @@
     </div>
 
     
-
     
-    
-    
-
-    
-
-    
-      
-    
-    
-
     
 
     <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
         <div class="post-eof"></div>
-      
     </footer>
   </div>
   
   
   
   </article>
-
 
     
   </section>
@@ -2051,12 +1363,10 @@
   </nav>
 
 
-
           </div>
           
 
         </div>
-        
           
   
   <div class="sidebar-toggle">
@@ -2070,266 +1380,225 @@
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
 
-      
-
-      
-
       <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
+
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-            
-              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="viseator(吴迪)">
-            
-              <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
-              <div class="site-description motion-element" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
-          </div>
+    <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="viseator(吴迪)">
+  <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
+  <div class="site-description motion-element" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives">
+        
+          <span class="site-state-item-count">34</span>
+          <span class="site-state-item-name">文章</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-categories">
+        
+          
+            <a href="/categories">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="https://github.com/viseator" title="GitHub &rarr; https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+      </span>
+    
+      <span class="links-of-author-item">
+      
+      
+        
+      
+      
+        
+      
+        <a href="mailto:viseator@gmail.com" title="Email &rarr; mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
+      </span>
+    
+  </div>
+  <div class="cc-license motion-element" itemprop="license">
+    
+  
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
 
-          
-            <nav class="site-state motion-element">
-              
-                <div class="site-state-item site-state-posts">
-                
-                  <a href="/archives">
-                
-                    <span class="site-state-item-count">34</span>
-                    <span class="site-state-item-name">文章</span>
-                  </a>
-                </div>
-              
 
-              
-                
-                
-                <div class="site-state-item site-state-categories">
-                  
-                    
-                      <a href="/categories">
-                    
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">20</span>
-                    <span class="site-state-item-name">分类</span>
-                  </a>
-                </div>
-              
-
-              
-                
-                
-                <div class="site-state-item site-state-tags">
-                  
-                    
-                      <a href="/tags">
-                    
-                  
-                    
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">25</span>
-                    <span class="site-state-item-name">标签</span>
-                  </a>
-                </div>
-              
-            </nav>
-          
-
-          
-
-          
-
-          
-            <div class="links-of-author motion-element">
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="https://github.com/viseator" title="GitHub &rarr; https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
-                </span>
-              
-                <span class="links-of-author-item">
-                  
-                  
-                    
-                  
-                  
-                    
-                  
-                  <a href="mailto:viseator@gmail.com" title="Email &rarr; mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
-                </span>
-              
-            </div>
-          
-
-          
-             <div class="cc-license motion-element" itemprop="license">
-              
-              
-                
-              
-              
-              
-              <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
-             </div>
-          
-
-          
-          
-            <div class="links-of-blogroll motion-element links-of-blogroll-inline">
-              <div class="links-of-blogroll-title">
-                <i class="fa  fa-fw fa-link"></i>
-                Links
-              </div>
-              <ul class="links-of-blogroll-list">
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
-                  </li>
-                
-                  <li class="links-of-blogroll-item">
-                    <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
-                  </li>
-                
-              </ul>
-            </div>
-          
-
-          
-            
-          
-          
+  <div class="links-of-blogroll motion-element links-of-blogroll-inline">
+    <div class="links-of-blogroll-title">
+      <i class="fa  fa-fw fa-link"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
+        </li>
+      
+        <li class="links-of-blogroll-item">
+          <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
+        </li>
+      
+    </ul>
+  </div>
 
         </div>
       </div>
 
-      
-
-      
-
     </div>
   </aside>
-  
+  <div id="sidebar-dimmer"></div>
 
 
-        
       </div>
     </main>
 
@@ -2340,33 +1609,12 @@
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
-
-  
-
-  
 </div>
-
-
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.8.0</div>
-
-
-
   <span class="post-meta-divider">|</span>
-
-
-
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.1.2</div>
-
-
-
-  <div class="footer-custom">永远欣赏那些可以行我所不能行之事的人</div>
-
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
 
         
-
-
-
-
 
 
   <div style="display: none;">
@@ -2375,94 +1623,36 @@
 
 
 
+
+
+
         
       </div>
     </footer>
-
-    
       <div class="back-to-top">
         <i class="fa fa-arrow-up"></i>
-        
       </div>
-    
 
     
 
-    
-
-    
   </div>
 
   
-
-<script>
-  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
-    window.Promise = null;
-  }
-</script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-  <script src="/lib/jquery/index.js?v=2.1.3"></script>
-
-  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-
-  
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
 
+  <script src="/js/utils.js?v=7.3.0"></script>
+  <script src="/js/motion.js?v=7.3.0"></script>
 
   
-
-
-  <script src="/js/utils.js?v=7.1.2"></script>
-
-  <script src="/js/motion.js?v=7.1.2"></script>
-
-
-
-  
-  
-
-
-  <script src="/js/schemes/muse.js?v=7.1.2"></script>
-
+  <script src="/js/schemes/muse.js?v=7.3.0"></script>
 
 
 
   
 
-  
-
-
-  <script src="/js/next-boot.js?v=7.1.2"></script>
-
-
-  
+  <script src="/js/next-boot.js?v=7.3.0"></script>
 
   
 
@@ -2471,29 +1661,29 @@
   
 
 
-
-  
-
-
-
-  
-  
-  
-  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
-
-  
-  
-  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
-  
-
-  <script src="/js/algolia-search.js?v=7.1.2"></script>
-
-
-
-  
   
   <script>
-    
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script>
     function showTime(Counter) {
       var entries = [];
       var $visitors = $('.leancloud_visitors');
@@ -2529,7 +1719,7 @@
           }
         })
         .fail(function ({ responseJSON }) {
-          console.log('LeanCloud Counter Error: ' + responseJSON.code + ' ' + responseJSON.error);
+          console.log(`LeanCloud Counter Error: ${responseJSON.code} ${responseJSON.error}`);
         });
     }
     
@@ -2540,7 +1730,7 @@
           var Counter = function(method, url, data) {
             return $.ajax({
               method: method,
-              url: 'https://' + api_server + '/1.1' + url,
+              url: `https://${api_server}/1.1${url}`,
               headers: {
                 'X-LC-Id': 'AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz',
                 'X-LC-Key': 'shxNGHkps7WDMLyCkIKIKSSM',
@@ -2549,7 +1739,6 @@
               data: data
             });
           };
-          
             if ($('.post-title-link').length >= 1) {
               showTime(Counter);
             }
@@ -2560,76 +1749,37 @@
 
 
 
-  
 
-  
 
-  
 
-  
 
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
+
+
+
 
 
   
-
-  
-
-  
-
-  
-
-  
-
-  
-<script>
-  $('.highlight').not('.gist .highlight').each(function(i, e) {
-    var $wrap = $('<div>').addClass('highlight-wrap');
-    $(e).after($wrap);
-    $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function(e) {
-      var code = $(this).parent().find('.code').find('.line').map(function(i, e) {
-        return $(e).text();
-      }).toArray().join('\n');
-      var ta = document.createElement('textarea');
-      var yPosition = window.pageYOffset || document.documentElement.scrollTop;
-      ta.style.top = yPosition + 'px'; // Prevent page scroll
-      ta.style.position = 'absolute';
-      ta.style.opacity = '0';
-      ta.readOnly = true;
-      ta.value = code;
-      document.body.appendChild(ta);
-      ta.select();
-      ta.setSelectionRange(0, code.length);
-      ta.readOnly = false;
-      var result = document.execCommand('copy');
-      
-        if (result) $(this).text('复制成功');
-        else $(this).text('复制失败');
-      
-      ta.blur(); // For iOS
-      $(this).blur();
-    })).on('mouseleave', function(e) {
-      var $b = $(this).find('.copy-btn');
-      setTimeout(function() {
-        $b.text('复制');
-      }, 300);
-    }).append(e);
-  })
-</script>
+<link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+<script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
 
 
-  
+<script src="/js/algolia-search.js?v=7.3.0"></script>
 
-  
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
 
 </body>
 </html>
