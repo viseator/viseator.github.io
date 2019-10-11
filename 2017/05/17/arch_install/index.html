@@ -90,7 +90,7 @@
 <meta property="og:image" content="https://www.viseator.com/images/arch25.png">
 <meta property="og:image" content="https://www.viseator.com/images/arch22.jpg">
 <meta property="og:image" content="https://www.viseator.com/images/arch19.jpg">
-<meta property="og:updated_time" content="2018-10-22T15:04:03.000Z">
+<meta property="og:updated_time" content="2019-10-11T12:31:15.713Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="以官方Wiki的方式安装ArchLinux">
 <meta name="twitter:description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
@@ -352,7 +352,7 @@
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-10-22 23:04:03" itemprop="dateModified" datetime="2018-10-22T23:04:03+08:00">2018-10-22</time>
+                <time title="修改时间：2019-10-11 20:31:15" itemprop="dateModified" datetime="2019-10-11T20:31:15+08:00">2019-10-11</time>
               </span>
             
           
@@ -582,6 +582,8 @@
 <p>这是我的分区过程供参考：</p>
 <p><img src="/images/arch07.jpg" alt=""></p>
 <p><img src="/images/arch08.jpg" alt=""></p>
+<hr>
+<p><strong>如果你在分区这步遇到了问题</strong>，先看看自己的操作是否与上面的指引一致，如果仍然无法解决可参考<a href="https://www.cnblogs.com/freerqy/p/8502838.html" target="_blank" rel="noopener">https://www.cnblogs.com/freerqy/p/8502838.html</a>这篇文章的“建立硬盘分区”一节尝试使用<code>cfdisk</code>进行分区。</p>
 <h4 id="挂载分区"><a href="#挂载分区" class="headerlink" title="挂载分区"></a>挂载分区</h4><p>执行以下命令将根分区挂载到<code>/mnt</code>：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/sdxY /mnt （请将sdxY替换为之前创建的根分区）</span><br></pre></td></tr></table></figure>
 <hr>
@@ -607,7 +609,7 @@
 <p>最后记得用<code>:wq</code>命令保存文件并退出。</p>
 <h4 id="安装基本包"><a href="#安装基本包" class="headerlink" title="安装基本包"></a>安装基本包</h4><p>下面就要安装最基本的<code>ArchLinux</code>包到磁盘上了。这是一个联网下载并安装的过程。</p>
 <p>执行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacstrap /mnt base base-devel</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacstrap /mnt base base-devel linux</span><br></pre></td></tr></table></figure>
 <p>根据下载速度的不同在这里需要等待一段时间，当命令提示符重新出现的时候就可以进行下一步操作了。</p>
 <h4 id="配置Fstab"><a href="#配置Fstab" class="headerlink" title="配置Fstab"></a>配置Fstab</h4><p>生成自动挂载分区的<code>fstab</code>文件，执行以下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">genfstab -L /mnt &gt;&gt; /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
@@ -668,10 +670,10 @@
 <h4 id="安装Intel-ucode（非IntelCPU可以跳过此步骤）"><a href="#安装Intel-ucode（非IntelCPU可以跳过此步骤）" class="headerlink" title="安装Intel-ucode（非IntelCPU可以跳过此步骤）"></a>安装<code>Intel-ucode</code>（非<code>Intel</code>CPU可以跳过此步骤）</h4><p>直接<code>pacman</code>安装：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S intel-ucode</span><br></pre></td></tr></table></figure>
 <h4 id="安装Bootloader"><a href="#安装Bootloader" class="headerlink" title="安装Bootloader"></a>安装<code>Bootloader</code></h4><p>经常听说很多人因为引导问题导致系统安装失败，多数是因为教程没有统一或是过时的教程引起的，这里只要按照步骤来其实是不难的。</p>
-<p>这里我们安装最流行的<code>Grub2</code>。</p>
+<p>这里我们安装最流行的<code>Grub2</code>。<strong>（如果曾经装过<code>Linux</code>，记得删掉原来的<code>Grub</code>，否则不可能成功启动）</strong></p>
 <ul>
-<li><p>首先安装<code>os-prober</code>这个包，它可以配合<code>Grub</code>检测已经存在的系统，自动设置启动选项。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S os-prober</span><br></pre></td></tr></table></figure>
+<li><p>首先安装<code>os-prober</code>和<code>ntfs-3g</code>这两个包，它可以配合<code>Grub</code>检测已经存在的系统，自动设置启动选项。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S os-prober ntfs-3g</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
 <hr>
@@ -740,7 +742,7 @@
 <p>输入<code>root</code>，再输入之前设置的密码，显示出命令提示符，恭喜你，你已经成功安装<code>ArchLinux</code>！</p>
 <h2 id="安装后配置"><a href="#安装后配置" class="headerlink" title="安装后配置"></a>安装后配置</h2><p>虽然系统安装好了，但是还没有进行基本配置和安装图形界面，所以接下来我们要进行一些必须的配置和图形界面的安装。</p>
 <p>请见下一篇文章：<a href="http://www.viseator.com/2017/05/19/arch_setup/">ArchLinux安装后的必须配置与图形界面安装教程</a></p>
-<h2 id="特别感谢"><a href="#特别感谢" class="headerlink" title="特别感谢"></a>特别感谢</h2><p>评论区中<code>Senrey_Song</code>、<code>YKun</code>、<code>imzhwk</code>、<code>haonan mao</code>、<code>Lichen Zhang</code>、<code>回风</code>对于本教程内容的指正。</p>
+<h2 id="特别感谢"><a href="#特别感谢" class="headerlink" title="特别感谢"></a>特别感谢</h2><p>评论区中<code>Senrey_Song</code>、<code>YKun</code>、<code>imzhwk</code>、<code>haonan mao</code>、<code>Lichen Zhang</code>、<code>回风</code>、<code>Nee</code>、<code>Wafer</code>、<code>LIU SHIKE</code>对于本教程内容的宝贵建议与指正。</p>
 <p><code>leccesg</code>通过邮件提供的宝贵建议。</p>
 <h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>如果觉得这篇教程对你有帮助，可以移步我的知乎回答：</p>
 <blockquote>
