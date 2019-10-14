@@ -114,13 +114,6 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/10/24/android_event_2/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.viseator.com/2017/11/02/android_event_3/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
@@ -128,7 +121,7 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/03/26/android_property_animation_1/</loc>
+    <loc>https://www.viseator.com/2017/05/11/android_lan_messages/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
@@ -136,6 +129,13 @@
   
   <url>
     <loc>https://www.viseator.com/2017/04/02/android_property_animation_2/</loc>
+    
+    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/03/26/android_property_animation_1/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
@@ -170,21 +170,21 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/04/10/assembly_wang_lab_9/</loc>
+    <loc>https://www.viseator.com/2017/07/18/CS_APP_AttackLab/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/02/14/DiffInGeneric/</loc>
+    <loc>https://www.viseator.com/2016/11/15/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/03/12/android_view_onLayout/</loc>
+    <loc>https://www.viseator.com/2017/03/10/android_view_onMeasure/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
@@ -205,7 +205,7 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/03/10/android_view_onMeasure/</loc>
+    <loc>https://www.viseator.com/2017/03/12/android_view_onLayout/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
@@ -254,7 +254,7 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2016/11/15/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
+    <loc>https://www.viseator.com/2017/02/14/DiffInGeneric/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
@@ -268,14 +268,14 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/05/11/android_lan_messages/</loc>
+    <loc>https://www.viseator.com/2017/10/24/android_event_2/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/07/18/CS_APP_AttackLab/</loc>
+    <loc>https://www.viseator.com/2017/04/10/assembly_wang_lab_9/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
