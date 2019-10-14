@@ -432,7 +432,7 @@
 <p>我们只修改了一处，第7行中我们使用<code>context.getApplicationContext()</code>这个方法来获取<code>Application</code>这个单例，而不是直接保存<code>context</code>本身，这样就可以保证不会出现某<code>context</code>因为被这个单例引用而不能回收的情况。而<code>Application</code>本身是单例这个特性保证了生命周期的一致，不会造成内存的浪费。</p>
 <h3 id="为什么不总是使用application作为context"><a href="#为什么不总是使用application作为context" class="headerlink" title="为什么不总是使用application作为context"></a>为什么不总是使用<code>application</code>作为<code>context</code></h3><p>既然它是一个单例，那么我们为什么不直接在任何地方都只使用它呢？</p>
 <p>这是因为各种<code>context</code>的能力有所不同：</p>
-<p><img src="/images/context01.png" alt=""></p>
+<p><img src="/images/context01.png" alt></p>
 <p>（图片出处见文末）</p>
 <p>对几个注解的地方作说明：</p>
 <ol>
@@ -457,6 +457,29 @@
     
     
         
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
       
         
 

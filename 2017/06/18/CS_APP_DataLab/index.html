@@ -441,7 +441,7 @@
 <li>重复第2步，直到合成只有1组，组中的数值即为结果</li>
 </ol>
 <p>用图片比较便于理解：</p>
-<p><img src="/images/bitCount.jpg" alt=""></p>
+<p><img src="/images/bitCount.jpg" alt></p>
 <p>可以看到最终的0x0000000F即为1的数量15</p>
 <p>该算法能成功的关键在于一开始中每组中的数值即为每组中1的数量，然后将相邻两组中的数值相加的过程就相当于将之前一级的1的数量汇总，不断重复这个过程就可以将1的数量汇总到最后的一个数中。</p>
 <p>有了算法我们还要考虑如何在题目的限制条件下实现这一算法。</p>
@@ -590,6 +590,29 @@
     
     
         
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
       
         
 

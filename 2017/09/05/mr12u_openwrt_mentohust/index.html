@@ -382,7 +382,7 @@
 <h2 id="刷不死Boot"><a href="#刷不死Boot" class="headerlink" title="刷不死Boot"></a>刷不死Boot</h2><p>由于路由器固件的特殊性，一旦刷崩了或者设置错误导致无法正常登陆路由器，那么就无法对路由器进行管理，也就是所谓的变砖。</p>
 <p>不死boot的作用就是在这种情况下提供进路由设置重新刷固件的机会。</p>
 <h3 id="刷解锁固件"><a href="#刷解锁固件" class="headerlink" title="刷解锁固件"></a>刷解锁固件</h3><p>由于<code>U-Boot</code>分区默认是锁定的，所以无法刷入新的<code>boot</code>。因此我们要先刷入一个修改过的解锁<code>U-Boot</code>分区的固件，这个修改过的固件可以在<a href="https://pan.baidu.com/s/1slWHygP" target="_blank" rel="noopener">百度网盘下载</a>，另外由于我手上的这个是v1版本的，与v2版本的硬件不同，所以需要使用的是<code>mr11u-v2</code>的解锁固件（即<code>openwr-ar71xx-generic-tl-mr11u-v2-squashfs-factory.bin</code>）。下载完以后先长按复位键复位路由器，连接上以后直接进入<code>192.168.1.1</code> <code>TP-Link</code>默认的管理界面，在下图这里选择刚下好的固件刷入即可：</p>
-<p><img src="/images/mr11u-1.png" alt=""></p>
+<p><img src="/images/mr11u-1.png" alt></p>
 <p>（图源网络）</p>
 <h3 id="刷不死boot"><a href="#刷不死boot" class="headerlink" title="刷不死boot"></a>刷不死boot</h3><p>先下载不死<code>boot</code>：</p>
 <blockquote>
@@ -393,7 +393,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@192.168.1.1</span><br></pre></td></tr></table></figure>
 <p>登陆以后先查看并记下<code>mac</code>地址，之后要用到：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ifconfig eth0</span><br></pre></td></tr></table></figure>
-<p><img src="/images/mr12u-2.png" alt=""></p>
+<p><img src="/images/mr12u-2.png" alt></p>
 <p><a href="http://xzper.com/2015/07/11/TP-MR12U%E5%88%B7openwrt-%E4%B8%8D%E6%AD%BBboot/" target="_blank" rel="noopener">图片来源</a></p>
 <p>然后<code>exit</code>退出<code>ssh</code>，使用<code>scp</code>命令传送下载好的<code>boot</code>包：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">scp breed-ar9331-mr12u.bin root@192.168.1.1:/tmp/</span><br></pre></td></tr></table></figure>
@@ -402,7 +402,7 @@
 <p>等待命令返回后直接将路由器关机。</p>
 <p>想要进入不死<code>boot</code>，只需按住<code>reset</code>复位键不放，再开机，等待个十几秒后松开，再有线连接电脑与路由器，浏览器输入<code>192.168.1.1</code>就可以进入管理界面了，以后变砖了只要这样都可以重新刷固件，所以称不死。</p>
 <p>进入不死<code>boot</code>以后，先进入下图界面设置之前记录的<code>mac</code>地址：</p>
-<p><img src="/images/mr12u-3.png" alt=""></p>
+<p><img src="/images/mr12u-3.png" alt></p>
 <p><a href="http://xzper.com/2015/07/11/TP-MR12U%E5%88%B7openwrt-%E4%B8%8D%E6%AD%BBboot/" target="_blank" rel="noopener">图片来源</a></p>
 <h2 id="刷入最新固件（可选）"><a href="#刷入最新固件（可选）" class="headerlink" title="刷入最新固件（可选）"></a>刷入最新固件（可选）</h2><p>下面就可以直接在不死<code>boot</code>里面选择固件更新刷入最新的固件了，最新固件的下载可以到<a href="https://downloads.openwrt.org/snapshots/trunk/ar71xx/generic/" target="_blank" rel="noopener">这里</a>找到。</p>
 <p>但是<code>mr12u</code>的闪存只有可怜的4m，如果安装最新的<code>openwrt</code>就没有空间放下<code>mentohust</code>了，所以还不如就直接用这个解锁用的固件。</p>
@@ -454,6 +454,29 @@
     
     
         
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
       
         
 

@@ -387,15 +387,15 @@
 <h2 id="触摸事件的来源"><a href="#触摸事件的来源" class="headerlink" title="触摸事件的来源"></a>触摸事件的来源</h2><p>这部分的内容与安卓本身无关，代码大部分也都是<code>C++</code>实现的，中间的大部分内容来自于我对相关资料的总结，不在代码层面进行详细解释，只是说明一个流程，同时也会对代码进行大部分的删减，只关注最核心的那部分。</p>
 <h3 id="从硬件到内核"><a href="#从硬件到内核" class="headerlink" title="从硬件到内核"></a>从硬件到内核</h3><p>我们从头开始，从触摸事件最初最初的来源开始，我们知道内核是以处理中断的方式处理用户的输入的，触摸事件作为一种特殊的输入事件，自然也需要这种方式进行处理，只不过触摸事件的提供的信息要稍微复杂一些。</p>
 <p>触摸事件来自于我们对硬件的操作，最初的来源当然是硬件引起的中断。而处理特定中断的代码则来自于对应硬件的驱动：</p>
-<p><img src="/images/event1_1.png" alt=""></p>
+<p><img src="/images/event1_1.png" alt></p>
 <p><a href="http://newandroidbook.com/files/AndroidInput.pdf" target="_blank" rel="noopener">图片来源</a>（以下系列图片来源相同，不作标注）</p>
 <p>当一个输入设备的驱动模块被首次载入内核的时候，会检测它应该管理的硬件设备，如果检测成功，驱动模块会调用<code>include/linux/input.h</code>中的<code>input_register_device(…)</code>函数设置一个<code>/dev/input/eventX</code>（<code>X</code>为整数）来代表这个输入设备。驱动模块同时也会通过<code>include/linux/interrupt.h</code>的<code>request_irq(…)</code>函数注册一个函数去处理这个硬件引发的中断，注册成功以后，当设备因用户交互而产生中断的时候就会交给对应的驱动模块进行处理。</p>
 <p>驱动模块处理的细节各不相同，但最终都会将数据处理后存放进对应的<code>/dev/input/eventX</code>文件中。</p>
-<p><img src="/images/event1_2.png" alt=""></p>
+<p><img src="/images/event1_2.png" alt></p>
 <h3 id="系统对触摸事件的处理"><a href="#系统对触摸事件的处理" class="headerlink" title="系统对触摸事件的处理"></a>系统对触摸事件的处理</h3><p>现在驱动程序为我们收集好了原始的输入信息并存放在了<code>eventX</code>文件中，下一步就是系统对于这个文件的处理并发送到应用层面。</p>
-<p><img src="/images/event1_3.png" alt=""></p>
+<p><img src="/images/event1_3.png" alt></p>
 <p>可以看到系统服务充当了从内核到应用的桥梁。</p>
-<p><img src="/images/event1_4.png" alt=""></p>
+<p><img src="/images/event1_4.png" alt></p>
 <p>系统服务由三个组件构成：<code>EventHub</code>、<code>InputReader</code>、<code>InputDispatcher</code>，关于它们的作用的详细分析在：</p>
 <blockquote>
 <p>  <a href="http://gityuan.com/2016/12/31/input-ipc/" target="_blank" rel="noopener">http://gityuan.com/2016/12/31/input-ipc/</a></p>
@@ -502,7 +502,7 @@
 <p>函数里封装了一个<code>msg</code>，然后最终调用了<code>mChannel</code>的<code>sendMessage()</code>方法进行跨进程通信。</p>
 <hr>
 <p>现在我们到了图中的这一步：</p>
-<p><img src="/images/event1_5.png" alt=""></p>
+<p><img src="/images/event1_5.png" alt></p>
 <p>我们的点击事件来到了建立的<code>socket</code>中，准备与交付给对应的<code>app</code>，我们知道每个<code>app</code>运行在自己的进程中，所以就需要使用<code>socket</code>来进行跨进程通信。</p>
 <hr>
 <h3 id="InputChannel连接建立过程"><a href="#InputChannel连接建立过程" class="headerlink" title="InputChannel连接建立过程"></a>InputChannel连接建立过程</h3><p>本段内容主要参考了</p>
@@ -558,8 +558,8 @@
 <p>这里将客户端的<code>InputChannel</code>保存的<code>Fd</code>加入到了<code>Native Looper</code>中进行监听，对返回的消息进行处理：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> Looper::addFd(<span class="keyword">int</span> fd, <span class="keyword">int</span> ident, <span class="keyword">int</span> events, <span class="keyword">const</span> sp&lt;LooperCallback&gt;&amp; callback, <span class="keyword">void</span>* data) &#123;</span><br><span class="line">       &#123; <span class="comment">// acquire lock</span></span><br><span class="line">        AutoMutex _l(mLock);</span><br><span class="line"></span><br><span class="line">        Request request;</span><br><span class="line">        request.fd = fd;</span><br><span class="line">        request.ident = ident;</span><br><span class="line">        request.events = events;</span><br><span class="line">        request.seq = mNextRequestSeq++;</span><br><span class="line">        request.callback = callback;</span><br><span class="line">        request.data = data;</span><br><span class="line">        <span class="keyword">if</span> (mNextRequestSeq == <span class="number">-1</span>) mNextRequestSeq = <span class="number">0</span>; <span class="comment">// reserve sequence number -1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">struct</span> epoll_event eventItem;</span><br><span class="line">        request.initEventItem(&amp;eventItem);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">ssize_t</span> requestIndex = mRequests.indexOfKey(fd);</span><br><span class="line">        <span class="keyword">if</span> (requestIndex &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, fd, &amp; eventItem);</span><br><span class="line">            <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                ALOGE(<span class="string">"Error adding epoll events for fd %d: %s"</span>, fd, strerror(errno));</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            mRequests.add(fd, request);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_MOD, fd, &amp; eventItem);</span><br><span class="line">             <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (errno == ENOENT) &#123;</span><br><span class="line">                    epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, fd, &amp; eventItem);</span><br><span class="line">                    ...</span><br><span class="line">                ...</span><br><span class="line">                &#125;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">       </span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里将<code>NativeInputEventReceiver</code>传入的<code>this</code>作为<code>callback</code>存入到<code>request</code>中， 再以<code>fd</code>为索引向<code>mRequests</code>映射表中加入<code>request</code>，然后以<code>fd</code>作为信号调用<code>epoll_ctl</code>系统调用，利用它对通信过程进行监听，在收到消息之后最终会根据<code>fd</code>找到<code>mRequests</code>中的<code>request</code>保存的<code>callback</code>，即<code>NativeInputEventReceiver</code>对象。</p>
-<p>关于<code>addFd</code>方法的详细分析，可以查看<a href="">Native消息机制的博文</a></p>
-<p><img src="/images/event1_6.png" alt=""></p>
+<p>关于<code>addFd</code>方法的详细分析，可以查看<a href>Native消息机制的博文</a></p>
+<p><img src="/images/event1_6.png" alt></p>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>现在我们了解了从内核到应用整个触摸事件的传输过程，并且知道了<code>InputChannel</code>在两端的监听建立与触发的函数，至此，触摸事件已经从系统底层来到了我们的应用进程，<a href="http://www.viseator.com/2017/10/07/android_view_event_2/">下一篇博客</a>将从触发函数开始讲解事件从<code>native</code>层真正传入<code>java</code>层的过程。</p>
 
     </div>
@@ -568,6 +568,29 @@
     
     
         
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
       
         
 

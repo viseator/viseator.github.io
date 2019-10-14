@@ -449,8 +449,8 @@
 <p>在从链表中取出事件之后，对事件的时间戳进行了更新。然后调用<code>deliverInputEvent()</code>方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">deliverInputEvent</span><span class="params">(QueuedInputEvent q)</span> </span>&#123;</span><br><span class="line">    Trace.asyncTraceBegin(Trace.TRACE_TAG_VIEW, <span class="string">"deliverInputEvent"</span>, q.mEvent.getSequenceNumber());</span><br><span class="line">    <span class="keyword">if</span> (mInputEventConsistencyVerifier != <span class="keyword">null</span>) &#123;</span><br><span class="line">        mInputEventConsistencyVerifier.onInputEvent(q.mEvent, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    InputStage stage;</span><br><span class="line">    <span class="keyword">if</span> (q.shouldSendToSynthesizer()) &#123;</span><br><span class="line">        stage = mSyntheticInputStage;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        stage = q.shouldSkipIme() ? mFirstPostImeInputStage : mFirstInputStage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (stage != <span class="keyword">null</span>) &#123;</span><br><span class="line">        stage.deliver(q);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        finishInputEvent(q);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这段代码第一眼看上去比较难懂，<code>Stage</code>让我们联想到了CPU流水线处理过程中的<code>Stage</code>，这里就是进入了一个流水线过程来处理事件：</p>
-<h3 id="流水线事件处理"><a href="#流水线事件处理" class="headerlink" title="流水线事件处理"></a>流水线事件处理</h3><p><img src="/images/event2_1.png" alt=""></p>
-<p><img src="/images/event2_2.png" alt=""></p>
+<h3 id="流水线事件处理"><a href="#流水线事件处理" class="headerlink" title="流水线事件处理"></a>流水线事件处理</h3><p><img src="/images/event2_1.png" alt></p>
+<p><img src="/images/event2_2.png" alt></p>
 <p>首先看到我们可以根据事件类型的需要从<code>mSyntheticInputStage</code> <code>EarlyPostImeInputStage</code> <code>NativePreImeInputStage</code>三个入口进入流水线，而流水线的每一步都对事件进行了不同的处理，并可以通过<code>forward()</code>方法传递到下一个<code>Stage</code>进行处理。并且这里使用的流水线是一个异步流水线，可以允许多个事件同时在里面运行处理，这种架构使得事件处理流程效率非常高。</p>
 <p>那么我们的触摸事件从<code>NativePreImeInputStage</code>进入流水线后会经历什么处理过程呢：</p>
 <p>我们并不是<code>IME</code>的事件，所以直接从<code>EarlyPostImeInputStage</code>开始：</p>
@@ -475,6 +475,29 @@
     
     
         
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
       
         
 

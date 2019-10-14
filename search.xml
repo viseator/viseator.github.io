@@ -13,7 +13,7 @@
 </li>
 <li>强<code>Hybrid</code>应用<ul>
 <li><code>​Native</code>​控件与​<code>web</code>​频繁交互</li>
-<li><code>​Native</code>​页面/组件利用​<code>JSBridge</code>​与后端同步数据，简化后端工作量（不需要维护两套通信接口），但过度依赖于<code>​WebView​</code><br><img src="/images/jsbridge_0.png" alt=""></li>
+<li><code>​Native</code>​页面/组件利用​<code>JSBridge</code>​与后端同步数据，简化后端工作量（不需要维护两套通信接口），但过度依赖于<code>​WebView​</code><br><img src="/images/jsbridge_0.png" alt></li>
 </ul>
 </li>
 </ul>
@@ -29,7 +29,7 @@
 </li>
 </ul>
 <p>我们只需要构建​<code>javascript:</code>​开头形式的代码字符串传入执行就可以了，以上两个方法都是直接返回的。</p>
-<h3 id="js调用Native"><a href="#js调用Native" class="headerlink" title="js调用Native"></a>js调用Native</h3><p>实现方式比较多样，先上一张图：<br><img src="/images/jsbridge_1.png" alt=""></p>
+<h3 id="js调用Native"><a href="#js调用Native" class="headerlink" title="js调用Native"></a>js调用Native</h3><p>实现方式比较多样，先上一张图：<br><img src="/images/jsbridge_1.png" alt></p>
 <h4 id="shouldOverrideUrlLoading拦截特定schema"><a href="#shouldOverrideUrlLoading拦截特定schema" class="headerlink" title="shouldOverrideUrlLoading拦截特定schema"></a>shouldOverrideUrlLoading拦截特定schema</h4><p><code>​WebView</code>​提供了<code>​shouldOverrideUrlLoading</code>​方法允许我们拦截<code>​web</code>​页面加载的<code>​url</code>​，我们可以利用这个方法采用加载伪协议的方式进行通信：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomWebViewClient</span> <span class="keyword">extends</span> <span class="title">WebViewClient</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldOverrideUrlLoading</span><span class="params">(WebView view, String url)</span> </span>&#123;</span><br><span class="line">      ......</span><br><span class="line">       <span class="comment">// 截取url并操作</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">super</span>.shouldOverrideUrlLoading(view, url);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>伪协议形式根据业务不同复杂度也不同，后面的工作主要就是围绕这个<code>scheme</code>字符串解析/生成。</p>
@@ -80,14 +80,14 @@
 </tbody>
 </table>
 <p><code>​shouldOverrideUrlLoading</code>​方式由于采用队列压缩消息，耗时数据与实际业务中数据收发频率相关，暂不测试，可以认为耗时显著高于其他几种。</p>
-<h4 id="如何选择"><a href="#如何选择" class="headerlink" title="如何选择"></a>如何选择</h4><p><img src="/images/jsbridge_1.png" alt=""><br>从编码角度上看，​<code>addJavascriptInterface()</code>​方法实现是最为简洁明了的，同时上表中的速度一栏，在实际测试中发现​<code>addJavascriptInterface()</code>​方法耗时比<code>​onJsPrompt</code>​要少。</p>
+<h4 id="如何选择"><a href="#如何选择" class="headerlink" title="如何选择"></a>如何选择</h4><p><img src="/images/jsbridge_1.png" alt><br>从编码角度上看，​<code>addJavascriptInterface()</code>​方法实现是最为简洁明了的，同时上表中的速度一栏，在实际测试中发现​<code>addJavascriptInterface()</code>​方法耗时比<code>​onJsPrompt</code>​要少。</p>
 <p><code>​console.log()</code>​在​10ms​延迟测试中由于自身不阻塞的特性，耗时较短，但在实际处理中，会在​<code>addJavascriptInterface()</code>​中另开线程去异步处理消息，延迟时间也非常短。</p>
 <p>综上，使用​<code>addJavascriptInterface</code>​作为<code>​js</code>​向<code>​Native</code>​传递数据的通道是较为合理的选择。如果实在对耗时要求高，可以考虑采用​<code>console.log()</code>​的方式。</p>
 <h2 id="JSBridge上层实现"><a href="#JSBridge上层实现" class="headerlink" title="JSBridge上层实现"></a>JSBridge上层实现</h2><p>有了上述的双端通信的基础通道，我们就可以基于此去构建一套易用的方法封装。</p>
 <h3 id="消息格式"><a href="#消息格式" class="headerlink" title="消息格式"></a>消息格式</h3><p>为了一定程度上兼容​<code>iOS</code>​端的<code>​JSBridge</code>​，我们双端都采用注册​<code>Handler</code>​，以<code>​Handler</code>​名作为方法索引，再使用​<code>json</code>​作为参数数据的序列化/反序列化格式。<br>下一步解决的问题是如何回调调用方的<code>​callback</code>​，我们期望异步调用在完成时被调用方通过回调​<code>callback</code>​方法来返回数据。这里采用注册​<code>Handler</code>​的思路，在调用方进行调用时，为​<code>callback</code>​方法生成一个​<code>callbackId</code>​作为<code>​Key</code>​来保存这个​<code>callback</code>​方法，被调用方完成处理之后，在返回的消息中一并返回<code>​callbackId</code>​（这时它变为了​<code>responseId</code>​），调用方拿到<code>​callbackId</code>​找到对应方法进行回调。</p>
 <p>依此，我们制定的消息格式如下：<br><figure class="highlight"><table><tr><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"handlerName"</span>: <span class="string">"NameOfHandler"</span>,</span><br><span class="line">    "data": "json data", // 传送给接收方的数据</span><br><span class="line">    "callbackId": "", // 接收方回调调用方的方法id</span><br><span class="line">    "responseId": "", // 调用方被回调时收到的方法id，即为发送时的callbackId参数</span><br><span class="line">    "responseData": "json data" // 接收方返回的数据</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>通信过程可以由下图表示：</p>
-<p><img src="/images/jsbridge_2.png" alt=""></p>
+<p><img src="/images/jsbridge_2.png" alt></p>
 <p>为了兼容​<code>schema</code>​格式，在消息体的基础上添加<code>​schema</code>​头部，组成最终的消息协议：<br><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">CUSTOM_PROTOCOL_SCHEME + &apos;://data/message/&apos; + messageQueueString</span><br></pre></td></tr></table></figure></p>
 <p>​<code>messageQueueString</code>​为​<code>json</code>​数组，一个​<code>json</code>​元素为一条消息。</p>
 <h3 id="双端通信封装"><a href="#双端通信封装" class="headerlink" title="双端通信封装"></a>双端通信封装</h3><p>当<code>​Native</code>​的<code>​WebView</code>​加载页面到80%以上时，会不断尝试将本地的一个<code>bridge.js</code>文件注入到​<code>WebView</code>​中，不断尝试是为了解决在弱网状况下一次注入可能失败的问题，<code>js</code>代码保证初始化不会重复进行，后续这个文件的代码可以放在前端加载。<code>bridge.js</code>负责初始化<code>​LkWebViewJavascriptBridge</code>​类，封装了一些通信的方法和数据对象。</p>
@@ -152,7 +152,7 @@
   <entry>
     <title>Kotlin优势浅析 我们为什么应该使用Kotlin开发新项目</title>
     <url>/2018/07/11/introduce_kotlin/</url>
-    <content><![CDATA[<p><img src="/images/introduce_kotlin1.png" alt=""></p>
+    <content><![CDATA[<p><img src="/images/introduce_kotlin1.png" alt></p>
 <h2 id="Backgroud-Target"><a href="#Backgroud-Target" class="headerlink" title="Backgroud/Target"></a>Backgroud/Target</h2><p>由Jetbrains在圣彼得堡的团队开发，得名于附近的一个Kotlin的小岛。</p>
 <p>Jetbrains有多年的Java平台开发经验，他们认为Java编程语言有一定的局限性，而且由于需要向后兼容，它们很难得到解决。因此，他们创建了Kotlin项目，主要目标包括：</p>
 <ul>
@@ -198,8 +198,8 @@
 <h3 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h3><p>引入属性的概念，隐式的<code>getter</code>与<code>setter</code>：<br><figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">0</span> <span class="comment">// has setter and getter</span></span><br><span class="line">    <span class="keyword">val</span> b = <span class="number">1</span> <span class="comment">// just has getter</span></span><br><span class="line">    <span class="keyword">private</span> c = <span class="number">2</span> <span class="comment">// no setter and getter</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> test = Test()</span><br><span class="line">test.a = test.b <span class="comment">// test.setA(test.getB())</span></span><br></pre></td></tr></table></figure></p>
 <p>再也不用写<code>setter/getter</code>逻辑了：<br><figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="keyword">var</span> stringRepresentation: String</span><br><span class="line">    <span class="keyword">get</span>() = <span class="keyword">this</span>.toString()</span><br><span class="line">    <span class="keyword">set</span>(value) &#123;</span><br><span class="line">        setDataFromString(value)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相当于</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span> String getStringRepresentation() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.toString();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> void setStringRepresentation(String value) &#123;</span><br><span class="line">    setDataFromString(value)  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>java中已有的<code>getter/setter</code>会被“转换”成kotlin属性的形式</p>
-<p><img src="/images/introduce_kotlin2.png" alt=""></p>
-<h3 id="Null安全"><a href="#Null安全" class="headerlink" title="Null安全"></a>Null安全</h3><p><img src="/images/introduce_kotlin3.png" alt=""></p>
+<p><img src="/images/introduce_kotlin2.png" alt></p>
+<h3 id="Null安全"><a href="#Null安全" class="headerlink" title="Null安全"></a>Null安全</h3><p><img src="/images/introduce_kotlin3.png" alt></p>
 <p>图灵奖得主托尼·霍尔把<code>Null</code>这个设计称为十亿美元错误：“它导致了数不清的错误、漏洞和系统崩溃，可能在之后 40 年中造成了十亿美元的损失”</p>
 <p>Java中，引入了<code>@NonNull</code>和<code>@Nullable</code>注解辅助进行静态检查，有局限性。</p>
 <p>Java8引入<code>Optional&lt;&gt;</code>来解决这个问题，写起来比较恶心，难以推广。</p>
@@ -313,7 +313,7 @@
 <p>可以将逻辑划分清楚，直观，避免判空打断思路。<br><figure class="highlight kotlin"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">getMessages</span><span class="params">(context: <span class="type">Context</span>, cursor: <span class="type">Int</span>, direction: <span class="type">Int</span>)</span></span>: ModelResult&lt;MessageResponse&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> UrlBuilder(LOAD_NOTIFY)</span><br><span class="line">            .apply &#123;</span><br><span class="line">                addParam(<span class="string">"cursor"</span>, cursor)</span><br><span class="line">                addParam(<span class="string">"direction"</span>, direction)</span><br><span class="line">            &#125;.let &#123;</span><br><span class="line">                queryDataFromServer(it.build())</span><br><span class="line">            &#125;?.let &#123;</span><br><span class="line">                <span class="keyword">val</span> statusCode = it.optInt(<span class="string">"status_code"</span>, <span class="number">-1</span>)</span><br><span class="line">                <span class="keyword">val</span> statusMessage = it.optString(<span class="string">"status_message"</span>)</span><br><span class="line">                <span class="keyword">if</span> (statusCode == <span class="number">0</span>) &#123;</span><br><span class="line">                    MessageParser.parseMessageList(it.optString(<span class="string">"data"</span>))</span><br><span class="line">                            ?.let &#123;</span><br><span class="line">                                ModelResult(<span class="literal">true</span>, statusMessage, it)</span><br><span class="line">                            &#125;</span><br><span class="line">                            ?: ModelResult&lt;MessageResponse&gt;()</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            ?: ModelResult&lt;MessageResponse&gt;())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>同样是划分逻辑，更加清晰？（需要适应）</p>
 <p>附图一张：</p>
-<p><img src="/images/introduce_kotlin4.jpg" alt=""></p>
+<p><img src="/images/introduce_kotlin4.jpg" alt></p>
 <blockquote>
 <p><a href="https://medium.com/@elye.project/using-kotlin-takeif-or-takeunless-c9eeb7099c22" target="_blank" rel="noopener">https://medium.com/@elye.project/using-kotlin-takeif-or-takeunless-c9eeb7099c22</a></p>
 </blockquote>
@@ -382,10 +382,10 @@
 <h3 id="包大小"><a href="#包大小" class="headerlink" title="包大小"></a>包大小</h3><p>标准库大小<code>100k</code>左右。</p>
 <p>新建标准工程（不带Kotlin支持），开启混淆，打release包。</p>
 <p>将这个工程文件转为Kotlin实现，引入Kotlin支持，打release包，对比大小：</p>
-<p><img src="/images/introduce_kotlin5.png" alt=""></p>
+<p><img src="/images/introduce_kotlin5.png" alt></p>
 <p>增加了约<code>109k</code></p>
 <p>将某应用一个module转换为Kotlin实现（直接使用AS的工具转换），对比编译生成的所有<code>class</code>文件大小：</p>
-<p><img src="/images/introduce_kotlin6.png" alt=""></p>
+<p><img src="/images/introduce_kotlin6.png" alt></p>
 <p>增加了约2%的体积。</p>
 <blockquote>
 <p><a href="https://discuss.kotlinlang.org/t/kotlin-generated-class-file-out-of-kt-is-bigger-than-java-file/1520/4" target="_blank" rel="noopener">https://discuss.kotlinlang.org/t/kotlin-generated-class-file-out-of-kt-is-bigger-than-java-file/1520/4</a></p>
@@ -413,7 +413,7 @@
 <p>可以看到我们在C语言中分别定义了几种类型的变量：初始化过的全局变量、未初始化的全局变量、初始化过的静态变量、未初始化的静态变量与字符串。定义这些变量是为了查看编译后各变量所处的数据段与存放形式。</p>
 <p>同时也声明了一个外部函数<code>test_fun()</code>与一个外部变量<code>var_from_asm</code>，用来测试C语言对<code>asm</code>声明的符号的引用。</p>
 <p>现在我们编译这个C语言文件到汇编文件，使用<code>TC2.0</code>的命令行工具<code>tcc</code>，使用<code>-S</code>参数，即可在同目录生成同名的<code>ASM</code>文件：</p>
-<p><img src="/images/8086asmc1.png" alt=""></p>
+<p><img src="/images/8086asmc1.png" alt></p>
 <p>我们打开文件，删除一些debug信息后的结果如下：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">_TEXT	segment byte public &apos;CODE&apos;</span><br><span class="line">_TEXT	ends</span><br><span class="line">DGROUP	group	_DATA,_BSS</span><br><span class="line">	assume	cs:_TEXT,ds:DGROUP</span><br><span class="line">_DATA	segment word public &apos;DATA&apos;</span><br><span class="line">_DATA	ends</span><br><span class="line">_BSS	segment word public &apos;BSS&apos;</span><br><span class="line">_BSS	ends</span><br><span class="line">_DATA	segment word public &apos;DATA&apos;</span><br><span class="line">_global_init	label	word</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">static_init	label	word</span><br><span class="line">	db	232</span><br><span class="line">	db	3</span><br><span class="line">_string	label	word</span><br><span class="line">	dw	DGROUP:s@</span><br><span class="line">_DATA	ends</span><br><span class="line">_TEXT	segment byte public &apos;CODE&apos;</span><br><span class="line">   ;	</span><br><span class="line">   ;	int main() &#123;</span><br><span class="line">   ;	</span><br><span class="line">	assume	cs:_TEXT</span><br><span class="line">_main	proc	near</span><br><span class="line">	push	bp</span><br><span class="line">	mov	bp,sp</span><br><span class="line">	sub	sp,2</span><br><span class="line">   ;	</span><br><span class="line">   ;	    int value = 666;</span><br><span class="line">   ;	</span><br><span class="line">	mov	word ptr [bp-2],666</span><br><span class="line">   ;	</span><br><span class="line">   ;	    test_fun(&amp;value);</span><br><span class="line">   ;	</span><br><span class="line">	lea	ax,word ptr [bp-2]</span><br><span class="line">	push	ax</span><br><span class="line">	call	near ptr _test_fun</span><br><span class="line">	pop	cx</span><br><span class="line">   ;	</span><br><span class="line">   ;	    printf(&quot;var from asm:%d\n&quot;, var_from_asm);</span><br><span class="line">   ;	</span><br><span class="line">	push	word ptr DGROUP:_var_from_asm</span><br><span class="line">	mov	ax,offset DGROUP:s@+12</span><br><span class="line">	push	ax</span><br><span class="line">	call	near ptr _printf</span><br><span class="line">	pop	cx</span><br><span class="line">	pop	cx</span><br><span class="line">   ;	</span><br><span class="line">   ;	    printf(&quot;assign from asm:%d\n&quot;, global);</span><br><span class="line">   ;	</span><br><span class="line">	push	word ptr DGROUP:_global</span><br><span class="line">	mov	ax,offset DGROUP:s@+29</span><br><span class="line">	push	ax</span><br><span class="line">	call	near ptr _printf</span><br><span class="line">	pop	cx</span><br><span class="line">	pop	cx</span><br><span class="line">   ;	</span><br><span class="line">   ;	    printf(&quot;value passed by stack:%d\n&quot;, global_init);</span><br><span class="line">   ;	</span><br><span class="line">	push	word ptr DGROUP:_global_init</span><br><span class="line">	mov	ax,offset DGROUP:s@+49</span><br><span class="line">	push	ax</span><br><span class="line">	call	near ptr _printf</span><br><span class="line">	pop	cx</span><br><span class="line">	pop	cx</span><br><span class="line">   ;	</span><br><span class="line">   ;	    return 0;</span><br><span class="line">   ;	</span><br><span class="line">	xor	ax,ax</span><br><span class="line">	jmp	short @1@58</span><br><span class="line">@1@58:</span><br><span class="line">   ;	</span><br><span class="line">   ;	&#125;</span><br><span class="line">   ;	</span><br><span class="line">	mov	sp,bp</span><br><span class="line">	pop	bp</span><br><span class="line">	ret	</span><br><span class="line">_main	endp</span><br><span class="line">_TEXT	ends</span><br><span class="line">_BSS	segment word public &apos;BSS&apos;</span><br><span class="line">static_var	label	word</span><br><span class="line">	db	2 dup (?)</span><br><span class="line">_global	label	word</span><br><span class="line">	db	2 dup (?)</span><br><span class="line">_BSS	ends</span><br><span class="line">_DATA	segment word public &apos;DATA&apos;</span><br><span class="line">s@	label	byte</span><br><span class="line">	db	&apos;test string&apos;</span><br><span class="line">	db	0</span><br><span class="line">	db	&apos;var from asm:%d&apos;</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">	db	&apos;assign from asm:%d&apos;</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">	db	&apos;value passed by stack:%d&apos;</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">_DATA	ends</span><br><span class="line">_TEXT	segment byte public &apos;CODE&apos;</span><br><span class="line">_TEXT	ends</span><br><span class="line">	public	_main</span><br><span class="line">	public	_string</span><br><span class="line">_static_var	equ	static_var</span><br><span class="line">_static_init	equ	static_init</span><br><span class="line">	public	_global</span><br><span class="line">	public	_global_init</span><br><span class="line">	extrn	_var_from_asm:word</span><br><span class="line">	extrn	_test_fun:near</span><br><span class="line">	extrn	_printf:near</span><br><span class="line">_s@	equ	s@</span><br><span class="line">	end</span><br></pre></td></tr></table></figure>
 <p>首先可以发现几个数据段：</p>
@@ -440,9 +440,9 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>而在<code>test_fun</code>中，我们先将<code>bp</code>入栈，将<code>sp</code>赋给<code>bp</code>后，将<code>bp+6</code>位置的值赋给了<code>ax</code>，在函数调用的时候，会先将参数入栈，然后将<code>CS</code>与<code>IP</code>入栈，占用了<code>4</code>个字节的栈空间，函数内调用<code>push bp</code>又占用了<code>2</code>个字节的栈空间，所以传入的参数应该在<code>bp+6</code>的位置上。我们将这个参数值写回到C语言定义的全局变量<code>_global_init</code>中，下一行将<code>_global</code>赋上了<code>100</code>。</p>
 <p>现在，就可以进行编译链接步骤了。</p>
 <p>一般地，我们可以使用C编译器编译<code>test.c</code>生成目标文件，使用<code>TASM</code>汇编编译器编译<code>t.asm</code>生成目标文件，再使用<code>tlink</code>将生成的目标文件与库提供的目标文件进行链接，但是这样做略显麻烦，<code>tcc</code>会调用<code>TASM</code>编译汇编文件，也会将生成的目标文件和库文件一起链接并生成最后的可执行文件，所以我们只要简单地执行<code>tcc test.c t.asm</code>就可以了。</p>
-<p><img src="/images/8086asmc2.png" alt=""></p>
+<p><img src="/images/8086asmc2.png" alt></p>
 <p>直接运行生成的test.exe，查看结果：</p>
-<p><img src="/images/8086asmc3.png" alt=""></p>
+<p><img src="/images/8086asmc3.png" alt></p>
 ]]></content>
       <categories>
         <category>Assembly</category>
@@ -454,13 +454,13 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
   <entry>
     <title>Android UI自动化测试技术选择与踩坑</title>
     <url>/2018/02/09/android_ui_test/</url>
-    <content><![CDATA[<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>在<a href="https://developer.android.com/training/testing/fundamentals.html" target="_blank" rel="noopener">官方文档关于测试一节</a>中，介绍了测试金字塔这一概念：<br><img src="/images/ui_test_1.png" alt=""><br>即我们应该包括三个层次的测试：小型、中型、与大型：</p>
+    <content><![CDATA[<h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>在<a href="https://developer.android.com/training/testing/fundamentals.html" target="_blank" rel="noopener">官方文档关于测试一节</a>中，介绍了测试金字塔这一概念：<br><img src="/images/ui_test_1.png" alt><br>即我们应该包括三个层次的测试：小型、中型、与大型：</p>
 <ul>
 <li>小型测试是单元测试，即可以独立运行在每个模块上的测试。它们通常模拟了每个主要的组件并且应该快速地运行。</li>
 <li>中型测试是介于大型与小型测试之间的综合测试，它们集成了数个组件并且运行在模拟器或实机上。</li>
 <li>大型测试是以模拟UI工作流方式进行的综合UI测试，它们保证了关键的终端用户的使用可以符合我们的预期。<br>虽然小型测试迅速并且专注，可以让我们很快地发现错误，但它们同样是低仿真且自成一体的，这使得我们很难保证通过了所有的单元测试就可以成功地让App运行。而大型测试的优缺点恰恰与上述相反。<br>由于每个层次的测试的角色各不相同，我们应该进行所有这三个层次的测试，尽管各个层次使用比例需要根据App的使用特点，通常建议三个测试的比例为1:2:7。<br>UI自动化测试即属于上面说的大型测试。<a id="more"></a>
 <h2 id="测试框架功能对比"><a href="#测试框架功能对比" class="headerlink" title="测试框架功能对比"></a>测试框架功能对比</h2><h3 id="概览"><a href="#概览" class="headerlink" title="概览"></a>概览</h3>参考：</li>
-<li><a href="https://stackoverflow.com/questions/20046021/google-espresso-or-robotium" target="_blank" rel="noopener">https://stackoverflow.com/questions/20046021/google-espresso-or-robotium</a><br><img src="/images/ui_test_2.png" alt=""><h3 id="实际测试编写体验"><a href="#实际测试编写体验" class="headerlink" title="实际测试编写体验"></a>实际测试编写体验</h3>实际的编写中，主要的步骤可以总结为三步：</li>
+<li><a href="https://stackoverflow.com/questions/20046021/google-espresso-or-robotium" target="_blank" rel="noopener">https://stackoverflow.com/questions/20046021/google-espresso-or-robotium</a><br><img src="/images/ui_test_2.png" alt><h3 id="实际测试编写体验"><a href="#实际测试编写体验" class="headerlink" title="实际测试编写体验"></a>实际测试编写体验</h3>实际的编写中，主要的步骤可以总结为三步：</li>
 </ul>
 <ol>
 <li>如何定位想要操作的<code>View</code></li>
@@ -753,7 +753,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <a id="more"></a>
 <h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p><code>Android Studio</code>的<code>3.0</code>版本中引入了一个强大的性能分析工具：<code>Android Profiler</code>，对于它的详细介绍可以看<a href="https://developer.android.com/studio/profile/android-profiler.html" target="_blank" rel="noopener">官方的文档</a>。</p>
 <p>我们对一个简单的<code>HelloWorld</code>应用进行方法分析：</p>
-<p><img src="/images/android_event_1.png" alt=""></p>
+<p><img src="/images/android_event_1.png" alt></p>
 <p>可以看到，对于这样一个没有任务需要处理的程序，这段时间中它一直执行的是<code>nativePollOnce()</code>方法，对于这个，<code>stackoverflow</code>上就有人提了<a href="https://stackoverflow.com/questions/38818642/android-what-is-message-queue-native-poll-once-in-android" target="_blank" rel="noopener">一个问题</a>。这个方法其实就是消息队列在队列中没有消息时处于等待状态执行的一个<code>Native</code>方法。</p>
 <p>我们的分析就从消息队列(MessageQueue)与负责执行循环过程的<code>Looper</code>对象的创建与开始运行开始。</p>
 <h2 id="Looper与MessageQueue的创建"><a href="#Looper与MessageQueue的创建" class="headerlink" title="Looper与MessageQueue的创建"></a>Looper与MessageQueue的创建</h2><p>当一个<code>Activity</code>被创建时，<code>ActivityThread</code>的<code>main()</code>方法会被执行（关于<code>Activity</code>创建过程的内容，请参阅启动分析相关的文章）：</p>
@@ -790,7 +790,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> jlong <span class="title">android_os_MessageQueue_nativeInit</span><span class="params">(JNIEnv* env, jclass clazz)</span> </span>&#123;</span><br><span class="line">    NativeMessageQueue* nativeMessageQueue = <span class="keyword">new</span> NativeMessageQueue();</span><br><span class="line">    <span class="keyword">if</span> (!nativeMessageQueue) &#123;</span><br><span class="line">        jniThrowRuntimeException(env, <span class="string">"Unable to allocate native queue"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    nativeMessageQueue-&gt;incStrong(env);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">reinterpret_cast</span>&lt;jlong&gt;(nativeMessageQueue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>第9行就将创建的<code>NativeMessageQueue</code>对象的地址转换为一个<code>Java long</code>类型返回，之后调用<code>Native</code>方法的时候就会传入这个参数来找到这个<code>MessageQueue</code>。</p>
 <p>用一张图来梳理这个过程：</p>
-<p><img src="/images/android_event_2.png" alt=""></p>
+<p><img src="/images/android_event_2.png" alt></p>
 <h2 id="消息循环"><a href="#消息循环" class="headerlink" title="消息循环"></a>消息循环</h2><h3 id="loop"><a href="#loop" class="headerlink" title="loop()"></a>loop()</h3><p>初始化过程结束后，我们回到<code>ActivityThread</code>的<code>main()</code>函数：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line">Looper.loop();</span><br></pre></td></tr></table></figure>
 <p>调用了<code>Looper</code>的<code>loop()</code>函数开始消息循环。</p>
@@ -922,8 +922,8 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>在从链表中取出事件之后，对事件的时间戳进行了更新。然后调用<code>deliverInputEvent()</code>方法：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">deliverInputEvent</span><span class="params">(QueuedInputEvent q)</span> </span>&#123;</span><br><span class="line">    Trace.asyncTraceBegin(Trace.TRACE_TAG_VIEW, <span class="string">"deliverInputEvent"</span>, q.mEvent.getSequenceNumber());</span><br><span class="line">    <span class="keyword">if</span> (mInputEventConsistencyVerifier != <span class="keyword">null</span>) &#123;</span><br><span class="line">        mInputEventConsistencyVerifier.onInputEvent(q.mEvent, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    InputStage stage;</span><br><span class="line">    <span class="keyword">if</span> (q.shouldSendToSynthesizer()) &#123;</span><br><span class="line">        stage = mSyntheticInputStage;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        stage = q.shouldSkipIme() ? mFirstPostImeInputStage : mFirstInputStage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (stage != <span class="keyword">null</span>) &#123;</span><br><span class="line">        stage.deliver(q);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        finishInputEvent(q);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这段代码第一眼看上去比较难懂，<code>Stage</code>让我们联想到了CPU流水线处理过程中的<code>Stage</code>，这里就是进入了一个流水线过程来处理事件：</p>
-<h3 id="流水线事件处理"><a href="#流水线事件处理" class="headerlink" title="流水线事件处理"></a>流水线事件处理</h3><p><img src="/images/event2_1.png" alt=""></p>
-<p><img src="/images/event2_2.png" alt=""></p>
+<h3 id="流水线事件处理"><a href="#流水线事件处理" class="headerlink" title="流水线事件处理"></a>流水线事件处理</h3><p><img src="/images/event2_1.png" alt></p>
+<p><img src="/images/event2_2.png" alt></p>
 <p>首先看到我们可以根据事件类型的需要从<code>mSyntheticInputStage</code> <code>EarlyPostImeInputStage</code> <code>NativePreImeInputStage</code>三个入口进入流水线，而流水线的每一步都对事件进行了不同的处理，并可以通过<code>forward()</code>方法传递到下一个<code>Stage</code>进行处理。并且这里使用的流水线是一个异步流水线，可以允许多个事件同时在里面运行处理，这种架构使得事件处理流程效率非常高。</p>
 <p>那么我们的触摸事件从<code>NativePreImeInputStage</code>进入流水线后会经历什么处理过程呢：</p>
 <p>我们并不是<code>IME</code>的事件，所以直接从<code>EarlyPostImeInputStage</code>开始：</p>
@@ -962,15 +962,15 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <h2 id="触摸事件的来源"><a href="#触摸事件的来源" class="headerlink" title="触摸事件的来源"></a>触摸事件的来源</h2><p>这部分的内容与安卓本身无关，代码大部分也都是<code>C++</code>实现的，中间的大部分内容来自于我对相关资料的总结，不在代码层面进行详细解释，只是说明一个流程，同时也会对代码进行大部分的删减，只关注最核心的那部分。</p>
 <h3 id="从硬件到内核"><a href="#从硬件到内核" class="headerlink" title="从硬件到内核"></a>从硬件到内核</h3><p>我们从头开始，从触摸事件最初最初的来源开始，我们知道内核是以处理中断的方式处理用户的输入的，触摸事件作为一种特殊的输入事件，自然也需要这种方式进行处理，只不过触摸事件的提供的信息要稍微复杂一些。</p>
 <p>触摸事件来自于我们对硬件的操作，最初的来源当然是硬件引起的中断。而处理特定中断的代码则来自于对应硬件的驱动：</p>
-<p><img src="/images/event1_1.png" alt=""></p>
+<p><img src="/images/event1_1.png" alt></p>
 <p><a href="http://newandroidbook.com/files/AndroidInput.pdf" target="_blank" rel="noopener">图片来源</a>（以下系列图片来源相同，不作标注）</p>
 <p>当一个输入设备的驱动模块被首次载入内核的时候，会检测它应该管理的硬件设备，如果检测成功，驱动模块会调用<code>include/linux/input.h</code>中的<code>input_register_device(…)</code>函数设置一个<code>/dev/input/eventX</code>（<code>X</code>为整数）来代表这个输入设备。驱动模块同时也会通过<code>include/linux/interrupt.h</code>的<code>request_irq(…)</code>函数注册一个函数去处理这个硬件引发的中断，注册成功以后，当设备因用户交互而产生中断的时候就会交给对应的驱动模块进行处理。</p>
 <p>驱动模块处理的细节各不相同，但最终都会将数据处理后存放进对应的<code>/dev/input/eventX</code>文件中。</p>
-<p><img src="/images/event1_2.png" alt=""></p>
+<p><img src="/images/event1_2.png" alt></p>
 <h3 id="系统对触摸事件的处理"><a href="#系统对触摸事件的处理" class="headerlink" title="系统对触摸事件的处理"></a>系统对触摸事件的处理</h3><p>现在驱动程序为我们收集好了原始的输入信息并存放在了<code>eventX</code>文件中，下一步就是系统对于这个文件的处理并发送到应用层面。</p>
-<p><img src="/images/event1_3.png" alt=""></p>
+<p><img src="/images/event1_3.png" alt></p>
 <p>可以看到系统服务充当了从内核到应用的桥梁。</p>
-<p><img src="/images/event1_4.png" alt=""></p>
+<p><img src="/images/event1_4.png" alt></p>
 <p>系统服务由三个组件构成：<code>EventHub</code>、<code>InputReader</code>、<code>InputDispatcher</code>，关于它们的作用的详细分析在：</p>
 <blockquote>
 <p>  <a href="http://gityuan.com/2016/12/31/input-ipc/" target="_blank" rel="noopener">http://gityuan.com/2016/12/31/input-ipc/</a></p>
@@ -1077,7 +1077,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>函数里封装了一个<code>msg</code>，然后最终调用了<code>mChannel</code>的<code>sendMessage()</code>方法进行跨进程通信。</p>
 <hr>
 <p>现在我们到了图中的这一步：</p>
-<p><img src="/images/event1_5.png" alt=""></p>
+<p><img src="/images/event1_5.png" alt></p>
 <p>我们的点击事件来到了建立的<code>socket</code>中，准备与交付给对应的<code>app</code>，我们知道每个<code>app</code>运行在自己的进程中，所以就需要使用<code>socket</code>来进行跨进程通信。</p>
 <hr>
 <h3 id="InputChannel连接建立过程"><a href="#InputChannel连接建立过程" class="headerlink" title="InputChannel连接建立过程"></a>InputChannel连接建立过程</h3><p>本段内容主要参考了</p>
@@ -1133,8 +1133,8 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>这里将客户端的<code>InputChannel</code>保存的<code>Fd</code>加入到了<code>Native Looper</code>中进行监听，对返回的消息进行处理：</p>
 <figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span> Looper::addFd(<span class="keyword">int</span> fd, <span class="keyword">int</span> ident, <span class="keyword">int</span> events, <span class="keyword">const</span> sp&lt;LooperCallback&gt;&amp; callback, <span class="keyword">void</span>* data) &#123;</span><br><span class="line">       &#123; <span class="comment">// acquire lock</span></span><br><span class="line">        AutoMutex _l(mLock);</span><br><span class="line"></span><br><span class="line">        Request request;</span><br><span class="line">        request.fd = fd;</span><br><span class="line">        request.ident = ident;</span><br><span class="line">        request.events = events;</span><br><span class="line">        request.seq = mNextRequestSeq++;</span><br><span class="line">        request.callback = callback;</span><br><span class="line">        request.data = data;</span><br><span class="line">        <span class="keyword">if</span> (mNextRequestSeq == <span class="number">-1</span>) mNextRequestSeq = <span class="number">0</span>; <span class="comment">// reserve sequence number -1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">struct</span> epoll_event eventItem;</span><br><span class="line">        request.initEventItem(&amp;eventItem);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">ssize_t</span> requestIndex = mRequests.indexOfKey(fd);</span><br><span class="line">        <span class="keyword">if</span> (requestIndex &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, fd, &amp; eventItem);</span><br><span class="line">            <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                ALOGE(<span class="string">"Error adding epoll events for fd %d: %s"</span>, fd, strerror(errno));</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            mRequests.add(fd, request);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_MOD, fd, &amp; eventItem);</span><br><span class="line">             <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (errno == ENOENT) &#123;</span><br><span class="line">                    epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, fd, &amp; eventItem);</span><br><span class="line">                    ...</span><br><span class="line">                ...</span><br><span class="line">                &#125;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">       </span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里将<code>NativeInputEventReceiver</code>传入的<code>this</code>作为<code>callback</code>存入到<code>request</code>中， 再以<code>fd</code>为索引向<code>mRequests</code>映射表中加入<code>request</code>，然后以<code>fd</code>作为信号调用<code>epoll_ctl</code>系统调用，利用它对通信过程进行监听，在收到消息之后最终会根据<code>fd</code>找到<code>mRequests</code>中的<code>request</code>保存的<code>callback</code>，即<code>NativeInputEventReceiver</code>对象。</p>
-<p>关于<code>addFd</code>方法的详细分析，可以查看<a href="">Native消息机制的博文</a></p>
-<p><img src="/images/event1_6.png" alt=""></p>
+<p>关于<code>addFd</code>方法的详细分析，可以查看<a href>Native消息机制的博文</a></p>
+<p><img src="/images/event1_6.png" alt></p>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>现在我们了解了从内核到应用整个触摸事件的传输过程，并且知道了<code>InputChannel</code>在两端的监听建立与触发的函数，至此，触摸事件已经从系统底层来到了我们的应用进程，<a href="http://www.viseator.com/2017/10/07/android_view_event_2/">下一篇博客</a>将从触发函数开始讲解事件从<code>native</code>层真正传入<code>java</code>层的过程。</p>
 ]]></content>
       <categories>
@@ -1162,7 +1162,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <h2 id="刷不死Boot"><a href="#刷不死Boot" class="headerlink" title="刷不死Boot"></a>刷不死Boot</h2><p>由于路由器固件的特殊性，一旦刷崩了或者设置错误导致无法正常登陆路由器，那么就无法对路由器进行管理，也就是所谓的变砖。</p>
 <p>不死boot的作用就是在这种情况下提供进路由设置重新刷固件的机会。</p>
 <h3 id="刷解锁固件"><a href="#刷解锁固件" class="headerlink" title="刷解锁固件"></a>刷解锁固件</h3><p>由于<code>U-Boot</code>分区默认是锁定的，所以无法刷入新的<code>boot</code>。因此我们要先刷入一个修改过的解锁<code>U-Boot</code>分区的固件，这个修改过的固件可以在<a href="https://pan.baidu.com/s/1slWHygP" target="_blank" rel="noopener">百度网盘下载</a>，另外由于我手上的这个是v1版本的，与v2版本的硬件不同，所以需要使用的是<code>mr11u-v2</code>的解锁固件（即<code>openwr-ar71xx-generic-tl-mr11u-v2-squashfs-factory.bin</code>）。下载完以后先长按复位键复位路由器，连接上以后直接进入<code>192.168.1.1</code> <code>TP-Link</code>默认的管理界面，在下图这里选择刚下好的固件刷入即可：</p>
-<p><img src="/images/mr11u-1.png" alt=""></p>
+<p><img src="/images/mr11u-1.png" alt></p>
 <p>（图源网络）</p>
 <h3 id="刷不死boot"><a href="#刷不死boot" class="headerlink" title="刷不死boot"></a>刷不死boot</h3><p>先下载不死<code>boot</code>：</p>
 <blockquote>
@@ -1173,7 +1173,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ssh root@192.168.1.1</span><br></pre></td></tr></table></figure>
 <p>登陆以后先查看并记下<code>mac</code>地址，之后要用到：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ifconfig eth0</span><br></pre></td></tr></table></figure>
-<p><img src="/images/mr12u-2.png" alt=""></p>
+<p><img src="/images/mr12u-2.png" alt></p>
 <p><a href="http://xzper.com/2015/07/11/TP-MR12U%E5%88%B7openwrt-%E4%B8%8D%E6%AD%BBboot/" target="_blank" rel="noopener">图片来源</a></p>
 <p>然后<code>exit</code>退出<code>ssh</code>，使用<code>scp</code>命令传送下载好的<code>boot</code>包：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">scp breed-ar9331-mr12u.bin root@192.168.1.1:/tmp/</span><br></pre></td></tr></table></figure>
@@ -1182,7 +1182,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>等待命令返回后直接将路由器关机。</p>
 <p>想要进入不死<code>boot</code>，只需按住<code>reset</code>复位键不放，再开机，等待个十几秒后松开，再有线连接电脑与路由器，浏览器输入<code>192.168.1.1</code>就可以进入管理界面了，以后变砖了只要这样都可以重新刷固件，所以称不死。</p>
 <p>进入不死<code>boot</code>以后，先进入下图界面设置之前记录的<code>mac</code>地址：</p>
-<p><img src="/images/mr12u-3.png" alt=""></p>
+<p><img src="/images/mr12u-3.png" alt></p>
 <p><a href="http://xzper.com/2015/07/11/TP-MR12U%E5%88%B7openwrt-%E4%B8%8D%E6%AD%BBboot/" target="_blank" rel="noopener">图片来源</a></p>
 <h2 id="刷入最新固件（可选）"><a href="#刷入最新固件（可选）" class="headerlink" title="刷入最新固件（可选）"></a>刷入最新固件（可选）</h2><p>下面就可以直接在不死<code>boot</code>里面选择固件更新刷入最新的固件了，最新固件的下载可以到<a href="https://downloads.openwrt.org/snapshots/trunk/ar71xx/generic/" target="_blank" rel="noopener">这里</a>找到。</p>
 <p>但是<code>mr12u</code>的闪存只有可怜的4m，如果安装最新的<code>openwrt</code>就没有空间放下<code>mentohust</code>了，所以还不如就直接用这个解锁用的固件。</p>
@@ -1303,7 +1303,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>我们只修改了一处，第7行中我们使用<code>context.getApplicationContext()</code>这个方法来获取<code>Application</code>这个单例，而不是直接保存<code>context</code>本身，这样就可以保证不会出现某<code>context</code>因为被这个单例引用而不能回收的情况。而<code>Application</code>本身是单例这个特性保证了生命周期的一致，不会造成内存的浪费。</p>
 <h3 id="为什么不总是使用application作为context"><a href="#为什么不总是使用application作为context" class="headerlink" title="为什么不总是使用application作为context"></a>为什么不总是使用<code>application</code>作为<code>context</code></h3><p>既然它是一个单例，那么我们为什么不直接在任何地方都只使用它呢？</p>
 <p>这是因为各种<code>context</code>的能力有所不同：</p>
-<p><img src="/images/context01.png" alt=""></p>
+<p><img src="/images/context01.png" alt></p>
 <p>（图片出处见文末）</p>
 <p>对几个注解的地方作说明：</p>
 <ol>
@@ -1353,7 +1353,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>下面我们利用<code>objdump -d</code>命令将程序反汇编来查看<code>getbuf</code>函数的行为。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">00000000004017a8 &lt;getbuf&gt;:</span><br><span class="line">  4017a8:	48 83 ec 28          	sub    $0x28,%rsp</span><br><span class="line">  4017ac:	48 89 e7             	mov    %rsp,%rdi</span><br><span class="line">  4017af:	e8 8c 02 00 00       	callq  401a40 &lt;Gets&gt;</span><br><span class="line">  4017b4:	b8 01 00 00 00       	mov    $0x1,%eax</span><br><span class="line">  4017b9:	48 83 c4 28          	add    $0x28,%rsp</span><br><span class="line">  4017bd:	c3                   	retq   </span><br><span class="line">  4017be:	90                   	nop</span><br><span class="line">  4017bf:	90                   	nop</span><br></pre></td></tr></table></figure>
 <p>代码比较简单，在第2行中将<code>rsp</code>减了0x28，申请了一块28字节的空间，第3行将<code>rsp</code>赋给<code>rdi</code>就是空间的首地址，然后调用了<code>Gets</code>函数，<code>rdi</code>就是它的参数。到这里我们可以确定<code>BUFFER_SIZE</code>的大小为0x28（自学讲义中这个值是固定的，但是真正的实验中这个值是由服务器生成的）。换句话说，在0x28字节的栈被<code>Gets</code>函数写满之后，多出来的字符会被写入<code>getbuf</code>函数的栈外。我们用图来说明栈的结构：</p>
-<p><img src="/images/attacklab01.png" alt=""></p>
+<p><img src="/images/attacklab01.png" alt></p>
 <p>下面是低地址，上面是高地址，在<code>getbuf</code>函数申请的0x28字节内存之外的8个字节存放的就是<code>test</code>函数<code>call</code>指令后下一条指令的地址。</p>
 <p>现在我们可以知道，我们需要用0x28字节来将栈填满，再写入<code>touch1</code>函数的入口地址，在<code>getbuf</code>函数执行到<code>ret</code>指令的时候就会返回到<code>touch1</code>中执行。</p>
 <p>下面就要利用官方提供的<code>hex2raw</code>程序来帮助我们生成攻击字符串，这个程序将以空白字符隔开表示的字节转换成真正的二进制字节，注意这个程序只是原样地转换文件中的字符，所以字节序的问题是我们应该考虑的。</p>
@@ -1368,9 +1368,9 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>那么如何让程序去执行我们的代码呢？既然我们可以向栈中写入任意内容并且可以设置返回时跳转到的地址，那么我们就可以通过在栈中写入指令，再令从<code>getbuf</code>函数返回的地址为我们栈中指令的首地址，在指令中执行<code>ret</code>进行第二次返回，返回到<code>touch2</code>函数，就可以实现我们的目的。</p>
 <p>所以我决定将指令写入到栈地址的最低处，然后在溢出后将地址设置为这个栈地址。我们能完成这个攻击的前提是讲义中已经告诉我们这个具有漏洞的程序在运行时的栈地址是固定的，不会因运行多次而改变，并且这个程序允许执行栈中的代码。</p>
 <p>我们利用<code>gdb</code>在运行时查看栈地址：</p>
-<p><img src="/images/attacklab02.png" alt=""></p>
+<p><img src="/images/attacklab02.png" alt></p>
 <p>停在<code>getbuf</code>的这里，然后查看<code>rsp</code>指向的地址：</p>
-<p><img src="/images/attacklab03.png" alt=""></p>
+<p><img src="/images/attacklab03.png" alt></p>
 <p>可以看到首地址为<code>0x5561dc78</code>，顺便看到第6行也就是0x28个字节之后存放的原返回地址。</p>
 <p>由于我们需要在注入的代码中再次返回，就需要将二次返回的地址同样存放在栈中，这里为了避免与我们注入的代码重叠，我选择将<code>touch2</code>地址放在<code>getbuf</code>函数栈的最后8字节中。</p>
 <p>下面就要生成攻击字符串了，首先我们需要生成攻击代码。我们先将攻击代码用汇编指令的形式写出来：</p>
@@ -1383,7 +1383,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>仔细阅读上面的代码，我们需要传入<code>touch3</code>的参数是一个字符串的首地址，这个地址指向的字符串需要与<code>cookie</code>的字符串表示相同。这里<code>cookie</code>的字符串表示是<code>cookie</code>:<code>0x59b997fa</code>的<code>ASCII</code>表示的字符串：<code>35 39 62 39 39 37 66 61 00</code>。</p>
 <p>所以我们需要做的是将这串字符串放入栈中，并且将<code>rdi</code>的值置为字符串的首地址，再进行与上步类似的二次返回操作。</p>
 <p>这里我们需要好好考虑目标字符串在栈中的位置，下面是最终结果中的栈结构，先放出来便于讲解。</p>
-<p><img src="/images/attacklab04.png" alt=""></p>
+<p><img src="/images/attacklab04.png" alt></p>
 <p>如果目标字符串存放的位置比<code>touch3</code>存放地址更低，在最终字符串对比的时候会发现<code>rdi</code>指向地址的内容发生了改变。分析原因，我们可以查看从<code>getbuf</code>返回到字符串比对过程中执行的指令：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">00000000004018fa &lt;touch3&gt;:</span><br><span class="line">  4018fa:	53                   	push   %rbx</span><br><span class="line">  .</span><br><span class="line">  .</span><br><span class="line">  .</span><br><span class="line">  401911:	e8 36 ff ff ff       	callq  40184c &lt;hexmatch&gt;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">000000000040184c &lt;hexmatch&gt;:</span><br><span class="line">  40184c:	41 54                	push   %r12</span><br><span class="line">  40184e:	55                   	push   %rbp</span><br><span class="line">  40184f:	53                   	push   %rbx</span><br></pre></td></tr></table></figure>
@@ -1406,7 +1406,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">movq %rax, %rdi</span><br><span class="line">ret</span><br></pre></td></tr></table></figure>
 <p>这两条指令（指令的编码可以见讲义中的附录）。</p>
 <p>第1行的<code>movq</code>指令可以作为攻击代码的一部分来使用，那么我们怎么去执行这个代码呢？我们知道这个函数的入口地址是<code>0x400f15</code>，这个地址也是这条指令的地址。我们可以通过计算得出<code>48 89 c7 c3</code>这条指令的首地址是<code>0x400f18</code>，我们只要把这个地址存放在栈中，在执行<code>ret</code>指令的时候就会跳转到这个地址，执行<code>48 89 c7 c3</code>编码的指令。同时，我们可以注意到这个指令的最后是<code>c3</code>编码的是<code>ret</code>指令，利用这一点，我们就可以把多个这样的指令地址依次放在栈中，每次<code>ret</code>之后就会去执行栈中存放的下一个地址指向的指令，只要合理地放置这些地址，我们就可以执行我们想要执行的命令从而达到攻击的目的。</p>
-<p><img src="/images/attacklab05.png" alt=""></p>
+<p><img src="/images/attacklab05.png" alt></p>
 <p>这样的一串以<code>ret</code>结尾的指令，被称为<code>gadget</code>。我们要攻击的程序中为我们设置了一个<code>gadget_farm</code>，为我们提供了一系列这样可以执行的攻击指令，同时我们也只被允许使用程序中<code>start_farm</code>与<code>end_farm</code>函数标识之间的<code>gadget</code>来构建我们的攻击字符串。</p>
 <p>这种攻击方式被称为返回导向编程攻击。</p>
 <h4 id="Level-2-1"><a href="#Level-2-1" class="headerlink" title="Level 2"></a>Level 2</h4><p>目的与之前的<code>Level 2</code>相同，我们需要为<code>rdi</code>赋上<code>cookie</code>值，再跳转到<code>touch2</code>函数执行，跳转到<code>touch2</code>只需要将<code>touch2</code>的入口地址放在最后一个<code>gadget</code>之后，在它的<code>ret</code>指令执行之后就会返回到<code>touch2</code>中。</p>
@@ -1434,11 +1434,11 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>有了这个，我们就可以把<code>rsp</code>的值加上一个数偏移若干后表示存放目标字符串的位置，就不会与需要执行的指令冲突了。</p>
 <p>同时还要注意的是，这里有些<code>gadget</code>藏得比较隐蔽，讲义中暗示我们有一些两字节编码的指令实际上没有任何影响，它们之前的指令同样也是可以使用的。</p>
 <p>仔细找出所有可以执行的指令并整理之后我得出了这样一张图：</p>
-<p><img src="/images/attacklab06.png" alt=""></p>
+<p><img src="/images/attacklab06.png" alt></p>
 <p>目标字符串存放的位置一定在<code>touch3</code>地址之上（原因见前文）。</p>
 <p>由于相加操作只能对<code>rsi</code>与<code>rdi</code>进行，经过观察可以发现栈地址是一个8字节值，所以无法通过下面这条<code>movl</code>组成的路来传递，但是我们的偏移值完全可以。所以我们的思路就定下了，把<code>rsp</code>的值存放在<code>rdi</code>中，把偏移量的值通过<code>popq</code>指令从栈中取出放在<code>esi</code>中，再利用<code>add_xy</code>函数将它们相加的结果存放到<code>rax</code>再转移到<code>rdi</code>中。这个偏移量是多少要等到我们的栈结构出来之后才可以确定。</p>
 <p>根据上面这些信息，我们可以把栈结构示意出来：</p>
-<p><img src="/images/attacklab07.png" alt=""></p>
+<p><img src="/images/attacklab07.png" alt></p>
 <p>标注灰色的地方是我们计算偏移量的部分（从<code>rsp</code>读入时开始），可以计算出偏移量为<code>4 x 8 = 32 = 0x20</code>，再依此计算各命令的地址、构建出我们的攻击字符串：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">00 00 00 00 00 00 00 00 </span><br><span class="line">00 00 00 00 00 00 00 00 </span><br><span class="line">00 00 00 00 00 00 00 00 </span><br><span class="line">00 00 00 00 00 00 00 00 </span><br><span class="line">00 00 00 00 00 00 00 00 # 前0x28个字符填充0x00</span><br><span class="line">cc 19 40 00 00 00 00 00 # popq %rax</span><br><span class="line">20 00 00 00 00 00 00 00 # 偏移量</span><br><span class="line">42 1a 40 00 00 00 00 00 # movl %eax,%edx</span><br><span class="line">69 1a 40 00 00 00 00 00 # movl %edx,%ecx</span><br><span class="line">27 1a 40 00 00 00 00 00 # movl %ecx,%esi</span><br><span class="line">06 1a 40 00 00 00 00 00 # movq %rsp,%rax</span><br><span class="line">c5 19 40 00 00 00 00 00 # movq %rax,%rdi</span><br><span class="line">d6 19 40 00 00 00 00 00 # add_xy</span><br><span class="line">c5 19 40 00 00 00 00 00 # movq %rax,%rdi</span><br><span class="line">fa 18 40 00 00 00 00 00 # touch3地址</span><br><span class="line">35 39 62 39 39 37 66 61 # 目标字符串</span><br><span class="line">00 00 00 00 00 00 00 00</span><br></pre></td></tr></table></figure>
 <h3 id="实验小结"><a href="#实验小结" class="headerlink" title="实验小结"></a>实验小结</h3><p><code>Attack Lab</code>与之前的两个实验相比还是比较简单的，但是最后一个阶段确实因为自己的观察不够细致浪费了大量的时间。也告诉我们不要受思维定势的左右，一味地去寻找可以使用的<code>gadget</code>而忽略了函数本身的作用。</p>
@@ -1494,7 +1494,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>推荐使用<code>proxychains-ng</code>包进行命令行代理：</p>
 <p>安装<code>proxychains-ng</code>包后编辑<code>/etc/proxychains.conf</code>文件（需<code>root</code>权限）</p>
 <p>到文件末尾找到<code>ProxyList</code>项，按示例添加本地代理：</p>
-<p><img src="/images/arch24.png" alt=""></p>
+<p><img src="/images/arch24.png" alt></p>
 <p>图为我的<code>socks5</code>配置，保存后退出。</p>
 <p>之后需要用代理运行的命令都可以通过在命令前加上<code>proxychains</code>来使用代理运行。</p>
 <h3 id="中文字体与中文输入法"><a href="#中文字体与中文输入法" class="headerlink" title="中文字体与中文输入法"></a>中文字体与中文输入法</h3><p>中文字体推荐安装官方源中<code>noto-fonts-cjk</code>，中文输入法需要安装<code>fcitx</code>包与<code>fcitx-im</code>集合包，再加上一个中文支持包，可以到<a href="https://wiki.archlinux.org/index.php/fcitx#Chinese" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/fcitx#Chinese</a>中挑选一个喜欢的包装上。</p>
@@ -1512,7 +1512,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <h3 id="Synapse"><a href="#Synapse" class="headerlink" title="Synapse"></a>Synapse</h3><p><code>Synapse</code>是一个快速的软件启动器，可以方便地查找安装的软件，设置快捷键使用再也不用找软件入口了。</p>
 <p>安装官方源中的<code>synapse</code>包。</p>
 <h3 id="Yakuake"><a href="#Yakuake" class="headerlink" title="Yakuake"></a>Yakuake</h3><p><code>Yakuake</code>是一个终端模拟器，我使用它的原因是它支持下拉，配合快捷键使用非常方便：</p>
-<p><img src="/images/arch23.png" alt=""></p>
+<p><img src="/images/arch23.png" alt></p>
 <p>安装官方源中的<code>yakuake</code>包。</p>
 <h3 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h3><p>有些时候需要使用<code>windows</code>而不想切换系统或干脆没有<code>windows</code>的情况下，我们可以使用<code>windows</code>虚拟机来代替。当然虚拟机的用处不止于此。</p>
 <p><code>Arch</code>下的虚拟机首先开源的<code>VirtualBox</code>，安装官方源的<code>virtualbox</code> <code>virtualbox-ext-vnc</code> <code>virtualbox-guest-iso</code> <code>virtualbox-host-modules-arch</code>这几个包。</p>
@@ -1572,7 +1572,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>然后通过<code>VS Code</code>来查看反汇编的结果，<code>VS Code</code>有<a href="https://marketplace.visualstudio.com/items?itemName=13xforever.language-x86-64-assembly" target="_blank" rel="noopener">x86 and x86_64 Assembly</a>这个插件可以高亮汇编，看起来会舒服许多。</p>
 <p>反汇编出来的代码有近六千行，但是因为有符号表的存在，说明保留了调试所需的信息，我们可以通过<code>gdb</code>进行单步调试来查看程序的运行过程。</p>
 <p>在使用<code>gdb</code> 的时候，我们可以加上<code>-tui</code>命令并用<code>layout asm</code>命令切换到汇编指令模式，就可以在调试的时候查看对应的汇编代码了。界面如下：</p>
-<p><img src="/images/bomblab1.jpg" alt=""></p>
+<p><img src="/images/bomblab1.jpg" alt></p>
 <p>可以看到地址<code>0x400da0</code>就是<code>main</code>函数的地址。</p>
 <p>一直向下查看，我们就可以看到C文件中出现的<code>initialize_bomb</code>函数，然后就到了<code>phase_1</code>函数，我们可以推测这个函数就是判断是否通过的核心函数。</p>
 <p>这时候就要用到<code>gdb</code>的指令了，在汇编模式下的指令与普通模式有一些不同。我们可以使用<code>ni</code>(<code>next instruction</code>)和<code>si</code>(<code>step into</code>)来实现普通模式下的单步向下执行与步入操作。</p>
@@ -1591,12 +1591,12 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">40133c:	48 89 fb             	mov    %rdi,%rbx</span><br><span class="line">40133f:	48 89 f5             	mov    %rsi,%rbp</span><br><span class="line">401342:	e8 d4 ff ff ff       	callq  40131b &lt;string_length&gt;</span><br></pre></td></tr></table></figure>
 <p>函数中这两行分别把<code>rdi</code> <code>rsi</code>的值复制到了<code>rbx</code>与<code>rbp</code>，然后调用了<code>string_length</code>，这个时候就不用去看<code>string_length</code>函数了，我们可以直接猜测出<code>rbx</code>与<code>rbp</code>就是函数的参数。那么可以说明<code>rdi</code> <code>rsi</code>就是给<code>string_not_equal</code>的函数，那么<code>string_not_equal</code>的返回值是什么呢？</p>
 <p>看到<code>string_not_equal</code>返回后的5、6两句，测试了<code>eax</code>的值，在<code>eax</code>等于0时就跳转到<code>400ef7</code>，如果不为0，那么会继续向下执行，下面一句是调用<code>explode_bomb</code>函数，不用说这一定是触发炸弹的函数，所以我们需要令<code>string_not_equal</code>的返回值为0，那么从名字判断，我们需要令两个字符串相等，两个字符串之前说过存放在<code>rdi</code>与<code>rsi</code>中，<code>rdi</code>是我们读入的字符串，而<code>rsi</code>中存放的是<code>400ee4</code>复制的<code>0x402400</code>，这个时候用<code>gdb</code>去查看该地址中存放的字符串比较方便：</p>
-<p><img src="/images/bomblab2.png" alt=""></p>
+<p><img src="/images/bomblab2.png" alt></p>
 <p>这串字符就是第一阶段的答案。</p>
 <h4 id="阶段二"><a href="#阶段二" class="headerlink" title="阶段二"></a>阶段二</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">400efc:	55                   	push   %rbp</span><br><span class="line">400efd:	53                   	push   %rbx</span><br><span class="line">400efe:	48 83 ec 28          	sub    $0x28,%rsp</span><br><span class="line">400f02:	48 89 e6             	mov    %rsp,%rsi</span><br><span class="line">400f05:	e8 52 05 00 00       	callq  40145c &lt;read_six_numbers&gt;</span><br><span class="line">400f0a:	83 3c 24 01          	cmpl   $0x1,(%rsp)</span><br><span class="line">400f0e:	74 20                	je     400f30 &lt;phase_2+0x34&gt;</span><br><span class="line">400f10:	e8 25 05 00 00       	callq  40143a &lt;explode_bomb&gt;</span><br><span class="line">400f15:	eb 19                	jmp    400f30 &lt;phase_2+0x34&gt;</span><br><span class="line">400f17:	8b 43 fc             	mov    -0x4(%rbx),%eax</span><br><span class="line">400f1a:	01 c0                	add    %eax,%eax</span><br><span class="line">400f1c:	39 03                	cmp    %eax,(%rbx)</span><br><span class="line">400f1e:	74 05                	je     400f25 &lt;phase_2+0x29&gt;</span><br><span class="line">400f20:	e8 15 05 00 00       	callq  40143a &lt;explode_bomb&gt;</span><br><span class="line">400f25:	48 83 c3 04          	add    $0x4,%rbx</span><br><span class="line">400f29:	48 39 eb             	cmp    %rbp,%rbx</span><br><span class="line">400f2c:	75 e9                	jne    400f17 &lt;phase_2+0x1b&gt;</span><br><span class="line">400f2e:	eb 0c                	jmp    400f3c &lt;phase_2+0x40&gt;</span><br><span class="line">400f30:	48 8d 5c 24 04       	lea    0x4(%rsp),%rbx</span><br><span class="line">400f35:	48 8d 6c 24 18       	lea    0x18(%rsp),%rbp</span><br><span class="line">400f3a:	eb db                	jmp    400f17 &lt;phase_2+0x1b&gt;</span><br><span class="line">400f3c:	48 83 c4 28          	add    $0x28,%rsp</span><br><span class="line">400f40:	5b                   	pop    %rbx</span><br><span class="line">400f41:	5d                   	pop    %rbp</span><br><span class="line">400f42:	c3                   	retq</span><br></pre></td></tr></table></figure>
 <p>进入<code>phase_2</code>函数，观察它的代码，可以发现第5行调用了一个名为<code>read_six_numbers</code>这个函数，顾名思义，这个函数的作用应该是从输入中读取6个数字，那么问题来了，这6个数字是怎么返回的呢？我们注意到第4行中把<code>rsp</code>的值复制给了<code>rsi</code>，我们可以猜测这个函数是使用栈来返回读入的结果。</p>
 <p>当然只是猜测是不行的，我们需要用实验去验证我们的想法，我们在输入文件中设置<code>1 2 3 4 5 6</code>这一行输入，然后将断点打在<code>*400f0a</code>这个函数刚返回的位置（注意输入中应该含有第一阶段的答案，不然炸弹就炸在第一阶段了）。运行停在断点之后查看栈中的内容：</p>
-<p><img src="/images/bomblab3.png" alt=""></p>
+<p><img src="/images/bomblab3.png" alt></p>
 <p>我们打出了<code>rsp</code>开始32字节的内容，发现栈中依次存放了输入的6个数，之后就是返回的地址。那么我们可以确定读取的数值就是依次存放在栈中的。</p>
 <p>接下来看第6、7、8行，它将<code>rsp</code>中存放的值与1进行比较，如果相等则跳过第8行的引爆代码，说明我们需要输入的第一个数为1 。再看跳转到的位置（19、20行）将<code>rsp+0x4</code>与<code>rsp+0x18</code>的值分别存放到了<code>rbx</code>与<code>rbp</code>。下一行又进行了一次跳转，来到了第10行，第10行将<code>rbx</code>的地址减4中存放的内容复制到了<code>eax</code>中，<code>rbx</code>的地址减4也就意味着与<code>rsp</code>相等，它的值也就是第一个读入的值。下一行将<code>eax</code>的值乘二，接下来将乘二后的值与<code>rbx</code>也就是第二个值进行比较，如果相同则跳过引爆代码。上面这一系列操作总结起来就是如果第二个值是第一个值的两倍则不引爆。</p>
 <p>再往下就是把<code>rbx</code>的值加上4，因为一个<code>int</code>占4个字节，也就是把<code>rbx</code>指向了下一个读入的值。下一步将<code>rbx</code>与<code>rbp</code>的值进行比较，回想<code>rbp</code>的值为的<code>rsp+0x18</code>也就是 <code>rsp+24</code>，指向6个<code>int</code>值之后的位置，所以与它进行比较就是判断是否到达临界条件。如果没有到达临界条件，则跳到上一段中比较的部分继承进行。看到这里，我们已经可以判断出<code>phase_2</code>的要求是读入的6个数第一个数必为1，而后面的数字都是前面一个数字的两倍。</p>
@@ -1604,7 +1604,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <h4 id="阶段三"><a href="#阶段三" class="headerlink" title="阶段三"></a>阶段三</h4><p>阶段三的代码比较长，我们分开来看：</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0000000000400f43 &lt;phase_3&gt;:</span><br><span class="line">  400f43:	48 83 ec 18          	sub    $0x18,%rsp</span><br><span class="line">  400f47:	48 8d 4c 24 0c       	lea    0xc(%rsp),%rcx</span><br><span class="line">  400f4c:	48 8d 54 24 08       	lea    0x8(%rsp),%rdx</span><br><span class="line">  400f51:	be cf 25 40 00       	mov    $0x4025cf,%esi</span><br><span class="line">  400f56:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  400f5b:	e8 90 fc ff ff       	callq  400bf0 &lt;__isoc99_sscanf@plt&gt;</span><br><span class="line">  400f60:	83 f8 01             	cmp    $0x1,%eax</span><br><span class="line">  400f63:	7f 05                	jg     400f6a &lt;phase_3+0x27&gt;</span><br><span class="line">  400f65:	e8 d0 04 00 00       	callq  40143a &lt;explode_bomb&gt;</span><br><span class="line">  400f6a:	83 7c 24 08 07       	cmpl   $0x7,0x8(%rsp)</span><br><span class="line">  400f6f:	77 3c                	ja     400fad &lt;phase_3+0x6a&gt;</span><br><span class="line">  400f71:	8b 44 24 08          	mov    0x8(%rsp),%eax</span><br><span class="line">  400f75:	ff 24 c5 70 24 40 00 	jmpq   *0x402470(,%rax,8)</span><br></pre></td></tr></table></figure>
 <p>第3、4两行将<code>rsp+0xc</code>与<code>rsp+0x8</code>的值分别给<code>rcx</code>与<code>rdx</code>，下一行将一个地址值复制给了<code>esi</code>，接着将<code>eax</code>置为0，下一步调用了库函数<code>sscanf</code>，我们想到<code>sscanf</code>中的参数中需要一个格式化字符串，那么<code>esi</code>中的这个地址值就很有可能存放了这个字符串，我们同样使用<code>gdb</code>在运行时查看这个字符串：</p>
-<p><img src="/images/bomblab4.png" alt=""></p>
+<p><img src="/images/bomblab4.png" alt></p>
 <p>可以看到这就是格式化字符串，读入的是两个整型值。这两个值存放在哪里呢？我们想到之前把<code>rsp+0xc</code>与<code>rsp+0x8</code>的值分别给<code>rcx</code>与<code>rdx</code>，这是两个地址值，我们可以用之前的方法验证栈中存放的确实是我们读入的这两个值。</p>
 <p>下面第8行将<code>eax</code>与1进行比较，<code>eax</code>一般用于存放函数返回值，而<code>sscanf</code> 的返回值是成功读入的数值个数，也就是说这几行将成功读入的个数与1进行比较，如果大于1则跳过引爆的代码。</p>
 <p>下面第11行将<code>rsp+0x8</code>中存放的值与<code>0x7</code>进行比较，如果大于<code>0x7</code>则跳到<code>400fad</code>的位置，我们看这个地址的指令：</p>
@@ -1617,7 +1617,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p><code>1 311</code></p>
 <h4 id="阶段四"><a href="#阶段四" class="headerlink" title="阶段四"></a>阶段四</h4><figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">000000000040100c &lt;phase_4&gt;:</span><br><span class="line">  40100c:	48 83 ec 18          	sub    $0x18,%rsp</span><br><span class="line">  401010:	48 8d 4c 24 0c       	lea    0xc(%rsp),%rcx</span><br><span class="line">  401015:	48 8d 54 24 08       	lea    0x8(%rsp),%rdx</span><br><span class="line">  40101a:	be cf 25 40 00       	mov    $0x4025cf,%esi</span><br><span class="line">  40101f:	b8 00 00 00 00       	mov    $0x0,%eax</span><br><span class="line">  401024:	e8 c7 fb ff ff       	callq  400bf0 &lt;__isoc99_sscanf@plt&gt;</span><br><span class="line">  401029:	83 f8 02             	cmp    $0x2,%eax</span><br><span class="line">  40102c:	75 07                	jne    401035 &lt;phase_4+0x29&gt;</span><br><span class="line">  40102e:	83 7c 24 08 0e       	cmpl   $0xe,0x8(%rsp)</span><br><span class="line">  401033:	76 05                	jbe    40103a &lt;phase_4+0x2e&gt;</span><br><span class="line">  401035:	e8 00 04 00 00       	callq  40143a &lt;explode_bomb&gt;</span><br><span class="line">  40103a:	ba 0e 00 00 00       	mov    $0xe,%edx</span><br><span class="line">  40103f:	be 00 00 00 00       	mov    $0x0,%esi</span><br><span class="line">  401044:	8b 7c 24 08          	mov    0x8(%rsp),%edi</span><br><span class="line">  401048:	e8 81 ff ff ff       	callq  400fce &lt;func4&gt;</span><br><span class="line">  40104d:	85 c0                	test   %eax,%eax</span><br><span class="line">  40104f:	75 07                	jne    401058 &lt;phase_4+0x4c&gt;</span><br></pre></td></tr></table></figure>
 <p>前面的代码比较熟悉，同样是调用了<code>sscanf</code>函数，我们查看格式字符串：</p>
-<p><img src="/images/bomblab5.png" alt=""></p>
+<p><img src="/images/bomblab5.png" alt></p>
 <p>也是读入两个参数存放在<code>rcx</code>与<code>rdx</code>中。</p>
 <p>同样对读入参数的个数进行了判断，要求成功读入参数的个数等于两个，第11、12行要求输入的第一个参数小于<code>0xe</code>。</p>
 <p>接下来把0xe赋给<code>edx</code>、0x0赋给<code>esi</code>，<code>rsp+0x8</code>的值赋给<code>edi</code>。接下来调用了<code>func4</code>函数。</p>
@@ -1654,10 +1654,10 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">4010b3:	be 5e 24 40 00       	mov    $0x40245e,%esi</span><br><span class="line">4010b8:	48 8d 7c 24 10       	lea    0x10(%rsp),%rdi</span><br><span class="line">4010bd:	e8 76 02 00 00       	callq  401338 &lt;strings_not_equal&gt;</span><br><span class="line">4010c2:	85 c0                	test   %eax,%eax</span><br><span class="line">4010c4:	74 13                	je     4010d9 &lt;phase_5+0x77&gt;</span><br><span class="line">4010c6:	e8 6f 03 00 00       	callq  40143a &lt;explode_bomb&gt;</span><br></pre></td></tr></table></figure>
 <p>接下来将<code>0x40245e</code>这个地址赋给<code>esi</code>，把<code>rsp+0x10</code>这个地址赋给<code>rdi</code>，接下来调用<code>strings_not_equal</code>这个函数，之前的经验告诉我们<code>esi</code>与<code>rdi</code>就是要比较的两个字符串的首地址。如果两个字符串不相同就引爆炸弹。</p>
 <p>我们先看<code>0x40245e</code>位置的字符串：</p>
-<p><img src="/images/bomblab6.png" alt=""></p>
+<p><img src="/images/bomblab6.png" alt></p>
 <p>这就是我们应该构造并存放在<code>rsp+0x10</code>处的字符串。</p>
 <p>接下来再查看我们复制到<code>rsp</code>中的字符来源也就是<code>0x4024b0</code>开始的字符：</p>
-<p><img src="/images/bomblab7.png" alt=""></p>
+<p><img src="/images/bomblab7.png" alt></p>
 <p>可以看到我们需要的字符<code>flyers</code>的索引分别为<code>9 15 14 5 6 7</code>。这个索引就是我们输入的字符的低4位，那我们只要找到低4位分别是以上数值的字符就可以了。</p>
 <p>所以阶段5的（一个）答案为：</p>
 <p><code>ionefg</code></p>
@@ -1684,7 +1684,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>我们在这里假设这个数确实小于等于1。到第9行，将一个地址值赋给了<code>edx</code>，接下来将<code>edx</code>的值赋给了<code>rsp+2*rsi+0x20</code>的地址指向的值，这里我们可以知道<code>rsi</code>起到的是索引的作用，下面一行将<code>rsi</code>增加4，说明从<code>rsp+0x20</code>开始存放8个字节的数据。再将<code>rsi</code>的值与<code>0x18</code>作比较，说明整个过程要进行6次。接下来又到了第14行将下一个<code>int</code>值给<code>rcx</code>。</p>
 <p>那么如果<code>rcx</code>的值不小于等于1，继续往下走，第18行将<code>0x1</code>赋给<code>eax</code>，19行将<code>0x6032d0</code>这个地址赋给<code>edx</code>，接下来跳转到了第3行。第3-6行的代码是一起的，也是理解这个过程的关键。</p>
 <p>首先第3行的命令，把<code>edx+0x8</code>地址指向的值赋给了<code>edx</code>，这步操作一开始比较难以理解，我们需要先看看<code>edx</code>的初始状态是什么样的，使用<code>gdb</code>在运行时查看内存：</p>
-<p><img src="/images/bomblab8.png" alt=""></p>
+<p><img src="/images/bomblab8.png" alt></p>
 <p>我们可以从这个信息中看出，其实它就是一个链表的结构，首先名字就是<code>node</code>给了提示，再者每一个<code>node</code>中偏移8个字节中储存的都是下一个节点的地址，那么前面8个字节自然就是节点储存的数据。</p>
 <p>我们再回过头来看第3行的代码，就不难理解这个操作就是我们常用的<code>p = p -&gt; next</code>，也就是指向下一个节点。</p>
 <p>第4行把<code>eax</code>增1，再将<code>eax</code>与<code>ecx</code>进行比较，如果不等就再跳到第3步指向链表下一个节点，那么可以看出这4行代码的作用就是从<code>edx</code>这个初始位置开始向后移动<code>ecx-1</code>次，第7行跳过了第9行，把<code>edx</code>赋给了<code>rsp+0x20</code>开始的第<code>rsi</code>个8字节的位置。如果<code>rsi</code>达到<code>0x18</code>则跳出这部分代码。</p>
@@ -1702,7 +1702,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>也就是说，我们需要使新的链表中前一个节点存放的数据值的低4字节都大于后一个节点的。</p>
 <p>弄清楚了过程，下面就可以开始反推答案了：</p>
 <p>先找到正确的链表节点排列，根据图：</p>
-<p><img src="/images/bomblab8.png" alt=""></p>
+<p><img src="/images/bomblab8.png" alt></p>
 <p>数据由大到小的排列依次是<code>3 4 5 6 1 2</code>。</p>
 <p>由于有一步x = 7 - x，所以倒推回来的答案应该是：</p>
 <p><code>4 3 2 1 6 5</code></p>
@@ -1713,15 +1713,15 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>可以看到第7行将函数<code>num_input_strings</code>的返回值与6进行比较，如果不等于6则的直接跳过中间代码到达最后的结束部分。</p>
 <p>从函数名我们可以推测这个函数的作用的是检测读取的字符串的数量，当读取了6个字符串时，就不会跳过中间的代码。我们继续看中间的代码：</p>
 <p>第9到14行又是熟悉的<code>sscanf</code>调用过程，我们已经知道<code>esi</code>指向的是格式化字符串的首地址，我们先来查看它的内容：</p>
-<p><img src="/images/bomblab9.png" alt=""></p>
+<p><img src="/images/bomblab9.png" alt></p>
 <p>读取两个整数和一个字符串。</p>
 <p>有所不同的是在12行之后又有一行给<code>edi</code>赋上了一个地址值，我们之前所有阶段中<code>edi</code>的值都是来自于我们<code>read_line</code>的地址，想到<code>sscanf</code> 参数中确实存在一个输入，我们可以推测这个<code>edi</code>中存放的是我们读取位置的首地址。</p>
 <p>那么我们就可以在运行时查看这个地址的内容，看是从哪里进行读取的：</p>
-<p><img src="/images/bomblab10.png" alt=""></p>
+<p><img src="/images/bomblab10.png" alt></p>
 <p>首先符号表告诉我们这段数据的名字叫做<code>input_strings</code>也就是我们输入的字符串，那么这个地址上的<code>0 0</code>代表的应该就是我们的第4行输入。两个整型数字正好与格式化字符串也是匹配的。现在我们知道，应该在这两个0之后再追加一个字符串作为输入。</p>
 <p>第15、16行对成功输入的数据个数进行了一个判断，如果不为3个则跳过调用<code>secret_phase</code>的代码。</p>
 <p>第17-19行是对<code>strings_not_equal</code>的调用，我们已经知道它的两个参数分别是<code>esi</code>与<code>edi</code>，<code>esi</code>被赋上了一个地址值，<code>edi</code>被赋上了<code>esp+0x10</code>，我们可以推测出<code>edi</code>的地址就是指向我们读入的第三个字符串的，那么需要比较的对象是什么呢？我们在运行时查看内存的内容：</p>
-<p><img src="/images/bomblab11.png" alt=""></p>
+<p><img src="/images/bomblab11.png" alt></p>
 <p>这就是我们需要的第三个参数。</p>
 <p>可以看到如果第三个参数与上面这个字符串相同的话就会调用两次<code>puts</code>输出提示信息，然后进入<code>secret_phase</code>阶段。</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">0000000000401242 &lt;secret_phase&gt;:</span><br><span class="line">  401242:	53                   	push   %rbx</span><br><span class="line">  401243:	e8 56 02 00 00       	callq  40149e &lt;read_line&gt;</span><br><span class="line">  401248:	ba 0a 00 00 00       	mov    $0xa,%edx</span><br><span class="line">  40124d:	be 00 00 00 00       	mov    $0x0,%esi</span><br><span class="line">  401252:	48 89 c7             	mov    %rax,%rdi</span><br><span class="line">  401255:	e8 76 f9 ff ff       	callq  400bd0 &lt;strtol@plt&gt;</span><br><span class="line">  40125a:	48 89 c3             	mov    %rax,%rbx</span><br><span class="line">  40125d:	8d 40 ff             	lea    -0x1(%rax),%eax</span><br><span class="line">  401260:	3d e8 03 00 00       	cmp    $0x3e8,%eax</span><br><span class="line">  401265:	76 05                	jbe    40126c &lt;secret_phase+0x2a&gt;</span><br><span class="line">  401267:	e8 ce 01 00 00       	callq  40143a &lt;explode_bomb&gt;</span><br><span class="line">  40126c:	89 de                	mov    %ebx,%esi</span><br><span class="line">  40126e:	bf f0 30 60 00       	mov    $0x6030f0,%edi</span><br><span class="line">  401273:	e8 8c ff ff ff       	callq  401204 &lt;fun7&gt;</span><br><span class="line">  401278:	83 f8 02             	cmp    $0x2,%eax</span><br><span class="line">  40127b:	74 05                	je     401282 &lt;secret_phase+0x40&gt;</span><br><span class="line">  40127d:	e8 b8 01 00 00       	callq  40143a &lt;explode_bomb&gt;</span><br><span class="line">  401282:	bf 38 24 40 00       	mov    $0x402438,%edi</span><br><span class="line">  401287:	e8 84 f8 ff ff       	callq  400b10 &lt;puts@plt&gt;</span><br><span class="line">  40128c:	e8 33 03 00 00       	callq  4015c4 &lt;phase_defused&gt;</span><br><span class="line">  401291:	5b                   	pop    %rbx</span><br><span class="line">  401292:	c3                   	retq</span><br></pre></td></tr></table></figure>
@@ -1734,10 +1734,10 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>第3、4两行先对我们输入的这个数作一个判断，如果等于0直接跳到第19行，返回-1，这显然不是我们想要的结果。</p>
 <p>第5行将<code>rdi</code>的值读入到了<code>edx</code>中，第6行则将这个数与我们读入的数进行比较，如果这个数小于等于我们读入的数就跳至第12行，第12行将<code>eax</code>置0，再进行一次相同的比较，如果相等则跳至第20行返回。</p>
 <p>如果不等（也就是<code>edx</code>小于我们读入的数），则继续向下执行第15行，这行代码有些与之前的链表跳至下一个节点类似，到这里，我们就需要查看一下<code>rdi</code>这个地址里存放的是怎样一种数据结构：</p>
-<p><img src="/images/bomblab12.png" alt=""></p>
+<p><img src="/images/bomblab12.png" alt></p>
 <p>仔细观察可以发现这是一个二叉树的结构，每个节点第1个8字节存放数据，第2个8字节存放左子树地址，第3个8字节存放右子树位置。并且命令也有规律，<code>nab</code>，<code>a</code>代表层数，<code>b</code>代表从左至右第b个节点。</p>
 <p>根据这个结构，我们可以把树画出来以便我们进行分析。随意找了个工具表示一下：</p>
-<p><img src="/images/bomblab13.png" alt=""></p>
+<p><img src="/images/bomblab13.png" alt></p>
 <p>下面我们回到代码，现在我们知道第15行代码的作用是将<code>rdi</code>移到它的右子树的位置，接着调用<code>fun7</code>，在返回后令<code>eax = 2 * rax + 1</code>。</p>
 <p>如果第6行的比较中树节点的值大于我们读入的数呢？</p>
 <p>代码会进行到第8行，令<code>rdi</code>移到它的左子树的位置，接下来调用<code>fun7</code>在返回后令<code>eax = 2 * eax</code>。下面跳至返回处。</p>
@@ -1751,7 +1751,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p><code>0x16</code>（22）</p>
 <hr>
 <p>至此，炸弹全部解除：</p>
-<p><img src="/images/bomblab14.png" alt=""></p>
+<p><img src="/images/bomblab14.png" alt></p>
 <h3 id="实验小结"><a href="#实验小结" class="headerlink" title="实验小结"></a>实验小结</h3><p>整个实验包括秘密部分用时九个小时，引爆了3次炸弹（一次因为错误的尝试，两次因为将<code>ni</code>命令错打成<code>n</code>）。</p>
 <p>一开始拿到题目的时候会比较蒙，需要先去学习工具的使用与一些编译的基础知道（符号表、定址表等等）花费了一些时间。前几个阶段过于关注函数的具体实现而没有根据常识去推测一些明显函数的作用花费了一些时间。</p>
 <p>前4个阶段都算比较简单，考查了一些常用结构在汇编中的出现形式。第5、6与秘密阶段分别考察了堆、链表、二叉树这三个数据结构在内存中的结构与汇编级的使用，受益良多。</p>
@@ -1836,7 +1836,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <li>重复第2步，直到合成只有1组，组中的数值即为结果</li>
 </ol>
 <p>用图片比较便于理解：</p>
-<p><img src="/images/bitCount.jpg" alt=""></p>
+<p><img src="/images/bitCount.jpg" alt></p>
 <p>可以看到最终的0x0000000F即为1的数量15</p>
 <p>该算法能成功的关键在于一开始中每组中的数值即为每组中1的数量，然后将相邻两组中的数值相加的过程就相当于将之前一级的1的数量汇总，不断重复这个过程就可以将1的数量汇总到最后的一个数中。</p>
 <p>有了算法我们还要考虑如何在题目的限制条件下实现这一算法。</p>
@@ -2007,7 +2007,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>需要读者参照源码查看本文。</p>
 <p>我将这个todo应用的框架提炼出来（同时也意味着丢失了很多的实现细节，但可以将架构看得更加清晰），制作了一张伪<code>UML</code>图（为了简化，没有遵循<code>UML</code>的规范），下面我们参照着表中的内容进行分析：</p>
 <a id="more"></a>
-<p><img src="/images/android_mvp_uml.jpg" alt=""></p>
+<p><img src="/images/android_mvp_uml.jpg" alt></p>
 <h2 id="BaseView与BasePresenter"><a href="#BaseView与BasePresenter" class="headerlink" title="BaseView与BasePresenter"></a>BaseView与BasePresenter</h2><p>可以看到它们是独立于包外的两个基础接口，之后的所有<code>View</code>与<code>Presenter</code>接口都将继承它们，所以应该将一些通用的方法写在这两个<code>Base</code>接口中。</p>
 <h2 id="tasks包"><a href="#tasks包" class="headerlink" title="tasks包"></a>tasks包</h2><p>整个app中<code>tasks</code>、<code>taskdetail</code>、<code>statistics</code>三个包对应着的就是三个<code>Activity</code>，可以看到每一个包中包含了对应的<code>Activity</code>、<code>View</code> 、<code>Presenter</code>与<code>Contract</code>类和其他工具组件，通过这样的方式构成了应用的一个组成单元（每一个<code>Activity</code>与其对应的<code>View</code>和实现逻辑的<code>Presenter</code>）。</p>
 <p>图中我只展现了<code>tasks</code>这一个包，其他的包内部的结构也是一样的。</p>
@@ -2098,7 +2098,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>接下来我们需要用专门的<code>visudo</code>命令来编辑<code>sudo</code>的配置文件：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">visudo</span><br></pre></td></tr></table></figure>
 <p>实际上就是<code>vim</code>的操作，使用它是为了对编辑后的文件进行检查防止格式的错误。</p>
-<p><img src="/images/arch20.jpg" alt=""></p>
+<p><img src="/images/arch20.jpg" alt></p>
 <p>找到</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># %wheel ALL=(ALL)ALL</span></span><br></pre></td></tr></table></figure>
 <p>这行，去掉之前的<code>#</code>注释符，保存并退出就可以了。</p>
@@ -2108,7 +2108,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
 <p>来重启你的电脑。</p>
 <p>重启以后输入你<strong>刚创建的用户名与密码</strong>来登录。注意登录后要重新进行联网操作。</p>
-<h2 id="图形界面的安装"><a href="#图形界面的安装" class="headerlink" title="图形界面的安装"></a>图形界面的安装</h2><h3 id="显卡驱动的安装"><a href="#显卡驱动的安装" class="headerlink" title="显卡驱动的安装"></a>显卡驱动的安装</h3><p><img src="/images/arch21.png" alt=""></p>
+<h2 id="图形界面的安装"><a href="#图形界面的安装" class="headerlink" title="图形界面的安装"></a>图形界面的安装</h2><h3 id="显卡驱动的安装"><a href="#显卡驱动的安装" class="headerlink" title="显卡驱动的安装"></a>显卡驱动的安装</h3><p><img src="/images/arch21.png" alt></p>
 <p>参照这个表格，安装相应的包，比如你是<code>intel</code>的集成显卡（绝大多数人的情况），执行：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo pacman -S xf86-video-intel</span><br></pre></td></tr></table></figure>
 <p>提示：<code>Nvidia</code>的独显驱动如非必要，建议只装集成显卡的驱动（省电，如果同时装也会默认使用集成显卡），不容易出现冲突问题。相反，如果集成显卡驱动有问题无法装上，可以装独显驱动，具体的版本请到下面的链接查询：</p>
@@ -2205,10 +2205,10 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <li><p>在<code>windows</code>下空出一块分区来安装：利用<code>windows</code>自带的磁盘管理工具就可以：</p>
 <ol>
 <li><p>右击<code>windows</code>图标，在弹出菜单中选择磁盘管理（其他版本的<code>windows</code>请自行找到打开磁盘管理的方式）：</p>
-<p><img src="/images/arch01.jpeg" alt=""></p>
+<p><img src="/images/arch01.jpeg" alt></p>
 </li>
 <li><p>右击想要删除的分区，选择删除卷（注意这步之后这个分区的所有数据将会丢失）：</p>
-<p><img src="/images/arch02.jpeg" alt=""></p>
+<p><img src="/images/arch02.jpeg" alt></p>
 </li>
 </ol>
 </li>
@@ -2229,15 +2229,15 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>一般来说现在的主板都可以不用进入BIOS而快速地切换启动顺序，只要找到相应的快捷键就可以了。</p>
 <h4 id="进入U盘下的Linux系统"><a href="#进入U盘下的Linux系统" class="headerlink" title="进入U盘下的Linux系统"></a>进入U盘下的Linux系统</h4><ol>
 <li><p>按上一步设置好启动顺序，启动之后会看到如下界面（UEFI启动方式的界面可能不同）：</p>
-<p><img src="/images/arch03.jpeg" alt=""></p>
+<p><img src="/images/arch03.jpeg" alt></p>
 <p>如果直接进入<code>windows</code>，请检查启动顺序是否设置成功，U盘是否在制作启动介质时成功写入。</p>
 <p>如果没有看到这个界面，请检查U盘是否制作成功，如果多次遇到问题可以考虑换一个U盘。</p>
 <p>选择第一个选项。</p>
 </li>
 <li><p>这时<code>Arch</code>开始加载，你将会看到屏幕显示如下内容：</p>
-<p><img src="/images/arch04.jpeg" alt=""></p>
+<p><img src="/images/arch04.jpeg" alt></p>
 <p>加载完成后你将会进入一个有命令提示符的界面：</p>
-<p><img src="/images/arch05.jpeg" alt=""></p>
+<p><img src="/images/arch05.jpeg" alt></p>
 <p>如果出现<code>FAIL</code>或是其他错误信息导致无法启动请自行搜索错误信息来获得解决方法。</p>
 <p>这就是<code>Linux</code>的终端界面了，接下来我们将通过在这个界面执行一系列命令来将<code>Arch</code>安装到我们的磁盘上。</p>
 </li>
@@ -2264,7 +2264,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ls: cannot access <span class="string">'/sys/firmware/efi/efivars'</span>: No such file or directory</span><br></pre></td></tr></table></figure>
 <p>表明你是以<code>BIOS</code>方式引导，否则为以<code>EFI</code>方式引导。现在只需要记住这个信息，之后这两种引导类型的安装方式会略有不同（下文中涉及到不同的地方请仔细区别）。</p>
 <hr>
-<p><strong>更新：</strong><br><br>部分同学反馈这种方式并不能100%确认你就是<code>BIOS</code>方式引导的，更加保险的方法是执行<code>fdisk -l</code>查看分区表，如果<strong>你的硬盘（而不是你的U盘）</strong>的<code>Disklabel type</code>属性为<code>gpt</code>并且有一个<code>Type</code>为<code>EFI System</code>的小分区（一般为256M左右，如下图），那么你应该是<code>EFI</code>引导的。<br><br><img src="/images/arch26.png" alt=""></p>
+<p><strong>更新：</strong><br><br>部分同学反馈这种方式并不能100%确认你就是<code>BIOS</code>方式引导的，更加保险的方法是执行<code>fdisk -l</code>查看分区表，如果<strong>你的硬盘（而不是你的U盘）</strong>的<code>Disklabel type</code>属性为<code>gpt</code>并且有一个<code>Type</code>为<code>EFI System</code>的小分区（一般为256M左右，如下图），那么你应该是<code>EFI</code>引导的。<br><br><img src="/images/arch26.png" alt></p>
 <hr>
 <h4 id="联网"><a href="#联网" class="headerlink" title="联网"></a>联网</h4><p><code>arch</code>并不能离线安装，因为我们需要联网来下载需要的组件，所以我们首先要连接网络。</p>
 <ul>
@@ -2274,7 +2274,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <li><p>然后执行以下命令来判断网络连接是否正常：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
 <p>如果可以看到类似下面的内容就说明连上了网络：</p>
-<p><img src="/images/arch05.jpg" alt=""></p>
+<p><img src="/images/arch05.jpg" alt></p>
 <blockquote>
 <p>  再次提示用快捷键Ctrl-C可以终止当前正在执行的命令</p>
 </blockquote>
@@ -2299,7 +2299,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <h5 id="查看目前的分区情况"><a href="#查看目前的分区情况" class="headerlink" title="查看目前的分区情况"></a>查看目前的分区情况</h5><p>执行命令：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fdisk <span class="_">-l</span></span><br></pre></td></tr></table></figure>
 <p>以我的电脑为例：</p>
-<p><img src="/images/arch06.jpg" alt=""></p>
+<p><img src="/images/arch06.jpg" alt></p>
 <p>可以看到我的一块238.5g的硬盘(<code>/dev/sda</code>就代表这块硬盘)，下面列出了<code>/dev/sda*</code>这三个分区，<code>/dev/sda3</code>是我存活下来的家目录，可以看到它的类型为<code>Linux</code>分区。注意看<code>Start</code>与<code>End</code>的数值，这个数值代表扇区号，可以理解成硬盘被划分成了一个个小单元，可以直观地看出来在<code>/dev/sda2</code>的<code>End</code>与<code>/dev/sda3</code>的<code>Start</code>之间空出了一大块未分配的空间，接下来我们将分配这块区域。</p>
 <hr>
 <ul>
@@ -2348,8 +2348,8 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 </li>
 </ol>
 <p>这是我的分区过程供参考：</p>
-<p><img src="/images/arch07.jpg" alt=""></p>
-<p><img src="/images/arch08.jpg" alt=""></p>
+<p><img src="/images/arch07.jpg" alt></p>
+<p><img src="/images/arch08.jpg" alt></p>
 <hr>
 <p><strong>如果你在分区这步遇到了问题</strong>，先看看自己的操作是否与上面的指引一致，如果仍然无法解决可参考<a href="https://www.cnblogs.com/freerqy/p/8502838.html" target="_blank" rel="noopener">https://www.cnblogs.com/freerqy/p/8502838.html</a>这篇文章的“建立硬盘分区”一节尝试使用<code>cfdisk</code>进行分区。</p>
 <h4 id="挂载分区"><a href="#挂载分区" class="headerlink" title="挂载分区"></a>挂载分区</h4><p>执行以下命令将根分区挂载到<code>/mnt</code>：</p>
@@ -2369,7 +2369,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <blockquote>
 <p>  提示：输入路径时可以用<code>Tab</code>键补全</p>
 </blockquote>
-<p><img src="/images/arch09.jpg" alt=""></p>
+<p><img src="/images/arch09.jpg" alt></p>
 <p>找到标有<code>China</code>的镜像源，<code>normal</code>模式下按下<code>dd</code>可以剪切光标下的行，按<code>gg</code>回到文件首，按<code>P</code>（注意是大写的）将行粘贴到文件最前面的位置（优先级最高）。</p>
 <p>当然也可以直接手工输入。</p>
 <p>这里推荐使用清华、浙大源：</p>
@@ -2383,7 +2383,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">genfstab -L /mnt &gt;&gt; /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
 <p>由于这步比较重要，所以我们需要输出生成的文件来检查是否正确，执行以下命令：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">cat /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch10.jpg" alt=""></p>
+<p><img src="/images/arch10.jpg" alt></p>
 <p>如图，可以看到<code>/dev/sda4</code>被挂载到了根分区。</p>
 <p><code>/dev/sda3</code>是我之前存活下来的家目录被挂载到了<code>/home</code>目录（你们没有这条）。</p>
 <p><strong>如果是<code>EFI/GPT</code>引导的还应该有引导分区被挂载到<code>/boot</code>目录</strong>。</p>
@@ -2395,22 +2395,22 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <hr>
 <h4 id="设置时区"><a href="#设置时区" class="headerlink" title="设置时区"></a>设置时区</h4><p>依次执行如下命令设置我们的时区为上海并生成相关文件：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">hwclock --systohc</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch11.jpg" alt=""></p>
+<p><img src="/images/arch11.jpg" alt></p>
 <h4 id="提前安装必须软件包"><a href="#提前安装必须软件包" class="headerlink" title="提前安装必须软件包"></a>提前安装必须软件包</h4><p>因为我们现在已经<code>Chroot</code>到了新的系统中，只有一些最基本的包（组件），这时候我们就需要自己安装新的包了，下面就要介绍一下<code>ArchLinux</code>下非常强大的包管理工具<code>pacman</code>，大部分情况下，一行命令就可以搞定包与依赖的问题。</p>
 <p>安装包的命令格式为<code>pacman -S 包名</code>，<code>pacman</code>会自动检查这个包所需要的其他包（即为依赖）并一起装上。下面我们就通过<code>pacman</code>来安装一些包，这些包在之后会用上，在这里先提前装好。</p>
 <p>执行如下命令：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">pacman -S vim dialog wpa_supplicant ntfs-3g networkmanager</span><br></pre></td></tr></table></figure>
 <p>一路确认之后包就被成功装上了。</p>
-<p><img src="/images/arch12.jpg" alt=""></p>
+<p><img src="/images/arch12.jpg" alt></p>
 <p>图中只安装了<code>Vim</code>和它的依赖。</p>
 <h4 id="设置Locale"><a href="#设置Locale" class="headerlink" title="设置Locale"></a>设置Locale</h4><p>设置我们使用的语言选项，执行如下命令来编辑<code>/etc/locale.gen</code>文件：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/locale.gen</span><br></pre></td></tr></table></figure>
 <p>在文件中找到<code>zh_CN.UTF-8 UTF-8</code> <code>zh_HK.UTF-8 UTF-8</code> <code>zh_TW.UTF-8 UTF-8</code> <code>en_US.UTF-8 UTF-8</code>这四行，去掉行首的#号，保存并退出。如图：</p>
-<p><img src="/images/arch13.jpg" alt=""></p>
-<p><img src="/images/arch14.jpg" alt=""></p>
+<p><img src="/images/arch13.jpg" alt></p>
+<p><img src="/images/arch14.jpg" alt></p>
 <p>然后执行：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">locale-gen</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch15.jpg" alt=""></p>
+<p><img src="/images/arch15.jpg" alt></p>
 <p>打开（不存在时会创建）<code>/etc/locale.conf</code>文件：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/locale.conf</span><br></pre></td></tr></table></figure>
 <p>在文件的第一行加入以下内容：</p>
@@ -2424,14 +2424,14 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
 <p>在文件末添加如下内容（将<code>myhostname</code>替换成你自己设定的主机名）</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">127.0.0.1	localhost</span><br><span class="line">::1		localhost</span><br><span class="line">127.0.1.1	myhostname.localdomain	myhostname</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch16.png" alt=""></p>
+<p><img src="/images/arch16.png" alt></p>
 <p>这里我设置的是<code>viseator</code>。</p>
 <p>保存并退出。</p>
 <h4 id="设置Root密码"><a href="#设置Root密码" class="headerlink" title="设置Root密码"></a>设置Root密码</h4><p><code>Root</code>是<code>Linux</code>中具有最高权限帐户，有些敏感的操作必须通过<code>Root</code>用户进行，比如使用<code>pacman</code>，我们之前进行所有的操作也都是以<code>Root</code>用户进行的，也正是因为<code>Root</code>的权限过高，如果使用不当会造成安全问题，所以我们之后会新建一个普通用户来进行日常的操作。在这里我们需要为<code>Root</code>帐户设置一个密码：</p>
 <p>执行如下命令：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
 <p>按提示设置并确认就可以了。</p>
-<p><img src="/images/arch17.jpg" alt=""></p>
+<p><img src="/images/arch17.jpg" alt></p>
 <hr>
 <p>或许有的人已经发现官方Wiki和一些其他教程资料中的命令是以<code>#</code>或<code>$</code>开头的，这两个符号就对应着命令行中的命令提示符，<code>#</code>代表以<code>Root</code>用户执行命令，<code>$</code>代表以普通用户执行命令，平时使用教程中的命令时应该注意这一点。</p>
 <hr>
@@ -2457,13 +2457,13 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p><img src="/images/arch18.jpg" alt=""></p>
+<p><img src="/images/arch18.jpg" alt></p>
 <p><strong>如果你没有看到如图所示的提示信息，请仔细检查是否正确完成上面的过程。常见问题如下：</strong></p>
 <ol>
 <li><p>如果报<code>warning failed to connect to lvmetad，falling back to device scanning.</code>错误。参照<a href="https://wiki.archlinux.org/index.php/Install_from_existing_Linux" target="_blank" rel="noopener">wiki</a>中搜索关键词<code>use_lvmetad</code>所在位置，简单的方法是编辑<code>/etc/lvm/lvm.conf</code>这个文件，找到<code>use_lvmetad = 1</code>将<code>1</code>修改为<code>0</code>，保存，重新配置grub。</p>
 </li>
 <li><p>有部分同学反馈后面安装<code>grub</code>包的时候报如下错误：</p>
-<p><img src="/images/arch25.png" alt=""></p>
+<p><img src="/images/arch25.png" alt></p>
 <p>是因为实际是<code>UEFI</code>引导的系统没有正确挂载<code>boot</code>分区。首先检查你是不是按照<code>BIOS</code>方式安装的系统，二是检查是否正确挂载<code>/mnt/boot</code>。正确配置好<code>boot</code>分区之后可以从“挂载分区”这步开始重做。</p>
 </li>
 </ol>
@@ -2487,7 +2487,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p><strong>强烈建议使用如下命令检查是否成功生成各系统的入口，如果没有正常生成会出现开机没有系统入口的情况：</strong></p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vim /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
 <p>检查接近末尾的<code>menuentry</code>部分是否有<code>windows</code>或其他系统名入口。下图例子中是<code>Arch Linux</code>入口与检测到的<code>windows10</code>入口（安装在<code>/dev/sda1</code>），具体情况可能有不同：</p>
-<p><img src="/images/arch22.jpg" alt=""></p>
+<p><img src="/images/arch22.jpg" alt></p>
 <p><strong>如果你没有看到<code>Arch Linux</code>系统入口或者该文件不存在</strong>，请先检查<code>/boot</code>目录是否正确部署<code>linux</code>内核：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">cd</span> /boot</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
 <p>查看是否有<code>initramfs-linux-fallback.img  initramfs-linux.img  intel-ucode.img  vmlinuz-linux</code>这几个文件，如果都没有，说明<code>linux</code>内核没有被正确部署，很有可能是<code>/boot</code>目录没有被正确挂载导致的，确认<code>/boot</code>目录无误后，可以重新部署<code>linux</code>内核：</p>
@@ -2505,7 +2505,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">exit</span></span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
 <p>注意这个时候你可能会卡在有两行提示的地方无法正常关机，长按电源键强制关机即可，没有影响。</p>
 <p>关机后拔出U盘，启动顺序会自动以硬盘启动，如果一切顺利，那么你将会看到下面的界面：</p>
-<p><img src="/images/arch19.jpg" alt=""></p>
+<p><img src="/images/arch19.jpg" alt></p>
 <p>启动时有可能会有输出信息显示在这里，直接回车就可以了。</p>
 <p>输入<code>root</code>，再输入之前设置的密码，显示出命令提示符，恭喜你，你已经成功安装<code>ArchLinux</code>！</p>
 <h2 id="安装后配置"><a href="#安装后配置" class="headerlink" title="安装后配置"></a>安装后配置</h2><p>虽然系统安装好了，但是还没有进行基本配置和安装图形界面，所以接下来我们要进行一些必须的配置和图形界面的安装。</p>
@@ -2584,7 +2584,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
     <url>/2017/04/10/assembly_wang_lab_9/</url>
     <content><![CDATA[<p>编程：在屏幕中间分别显示绿色、绿底红色、白底蓝色的字符串<code>welcome to masm!</code>。</p>
 <p>效果图：</p>
-<p><img src="/images/assembly_9.jpg" alt=""></p>
+<p><img src="/images/assembly_9.jpg" alt></p>
 <p>采用了双循环嵌套的写法，外层控制输出行数，内层逐字符读取ASCII码与对应行的属性。</p>
 <blockquote>
 <p>  把<code>loop s1</code>改为<code>loop s2</code>有惊喜哦</p>
@@ -2606,7 +2606,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://github.com/viseator/AndroidAnimatorBounceBallDemo" target="_blank" rel="noopener">GitHub完整代码</a></p>
 <p><a href="http://www.viseator.com/2017/03/26/android_property_animation_1/">上篇博客</a>简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对<code>Animator</code>的几个回调方法进行讲解。</p>
 <p>目标是自定义一个<code>View</code>，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：</p>
-<p><img src="/images/android_animator.gif" alt=""></p>
+<p><img src="/images/android_animator.gif" alt></p>
 <a id="more"></a>
 <h2 id="创建自定义View"><a href="#创建自定义View" class="headerlink" title="创建自定义View"></a>创建自定义View</h2><p>首先我们要创建一个自定义<code>View</code>，这里我就采用继承<code>LinearLayout</code>的方式来创建这个<code>View</code>，但要注意<code>LinearLayout</code>默认是不绘制自身的，需要在<code>onDraw()</code>方法之前适当的时候调用<code>setWillNotDraw(false);</code>令其进行绘制。</p>
 <p>在继承<code>LinearLayout</code>的同时我们要实现全部三个构造方法，否则xml文件的预览解析会出现问题：</p>
@@ -2637,7 +2637,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>到这里，我们已经可以看到点击屏幕后小球下落到底部并停止的效果。</p>
 <h3 id="回弹效果实现"><a href="#回弹效果实现" class="headerlink" title="回弹效果实现"></a>回弹效果实现</h3><p>我们之前已经为<code>animator</code>设置了无限重复，并且模式为重新开始，那么要做到回弹的效果，就要在小球落到底边（动画完成）之后，为小球设置新的初始值与最终值，让小球从最低点回到落下时一半的高度。高度数据我们在<code>onClick()</code>中的第4行（上面代码）已经初始化为了相对于画布的高度，之后再使用时只需把它除2就可以表示圆心距底边的高度了。</p>
 <p><code>Animator.AnimatorListener</code>为我们提供了一系列方法用于监听<code>animator</code>状态的变化（而不是数值）：</p>
-<p><img src="/images/AnimatorListener.jpg" alt=""></p>
+<p><img src="/images/AnimatorListener.jpg" alt></p>
 <p>（除金色为Android 8新增外）依次为动画取消，动画结束，动画开始重复，动画开始。</p>
 <p>这里我们就需要在<code>onAnimationReapt()</code>回调中为动画设置新的初值与结束数值：</p>
 <figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationRepeat</span><span class="params">(Animator animation)</span> </span>&#123;</span><br><span class="line">    ValueAnimator vAnimation = (ValueAnimator) animation;</span><br><span class="line">    <span class="keyword">if</span> (isDown) &#123;</span><br><span class="line">        animationHeight = (<span class="keyword">int</span>) (animationHeight * <span class="number">0.5</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    isDown = !isDown;</span><br><span class="line">    <span class="keyword">if</span> (isDown) &#123;</span><br><span class="line">        vAnimation.setIntValues(canvasHeight - animationHeight, canvasHeight);</span><br><span class="line">        vAnimation.setInterpolator(<span class="keyword">new</span> AccelerateInterpolator());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        vAnimation.setIntValues(canvasHeight, canvasHeight - animationHeight);</span><br><span class="line">        vAnimation.setInterpolator(<span class="keyword">new</span> DecelerateInterpolator());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -3292,13 +3292,13 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p>最后用<code>Imgcodecs.imwrite</code>将<code>Mat</code>写入文件就可以看到最终的效果了，在测试的时候尤其有用。</p>
 <p><img src="/images/redLines1.jpg" alt="redlines1"></p>
 <p>也可以把<code>blockImages</code>中的图输出出来看结果，因为做的时候没存档，所以只能用之后的图来说明一下了：</p>
-<p><img src="/images/rows1.jpg" alt=""><img src="/images/rows2.jpg" alt=""></p>
+<p><img src="/images/rows1.jpg" alt><img src="/images/rows2.jpg" alt></p>
 <p>请忽略图中的红线，为之后的步骤绘制出来的，左右不完整是因为我设置了百分之二十的左右的<code>PADDING</code>，为了方便后面的找线与切割。</p>
 <p>当然在找直线的过程中也可以把找到的图片打印出来感觉一下效果，下面分别是调试前出的图和最终参数调试后出来的图：</p>
 <p>调试前：</p>
-<p><img src="/images/blackLines1.jpg" alt=""></p>
+<p><img src="/images/blackLines1.jpg" alt></p>
 <p>调试后：</p>
-<p><img src="/images/blackLines2.jpg" alt=""></p>
+<p><img src="/images/blackLines2.jpg" alt></p>
 ]]></content>
       <categories>
         <category>Java</category>
@@ -3320,7 +3320,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>首先介绍一下openCV提供的直线检测算法：霍夫变换。<br><a id="more"></a></p>
 <p>霍夫变换是图像处理中一个著名的检测算法，用于对二值图片中特定的几何形状的检测，直线检测只是其中比较常见的一种用法。从<a href="http://blog.csdn.net/holybin/article/details/20214169" target="_blank" rel="noopener">holybin的专栏</a>中复制一段介绍基本理论的内容：</p>
 <blockquote>
-<p>Hough直线检测的基本理论是二值图像中的任何点都可能是一些候选直线集合的一部分，所选的参数方式是每一行代表极坐标中的一个点，并且隐含的直线是通过象征点的，垂直于原点到此点的半径，即：检测的过程可以看成从图像中的一个个像素点出发，寻找每个点成为直线一部分的可能，再把这条线上可能的点连起来形成直线。在实际检测中，当一条线出现凹陷或是弯曲度时，也会检测出直线，只是不是一条完整长度直线，而是断断续续重叠相近的很多直线。&gt;<br>而对于图像中的一条直线而言，利用直角坐标系，可以表示为：<img src="http://hi.csdn.net/attachment/201109/25/0_1316925577jVvv.gif" alt="">的形式。那么，该直线上任意一点（x,y）变换到k-b参数空间将变成一个“点”。也就是说，将图像空间中所有的非零像素转换到k-b参数空间，那么它们将聚焦在一个点上。如此一来，参数空间中的一个局部峰值点就很有可能对应着原图像空间中的一条直线。不过，由于直线的斜率可能为无穷大，或者无穷小，那么，在k-b参数空间就不便于对直线进行刻画和描述。所以，研究人员提出采用极坐标参数空间进行直线检测。在极坐标系中，直线可以表述为以下形式：<img src="http://hi.csdn.net/attachment/201109/25/0_1316925607206o.gif" alt="">&gt;<img src="http://img.blog.csdn.net/20140301150643531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaG9seWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt=""></p>
+<p>Hough直线检测的基本理论是二值图像中的任何点都可能是一些候选直线集合的一部分，所选的参数方式是每一行代表极坐标中的一个点，并且隐含的直线是通过象征点的，垂直于原点到此点的半径，即：检测的过程可以看成从图像中的一个个像素点出发，寻找每个点成为直线一部分的可能，再把这条线上可能的点连起来形成直线。在实际检测中，当一条线出现凹陷或是弯曲度时，也会检测出直线，只是不是一条完整长度直线，而是断断续续重叠相近的很多直线。&gt;<br>而对于图像中的一条直线而言，利用直角坐标系，可以表示为：<img src="http://hi.csdn.net/attachment/201109/25/0_1316925577jVvv.gif" alt>的形式。那么，该直线上任意一点（x,y）变换到k-b参数空间将变成一个“点”。也就是说，将图像空间中所有的非零像素转换到k-b参数空间，那么它们将聚焦在一个点上。如此一来，参数空间中的一个局部峰值点就很有可能对应着原图像空间中的一条直线。不过，由于直线的斜率可能为无穷大，或者无穷小，那么，在k-b参数空间就不便于对直线进行刻画和描述。所以，研究人员提出采用极坐标参数空间进行直线检测。在极坐标系中，直线可以表述为以下形式：<img src="http://hi.csdn.net/attachment/201109/25/0_1316925607206o.gif" alt>&gt;<img src="http://img.blog.csdn.net/20140301150643531?watermark/2/text/aHR0cDovL2Jsb2cuY3Nkbi5uZXQvaG9seWJpbg==/font/5a6L5L2T/fontsize/400/fill/I0JBQkFCMA==/dissolve/70/gravity/SouthEast" alt></p>
 </blockquote>
 <p>更为详细的分析可以看<a href="http://blog.csdn.net/poem_qianmo/article/details/26977557" target="_blank" rel="noopener">浅墨的博客</a></p>
 <p>如果不能理解也没有关系，在<code>openCV</code>中已经为我们封装成了两个函数<code>HoughLines( )</code>与<code>HoughLinesP( )</code>，他们之间的区别在于算法的不同，而效果的差别不大，但<code>HoughLinesP</code>可以减少计算量，所以在这里我们采用了<code>HoughLinesP</code>来进行。<br><figure class="highlight java"><table><tr><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">HoughLinesP</span><span class="params">(Mat image,Mat lines,<span class="keyword">double</span> rho,<span class="keyword">double</span> theta,<span class="keyword">int</span> threshold,<span class="keyword">double</span> minLineLength,<span class="keyword">double</span> maxLineGap)</span></span></span><br></pre></td></tr></table></figure></p>

@@ -379,7 +379,7 @@
 </li>
 <li>强<code>Hybrid</code>应用<ul>
 <li><code>​Native</code>​控件与​<code>web</code>​频繁交互</li>
-<li><code>​Native</code>​页面/组件利用​<code>JSBridge</code>​与后端同步数据，简化后端工作量（不需要维护两套通信接口），但过度依赖于<code>​WebView​</code><br><img src="/images/jsbridge_0.png" alt=""></li>
+<li><code>​Native</code>​页面/组件利用​<code>JSBridge</code>​与后端同步数据，简化后端工作量（不需要维护两套通信接口），但过度依赖于<code>​WebView​</code><br><img src="/images/jsbridge_0.png" alt></li>
 </ul>
 </li>
 </ul>
@@ -395,7 +395,7 @@
 </li>
 </ul>
 <p>我们只需要构建​<code>javascript:</code>​开头形式的代码字符串传入执行就可以了，以上两个方法都是直接返回的。</p>
-<h3 id="js调用Native"><a href="#js调用Native" class="headerlink" title="js调用Native"></a>js调用Native</h3><p>实现方式比较多样，先上一张图：<br><img src="/images/jsbridge_1.png" alt=""></p>
+<h3 id="js调用Native"><a href="#js调用Native" class="headerlink" title="js调用Native"></a>js调用Native</h3><p>实现方式比较多样，先上一张图：<br><img src="/images/jsbridge_1.png" alt></p>
 <h4 id="shouldOverrideUrlLoading拦截特定schema"><a href="#shouldOverrideUrlLoading拦截特定schema" class="headerlink" title="shouldOverrideUrlLoading拦截特定schema"></a>shouldOverrideUrlLoading拦截特定schema</h4><p><code>​WebView</code>​提供了<code>​shouldOverrideUrlLoading</code>​方法允许我们拦截<code>​web</code>​页面加载的<code>​url</code>​，我们可以利用这个方法采用加载伪协议的方式进行通信：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">CustomWebViewClient</span> <span class="keyword">extends</span> <span class="title">WebViewClient</span> </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">shouldOverrideUrlLoading</span><span class="params">(WebView view, String url)</span> </span>&#123;</span><br><span class="line">      ......</span><br><span class="line">       <span class="comment">// 截取url并操作</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">      &#125;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">super</span>.shouldOverrideUrlLoading(view, url);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>伪协议形式根据业务不同复杂度也不同，后面的工作主要就是围绕这个<code>scheme</code>字符串解析/生成。</p>
@@ -446,14 +446,14 @@
 </tbody>
 </table>
 <p><code>​shouldOverrideUrlLoading</code>​方式由于采用队列压缩消息，耗时数据与实际业务中数据收发频率相关，暂不测试，可以认为耗时显著高于其他几种。</p>
-<h4 id="如何选择"><a href="#如何选择" class="headerlink" title="如何选择"></a>如何选择</h4><p><img src="/images/jsbridge_1.png" alt=""><br>从编码角度上看，​<code>addJavascriptInterface()</code>​方法实现是最为简洁明了的，同时上表中的速度一栏，在实际测试中发现​<code>addJavascriptInterface()</code>​方法耗时比<code>​onJsPrompt</code>​要少。</p>
+<h4 id="如何选择"><a href="#如何选择" class="headerlink" title="如何选择"></a>如何选择</h4><p><img src="/images/jsbridge_1.png" alt><br>从编码角度上看，​<code>addJavascriptInterface()</code>​方法实现是最为简洁明了的，同时上表中的速度一栏，在实际测试中发现​<code>addJavascriptInterface()</code>​方法耗时比<code>​onJsPrompt</code>​要少。</p>
 <p><code>​console.log()</code>​在​10ms​延迟测试中由于自身不阻塞的特性，耗时较短，但在实际处理中，会在​<code>addJavascriptInterface()</code>​中另开线程去异步处理消息，延迟时间也非常短。</p>
 <p>综上，使用​<code>addJavascriptInterface</code>​作为<code>​js</code>​向<code>​Native</code>​传递数据的通道是较为合理的选择。如果实在对耗时要求高，可以考虑采用​<code>console.log()</code>​的方式。</p>
 <h2 id="JSBridge上层实现"><a href="#JSBridge上层实现" class="headerlink" title="JSBridge上层实现"></a>JSBridge上层实现</h2><p>有了上述的双端通信的基础通道，我们就可以基于此去构建一套易用的方法封装。</p>
 <h3 id="消息格式"><a href="#消息格式" class="headerlink" title="消息格式"></a>消息格式</h3><p>为了一定程度上兼容​<code>iOS</code>​端的<code>​JSBridge</code>​，我们双端都采用注册​<code>Handler</code>​，以<code>​Handler</code>​名作为方法索引，再使用​<code>json</code>​作为参数数据的序列化/反序列化格式。<br>下一步解决的问题是如何回调调用方的<code>​callback</code>​，我们期望异步调用在完成时被调用方通过回调​<code>callback</code>​方法来返回数据。这里采用注册​<code>Handler</code>​的思路，在调用方进行调用时，为​<code>callback</code>​方法生成一个​<code>callbackId</code>​作为<code>​Key</code>​来保存这个​<code>callback</code>​方法，被调用方完成处理之后，在返回的消息中一并返回<code>​callbackId</code>​（这时它变为了​<code>responseId</code>​），调用方拿到<code>​callbackId</code>​找到对应方法进行回调。</p>
 <p>依此，我们制定的消息格式如下：<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    <span class="attr">"handlerName"</span>: <span class="string">"NameOfHandler"</span>,</span><br><span class="line">    "data": "json data", // 传送给接收方的数据</span><br><span class="line">    "callbackId": "", // 接收方回调调用方的方法id</span><br><span class="line">    "responseId": "", // 调用方被回调时收到的方法id，即为发送时的callbackId参数</span><br><span class="line">    "responseData": "json data" // 接收方返回的数据</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>通信过程可以由下图表示：</p>
-<p><img src="/images/jsbridge_2.png" alt=""></p>
+<p><img src="/images/jsbridge_2.png" alt></p>
 <p>为了兼容​<code>schema</code>​格式，在消息体的基础上添加<code>​schema</code>​头部，组成最终的消息协议：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">CUSTOM_PROTOCOL_SCHEME + &apos;://data/message/&apos; + messageQueueString</span><br></pre></td></tr></table></figure></p>
 <p>​<code>messageQueueString</code>​为​<code>json</code>​数组，一个​<code>json</code>​元素为一条消息。</p>
 <h3 id="双端通信封装"><a href="#双端通信封装" class="headerlink" title="双端通信封装"></a>双端通信封装</h3><p>当<code>​Native</code>​的<code>​WebView</code>​加载页面到80%以上时，会不断尝试将本地的一个<code>bridge.js</code>文件注入到​<code>WebView</code>​中，不断尝试是为了解决在弱网状况下一次注入可能失败的问题，<code>js</code>代码保证初始化不会重复进行，后续这个文件的代码可以放在前端加载。<code>bridge.js</code>负责初始化<code>​LkWebViewJavascriptBridge</code>​类，封装了一些通信的方法和数据对象。</p>
@@ -511,6 +511,29 @@
     
     
         
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
       
         
 

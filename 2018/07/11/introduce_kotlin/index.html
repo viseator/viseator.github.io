@@ -371,7 +371,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><img src="/images/introduce_kotlin1.png" alt=""></p>
+        <p><img src="/images/introduce_kotlin1.png" alt></p>
 <h2 id="Backgroud-Target"><a href="#Backgroud-Target" class="headerlink" title="Backgroud/Target"></a>Backgroud/Target</h2><p>由Jetbrains在圣彼得堡的团队开发，得名于附近的一个Kotlin的小岛。</p>
 <p>Jetbrains有多年的Java平台开发经验，他们认为Java编程语言有一定的局限性，而且由于需要向后兼容，它们很难得到解决。因此，他们创建了Kotlin项目，主要目标包括：</p>
 <ul>
@@ -417,8 +417,8 @@
 <h3 id="类和对象"><a href="#类和对象" class="headerlink" title="类和对象"></a>类和对象</h3><p>引入属性的概念，隐式的<code>getter</code>与<code>setter</code>：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Test</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> a = <span class="number">0</span> <span class="comment">// has setter and getter</span></span><br><span class="line">    <span class="keyword">val</span> b = <span class="number">1</span> <span class="comment">// just has getter</span></span><br><span class="line">    <span class="keyword">private</span> c = <span class="number">2</span> <span class="comment">// no setter and getter</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">val</span> test = Test()</span><br><span class="line">test.a = test.b <span class="comment">// test.setA(test.getB())</span></span><br></pre></td></tr></table></figure></p>
 <p>再也不用写<code>setter/getter</code>逻辑了：<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> stringRepresentation: String</span><br><span class="line">    <span class="keyword">get</span>() = <span class="keyword">this</span>.toString()</span><br><span class="line">    <span class="keyword">set</span>(value) &#123;</span><br><span class="line">        setDataFromString(value)</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 相当于</span></span><br><span class="line">    </span><br><span class="line"><span class="keyword">public</span> String getStringRepresentation() &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">this</span>.toString();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> void setStringRepresentation(String value) &#123;</span><br><span class="line">    setDataFromString(value)  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>java中已有的<code>getter/setter</code>会被“转换”成kotlin属性的形式</p>
-<p><img src="/images/introduce_kotlin2.png" alt=""></p>
-<h3 id="Null安全"><a href="#Null安全" class="headerlink" title="Null安全"></a>Null安全</h3><p><img src="/images/introduce_kotlin3.png" alt=""></p>
+<p><img src="/images/introduce_kotlin2.png" alt></p>
+<h3 id="Null安全"><a href="#Null安全" class="headerlink" title="Null安全"></a>Null安全</h3><p><img src="/images/introduce_kotlin3.png" alt></p>
 <p>图灵奖得主托尼·霍尔把<code>Null</code>这个设计称为十亿美元错误：“它导致了数不清的错误、漏洞和系统崩溃，可能在之后 40 年中造成了十亿美元的损失”</p>
 <p>Java中，引入了<code>@NonNull</code>和<code>@Nullable</code>注解辅助进行静态检查，有局限性。</p>
 <p>Java8引入<code>Optional&lt;&gt;</code>来解决这个问题，写起来比较恶心，难以推广。</p>
@@ -532,7 +532,7 @@
 <p>可以将逻辑划分清楚，直观，避免判空打断思路。<br><figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">fun</span> <span class="title">getMessages</span><span class="params">(context: <span class="type">Context</span>, cursor: <span class="type">Int</span>, direction: <span class="type">Int</span>)</span></span>: ModelResult&lt;MessageResponse&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> UrlBuilder(LOAD_NOTIFY)</span><br><span class="line">            .apply &#123;</span><br><span class="line">                addParam(<span class="string">"cursor"</span>, cursor)</span><br><span class="line">                addParam(<span class="string">"direction"</span>, direction)</span><br><span class="line">            &#125;.let &#123;</span><br><span class="line">                queryDataFromServer(it.build())</span><br><span class="line">            &#125;?.let &#123;</span><br><span class="line">                <span class="keyword">val</span> statusCode = it.optInt(<span class="string">"status_code"</span>, <span class="number">-1</span>)</span><br><span class="line">                <span class="keyword">val</span> statusMessage = it.optString(<span class="string">"status_message"</span>)</span><br><span class="line">                <span class="keyword">if</span> (statusCode == <span class="number">0</span>) &#123;</span><br><span class="line">                    MessageParser.parseMessageList(it.optString(<span class="string">"data"</span>))</span><br><span class="line">                            ?.let &#123;</span><br><span class="line">                                ModelResult(<span class="literal">true</span>, statusMessage, it)</span><br><span class="line">                            &#125;</span><br><span class="line">                            ?: ModelResult&lt;MessageResponse&gt;()</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            ?: ModelResult&lt;MessageResponse&gt;())</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>同样是划分逻辑，更加清晰？（需要适应）</p>
 <p>附图一张：</p>
-<p><img src="/images/introduce_kotlin4.jpg" alt=""></p>
+<p><img src="/images/introduce_kotlin4.jpg" alt></p>
 <blockquote>
 <p><a href="https://medium.com/@elye.project/using-kotlin-takeif-or-takeunless-c9eeb7099c22" target="_blank" rel="noopener">https://medium.com/@elye.project/using-kotlin-takeif-or-takeunless-c9eeb7099c22</a></p>
 </blockquote>
@@ -601,10 +601,10 @@
 <h3 id="包大小"><a href="#包大小" class="headerlink" title="包大小"></a>包大小</h3><p>标准库大小<code>100k</code>左右。</p>
 <p>新建标准工程（不带Kotlin支持），开启混淆，打release包。</p>
 <p>将这个工程文件转为Kotlin实现，引入Kotlin支持，打release包，对比大小：</p>
-<p><img src="/images/introduce_kotlin5.png" alt=""></p>
+<p><img src="/images/introduce_kotlin5.png" alt></p>
 <p>增加了约<code>109k</code></p>
 <p>将某应用一个module转换为Kotlin实现（直接使用AS的工具转换），对比编译生成的所有<code>class</code>文件大小：</p>
-<p><img src="/images/introduce_kotlin6.png" alt=""></p>
+<p><img src="/images/introduce_kotlin6.png" alt></p>
 <p>增加了约2%的体积。</p>
 <blockquote>
 <p><a href="https://discuss.kotlinlang.org/t/kotlin-generated-class-file-out-of-kt-is-bigger-than-java-file/1520/4" target="_blank" rel="noopener">https://discuss.kotlinlang.org/t/kotlin-generated-class-file-out-of-kt-is-bigger-than-java-file/1520/4</a></p>
@@ -620,6 +620,29 @@
     
     
         
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
       
         
 

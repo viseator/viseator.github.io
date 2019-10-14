@@ -383,7 +383,7 @@
 <a id="more"></a>
 <h2 id="引入"><a href="#引入" class="headerlink" title="引入"></a>引入</h2><p><code>Android Studio</code>的<code>3.0</code>版本中引入了一个强大的性能分析工具：<code>Android Profiler</code>，对于它的详细介绍可以看<a href="https://developer.android.com/studio/profile/android-profiler.html" target="_blank" rel="noopener">官方的文档</a>。</p>
 <p>我们对一个简单的<code>HelloWorld</code>应用进行方法分析：</p>
-<p><img src="/images/android_event_1.png" alt=""></p>
+<p><img src="/images/android_event_1.png" alt></p>
 <p>可以看到，对于这样一个没有任务需要处理的程序，这段时间中它一直执行的是<code>nativePollOnce()</code>方法，对于这个，<code>stackoverflow</code>上就有人提了<a href="https://stackoverflow.com/questions/38818642/android-what-is-message-queue-native-poll-once-in-android" target="_blank" rel="noopener">一个问题</a>。这个方法其实就是消息队列在队列中没有消息时处于等待状态执行的一个<code>Native</code>方法。</p>
 <p>我们的分析就从消息队列(MessageQueue)与负责执行循环过程的<code>Looper</code>对象的创建与开始运行开始。</p>
 <h2 id="Looper与MessageQueue的创建"><a href="#Looper与MessageQueue的创建" class="headerlink" title="Looper与MessageQueue的创建"></a>Looper与MessageQueue的创建</h2><p>当一个<code>Activity</code>被创建时，<code>ActivityThread</code>的<code>main()</code>方法会被执行（关于<code>Activity</code>创建过程的内容，请参阅启动分析相关的文章）：</p>
@@ -420,7 +420,7 @@
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> jlong <span class="title">android_os_MessageQueue_nativeInit</span><span class="params">(JNIEnv* env, jclass clazz)</span> </span>&#123;</span><br><span class="line">    NativeMessageQueue* nativeMessageQueue = <span class="keyword">new</span> NativeMessageQueue();</span><br><span class="line">    <span class="keyword">if</span> (!nativeMessageQueue) &#123;</span><br><span class="line">        jniThrowRuntimeException(env, <span class="string">"Unable to allocate native queue"</span>);</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    nativeMessageQueue-&gt;incStrong(env);</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">reinterpret_cast</span>&lt;jlong&gt;(nativeMessageQueue);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>第9行就将创建的<code>NativeMessageQueue</code>对象的地址转换为一个<code>Java long</code>类型返回，之后调用<code>Native</code>方法的时候就会传入这个参数来找到这个<code>MessageQueue</code>。</p>
 <p>用一张图来梳理这个过程：</p>
-<p><img src="/images/android_event_2.png" alt=""></p>
+<p><img src="/images/android_event_2.png" alt></p>
 <h2 id="消息循环"><a href="#消息循环" class="headerlink" title="消息循环"></a>消息循环</h2><h3 id="loop"><a href="#loop" class="headerlink" title="loop()"></a>loop()</h3><p>初始化过程结束后，我们回到<code>ActivityThread</code>的<code>main()</code>函数：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Looper.loop();</span><br></pre></td></tr></table></figure>
 <p>调用了<code>Looper</code>的<code>loop()</code>函数开始消息循环。</p>
@@ -472,6 +472,29 @@
     
     
         
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
       
         
 

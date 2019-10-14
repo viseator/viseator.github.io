@@ -378,7 +378,7 @@
         <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p><a href="https://github.com/viseator/AndroidAnimatorBounceBallDemo" target="_blank" rel="noopener">GitHub完整代码</a></p>
 <p><a href="http://www.viseator.com/2017/03/26/android_property_animation_1/">上篇博客</a>简单介绍了属性动画的原理，这篇博客将会以一个简单的实例来运用上之前讲的内容，并对<code>Animator</code>的几个回调方法进行讲解。</p>
 <p>目标是自定义一个<code>View</code>，在画布上绘制一个小球，点击屏幕后小球从顶部自由下落，落到底边后反弹，反弹损失一半的能量，也就是说小球只能上升到下落时一半的高度，再重复这个过程直到退出程序。如图：</p>
-<p><img src="/images/android_animator.gif" alt=""></p>
+<p><img src="/images/android_animator.gif" alt></p>
 <a id="more"></a>
 <h2 id="创建自定义View"><a href="#创建自定义View" class="headerlink" title="创建自定义View"></a>创建自定义View</h2><p>首先我们要创建一个自定义<code>View</code>，这里我就采用继承<code>LinearLayout</code>的方式来创建这个<code>View</code>，但要注意<code>LinearLayout</code>默认是不绘制自身的，需要在<code>onDraw()</code>方法之前适当的时候调用<code>setWillNotDraw(false);</code>令其进行绘制。</p>
 <p>在继承<code>LinearLayout</code>的同时我们要实现全部三个构造方法，否则xml文件的预览解析会出现问题：</p>
@@ -409,7 +409,7 @@
 <p>到这里，我们已经可以看到点击屏幕后小球下落到底部并停止的效果。</p>
 <h3 id="回弹效果实现"><a href="#回弹效果实现" class="headerlink" title="回弹效果实现"></a>回弹效果实现</h3><p>我们之前已经为<code>animator</code>设置了无限重复，并且模式为重新开始，那么要做到回弹的效果，就要在小球落到底边（动画完成）之后，为小球设置新的初始值与最终值，让小球从最低点回到落下时一半的高度。高度数据我们在<code>onClick()</code>中的第4行（上面代码）已经初始化为了相对于画布的高度，之后再使用时只需把它除2就可以表示圆心距底边的高度了。</p>
 <p><code>Animator.AnimatorListener</code>为我们提供了一系列方法用于监听<code>animator</code>状态的变化（而不是数值）：</p>
-<p><img src="/images/AnimatorListener.jpg" alt=""></p>
+<p><img src="/images/AnimatorListener.jpg" alt></p>
 <p>（除金色为Android 8新增外）依次为动画取消，动画结束，动画开始重复，动画开始。</p>
 <p>这里我们就需要在<code>onAnimationReapt()</code>回调中为动画设置新的初值与结束数值：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimationRepeat</span><span class="params">(Animator animation)</span> </span>&#123;</span><br><span class="line">    ValueAnimator vAnimation = (ValueAnimator) animation;</span><br><span class="line">    <span class="keyword">if</span> (isDown) &#123;</span><br><span class="line">        animationHeight = (<span class="keyword">int</span>) (animationHeight * <span class="number">0.5</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    isDown = !isDown;</span><br><span class="line">    <span class="keyword">if</span> (isDown) &#123;</span><br><span class="line">        vAnimation.setIntValues(canvasHeight - animationHeight, canvasHeight);</span><br><span class="line">        vAnimation.setInterpolator(<span class="keyword">new</span> AccelerateInterpolator());</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        vAnimation.setIntValues(canvasHeight, canvasHeight - animationHeight);</span><br><span class="line">        vAnimation.setInterpolator(<span class="keyword">new</span> DecelerateInterpolator());</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -429,6 +429,29 @@
     
     
         
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
       
         
 

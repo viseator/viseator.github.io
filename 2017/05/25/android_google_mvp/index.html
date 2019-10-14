@@ -390,7 +390,7 @@
 <p>需要读者参照源码查看本文。</p>
 <p>我将这个todo应用的框架提炼出来（同时也意味着丢失了很多的实现细节，但可以将架构看得更加清晰），制作了一张伪<code>UML</code>图（为了简化，没有遵循<code>UML</code>的规范），下面我们参照着表中的内容进行分析：</p>
 <a id="more"></a>
-<p><img src="/images/android_mvp_uml.jpg" alt=""></p>
+<p><img src="/images/android_mvp_uml.jpg" alt></p>
 <h2 id="BaseView与BasePresenter"><a href="#BaseView与BasePresenter" class="headerlink" title="BaseView与BasePresenter"></a>BaseView与BasePresenter</h2><p>可以看到它们是独立于包外的两个基础接口，之后的所有<code>View</code>与<code>Presenter</code>接口都将继承它们，所以应该将一些通用的方法写在这两个<code>Base</code>接口中。</p>
 <h2 id="tasks包"><a href="#tasks包" class="headerlink" title="tasks包"></a>tasks包</h2><p>整个app中<code>tasks</code>、<code>taskdetail</code>、<code>statistics</code>三个包对应着的就是三个<code>Activity</code>，可以看到每一个包中包含了对应的<code>Activity</code>、<code>View</code> 、<code>Presenter</code>与<code>Contract</code>类和其他工具组件，通过这样的方式构成了应用的一个组成单元（每一个<code>Activity</code>与其对应的<code>View</code>和实现逻辑的<code>Presenter</code>）。</p>
 <p>图中我只展现了<code>tasks</code>这一个包，其他的包内部的结构也是一样的。</p>
@@ -416,6 +416,29 @@
     
     
         
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
       
         
 

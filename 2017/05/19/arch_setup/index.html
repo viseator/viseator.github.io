@@ -433,7 +433,7 @@
 <p>接下来我们需要用专门的<code>visudo</code>命令来编辑<code>sudo</code>的配置文件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">visudo</span><br></pre></td></tr></table></figure>
 <p>实际上就是<code>vim</code>的操作，使用它是为了对编辑后的文件进行检查防止格式的错误。</p>
-<p><img src="/images/arch20.jpg" alt=""></p>
+<p><img src="/images/arch20.jpg" alt></p>
 <p>找到</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># %wheel ALL=(ALL)ALL</span></span><br></pre></td></tr></table></figure>
 <p>这行，去掉之前的<code>#</code>注释符，保存并退出就可以了。</p>
@@ -443,7 +443,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">reboot</span><br></pre></td></tr></table></figure>
 <p>来重启你的电脑。</p>
 <p>重启以后输入你<strong>刚创建的用户名与密码</strong>来登录。注意登录后要重新进行联网操作。</p>
-<h2 id="图形界面的安装"><a href="#图形界面的安装" class="headerlink" title="图形界面的安装"></a>图形界面的安装</h2><h3 id="显卡驱动的安装"><a href="#显卡驱动的安装" class="headerlink" title="显卡驱动的安装"></a>显卡驱动的安装</h3><p><img src="/images/arch21.png" alt=""></p>
+<h2 id="图形界面的安装"><a href="#图形界面的安装" class="headerlink" title="图形界面的安装"></a>图形界面的安装</h2><h3 id="显卡驱动的安装"><a href="#显卡驱动的安装" class="headerlink" title="显卡驱动的安装"></a>显卡驱动的安装</h3><p><img src="/images/arch21.png" alt></p>
 <p>参照这个表格，安装相应的包，比如你是<code>intel</code>的集成显卡（绝大多数人的情况），执行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo pacman -S xf86-video-intel</span><br></pre></td></tr></table></figure>
 <p>提示：<code>Nvidia</code>的独显驱动如非必要，建议只装集成显卡的驱动（省电，如果同时装也会默认使用集成显卡），不容易出现冲突问题。相反，如果集成显卡驱动有问题无法装上，可以装独显驱动，具体的版本请到下面的链接查询：</p>
@@ -493,6 +493,29 @@
     
     
         
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
       
         
 

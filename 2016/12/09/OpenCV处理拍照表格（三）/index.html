@@ -405,13 +405,13 @@
 <h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p>最后用<code>Imgcodecs.imwrite</code>将<code>Mat</code>写入文件就可以看到最终的效果了，在测试的时候尤其有用。</p>
 <p><img src="/images/redLines1.jpg" alt="redlines1"></p>
 <p>也可以把<code>blockImages</code>中的图输出出来看结果，因为做的时候没存档，所以只能用之后的图来说明一下了：</p>
-<p><img src="/images/rows1.jpg" alt=""><img src="/images/rows2.jpg" alt=""></p>
+<p><img src="/images/rows1.jpg" alt><img src="/images/rows2.jpg" alt></p>
 <p>请忽略图中的红线，为之后的步骤绘制出来的，左右不完整是因为我设置了百分之二十的左右的<code>PADDING</code>，为了方便后面的找线与切割。</p>
 <p>当然在找直线的过程中也可以把找到的图片打印出来感觉一下效果，下面分别是调试前出的图和最终参数调试后出来的图：</p>
 <p>调试前：</p>
-<p><img src="/images/blackLines1.jpg" alt=""></p>
+<p><img src="/images/blackLines1.jpg" alt></p>
 <p>调试后：</p>
-<p><img src="/images/blackLines2.jpg" alt=""></p>
+<p><img src="/images/blackLines2.jpg" alt></p>
 
     </div>
 
@@ -419,6 +419,29 @@
     
     
         
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
       
         
 

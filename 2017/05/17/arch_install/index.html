@@ -437,10 +437,10 @@
 <li><p>在<code>windows</code>下空出一块分区来安装：利用<code>windows</code>自带的磁盘管理工具就可以：</p>
 <ol>
 <li><p>右击<code>windows</code>图标，在弹出菜单中选择磁盘管理（其他版本的<code>windows</code>请自行找到打开磁盘管理的方式）：</p>
-<p><img src="/images/arch01.jpeg" alt=""></p>
+<p><img src="/images/arch01.jpeg" alt></p>
 </li>
 <li><p>右击想要删除的分区，选择删除卷（注意这步之后这个分区的所有数据将会丢失）：</p>
-<p><img src="/images/arch02.jpeg" alt=""></p>
+<p><img src="/images/arch02.jpeg" alt></p>
 </li>
 </ol>
 </li>
@@ -461,15 +461,15 @@
 <p>一般来说现在的主板都可以不用进入BIOS而快速地切换启动顺序，只要找到相应的快捷键就可以了。</p>
 <h4 id="进入U盘下的Linux系统"><a href="#进入U盘下的Linux系统" class="headerlink" title="进入U盘下的Linux系统"></a>进入U盘下的Linux系统</h4><ol>
 <li><p>按上一步设置好启动顺序，启动之后会看到如下界面（UEFI启动方式的界面可能不同）：</p>
-<p><img src="/images/arch03.jpeg" alt=""></p>
+<p><img src="/images/arch03.jpeg" alt></p>
 <p>如果直接进入<code>windows</code>，请检查启动顺序是否设置成功，U盘是否在制作启动介质时成功写入。</p>
 <p>如果没有看到这个界面，请检查U盘是否制作成功，如果多次遇到问题可以考虑换一个U盘。</p>
 <p>选择第一个选项。</p>
 </li>
 <li><p>这时<code>Arch</code>开始加载，你将会看到屏幕显示如下内容：</p>
-<p><img src="/images/arch04.jpeg" alt=""></p>
+<p><img src="/images/arch04.jpeg" alt></p>
 <p>加载完成后你将会进入一个有命令提示符的界面：</p>
-<p><img src="/images/arch05.jpeg" alt=""></p>
+<p><img src="/images/arch05.jpeg" alt></p>
 <p>如果出现<code>FAIL</code>或是其他错误信息导致无法启动请自行搜索错误信息来获得解决方法。</p>
 <p>这就是<code>Linux</code>的终端界面了，接下来我们将通过在这个界面执行一系列命令来将<code>Arch</code>安装到我们的磁盘上。</p>
 </li>
@@ -496,7 +496,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls: cannot access <span class="string">'/sys/firmware/efi/efivars'</span>: No such file or directory</span><br></pre></td></tr></table></figure>
 <p>表明你是以<code>BIOS</code>方式引导，否则为以<code>EFI</code>方式引导。现在只需要记住这个信息，之后这两种引导类型的安装方式会略有不同（下文中涉及到不同的地方请仔细区别）。</p>
 <hr>
-<p><strong>更新：</strong><br><br>部分同学反馈这种方式并不能100%确认你就是<code>BIOS</code>方式引导的，更加保险的方法是执行<code>fdisk -l</code>查看分区表，如果<strong>你的硬盘（而不是你的U盘）</strong>的<code>Disklabel type</code>属性为<code>gpt</code>并且有一个<code>Type</code>为<code>EFI System</code>的小分区（一般为256M左右，如下图），那么你应该是<code>EFI</code>引导的。<br><br><img src="/images/arch26.png" alt=""></p>
+<p><strong>更新：</strong><br><br>部分同学反馈这种方式并不能100%确认你就是<code>BIOS</code>方式引导的，更加保险的方法是执行<code>fdisk -l</code>查看分区表，如果<strong>你的硬盘（而不是你的U盘）</strong>的<code>Disklabel type</code>属性为<code>gpt</code>并且有一个<code>Type</code>为<code>EFI System</code>的小分区（一般为256M左右，如下图），那么你应该是<code>EFI</code>引导的。<br><br><img src="/images/arch26.png" alt></p>
 <hr>
 <h4 id="联网"><a href="#联网" class="headerlink" title="联网"></a>联网</h4><p><code>arch</code>并不能离线安装，因为我们需要联网来下载需要的组件，所以我们首先要连接网络。</p>
 <ul>
@@ -506,7 +506,7 @@
 <li><p>然后执行以下命令来判断网络连接是否正常：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
 <p>如果可以看到类似下面的内容就说明连上了网络：</p>
-<p><img src="/images/arch05.jpg" alt=""></p>
+<p><img src="/images/arch05.jpg" alt></p>
 <blockquote>
 <p>  再次提示用快捷键Ctrl-C可以终止当前正在执行的命令</p>
 </blockquote>
@@ -531,7 +531,7 @@
 <h5 id="查看目前的分区情况"><a href="#查看目前的分区情况" class="headerlink" title="查看目前的分区情况"></a>查看目前的分区情况</h5><p>执行命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk <span class="_">-l</span></span><br></pre></td></tr></table></figure>
 <p>以我的电脑为例：</p>
-<p><img src="/images/arch06.jpg" alt=""></p>
+<p><img src="/images/arch06.jpg" alt></p>
 <p>可以看到我的一块238.5g的硬盘(<code>/dev/sda</code>就代表这块硬盘)，下面列出了<code>/dev/sda*</code>这三个分区，<code>/dev/sda3</code>是我存活下来的家目录，可以看到它的类型为<code>Linux</code>分区。注意看<code>Start</code>与<code>End</code>的数值，这个数值代表扇区号，可以理解成硬盘被划分成了一个个小单元，可以直观地看出来在<code>/dev/sda2</code>的<code>End</code>与<code>/dev/sda3</code>的<code>Start</code>之间空出了一大块未分配的空间，接下来我们将分配这块区域。</p>
 <hr>
 <ul>
@@ -580,8 +580,8 @@
 </li>
 </ol>
 <p>这是我的分区过程供参考：</p>
-<p><img src="/images/arch07.jpg" alt=""></p>
-<p><img src="/images/arch08.jpg" alt=""></p>
+<p><img src="/images/arch07.jpg" alt></p>
+<p><img src="/images/arch08.jpg" alt></p>
 <hr>
 <p><strong>如果你在分区这步遇到了问题</strong>，先看看自己的操作是否与上面的指引一致，如果仍然无法解决可参考<a href="https://www.cnblogs.com/freerqy/p/8502838.html" target="_blank" rel="noopener">https://www.cnblogs.com/freerqy/p/8502838.html</a>这篇文章的“建立硬盘分区”一节尝试使用<code>cfdisk</code>进行分区。</p>
 <h4 id="挂载分区"><a href="#挂载分区" class="headerlink" title="挂载分区"></a>挂载分区</h4><p>执行以下命令将根分区挂载到<code>/mnt</code>：</p>
@@ -601,7 +601,7 @@
 <blockquote>
 <p>  提示：输入路径时可以用<code>Tab</code>键补全</p>
 </blockquote>
-<p><img src="/images/arch09.jpg" alt=""></p>
+<p><img src="/images/arch09.jpg" alt></p>
 <p>找到标有<code>China</code>的镜像源，<code>normal</code>模式下按下<code>dd</code>可以剪切光标下的行，按<code>gg</code>回到文件首，按<code>P</code>（注意是大写的）将行粘贴到文件最前面的位置（优先级最高）。</p>
 <p>当然也可以直接手工输入。</p>
 <p>这里推荐使用清华、浙大源：</p>
@@ -615,7 +615,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">genfstab -L /mnt &gt;&gt; /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
 <p>由于这步比较重要，所以我们需要输出生成的文件来检查是否正确，执行以下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch10.jpg" alt=""></p>
+<p><img src="/images/arch10.jpg" alt></p>
 <p>如图，可以看到<code>/dev/sda4</code>被挂载到了根分区。</p>
 <p><code>/dev/sda3</code>是我之前存活下来的家目录被挂载到了<code>/home</code>目录（你们没有这条）。</p>
 <p><strong>如果是<code>EFI/GPT</code>引导的还应该有引导分区被挂载到<code>/boot</code>目录</strong>。</p>
@@ -627,22 +627,22 @@
 <hr>
 <h4 id="设置时区"><a href="#设置时区" class="headerlink" title="设置时区"></a>设置时区</h4><p>依次执行如下命令设置我们的时区为上海并生成相关文件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">hwclock --systohc</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch11.jpg" alt=""></p>
+<p><img src="/images/arch11.jpg" alt></p>
 <h4 id="提前安装必须软件包"><a href="#提前安装必须软件包" class="headerlink" title="提前安装必须软件包"></a>提前安装必须软件包</h4><p>因为我们现在已经<code>Chroot</code>到了新的系统中，只有一些最基本的包（组件），这时候我们就需要自己安装新的包了，下面就要介绍一下<code>ArchLinux</code>下非常强大的包管理工具<code>pacman</code>，大部分情况下，一行命令就可以搞定包与依赖的问题。</p>
 <p>安装包的命令格式为<code>pacman -S 包名</code>，<code>pacman</code>会自动检查这个包所需要的其他包（即为依赖）并一起装上。下面我们就通过<code>pacman</code>来安装一些包，这些包在之后会用上，在这里先提前装好。</p>
 <p>执行如下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S vim dialog wpa_supplicant ntfs-3g networkmanager</span><br></pre></td></tr></table></figure>
 <p>一路确认之后包就被成功装上了。</p>
-<p><img src="/images/arch12.jpg" alt=""></p>
+<p><img src="/images/arch12.jpg" alt></p>
 <p>图中只安装了<code>Vim</code>和它的依赖。</p>
 <h4 id="设置Locale"><a href="#设置Locale" class="headerlink" title="设置Locale"></a>设置Locale</h4><p>设置我们使用的语言选项，执行如下命令来编辑<code>/etc/locale.gen</code>文件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/locale.gen</span><br></pre></td></tr></table></figure>
 <p>在文件中找到<code>zh_CN.UTF-8 UTF-8</code> <code>zh_HK.UTF-8 UTF-8</code> <code>zh_TW.UTF-8 UTF-8</code> <code>en_US.UTF-8 UTF-8</code>这四行，去掉行首的#号，保存并退出。如图：</p>
-<p><img src="/images/arch13.jpg" alt=""></p>
-<p><img src="/images/arch14.jpg" alt=""></p>
+<p><img src="/images/arch13.jpg" alt></p>
+<p><img src="/images/arch14.jpg" alt></p>
 <p>然后执行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">locale-gen</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch15.jpg" alt=""></p>
+<p><img src="/images/arch15.jpg" alt></p>
 <p>打开（不存在时会创建）<code>/etc/locale.conf</code>文件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/locale.conf</span><br></pre></td></tr></table></figure>
 <p>在文件的第一行加入以下内容：</p>
@@ -656,14 +656,14 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
 <p>在文件末添加如下内容（将<code>myhostname</code>替换成你自己设定的主机名）</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1	localhost</span><br><span class="line">::1		localhost</span><br><span class="line">127.0.1.1	myhostname.localdomain	myhostname</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch16.png" alt=""></p>
+<p><img src="/images/arch16.png" alt></p>
 <p>这里我设置的是<code>viseator</code>。</p>
 <p>保存并退出。</p>
 <h4 id="设置Root密码"><a href="#设置Root密码" class="headerlink" title="设置Root密码"></a>设置Root密码</h4><p><code>Root</code>是<code>Linux</code>中具有最高权限帐户，有些敏感的操作必须通过<code>Root</code>用户进行，比如使用<code>pacman</code>，我们之前进行所有的操作也都是以<code>Root</code>用户进行的，也正是因为<code>Root</code>的权限过高，如果使用不当会造成安全问题，所以我们之后会新建一个普通用户来进行日常的操作。在这里我们需要为<code>Root</code>帐户设置一个密码：</p>
 <p>执行如下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
 <p>按提示设置并确认就可以了。</p>
-<p><img src="/images/arch17.jpg" alt=""></p>
+<p><img src="/images/arch17.jpg" alt></p>
 <hr>
 <p>或许有的人已经发现官方Wiki和一些其他教程资料中的命令是以<code>#</code>或<code>$</code>开头的，这两个符号就对应着命令行中的命令提示符，<code>#</code>代表以<code>Root</code>用户执行命令，<code>$</code>代表以普通用户执行命令，平时使用教程中的命令时应该注意这一点。</p>
 <hr>
@@ -689,13 +689,13 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p><img src="/images/arch18.jpg" alt=""></p>
+<p><img src="/images/arch18.jpg" alt></p>
 <p><strong>如果你没有看到如图所示的提示信息，请仔细检查是否正确完成上面的过程。常见问题如下：</strong></p>
 <ol>
 <li><p>如果报<code>warning failed to connect to lvmetad，falling back to device scanning.</code>错误。参照<a href="https://wiki.archlinux.org/index.php/Install_from_existing_Linux" target="_blank" rel="noopener">wiki</a>中搜索关键词<code>use_lvmetad</code>所在位置，简单的方法是编辑<code>/etc/lvm/lvm.conf</code>这个文件，找到<code>use_lvmetad = 1</code>将<code>1</code>修改为<code>0</code>，保存，重新配置grub。</p>
 </li>
 <li><p>有部分同学反馈后面安装<code>grub</code>包的时候报如下错误：</p>
-<p><img src="/images/arch25.png" alt=""></p>
+<p><img src="/images/arch25.png" alt></p>
 <p>是因为实际是<code>UEFI</code>引导的系统没有正确挂载<code>boot</code>分区。首先检查你是不是按照<code>BIOS</code>方式安装的系统，二是检查是否正确挂载<code>/mnt/boot</code>。正确配置好<code>boot</code>分区之后可以从“挂载分区”这步开始重做。</p>
 </li>
 </ol>
@@ -719,7 +719,7 @@
 <p><strong>强烈建议使用如下命令检查是否成功生成各系统的入口，如果没有正常生成会出现开机没有系统入口的情况：</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
 <p>检查接近末尾的<code>menuentry</code>部分是否有<code>windows</code>或其他系统名入口。下图例子中是<code>Arch Linux</code>入口与检测到的<code>windows10</code>入口（安装在<code>/dev/sda1</code>），具体情况可能有不同：</p>
-<p><img src="/images/arch22.jpg" alt=""></p>
+<p><img src="/images/arch22.jpg" alt></p>
 <p><strong>如果你没有看到<code>Arch Linux</code>系统入口或者该文件不存在</strong>，请先检查<code>/boot</code>目录是否正确部署<code>linux</code>内核：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /boot</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
 <p>查看是否有<code>initramfs-linux-fallback.img  initramfs-linux.img  intel-ucode.img  vmlinuz-linux</code>这几个文件，如果都没有，说明<code>linux</code>内核没有被正确部署，很有可能是<code>/boot</code>目录没有被正确挂载导致的，确认<code>/boot</code>目录无误后，可以重新部署<code>linux</code>内核：</p>
@@ -737,7 +737,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exit</span></span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
 <p>注意这个时候你可能会卡在有两行提示的地方无法正常关机，长按电源键强制关机即可，没有影响。</p>
 <p>关机后拔出U盘，启动顺序会自动以硬盘启动，如果一切顺利，那么你将会看到下面的界面：</p>
-<p><img src="/images/arch19.jpg" alt=""></p>
+<p><img src="/images/arch19.jpg" alt></p>
 <p>启动时有可能会有输出信息显示在这里，直接回车就可以了。</p>
 <p>输入<code>root</code>，再输入之前设置的密码，显示出命令提示符，恭喜你，你已经成功安装<code>ArchLinux</code>！</p>
 <h2 id="安装后配置"><a href="#安装后配置" class="headerlink" title="安装后配置"></a>安装后配置</h2><p>虽然系统安装好了，但是还没有进行基本配置和安装图形界面，所以接下来我们要进行一些必须的配置和图形界面的安装。</p>
@@ -757,6 +757,29 @@
     
     
         
+      
+        <div id="reward-container">
+  <div></div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
+        <p>微信支付</p>
+      </div>
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <p>支付宝</p>
+      </div>
+
+  </div>
+</div>
+
       
         
 
