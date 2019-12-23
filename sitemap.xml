@@ -4,14 +4,14 @@
   <url>
     <loc>https://www.viseator.com/2017/05/17/arch_install/</loc>
     
-    <lastmod>2019-10-14T03:47:31.147Z</lastmod>
+    <lastmod>2019-12-23T03:17:46.544Z</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/about/index.html</loc>
     
-    <lastmod>2019-08-16T06:13:43.009Z</lastmod>
+    <lastmod>2019-08-16T06:13:43.000Z</lastmod>
     
   </url>
   
@@ -79,7 +79,7 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/eula_text.html</loc>
+    <loc>https://www.viseator.com/googleplayprivacy/index.html</loc>
     
     <lastmod>2018-02-02T01:19:16.000Z</lastmod>
     
@@ -93,14 +93,14 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/tags/index.html</loc>
+    <loc>https://www.viseator.com/eula_text.html</loc>
     
     <lastmod>2018-02-02T01:19:16.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.viseator.com/googleplayprivacy/index.html</loc>
+    <loc>https://www.viseator.com/tags/index.html</loc>
     
     <lastmod>2018-02-02T01:19:16.000Z</lastmod>
     
@@ -114,21 +114,7 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/11/02/android_event_3/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/05/11/android_lan_messages/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/03/26/android_property_animation_1/</loc>
+    <loc>https://www.viseator.com/2017/10/24/android_event_2/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
@@ -142,14 +128,21 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/02/05/LeetCode/</loc>
+    <loc>https://www.viseator.com/2017/03/10/android_view_onMeasure/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/03/12/android_view_onDraw_canvas/</loc>
+    <loc>https://www.viseator.com/2017/03/12/android_view_onLayout/</loc>
+    
+    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/02/05/LeetCode/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
@@ -163,7 +156,7 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/09/05/mr12u_openwrt_mentohust/</loc>
+    <loc>https://www.viseator.com/2017/11/02/android_event_3/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
@@ -177,14 +170,7 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/02/14/DiffInGeneric/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/03/10/android_view_onMeasure/</loc>
+    <loc>https://www.viseator.com/2017/05/11/android_lan_messages/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
@@ -205,7 +191,49 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/03/12/android_view_onLayout/</loc>
+    <loc>https://www.viseator.com/2017/03/12/android_view_onDraw_canvas/</loc>
+    
+    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/09/05/mr12u_openwrt_mentohust/</loc>
+    
+    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/07/19/android_context/</loc>
+    
+    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2016/11/15/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
+    
+    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/02/14/DiffInGeneric/</loc>
+    
+    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/01/20/2016%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</loc>
+    
+    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/09/14/android_view_event_1/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
@@ -233,20 +261,6 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/09/14/android_view_event_1/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/01/20/2016%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
     <loc>https://www.viseator.com/2016/12/09/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%89%EF%BC%89/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
@@ -254,21 +268,7 @@
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2016/11/15/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/07/19/android_context/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/10/24/android_event_2/</loc>
+    <loc>https://www.viseator.com/2017/03/26/android_property_animation_1/</loc>
     
     <lastmod>2018-02-02T01:19:07.000Z</lastmod>
     
