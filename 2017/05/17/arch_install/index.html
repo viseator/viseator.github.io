@@ -1,28 +1,23 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-<meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=7.4.0">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#F5F5F5">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
   <meta name="msapplication-config" content="/images/browserconfig.xml">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+<link rel="stylesheet" href="/css/main.css">
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
@@ -30,7 +25,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    version: '7.4.0',
+    version: '7.5.0',
     exturl: false,
     sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":true,"show_result":true,"style":null},
@@ -60,13 +55,12 @@
 </script>
 
   <meta name="description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
-<meta name="keywords" content="Linux,Arch">
 <meta property="og:type" content="article">
 <meta property="og:title" content="以官方Wiki的方式安装ArchLinux">
 <meta property="og:url" content="https://www.viseator.com/2017/05/17/arch_install/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.viseator.com/images/arch01.jpeg">
 <meta property="og:image" content="https://www.viseator.com/images/arch02.jpeg">
 <meta property="og:image" content="https://www.viseator.com/images/arch03.jpeg">
@@ -90,12 +84,15 @@
 <meta property="og:image" content="https://www.viseator.com/images/arch25.png">
 <meta property="og:image" content="https://www.viseator.com/images/arch22.jpg">
 <meta property="og:image" content="https://www.viseator.com/images/arch19.jpg">
-<meta property="og:updated_time" content="2019-12-23T03:17:46.544Z">
+<meta property="article:published_time" content="2017-05-17T15:26:29.000Z">
+<meta property="article:modified_time" content="2019-12-23T03:17:46.544Z">
+<meta property="article:author" content="viseator(吴迪)">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Arch">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="以官方Wiki的方式安装ArchLinux">
-<meta name="twitter:description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
 <meta name="twitter:image" content="https://www.viseator.com/images/arch01.jpeg">
-  <link rel="canonical" href="https://www.viseator.com/2017/05/17/arch_install/">
+
+<link rel="canonical" href="https://www.viseator.com/2017/05/17/arch_install/">
 
 
 <script id="page-configurations">
@@ -111,16 +108,16 @@
 
   <title>以官方Wiki的方式安装ArchLinux | viseator's blog</title>
   
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
-  <script>
-    var host = window.location.hostname;
-    if (host !== "localhost" || !true) {
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-93455229-1');
-    }
-  </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-93455229-1');
+      }
+    </script>
 
 
   <script>
@@ -132,8 +129,6 @@
       s.parentNode.insertBefore(hm, s);
     })();
   </script>
-
-
 
 
 
@@ -150,7 +145,6 @@
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -164,11 +158,11 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
 
@@ -184,11 +178,11 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 </div>
 
@@ -196,77 +190,46 @@
 <nav class="site-nav">
   
   <ul id="menu" class="menu">
-      
-      
-      
-        
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section">首页</a>
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories" rel="section">分类</a>
+    <a href="/categories" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section">归档</a>
+    <a href="/archives" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags" rel="section">标签</a>
+    <a href="/tags" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-resource">
 
-    <a href="/2017/03/25/resource_general" rel="section">资源</a>
+    <a href="/2017/03/25/resource_general" rel="section"><i class="fa fa-fw fa-star"></i>资源</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-arch">
 
-    <a href="/categories/Linux/" rel="section">Arch安装</a>
+    <a href="/categories/Linux/" rel="section"><i class="fa fa-fw fa-linux"></i>Arch安装</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-about">
 
-    <a href="/about" rel="section">关于</a>
+    <a href="/about" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
 
   </li>
       <li class="menu-item menu-item-search">
-        <a href="javascript:;" class="popup-trigger">
-        搜索</a>
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
       </li>
-    
   </ul>
-
-    
 
 </nav>
   <div class="site-search">
@@ -301,33 +264,33 @@
   </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content">
+          
+
+          <div class="content">
             
 
-  <div id="posts" class="posts-expand">
-      <article itemscope itemtype="http://schema.org/Article">
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block post">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/05/17/arch_install/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="viseator(吴迪)">
       <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">以官方Wiki的方式安装ArchLinux
-
-          
+        <h2 class="post-title" itemprop="name headline">
+          以官方Wiki的方式安装ArchLinux
         </h2>
 
         <div class="post-meta">
@@ -337,16 +300,8 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              
-                
-              
-
               <time title="创建时间：2017-05-17 23:26:29" itemprop="dateCreated datePublished" datetime="2017-05-17T23:26:29+08:00">2017-05-17</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -354,28 +309,23 @@
                 <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2019-12-23 11:17:46" itemprop="dateModified" datetime="2019-12-23T11:17:46+08:00">2019-12-23</time>
               </span>
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a></span>
-
-                
-                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/" itemprop="url" rel="index">
+                    <span itemprop="name">Linux</span>
+                  </a>
+                </span>
                   ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Linux/Arch/" itemprop="url" rel="index"><span itemprop="name">Arch</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Linux/Arch/" itemprop="url" rel="index">
+                    <span itemprop="name">Arch</span>
+                  </a>
+                </span>
             </span>
-          
 
           
             <span id="/2017/05/17/arch_install/" class="post-meta-item leancloud_visitors" data-flag-title="以官方Wiki的方式安装ArchLinux" title="阅读次数">
@@ -385,7 +335,6 @@
               <span class="post-meta-item-text">阅读次数：</span>
               <span class="leancloud-visitors-count"></span>
             </span>
-          
 
         </div>
       </header>
@@ -437,10 +386,10 @@
 <li><p>在<code>windows</code>下空出一块分区来安装：利用<code>windows</code>自带的磁盘管理工具就可以：</p>
 <ol>
 <li><p>右击<code>windows</code>图标，在弹出菜单中选择磁盘管理（其他版本的<code>windows</code>请自行找到打开磁盘管理的方式）：</p>
-<p><img src="/images/arch01.jpeg" alt></p>
+<p><img src="/images/arch01.jpeg" alt=""></p>
 </li>
 <li><p>右击想要删除的分区，选择删除卷（注意这步之后这个分区的所有数据将会丢失）：</p>
-<p><img src="/images/arch02.jpeg" alt></p>
+<p><img src="/images/arch02.jpeg" alt=""></p>
 </li>
 </ol>
 </li>
@@ -461,15 +410,15 @@
 <p>一般来说现在的主板都可以不用进入BIOS而快速地切换启动顺序，只要找到相应的快捷键就可以了。</p>
 <h4 id="进入U盘下的Linux系统"><a href="#进入U盘下的Linux系统" class="headerlink" title="进入U盘下的Linux系统"></a>进入U盘下的Linux系统</h4><ol>
 <li><p>按上一步设置好启动顺序，启动之后会看到如下界面（UEFI启动方式的界面可能不同）：</p>
-<p><img src="/images/arch03.jpeg" alt></p>
+<p><img src="/images/arch03.jpeg" alt=""></p>
 <p>如果直接进入<code>windows</code>，请检查启动顺序是否设置成功，U盘是否在制作启动介质时成功写入。</p>
 <p>如果没有看到这个界面，请检查U盘是否制作成功，如果多次遇到问题可以考虑换一个U盘。</p>
 <p>选择第一个选项。</p>
 </li>
 <li><p>这时<code>Arch</code>开始加载，你将会看到屏幕显示如下内容：</p>
-<p><img src="/images/arch04.jpeg" alt></p>
+<p><img src="/images/arch04.jpeg" alt=""></p>
 <p>加载完成后你将会进入一个有命令提示符的界面：</p>
-<p><img src="/images/arch05.jpeg" alt></p>
+<p><img src="/images/arch05.jpeg" alt=""></p>
 <p>如果出现<code>FAIL</code>或是其他错误信息导致无法启动请自行搜索错误信息来获得解决方法。</p>
 <p>这就是<code>Linux</code>的终端界面了，接下来我们将通过在这个界面执行一系列命令来将<code>Arch</code>安装到我们的磁盘上。</p>
 </li>
@@ -496,7 +445,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls: cannot access <span class="string">'/sys/firmware/efi/efivars'</span>: No such file or directory</span><br></pre></td></tr></table></figure>
 <p>表明你是以<code>BIOS</code>方式引导，否则为以<code>EFI</code>方式引导。现在只需要记住这个信息，之后这两种引导类型的安装方式会略有不同（下文中涉及到不同的地方请仔细区别）。</p>
 <hr>
-<p><strong>更新：</strong><br><br>部分同学反馈这种方式并不能100%确认你就是<code>BIOS</code>方式引导的，更加保险的方法是执行<code>fdisk -l</code>查看分区表，如果<strong>你的硬盘（而不是你的U盘）</strong>的<code>Disklabel type</code>属性为<code>gpt</code>并且有一个<code>Type</code>为<code>EFI System</code>的小分区（一般为256M左右，如下图），那么你应该是<code>EFI</code>引导的。<br><br><img src="/images/arch26.png" alt></p>
+<p><strong>更新：</strong><br><br>部分同学反馈这种方式并不能100%确认你就是<code>BIOS</code>方式引导的，更加保险的方法是执行<code>fdisk -l</code>查看分区表，如果<strong>你的硬盘（而不是你的U盘）</strong>的<code>Disklabel type</code>属性为<code>gpt</code>并且有一个<code>Type</code>为<code>EFI System</code>的小分区（一般为256M左右，如下图），那么你应该是<code>EFI</code>引导的。<br><br><img src="/images/arch26.png" alt=""></p>
 <hr>
 <h4 id="联网"><a href="#联网" class="headerlink" title="联网"></a>联网</h4><p><code>arch</code>并不能离线安装，因为我们需要联网来下载需要的组件，所以我们首先要连接网络。</p>
 <ul>
@@ -506,7 +455,7 @@
 <li><p>然后执行以下命令来判断网络连接是否正常：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
 <p>如果可以看到类似下面的内容就说明连上了网络：</p>
-<p><img src="/images/arch05.jpg" alt></p>
+<p><img src="/images/arch05.jpg" alt=""></p>
 <blockquote>
 <p>  再次提示用快捷键Ctrl-C可以终止当前正在执行的命令</p>
 </blockquote>
@@ -529,9 +478,9 @@
 <h4 id="分区与格式化"><a href="#分区与格式化" class="headerlink" title="分区与格式化"></a>分区与格式化</h4><p><strong>特别注意：涉及到分区与格式化的操作要格外注意，命令在回车之前请再三确认知道自己在做什么，并且没有输错命令，否则将会来带来数据的丢失！如果有需要在操作之前请备份重要的数据。</strong></p>
 <p>但是我们也并不要过于惧怕分区与格式化过程，正确操作的情况下不会对你其他数据产生任何影响。</p>
 <h5 id="查看目前的分区情况"><a href="#查看目前的分区情况" class="headerlink" title="查看目前的分区情况"></a>查看目前的分区情况</h5><p>执行命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk <span class="_">-l</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk -l</span><br></pre></td></tr></table></figure>
 <p>以我的电脑为例：</p>
-<p><img src="/images/arch06.jpg" alt></p>
+<p><img src="/images/arch06.jpg" alt=""></p>
 <p>可以看到我的一块238.5g的硬盘(<code>/dev/sda</code>就代表这块硬盘)，下面列出了<code>/dev/sda*</code>这三个分区，<code>/dev/sda3</code>是我存活下来的家目录，可以看到它的类型为<code>Linux</code>分区。注意看<code>Start</code>与<code>End</code>的数值，这个数值代表扇区号，可以理解成硬盘被划分成了一个个小单元，可以直观地看出来在<code>/dev/sda2</code>的<code>End</code>与<code>/dev/sda3</code>的<code>Start</code>之间空出了一大块未分配的空间，接下来我们将分配这块区域。</p>
 <hr>
 <ul>
@@ -580,8 +529,8 @@
 </li>
 </ol>
 <p>这是我的分区过程供参考：</p>
-<p><img src="/images/arch07.jpg" alt></p>
-<p><img src="/images/arch08.jpg" alt></p>
+<p><img src="/images/arch07.jpg" alt=""></p>
+<p><img src="/images/arch08.jpg" alt=""></p>
 <hr>
 <p><strong>如果你在分区这步遇到了问题</strong>，先看看自己的操作是否与上面的指引一致，如果仍然无法解决可参考<a href="https://www.cnblogs.com/freerqy/p/8502838.html" target="_blank" rel="noopener">https://www.cnblogs.com/freerqy/p/8502838.html</a>这篇文章的“建立硬盘分区”一节尝试使用<code>cfdisk</code>进行分区。</p>
 <h4 id="挂载分区"><a href="#挂载分区" class="headerlink" title="挂载分区"></a>挂载分区</h4><p>执行以下命令将根分区挂载到<code>/mnt</code>：</p>
@@ -601,11 +550,11 @@
 <blockquote>
 <p>  提示：输入路径时可以用<code>Tab</code>键补全</p>
 </blockquote>
-<p><img src="/images/arch09.jpg" alt></p>
+<p><img src="/images/arch09.jpg" alt=""></p>
 <p>找到标有<code>China</code>的镜像源，<code>normal</code>模式下按下<code>dd</code>可以剪切光标下的行，按<code>gg</code>回到文件首，按<code>P</code>（注意是大写的）将行粘贴到文件最前面的位置（优先级最高）。</p>
 <p>当然也可以直接手工输入。</p>
 <p>这里推荐使用清华、浙大源：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Server = http://mirrors.tuna.tsinghua.edu.cn/archlinux/$repo/os/$arch</span><br><span class="line">Server = http://mirrors.zju.edu.cn/archlinux/$repo/os/$arch</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Server &#x3D; http:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;archlinux&#x2F;$repo&#x2F;os&#x2F;$arch</span><br><span class="line">Server &#x3D; http:&#x2F;&#x2F;mirrors.zju.edu.cn&#x2F;archlinux&#x2F;$repo&#x2F;os&#x2F;$arch</span><br></pre></td></tr></table></figure>
 <p>最后记得用<code>:wq</code>命令保存文件并退出。</p>
 <h4 id="安装基本包"><a href="#安装基本包" class="headerlink" title="安装基本包"></a>安装基本包</h4><p>下面就要安装最基本的<code>ArchLinux</code>包到磁盘上了。这是一个联网下载并安装的过程。</p>
 <p>执行以下命令：</p>
@@ -615,7 +564,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">genfstab -L /mnt &gt;&gt; /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
 <p>由于这步比较重要，所以我们需要输出生成的文件来检查是否正确，执行以下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch10.jpg" alt></p>
+<p><img src="/images/arch10.jpg" alt=""></p>
 <p>如图，可以看到<code>/dev/sda4</code>被挂载到了根分区。</p>
 <p><code>/dev/sda3</code>是我之前存活下来的家目录被挂载到了<code>/home</code>目录（你们没有这条）。</p>
 <p><strong>如果是<code>EFI/GPT</code>引导的还应该有引导分区被挂载到<code>/boot</code>目录</strong>。</p>
@@ -627,22 +576,22 @@
 <hr>
 <h4 id="设置时区"><a href="#设置时区" class="headerlink" title="设置时区"></a>设置时区</h4><p>依次执行如下命令设置我们的时区为上海并生成相关文件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">hwclock --systohc</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch11.jpg" alt></p>
+<p><img src="/images/arch11.jpg" alt=""></p>
 <h4 id="提前安装必须软件包"><a href="#提前安装必须软件包" class="headerlink" title="提前安装必须软件包"></a>提前安装必须软件包</h4><p>因为我们现在已经<code>Chroot</code>到了新的系统中，只有一些最基本的包（组件），这时候我们就需要自己安装新的包了，下面就要介绍一下<code>ArchLinux</code>下非常强大的包管理工具<code>pacman</code>，大部分情况下，一行命令就可以搞定包与依赖的问题。</p>
 <p>安装包的命令格式为<code>pacman -S 包名</code>，<code>pacman</code>会自动检查这个包所需要的其他包（即为依赖）并一起装上。下面我们就通过<code>pacman</code>来安装一些包，这些包在之后会用上，在这里先提前装好。</p>
 <p>执行如下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S vim dialog wpa_supplicant ntfs-3g networkmanager</span><br></pre></td></tr></table></figure>
 <p>一路确认之后包就被成功装上了。</p>
-<p><img src="/images/arch12.jpg" alt></p>
+<p><img src="/images/arch12.jpg" alt=""></p>
 <p>图中只安装了<code>Vim</code>和它的依赖。</p>
 <h4 id="设置Locale"><a href="#设置Locale" class="headerlink" title="设置Locale"></a>设置Locale</h4><p>设置我们使用的语言选项，执行如下命令来编辑<code>/etc/locale.gen</code>文件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/locale.gen</span><br></pre></td></tr></table></figure>
 <p>在文件中找到<code>zh_CN.UTF-8 UTF-8</code> <code>zh_HK.UTF-8 UTF-8</code> <code>zh_TW.UTF-8 UTF-8</code> <code>en_US.UTF-8 UTF-8</code>这四行，去掉行首的#号，保存并退出。如图：</p>
-<p><img src="/images/arch13.jpg" alt></p>
-<p><img src="/images/arch14.jpg" alt></p>
+<p><img src="/images/arch13.jpg" alt=""></p>
+<p><img src="/images/arch14.jpg" alt=""></p>
 <p>然后执行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">locale-gen</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch15.jpg" alt></p>
+<p><img src="/images/arch15.jpg" alt=""></p>
 <p>打开（不存在时会创建）<code>/etc/locale.conf</code>文件：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/locale.conf</span><br></pre></td></tr></table></figure>
 <p>在文件的第一行加入以下内容：</p>
@@ -656,14 +605,14 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
 <p>在文件末添加如下内容（将<code>myhostname</code>替换成你自己设定的主机名）</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1	localhost</span><br><span class="line">::1		localhost</span><br><span class="line">127.0.1.1	myhostname.localdomain	myhostname</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch16.png" alt></p>
+<p><img src="/images/arch16.png" alt=""></p>
 <p>这里我设置的是<code>viseator</code>。</p>
 <p>保存并退出。</p>
 <h4 id="设置Root密码"><a href="#设置Root密码" class="headerlink" title="设置Root密码"></a>设置Root密码</h4><p><code>Root</code>是<code>Linux</code>中具有最高权限帐户，有些敏感的操作必须通过<code>Root</code>用户进行，比如使用<code>pacman</code>，我们之前进行所有的操作也都是以<code>Root</code>用户进行的，也正是因为<code>Root</code>的权限过高，如果使用不当会造成安全问题，所以我们之后会新建一个普通用户来进行日常的操作。在这里我们需要为<code>Root</code>帐户设置一个密码：</p>
 <p>执行如下命令：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
 <p>按提示设置并确认就可以了。</p>
-<p><img src="/images/arch17.jpg" alt></p>
+<p><img src="/images/arch17.jpg" alt=""></p>
 <hr>
 <p>或许有的人已经发现官方Wiki和一些其他教程资料中的命令是以<code>#</code>或<code>$</code>开头的，这两个符号就对应着命令行中的命令提示符，<code>#</code>代表以<code>Root</code>用户执行命令，<code>$</code>代表以普通用户执行命令，平时使用教程中的命令时应该注意这一点。</p>
 <hr>
@@ -689,13 +638,13 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
 </li>
 </ul>
-<p><img src="/images/arch18.jpg" alt></p>
+<p><img src="/images/arch18.jpg" alt=""></p>
 <p><strong>如果你没有看到如图所示的提示信息，请仔细检查是否正确完成上面的过程。常见问题如下：</strong></p>
 <ol>
 <li><p>如果报<code>warning failed to connect to lvmetad，falling back to device scanning.</code>错误。参照<a href="https://wiki.archlinux.org/index.php/Install_from_existing_Linux" target="_blank" rel="noopener">wiki</a>中搜索关键词<code>use_lvmetad</code>所在位置，简单的方法是编辑<code>/etc/lvm/lvm.conf</code>这个文件，找到<code>use_lvmetad = 1</code>将<code>1</code>修改为<code>0</code>，保存，重新配置grub。</p>
 </li>
 <li><p>有部分同学反馈后面安装<code>grub</code>包的时候报如下错误：</p>
-<p><img src="/images/arch25.png" alt></p>
+<p><img src="/images/arch25.png" alt=""></p>
 <p>是因为实际是<code>UEFI</code>引导的系统没有正确挂载<code>boot</code>分区。首先检查你是不是按照<code>BIOS</code>方式安装的系统，二是检查是否正确挂载<code>/mnt/boot</code>。正确配置好<code>boot</code>分区之后可以从“挂载分区”这步开始重做。</p>
 </li>
 </ol>
@@ -719,7 +668,7 @@
 <p><strong>强烈建议使用如下命令检查是否成功生成各系统的入口，如果没有正常生成会出现开机没有系统入口的情况：</strong></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
 <p>检查接近末尾的<code>menuentry</code>部分是否有<code>windows</code>或其他系统名入口。下图例子中是<code>Arch Linux</code>入口与检测到的<code>windows10</code>入口（安装在<code>/dev/sda1</code>），具体情况可能有不同：</p>
-<p><img src="/images/arch22.jpg" alt></p>
+<p><img src="/images/arch22.jpg" alt=""></p>
 <p><strong>如果你没有看到<code>Arch Linux</code>系统入口或者该文件不存在</strong>，请先检查<code>/boot</code>目录是否正确部署<code>linux</code>内核：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /boot</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
 <p>查看是否有<code>initramfs-linux-fallback.img  initramfs-linux.img  intel-ucode.img  vmlinuz-linux</code>这几个文件，如果都没有，说明<code>linux</code>内核没有被正确部署，很有可能是<code>/boot</code>目录没有被正确挂载导致的，确认<code>/boot</code>目录无误后，可以重新部署<code>linux</code>内核：</p>
@@ -738,7 +687,7 @@
 <p><strong> 如果挂载了<code>/mnt/boot</code>，先<code>umount /mnt/boot</code>，再<code>umount /mnt</code>，否则直接<code>umount /mnt</code>：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">umount /mnt/boot</span><br><span class="line">umount /mnt</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure></p>
 <p>注意这个时候你可能会卡在有两行提示的地方无法正常关机，长按电源键强制关机即可，没有影响。</p>
 <p>关机后拔出U盘，启动顺序会自动以硬盘启动，如果一切顺利，那么你将会看到下面的界面：</p>
-<p><img src="/images/arch19.jpg" alt></p>
+<p><img src="/images/arch19.jpg" alt=""></p>
 <p>启动时有可能会有输出信息显示在这里，直接回车就可以了。</p>
 <p>输入<code>root</code>，再输入之前设置的密码，显示出命令提示符，恭喜你，你已经成功安装<code>ArchLinux</code>！</p>
 <h2 id="安装后配置"><a href="#安装后配置" class="headerlink" title="安装后配置"></a>安装后配置</h2><p>虽然系统安装好了，但是还没有进行基本配置和安装图形界面，所以接下来我们要进行一些必须的配置和图形界面的安装。</p>
@@ -749,30 +698,27 @@
 <blockquote>
 <p>  Arch Linux 怎么安装？ - viseator的回答 - 知乎<br>  <a href="https://www.zhihu.com/question/21427410/answer/171867330" target="_blank" rel="noopener">https://www.zhihu.com/question/21427410/answer/171867330</a></p>
 </blockquote>
-<p>如果安装过程中遇到问题，可以直接在下方评论区留言或邮件<a href="mailto:viseator@gmail.com" target="_blank" rel="noopener">viseator@gmail.com</a>（尽量附上错误信息），我会尽力回复解决。</p>
+<p>如果安装过程中遇到问题，可以直接在下方评论区留言或邮件<a href="mailto:viseator@gmail.com">viseator@gmail.com</a>（尽量附上错误信息），我会尽力回复解决。</p>
 
     </div>
 
     
     
     
-        
       
-        <div id="reward-container">
+        <div class="reward-container">
   <div></div>
-  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
     打赏
   </button>
   <div id="qr" style="display: none;">
-        
       
-      <div style="display: inline-block">
+      <div style="display: inline-block;">
         <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
         <p>微信支付</p>
       </div>
-        
       
-      <div style="display: inline-block">
+      <div style="display: inline-block;">
         <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
         <p>支付宝</p>
       </div>
@@ -780,98 +726,76 @@
   </div>
 </div>
 
-      
         
 
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>viseator(吴迪)</li>
+    <strong>本文作者： </strong>viseator(吴迪)
+  </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     <a href="https://www.viseator.com/2017/05/17/arch_install/" title="以官方Wiki的方式安装ArchLinux">https://www.viseator.com/2017/05/17/arch_install/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
 </ul>
 </div>
 
-      
 
       <footer class="post-footer">
-          
-            
-          
           <div class="post-tags">
-            
               <a href="/tags/Linux/" rel="tag"># Linux</a>
-            
               <a href="/tags/Arch/" rel="tag"># Arch</a>
-            
           </div>
-        
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-              
                 <a href="/2017/05/11/android_lan_messages/" rel="next" title="Android利用UDP、TCP进行局域网数据传输">
                   <i class="fa fa-chevron-left"></i> Android利用UDP、TCP进行局域网数据传输
                 </a>
-              
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
                 <a href="/2017/05/19/arch_setup/" rel="prev" title="ArchLinux安装后的必须配置与图形界面安装教程">
                   ArchLinux安装后的必须配置与图形界面安装教程 <i class="fa fa-chevron-right"></i>
                 </a>
-              
             </div>
           </div>
-        
       </footer>
     
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
   </div>
 
 
           </div>
           
-    
     
   <div class="comments" id="comments">
     <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
   </div>
   
-  
 
         </div>
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -884,85 +808,49 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">1.1.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装教程"><span class="nav-number">2.</span> <span class="nav-text">安装教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前期准备"><span class="nav-number">2.1.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装介质"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装介质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#磁盘准备"><span class="nav-number">2.1.2.</span> <span class="nav-text">磁盘准备</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#U盘安装"><span class="nav-number">2.2.</span> <span class="nav-text">U盘安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置启动顺序"><span class="nav-number">2.2.1.</span> <span class="nav-text">设置启动顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进入U盘下的Linux系统"><span class="nav-number">2.2.2.</span> <span class="nav-text">进入U盘下的Linux系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#检查引导方式"><span class="nav-number">2.2.3.</span> <span class="nav-text">检查引导方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#联网"><span class="nav-number">2.2.4.</span> <span class="nav-text">联网</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新系统时间"><span class="nav-number">2.2.5.</span> <span class="nav-text">更新系统时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分区与格式化"><span class="nav-number">2.2.6.</span> <span class="nav-text">分区与格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查看目前的分区情况"><span class="nav-number">2.2.6.1.</span> <span class="nav-text">查看目前的分区情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建一个引导分区（仅上面所列的第三种情况需要进行这步）"><span class="nav-number">2.2.6.2.</span> <span class="nav-text">创建一个引导分区（仅上面所列的第三种情况需要进行这步）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建根分区"><span class="nav-number">2.2.6.3.</span> <span class="nav-text">创建根分区</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#挂载分区"><span class="nav-number">2.2.7.</span> <span class="nav-text">挂载分区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择镜像源"><span class="nav-number">2.2.8.</span> <span class="nav-text">选择镜像源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装基本包"><span class="nav-number">2.2.9.</span> <span class="nav-text">安装基本包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置Fstab"><span class="nav-number">2.2.10.</span> <span class="nav-text">配置Fstab</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chroot"><span class="nav-number">2.2.11.</span> <span class="nav-text">Chroot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置时区"><span class="nav-number">2.2.12.</span> <span class="nav-text">设置时区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提前安装必须软件包"><span class="nav-number">2.2.13.</span> <span class="nav-text">提前安装必须软件包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置Locale"><span class="nav-number">2.2.14.</span> <span class="nav-text">设置Locale</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置主机名"><span class="nav-number">2.2.15.</span> <span class="nav-text">设置主机名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置Root密码"><span class="nav-number">2.2.16.</span> <span class="nav-text">设置Root密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Intel-ucode（非IntelCPU可以跳过此步骤）"><span class="nav-number">2.2.17.</span> <span class="nav-text">安装Intel-ucode（非IntelCPU可以跳过此步骤）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Bootloader"><span class="nav-number">2.2.18.</span> <span class="nav-text">安装Bootloader</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如果为BIOS-MBR引导方式："><span class="nav-number">2.2.18.1.</span> <span class="nav-text">如果为BIOS/MBR引导方式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如果为EFI-GPT引导方式："><span class="nav-number">2.2.18.2.</span> <span class="nav-text">如果为EFI/GPT引导方式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装后检查"><span class="nav-number">2.2.18.3.</span> <span class="nav-text">安装后检查</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#重启"><span class="nav-number">2.2.18.4.</span> <span class="nav-text">重启</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装后配置"><span class="nav-number">3.</span> <span class="nav-text">安装后配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特别感谢"><span class="nav-number">4.</span> <span class="nav-text">特别感谢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">5.</span> <span class="nav-text">最后</span></a></li></ol></div>
-        
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">1.1.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装教程"><span class="nav-number">2.</span> <span class="nav-text">安装教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前期准备"><span class="nav-number">2.1.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装介质"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装介质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#磁盘准备"><span class="nav-number">2.1.2.</span> <span class="nav-text">磁盘准备</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#U盘安装"><span class="nav-number">2.2.</span> <span class="nav-text">U盘安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置启动顺序"><span class="nav-number">2.2.1.</span> <span class="nav-text">设置启动顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进入U盘下的Linux系统"><span class="nav-number">2.2.2.</span> <span class="nav-text">进入U盘下的Linux系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#检查引导方式"><span class="nav-number">2.2.3.</span> <span class="nav-text">检查引导方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#联网"><span class="nav-number">2.2.4.</span> <span class="nav-text">联网</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新系统时间"><span class="nav-number">2.2.5.</span> <span class="nav-text">更新系统时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分区与格式化"><span class="nav-number">2.2.6.</span> <span class="nav-text">分区与格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查看目前的分区情况"><span class="nav-number">2.2.6.1.</span> <span class="nav-text">查看目前的分区情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建一个引导分区（仅上面所列的第三种情况需要进行这步）"><span class="nav-number">2.2.6.2.</span> <span class="nav-text">创建一个引导分区（仅上面所列的第三种情况需要进行这步）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建根分区"><span class="nav-number">2.2.6.3.</span> <span class="nav-text">创建根分区</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#挂载分区"><span class="nav-number">2.2.7.</span> <span class="nav-text">挂载分区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择镜像源"><span class="nav-number">2.2.8.</span> <span class="nav-text">选择镜像源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装基本包"><span class="nav-number">2.2.9.</span> <span class="nav-text">安装基本包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置Fstab"><span class="nav-number">2.2.10.</span> <span class="nav-text">配置Fstab</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chroot"><span class="nav-number">2.2.11.</span> <span class="nav-text">Chroot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置时区"><span class="nav-number">2.2.12.</span> <span class="nav-text">设置时区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提前安装必须软件包"><span class="nav-number">2.2.13.</span> <span class="nav-text">提前安装必须软件包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置Locale"><span class="nav-number">2.2.14.</span> <span class="nav-text">设置Locale</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置主机名"><span class="nav-number">2.2.15.</span> <span class="nav-text">设置主机名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置Root密码"><span class="nav-number">2.2.16.</span> <span class="nav-text">设置Root密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Intel-ucode（非IntelCPU可以跳过此步骤）"><span class="nav-number">2.2.17.</span> <span class="nav-text">安装Intel-ucode（非IntelCPU可以跳过此步骤）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Bootloader"><span class="nav-number">2.2.18.</span> <span class="nav-text">安装Bootloader</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如果为BIOS-MBR引导方式："><span class="nav-number">2.2.18.1.</span> <span class="nav-text">如果为BIOS&#x2F;MBR引导方式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如果为EFI-GPT引导方式："><span class="nav-number">2.2.18.2.</span> <span class="nav-text">如果为EFI&#x2F;GPT引导方式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装后检查"><span class="nav-number">2.2.18.3.</span> <span class="nav-text">安装后检查</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#重启"><span class="nav-number">2.2.18.4.</span> <span class="nav-text">重启</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装后配置"><span class="nav-number">3.</span> <span class="nav-text">安装后配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特别感谢"><span class="nav-number">4.</span> <span class="nav-text">特别感谢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">5.</span> <span class="nav-text">最后</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image"
-      src="/images/avatar.jpg"
-      alt="viseator(吴迪)">
+  <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
+    src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
   <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives">
         
           <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-categories">
-        
-          
             <a href="/categories">
           
-        
-        <span class="site-state-item-count">21</span>
-        <span class="site-state-item-name">分类</span>
-        </a>
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
-          
             <a href="/tags">
           
-        
-        <span class="site-state-item-count">26</span>
-        <span class="site-state-item-name">标签</span>
-        </a>
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
-    
   </nav>
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
         <a href="https://github.com/viseator" title="GitHub &rarr; https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
         <a href="mailto:viseator@gmail.com" title="Email &rarr; mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
       </span>
-    
   </div>
   <div class="cc-license motion-element" itemprop="license">
-    
-  
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
@@ -976,31 +864,24 @@
         <li class="links-of-blogroll-item">
           <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
         </li>
-      
     </ul>
   </div>
 
@@ -1014,17 +895,24 @@
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2016 – <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.0</div>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.5.0
+  </div>
 
         
 
@@ -1036,7 +924,6 @@
 
 
 
-  
   <script>
   function leancloudSelector(url) {
     return document.getElementById(url).querySelector('.leancloud-visitors-count');
@@ -1053,7 +940,6 @@
           if (results.length > 0) {
             var counter = results[0];
               leancloudSelector(url).innerText = counter.time + 1;
-            
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .then(response => response.json())
               .catch(error => {
@@ -1068,7 +954,6 @@
                 .catch(error => {
                   console.log('Failed to create', error);
                 });
-            
           }
         })
         .catch(error => {
@@ -1146,13 +1031,20 @@
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
-<script src="/js/schemes/muse.js?v=7.4.0"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/js/next-boot.js?v=7.4.0"></script>
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
 
 
 
@@ -1170,13 +1062,10 @@
 
 
 
-
-
-
-
   
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.css">
-<script src="//cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js"></script><script src="/js/algolia-search.js?v=7.4.0"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js"></script>
+<script src="/js/algolia-search.js"></script>
 
 
 
@@ -1191,8 +1080,6 @@
 
 
 
-
-  
 
   
 

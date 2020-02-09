@@ -1,28 +1,23 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-<meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=7.4.0">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#F5F5F5">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
   <meta name="msapplication-config" content="/images/browserconfig.xml">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+<link rel="stylesheet" href="/css/main.css">
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
@@ -30,7 +25,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    version: '7.4.0',
+    version: '7.5.0',
     exturl: false,
     sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":true,"show_result":true,"style":null},
@@ -60,25 +55,27 @@
 </script>
 
   <meta name="description" content="写在前面本文基于Android 7.1.1 (API 25)的源码分析编写 安卓是基于触摸操作进行交互的系统，几乎所有的操作都由对屏幕的一次次触摸完成，如何正确处理触摸事件关乎整个应用的操作体验。因此安卓对于触摸事件的分发与处理机制也是我们学习安卓开发的重中之重。同时几乎每一个安卓技术博客中都会对触摸分发机制这一块进行详解，例如比较早期也是最为出名的郭霖（《第一行代码》的作者）。现在网络上对于这一">
-<meta name="keywords" content="Android,View">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 触摸事件分发机制（一）从内核到应用 一切的开始">
 <meta property="og:url" content="https://www.viseator.com/2017/09/14/android_view_event_1/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="写在前面本文基于Android 7.1.1 (API 25)的源码分析编写 安卓是基于触摸操作进行交互的系统，几乎所有的操作都由对屏幕的一次次触摸完成，如何正确处理触摸事件关乎整个应用的操作体验。因此安卓对于触摸事件的分发与处理机制也是我们学习安卓开发的重中之重。同时几乎每一个安卓技术博客中都会对触摸分发机制这一块进行详解，例如比较早期也是最为出名的郭霖（《第一行代码》的作者）。现在网络上对于这一">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.viseator.com/images/event1_1.png">
 <meta property="og:image" content="https://www.viseator.com/images/event1_2.png">
 <meta property="og:image" content="https://www.viseator.com/images/event1_3.png">
 <meta property="og:image" content="https://www.viseator.com/images/event1_4.png">
 <meta property="og:image" content="https://www.viseator.com/images/event1_5.png">
 <meta property="og:image" content="https://www.viseator.com/images/event1_6.png">
-<meta property="og:updated_time" content="2018-02-02T01:19:07.000Z">
+<meta property="article:published_time" content="2017-09-14T03:20:38.000Z">
+<meta property="article:modified_time" content="2018-02-02T01:19:07.000Z">
+<meta property="article:author" content="viseator(吴迪)">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="View">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 触摸事件分发机制（一）从内核到应用 一切的开始">
-<meta name="twitter:description" content="写在前面本文基于Android 7.1.1 (API 25)的源码分析编写 安卓是基于触摸操作进行交互的系统，几乎所有的操作都由对屏幕的一次次触摸完成，如何正确处理触摸事件关乎整个应用的操作体验。因此安卓对于触摸事件的分发与处理机制也是我们学习安卓开发的重中之重。同时几乎每一个安卓技术博客中都会对触摸分发机制这一块进行详解，例如比较早期也是最为出名的郭霖（《第一行代码》的作者）。现在网络上对于这一">
 <meta name="twitter:image" content="https://www.viseator.com/images/event1_1.png">
-  <link rel="canonical" href="https://www.viseator.com/2017/09/14/android_view_event_1/">
+
+<link rel="canonical" href="https://www.viseator.com/2017/09/14/android_view_event_1/">
 
 
 <script id="page-configurations">
@@ -94,16 +91,16 @@
 
   <title>Android 触摸事件分发机制（一）从内核到应用 一切的开始 | viseator's blog</title>
   
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
-  <script>
-    var host = window.location.hostname;
-    if (host !== "localhost" || !true) {
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-93455229-1');
-    }
-  </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-93455229-1');
+      }
+    </script>
 
 
   <script>
@@ -115,8 +112,6 @@
       s.parentNode.insertBefore(hm, s);
     })();
   </script>
-
-
 
 
 
@@ -133,7 +128,6 @@
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -147,11 +141,11 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
 
@@ -167,11 +161,11 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 </div>
 
@@ -179,77 +173,46 @@
 <nav class="site-nav">
   
   <ul id="menu" class="menu">
-      
-      
-      
-        
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section">首页</a>
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories" rel="section">分类</a>
+    <a href="/categories" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section">归档</a>
+    <a href="/archives" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags" rel="section">标签</a>
+    <a href="/tags" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-resource">
 
-    <a href="/2017/03/25/resource_general" rel="section">资源</a>
+    <a href="/2017/03/25/resource_general" rel="section"><i class="fa fa-fw fa-star"></i>资源</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-arch">
 
-    <a href="/categories/Linux/" rel="section">Arch安装</a>
+    <a href="/categories/Linux/" rel="section"><i class="fa fa-fw fa-linux"></i>Arch安装</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-about">
 
-    <a href="/about" rel="section">关于</a>
+    <a href="/about" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
 
   </li>
       <li class="menu-item menu-item-search">
-        <a href="javascript:;" class="popup-trigger">
-        搜索</a>
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
       </li>
-    
   </ul>
-
-    
 
 </nav>
   <div class="site-search">
@@ -284,33 +247,33 @@
   </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content">
+          
+
+          <div class="content">
             
 
-  <div id="posts" class="posts-expand">
-      <article itemscope itemtype="http://schema.org/Article">
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block post">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/09/14/android_view_event_1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="viseator(吴迪)">
       <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">Android 触摸事件分发机制（一）从内核到应用 一切的开始
-
-          
+        <h2 class="post-title" itemprop="name headline">
+          Android 触摸事件分发机制（一）从内核到应用 一切的开始
         </h2>
 
         <div class="post-meta">
@@ -320,16 +283,8 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              
-                
-              
-
               <time title="创建时间：2017-09-14 11:20:38" itemprop="dateCreated datePublished" datetime="2017-09-14T11:20:38+08:00">2017-09-14</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -337,28 +292,23 @@
                 <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
               </span>
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
-
-                
-                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
                   ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/View/" itemprop="url" rel="index"><span itemprop="name">View</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/View/" itemprop="url" rel="index">
+                    <span itemprop="name">View</span>
+                  </a>
+                </span>
             </span>
-          
 
           
             <span id="/2017/09/14/android_view_event_1/" class="post-meta-item leancloud_visitors" data-flag-title="Android 触摸事件分发机制（一）从内核到应用 一切的开始" title="阅读次数">
@@ -368,7 +318,6 @@
               <span class="post-meta-item-text">阅读次数：</span>
               <span class="leancloud-visitors-count"></span>
             </span>
-          
 
         </div>
       </header>
@@ -387,15 +336,15 @@
 <h2 id="触摸事件的来源"><a href="#触摸事件的来源" class="headerlink" title="触摸事件的来源"></a>触摸事件的来源</h2><p>这部分的内容与安卓本身无关，代码大部分也都是<code>C++</code>实现的，中间的大部分内容来自于我对相关资料的总结，不在代码层面进行详细解释，只是说明一个流程，同时也会对代码进行大部分的删减，只关注最核心的那部分。</p>
 <h3 id="从硬件到内核"><a href="#从硬件到内核" class="headerlink" title="从硬件到内核"></a>从硬件到内核</h3><p>我们从头开始，从触摸事件最初最初的来源开始，我们知道内核是以处理中断的方式处理用户的输入的，触摸事件作为一种特殊的输入事件，自然也需要这种方式进行处理，只不过触摸事件的提供的信息要稍微复杂一些。</p>
 <p>触摸事件来自于我们对硬件的操作，最初的来源当然是硬件引起的中断。而处理特定中断的代码则来自于对应硬件的驱动：</p>
-<p><img src="/images/event1_1.png" alt></p>
+<p><img src="/images/event1_1.png" alt=""></p>
 <p><a href="http://newandroidbook.com/files/AndroidInput.pdf" target="_blank" rel="noopener">图片来源</a>（以下系列图片来源相同，不作标注）</p>
 <p>当一个输入设备的驱动模块被首次载入内核的时候，会检测它应该管理的硬件设备，如果检测成功，驱动模块会调用<code>include/linux/input.h</code>中的<code>input_register_device(…)</code>函数设置一个<code>/dev/input/eventX</code>（<code>X</code>为整数）来代表这个输入设备。驱动模块同时也会通过<code>include/linux/interrupt.h</code>的<code>request_irq(…)</code>函数注册一个函数去处理这个硬件引发的中断，注册成功以后，当设备因用户交互而产生中断的时候就会交给对应的驱动模块进行处理。</p>
 <p>驱动模块处理的细节各不相同，但最终都会将数据处理后存放进对应的<code>/dev/input/eventX</code>文件中。</p>
-<p><img src="/images/event1_2.png" alt></p>
+<p><img src="/images/event1_2.png" alt=""></p>
 <h3 id="系统对触摸事件的处理"><a href="#系统对触摸事件的处理" class="headerlink" title="系统对触摸事件的处理"></a>系统对触摸事件的处理</h3><p>现在驱动程序为我们收集好了原始的输入信息并存放在了<code>eventX</code>文件中，下一步就是系统对于这个文件的处理并发送到应用层面。</p>
-<p><img src="/images/event1_3.png" alt></p>
+<p><img src="/images/event1_3.png" alt=""></p>
 <p>可以看到系统服务充当了从内核到应用的桥梁。</p>
-<p><img src="/images/event1_4.png" alt></p>
+<p><img src="/images/event1_4.png" alt=""></p>
 <p>系统服务由三个组件构成：<code>EventHub</code>、<code>InputReader</code>、<code>InputDispatcher</code>，关于它们的作用的详细分析在：</p>
 <blockquote>
 <p>  <a href="http://gityuan.com/2016/12/31/input-ipc/" target="_blank" rel="noopener">http://gityuan.com/2016/12/31/input-ipc/</a></p>
@@ -409,7 +358,7 @@
 <p>  <a href="http://gityuan.com/2016/12/10/input-manager/" target="_blank" rel="noopener">http://gityuan.com/2016/12/10/input-manager/</a></p>
 </blockquote>
 <p>它会在内部不断地循环调用<code>loopOnce()</code>方法来不断读取事件：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> InputReader::loopOnce() &#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">size_t</span> count = mEventHub-&gt;getEvents(timeoutMillis, mEventBuffer, EVENT_BUFFER_SIZE);</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (count) &#123;</span><br><span class="line">        processEventsLocked(mEventBuffer, count);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InputReader::loopOnce</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">size_t</span> count = mEventHub-&gt;getEvents(timeoutMillis, mEventBuffer, EVENT_BUFFER_SIZE);</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">if</span> (count) &#123;</span><br><span class="line">        processEventsLocked(mEventBuffer, count);</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>第3行调用了<code>mEventHub</code>的<code>getEvent()</code>方法以获取事件。</p>
 <p>第6行调用<code>processEventLocked()</code>方法来处理事件，经过一系列判断之后，会执行这行代码：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">device-&gt;process(rawEvents, count);</span><br></pre></td></tr></table></figure>
@@ -417,20 +366,20 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">InputMapper* mapper = mMappers[i];</span><br><span class="line">mapper-&gt;process(rawEvent);</span><br></pre></td></tr></table></figure>
 <p>使用<code>mapper</code>去处理<code>rawEvent</code>，不同的输入事件类型会由不同的<code>mapper</code>去处理，以处理触摸事件的<code>TouchInputMapper</code>为例：</p>
 <p>只看核心调用的话，会依次调用如下函数：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> TouchInputMapper::process(<span class="keyword">const</span> RawEvent* rawEvent)</span><br><span class="line"><span class="keyword">void</span> TouchInputMapper::sync(<span class="keyword">nsecs_t</span> when)</span><br><span class="line"><span class="keyword">void</span> TouchInputMapper::processRawTouches(<span class="keyword">bool</span> timeout)</span><br><span class="line"><span class="keyword">void</span> TouchInputMapper::cookAndDispatch(<span class="keyword">nsecs_t</span> when)</span><br><span class="line"><span class="keyword">void</span> TouchInputMapper::dispatchTouches(<span class="keyword">nsecs_t</span> when, <span class="keyword">uint32_t</span> policyFlags) </span><br><span class="line"><span class="keyword">void</span> TouchInputMapper::dispatchMotion(<span class="keyword">nsecs_t</span> when, <span class="keyword">uint32_t</span> policyFlags, <span class="keyword">uint32_t</span> source,</span><br><span class="line">        <span class="keyword">int32_t</span> action, <span class="keyword">int32_t</span> actionButton, <span class="keyword">int32_t</span> flags,</span><br><span class="line">        <span class="keyword">int32_t</span> metaState, <span class="keyword">int32_t</span> buttonState, <span class="keyword">int32_t</span> edgeFlags,</span><br><span class="line">        <span class="keyword">const</span> PointerProperties* properties, <span class="keyword">const</span> PointerCoords* coords,</span><br><span class="line">        <span class="keyword">const</span> <span class="keyword">uint32_t</span>* idToIndex, BitSet32 idBits, <span class="keyword">int32_t</span> changedId,</span><br><span class="line">        <span class="keyword">float</span> xPrecision, <span class="keyword">float</span> yPrecision, <span class="keyword">nsecs_t</span> downTime)</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TouchInputMapper::process</span><span class="params">(<span class="keyword">const</span> RawEvent* rawEvent)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TouchInputMapper::sync</span><span class="params">(<span class="keyword">nsecs_t</span> when)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TouchInputMapper::processRawTouches</span><span class="params">(<span class="keyword">bool</span> timeout)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TouchInputMapper::cookAndDispatch</span><span class="params">(<span class="keyword">nsecs_t</span> when)</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TouchInputMapper::dispatchTouches</span><span class="params">(<span class="keyword">nsecs_t</span> when, <span class="keyword">uint32_t</span> policyFlags)</span> </span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">TouchInputMapper::dispatchMotion</span><span class="params">(<span class="keyword">nsecs_t</span> when, <span class="keyword">uint32_t</span> policyFlags, <span class="keyword">uint32_t</span> source,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">int32_t</span> action, <span class="keyword">int32_t</span> actionButton, <span class="keyword">int32_t</span> flags,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">int32_t</span> metaState, <span class="keyword">int32_t</span> buttonState, <span class="keyword">int32_t</span> edgeFlags,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> PointerProperties* properties, <span class="keyword">const</span> PointerCoords* coords,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> <span class="keyword">uint32_t</span>* idToIndex, BitSet32 idBits, <span class="keyword">int32_t</span> changedId,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">float</span> xPrecision, <span class="keyword">float</span> yPrecision, <span class="keyword">nsecs_t</span> downTime)</span></span></span><br></pre></td></tr></table></figure>
 <p>在最终的<code>dispatchMotion()</code>函数中执行以下代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">NotifyMotionArgs args(when, getDeviceId(), source, policyFlags,</span><br><span class="line">        action, actionButton, flags, metaState, buttonState, edgeFlags,</span><br><span class="line">        mViewport.displayId, pointerCount, pointerProperties, pointerCoords,</span><br><span class="line">        xPrecision, yPrecision, downTime);</span><br><span class="line">getListener()-&gt;notifyMotion(&amp;args);</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function">NotifyMotionArgs <span class="title">args</span><span class="params">(when, getDeviceId(), source, policyFlags,</span></span></span><br><span class="line"><span class="function"><span class="params">        action, actionButton, flags, metaState, buttonState, edgeFlags,</span></span></span><br><span class="line"><span class="function"><span class="params">        mViewport.displayId, pointerCount, pointerProperties, pointerCoords,</span></span></span><br><span class="line"><span class="function"><span class="params">        xPrecision, yPrecision, downTime)</span></span>;</span><br><span class="line">getListener()-&gt;notifyMotion(&amp;args);</span><br></pre></td></tr></table></figure>
 <p>可以看到事件已经被处理成了一个<code>args</code>，然后调用<code>getListener()</code>：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">InputListenerInterface* InputReader::ContextImpl::getListener() &#123;</span><br><span class="line">    <span class="keyword">return</span> mReader-&gt;mQueuedListener.get();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>获取的是<code>mQueuedListener</code>，查看<code>notifyMotion()</code>函数：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> QueuedInputListener::notifyMotion(<span class="keyword">const</span> NotifyMotionArgs* args) &#123;</span><br><span class="line">    mArgsQueue.push(<span class="keyword">new</span> NotifyMotionArgs(*args));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueuedInputListener::notifyMotion</span><span class="params">(<span class="keyword">const</span> NotifyMotionArgs* args)</span> </span>&#123;</span><br><span class="line">    mArgsQueue.push(<span class="keyword">new</span> NotifyMotionArgs(*args));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里的<code>NotifyMotionArgs()</code>只是对事件进行了一次再封装。可以看到这个<code>args</code>最终进入了<code>QueuedInputListener</code>的<code>mArgsQueue</code>中。</p>
 <p>我们再回到<code>InputReader</code>的<code>loopOnce()</code>函数中，函数在执行完上述调用到达最后一行时：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mQueuedListener-&gt;flush();</span><br></pre></td></tr></table></figure>
 <p>调用<code>flush()</code>函数：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> QueuedInputListener::flush() &#123;</span><br><span class="line">    <span class="keyword">size_t</span> count = mArgsQueue.size();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">        NotifyArgs* args = mArgsQueue[i];</span><br><span class="line">        args-&gt;notify(mInnerListener);</span><br><span class="line">        <span class="keyword">delete</span> args;</span><br><span class="line">    &#125;</span><br><span class="line">    mArgsQueue.clear();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QueuedInputListener::flush</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> count = mArgsQueue.size();</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; count; i++) &#123;</span><br><span class="line">        NotifyArgs* args = mArgsQueue[i];</span><br><span class="line">        args-&gt;notify(mInnerListener);</span><br><span class="line">        <span class="keyword">delete</span> args;</span><br><span class="line">    &#125;</span><br><span class="line">    mArgsQueue.clear();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>调用了各<code>args</code>的<code>notify()</code>函数：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> NotifyMotionArgs::notify(<span class="keyword">const</span> sp&lt;InputListenerInterface&gt;&amp; listener) <span class="keyword">const</span> &#123;</span><br><span class="line">    listener-&gt;notifyMotion(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">NotifyMotionArgs::notify</span><span class="params">(<span class="keyword">const</span> sp&lt;InputListenerInterface&gt;&amp; listener)</span> <span class="keyword">const</span> </span>&#123;</span><br><span class="line">    listener-&gt;notifyMotion(<span class="keyword">this</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>注意这里的<code>listener</code>传入的是<code>mInnerListener</code>，它是什么呢？</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">QueuedInputListener::QueuedInputListener(<span class="keyword">const</span> sp&lt;InputListenerInterface&gt;&amp; innerListener) :</span><br><span class="line">        mInnerListener(innerListener) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在构造函数中初始化。</p>
@@ -449,7 +398,7 @@
 <p>到这里我们可以看到事件经过一系列的处理和传递以后最终作为一个<code>entry</code>插入到了<code>InputDispatcher</code>的队列中等待被进一步分发。</p>
 <p>这个分发过程是在哪里进行的呢？</p>
 <p><code>InputDispatcher</code>线程的<code>threadLoop()</code>函数会被不断调用：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">bool</span> InputDispatcherThread::threadLoop() &#123;</span><br><span class="line">    mDispatcher-&gt;dispatchOnce();</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">InputDispatcherThread::threadLoop</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    mDispatcher-&gt;dispatchOnce();</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在<code>dispatcherOnce()</code>中：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!haveCommandsLocked()) &#123;</span><br><span class="line">	dispatchOnceInnerLocked(&amp;nextWakeupTime);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在没有待执行的指令时执行<code>dispatchOnceInnerLocked()</code>函数：</p>
@@ -462,39 +411,39 @@
 <p>对触摸或轨迹球事件做一个判断，再调用<code>findTouchedWindowTargesLocked()</code>函数：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int32_t</span> pointerIndex = getMotionEventActionPointerIndex(action);</span><br><span class="line"><span class="keyword">int32_t</span> x = <span class="keyword">int32_t</span>(entry-&gt;pointerCoords[pointerIndex].</span><br><span class="line">                getAxisValue(AMOTION_EVENT_AXIS_X));</span><br><span class="line"><span class="keyword">int32_t</span> y = <span class="keyword">int32_t</span>(entry-&gt;pointerCoords[pointerIndex].</span><br><span class="line">                getAxisValue(AMOTION_EVENT_AXIS_Y));</span><br></pre></td></tr></table></figure>
 <p>在这里取出了<code>entry</code>里面的<code>pointerIndex</code>与触摸点坐标的<code>x</code> <code>y</code>值。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从前向后遍历所有的window以找出触摸的window</span></span><br><span class="line"><span class="keyword">size_t</span> numWindows = mWindowHandles.size();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; numWindows; i++) &#123;</span><br><span class="line">    sp&lt;InputWindowHandle&gt; windowHandle = mWindowHandles.itemAt(i);</span><br><span class="line">    <span class="keyword">const</span> InputWindowInfo *windowInfo = windowHandle-&gt;getInfo();</span><br><span class="line">    <span class="keyword">if</span> (windowInfo-&gt;displayId != displayId) &#123;</span><br><span class="line">        <span class="keyword">continue</span>; <span class="comment">// 错误的window(displayId不匹配)</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int32_t</span> flags = windowInfo-&gt;layoutParamsFlags;</span><br><span class="line">    <span class="keyword">if</span> (windowInfo-&gt;visible) &#123; <span class="comment">// 如果window可见</span></span><br><span class="line">        <span class="keyword">if</span> (!(flags &amp; InputWindowInfo::FLAG_NOT_TOUCHABLE)) &#123;</span><br><span class="line">            isTouchModal = (flags &amp; (InputWindowInfo::FLAG_NOT_FOCUSABLE |</span><br><span class="line">                                     InputWindowInfo::FLAG_NOT_TOUCH_MODAL)) == <span class="number">0</span>;</span><br><span class="line">          <span class="comment">// window可以被触摸</span></span><br><span class="line">            <span class="keyword">if</span> (isTouchModal || windowInfo-&gt;touchableRegionContainsPoint(x, y)) &#123; <span class="comment">// (x,y)在window内可触摸区域内</span></span><br><span class="line">                newTouchedWindowHandle = windowHandle;</span><br><span class="line">                <span class="keyword">break</span>; <span class="comment">// 找到触摸的window，保存在newTouchedWindowHandle中</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">		<span class="comment">// 判断是否触摸window之外的区域</span></span><br><span class="line">        <span class="keyword">if</span> (maskedAction == AMOTION_EVENT_ACTION_DOWN &amp;&amp;</span><br><span class="line">            (flags &amp; InputWindowInfo::FLAG_WATCH_OUTSIDE_TOUCH)) &#123;</span><br><span class="line">            <span class="keyword">int32_t</span> outsideTargetFlags = InputTarget::FLAG_DISPATCH_AS_OUTSIDE;</span><br><span class="line">            <span class="keyword">if</span> (isWindowObscuredAtPointLocked(windowHandle, x, y)) &#123;</span><br><span class="line">                outsideTargetFlags |= InputTarget::FLAG_WINDOW_IS_OBSCURED;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isWindowObscuredLocked(windowHandle)) &#123;</span><br><span class="line">                outsideTargetFlags |= InputTarget::FLAG_WINDOW_IS_PARTIALLY_OBSCURED;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            mTempTouchState.addOrUpdateWindow(windowHandle, outsideTargetFlags, BitSet32(<span class="number">0</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 从前向后遍历所有的window以找出触摸的window</span></span><br><span class="line"><span class="keyword">size_t</span> numWindows = mWindowHandles.<span class="built_in">size</span>();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; numWindows; i++) &#123;</span><br><span class="line">    sp&lt;InputWindowHandle&gt; windowHandle = mWindowHandles.itemAt(i);</span><br><span class="line">    <span class="keyword">const</span> InputWindowInfo *windowInfo = windowHandle-&gt;getInfo();</span><br><span class="line">    <span class="keyword">if</span> (windowInfo-&gt;displayId != displayId) &#123;</span><br><span class="line">        <span class="keyword">continue</span>; <span class="comment">// 错误的window(displayId不匹配)</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int32_t</span> flags = windowInfo-&gt;layoutParamsFlags;</span><br><span class="line">    <span class="keyword">if</span> (windowInfo-&gt;visible) &#123; <span class="comment">// 如果window可见</span></span><br><span class="line">        <span class="keyword">if</span> (!(flags &amp; InputWindowInfo::FLAG_NOT_TOUCHABLE)) &#123;</span><br><span class="line">            isTouchModal = (flags &amp; (InputWindowInfo::FLAG_NOT_FOCUSABLE |</span><br><span class="line">                                     InputWindowInfo::FLAG_NOT_TOUCH_MODAL)) == <span class="number">0</span>;</span><br><span class="line">          <span class="comment">// window可以被触摸</span></span><br><span class="line">            <span class="keyword">if</span> (isTouchModal || windowInfo-&gt;touchableRegionContainsPoint(x, y)) &#123; <span class="comment">// (x,y)在window内可触摸区域内</span></span><br><span class="line">                newTouchedWindowHandle = windowHandle;</span><br><span class="line">                <span class="keyword">break</span>; <span class="comment">// 找到触摸的window，保存在newTouchedWindowHandle中</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">		<span class="comment">// 判断是否触摸window之外的区域</span></span><br><span class="line">        <span class="keyword">if</span> (maskedAction == AMOTION_EVENT_ACTION_DOWN &amp;&amp;</span><br><span class="line">            (flags &amp; InputWindowInfo::FLAG_WATCH_OUTSIDE_TOUCH)) &#123;</span><br><span class="line">            <span class="keyword">int32_t</span> outsideTargetFlags = InputTarget::FLAG_DISPATCH_AS_OUTSIDE;</span><br><span class="line">            <span class="keyword">if</span> (isWindowObscuredAtPointLocked(windowHandle, x, y)) &#123;</span><br><span class="line">                outsideTargetFlags |= InputTarget::FLAG_WINDOW_IS_OBSCURED;</span><br><span class="line">            &#125; <span class="keyword">else</span> <span class="keyword">if</span> (isWindowObscuredLocked(windowHandle)) &#123;</span><br><span class="line">                outsideTargetFlags |= InputTarget::FLAG_WINDOW_IS_PARTIALLY_OBSCURED;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            mTempTouchState.addOrUpdateWindow(windowHandle, outsideTargetFlags, BitSet32(<span class="number">0</span>));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这段代码的目的是为了遍历所有的<code>window</code>找到触摸对应的那个<code>window</code>。</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Handle the case where we did not find a window.</span></span><br><span class="line"><span class="keyword">if</span> (newTouchedWindowHandle == <span class="literal">NULL</span>) &#123;</span><br><span class="line">    <span class="comment">// Try to assign the pointer to the first foreground window we find, if there is one.</span></span><br><span class="line">    newTouchedWindowHandle = mTempTouchState.getFirstForegroundWindowHandle();</span><br><span class="line">    <span class="keyword">if</span> (newTouchedWindowHandle == <span class="literal">NULL</span>) &#123;</span><br><span class="line">        ALOGI(<span class="string">"Dropping event because there is no touchable window at (%d, %d)."</span>, x, y);</span><br><span class="line">        injectionResult = INPUT_EVENT_INJECTION_FAILED;</span><br><span class="line">        <span class="keyword">goto</span> Failed;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>如果遍历后没有找到合适的<code>window</code>，那就取第一个前台的<code>window</code>。</p>
 <p>然后通过<code>addWindowTargetLocked()</code>方法把缓存下来的结果存放入<code>inputTargets</code>中。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; mTempTouchState.windows.size(); i++) &#123;</span><br><span class="line">	<span class="keyword">const</span> TouchedWindow&amp; touchedWindow = mTempTouchState.windows.itemAt(i);</span><br><span class="line">	addWindowTargetLocked(touchedWindow.windowHandle, touchedWindow.targetFlags,</span><br><span class="line">	touchedWindow.pointerIds, inputTargets);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> InputDispatcher::addWindowTargetLocked(<span class="keyword">const</span> sp&lt;InputWindowHandle&gt;&amp; windowHandle,</span><br><span class="line">        <span class="keyword">int32_t</span> targetFlags, BitSet32 pointerIds, Vector&lt;InputTarget&gt;&amp; inputTargets) &#123;</span><br><span class="line">    inputTargets.push();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> InputWindowInfo* windowInfo = windowHandle-&gt;getInfo();</span><br><span class="line">    InputTarget&amp; target = inputTargets.editTop();</span><br><span class="line">    target.inputChannel = windowInfo-&gt;inputChannel;</span><br><span class="line">    target.flags = targetFlags;</span><br><span class="line">    target.xOffset = - windowInfo-&gt;frameLeft;</span><br><span class="line">    target.yOffset = - windowInfo-&gt;frameTop;</span><br><span class="line">    target.scaleFactor = windowInfo-&gt;scaleFactor;</span><br><span class="line">    target.pointerIds = pointerIds;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; mTempTouchState.windows.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">	<span class="keyword">const</span> TouchedWindow&amp; touchedWindow = mTempTouchState.windows.itemAt(i);</span><br><span class="line">	addWindowTargetLocked(touchedWindow.windowHandle, touchedWindow.targetFlags,</span><br><span class="line">	touchedWindow.pointerIds, inputTargets);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InputDispatcher::addWindowTargetLocked</span><span class="params">(<span class="keyword">const</span> sp&lt;InputWindowHandle&gt;&amp; windowHandle,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">int32_t</span> targetFlags, BitSet32 pointerIds, Vector&lt;InputTarget&gt;&amp; inputTargets)</span> </span>&#123;</span><br><span class="line">    inputTargets.push();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> InputWindowInfo* windowInfo = windowHandle-&gt;getInfo();</span><br><span class="line">    InputTarget&amp; target = inputTargets.editTop();</span><br><span class="line">    target.inputChannel = windowInfo-&gt;inputChannel;</span><br><span class="line">    target.flags = targetFlags;</span><br><span class="line">    target.xOffset = - windowInfo-&gt;frameLeft;</span><br><span class="line">    target.yOffset = - windowInfo-&gt;frameTop;</span><br><span class="line">    target.scaleFactor = windowInfo-&gt;scaleFactor;</span><br><span class="line">    target.pointerIds = pointerIds;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>函数将原始的<code>window</code>数据进行了再次封装。</p>
 <p>找到合适的<code>window</code>或是没有找到（处理错误）之后，函数返回到<code>bool InputDispatcher::dispatchMotionLocked()</code>中：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dispatchEventLocked(currentTime, entry, inputTargets);</span><br></pre></td></tr></table></figure>
 <p>开始向<code>inputTargets</code>中的目标分发事件：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> InputDispatcher::dispatchEventLocked(<span class="keyword">nsecs_t</span> currentTime,</span><br><span class="line">        EventEntry* eventEntry, <span class="keyword">const</span> Vector&lt;InputTarget&gt;&amp; inputTargets) &#123;</span><br><span class="line">...</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; inputTargets.size(); i++) &#123;</span><br><span class="line">        <span class="keyword">const</span> InputTarget&amp; inputTarget = inputTargets.itemAt(i); <span class="comment">// 遍历目标</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">ssize_t</span> connectionIndex = getConnectionIndexLocked(inputTarget.inputChannel); <span class="comment">// 见下文</span></span><br><span class="line">        <span class="keyword">if</span> (connectionIndex &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            sp&lt;Connection&gt; connection = mConnectionsByFd.valueAt(connectionIndex);</span><br><span class="line">            prepareDispatchCycleLocked(currentTime, connection, eventEntry, &amp;inputTarget);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InputDispatcher::dispatchEventLocked</span><span class="params">(<span class="keyword">nsecs_t</span> currentTime,</span></span></span><br><span class="line"><span class="function"><span class="params">        EventEntry* eventEntry, <span class="keyword">const</span> Vector&lt;InputTarget&gt;&amp; inputTargets)</span> </span>&#123;</span><br><span class="line">...</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; inputTargets.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">        <span class="keyword">const</span> InputTarget&amp; inputTarget = inputTargets.itemAt(i); <span class="comment">// 遍历目标</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">ssize_t</span> connectionIndex = getConnectionIndexLocked(inputTarget.inputChannel); <span class="comment">// 见下文</span></span><br><span class="line">        <span class="keyword">if</span> (connectionIndex &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">            sp&lt;Connection&gt; connection = mConnectionsByFd.valueAt(connectionIndex);</span><br><span class="line">            prepareDispatchCycleLocked(currentTime, connection, eventEntry, &amp;inputTarget);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">...</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>inputTarget</code>中包含的<code>inputChannel</code>就是后面用于与<code>window</code>实例通信的关键：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * An input channel consists of a local unix domain socket used to send and receive</span></span><br><span class="line"><span class="comment"> * input messages across processes.  Each channel has a descriptive name for debugging purposes.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Each endpoint has its own InputChannel object that specifies its file descriptor.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * The input channel is closed when all references to it are released.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">class</span> InputChannel : <span class="keyword">public</span> RefBase &#123;</span><br><span class="line">  <span class="keyword">protected</span>:</span><br><span class="line">    <span class="keyword">virtual</span> ~InputChannel();</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    InputChannel(<span class="keyword">const</span> String8&amp; name, <span class="keyword">int</span> fd);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Creates a pair of input channels.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * Returns OK on success.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">static</span> status_t <span class="title">openInputChannelPair</span><span class="params">(<span class="keyword">const</span> String8&amp; name,</span></span></span><br><span class="line"><span class="function"><span class="params">            sp&lt;InputChannel&gt;&amp; outServerChannel, sp&lt;InputChannel&gt;&amp; outClientChannel)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> String8 <span class="title">getName</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> mName; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">getFd</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> mFd; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Sends a message to the other endpoint.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * If the channel is full then the message is guaranteed not to have been sent at all.</span></span><br><span class="line"><span class="comment">     * Try again after the consumer has sent a finished signal indicating that it has</span></span><br><span class="line"><span class="comment">     * consumed some of the pending messages from the channel.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * Returns OK on success.</span></span><br><span class="line"><span class="comment">     * Returns WOULD_BLOCK if the channel is full.</span></span><br><span class="line"><span class="comment">     * Returns DEAD_OBJECT if the channel's peer has been closed.</span></span><br><span class="line"><span class="comment">     * Other errors probably indicate that the channel is broken.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">status_t</span> sendMessage(<span class="keyword">const</span> InputMessage* msg);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Receives a message sent by the other endpoint.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * If there is no message present, try again after poll() indicates that the fd</span></span><br><span class="line"><span class="comment">     * is readable.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * Returns OK on success.</span></span><br><span class="line"><span class="comment">     * Returns WOULD_BLOCK if there is no message present.</span></span><br><span class="line"><span class="comment">     * Returns DEAD_OBJECT if the channel's peer has been closed.</span></span><br><span class="line"><span class="comment">     * Other errors probably indicate that the channel is broken.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">status_t</span> receiveMessage(InputMessage* msg);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Returns a new object that has a duplicate of this channel's fd. */</span></span><br><span class="line">    sp&lt;InputChannel&gt; dup() <span class="keyword">const</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    String8 mName;</span><br><span class="line">    <span class="keyword">int</span> mFd;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * An input channel consists of a local unix domain socket used to send and receive</span></span><br><span class="line"><span class="comment"> * input messages across processes.  Each channel has a descriptive name for debugging purposes.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * Each endpoint has its own InputChannel object that specifies its file descriptor.</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * The input channel is closed when all references to it are released.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">InputChannel</span> :</span> <span class="keyword">public</span> RefBase &#123;</span><br><span class="line">  <span class="keyword">protected</span>:</span><br><span class="line">    <span class="keyword">virtual</span> ~InputChannel();</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    InputChannel(<span class="keyword">const</span> String8&amp; name, <span class="keyword">int</span> fd);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Creates a pair of input channels.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * Returns OK on success.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">status_t</span> <span class="title">openInputChannelPair</span><span class="params">(<span class="keyword">const</span> String8&amp; name,</span></span></span><br><span class="line"><span class="function"><span class="params">            sp&lt;InputChannel&gt;&amp; outServerChannel, sp&lt;InputChannel&gt;&amp; outClientChannel)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">inline</span> String8 <span class="title">getName</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> mName; &#125;</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">getFd</span><span class="params">()</span> <span class="keyword">const</span> </span>&#123; <span class="keyword">return</span> mFd; &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Sends a message to the other endpoint.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * If the channel is full then the message is guaranteed not to have been sent at all.</span></span><br><span class="line"><span class="comment">     * Try again after the consumer has sent a finished signal indicating that it has</span></span><br><span class="line"><span class="comment">     * consumed some of the pending messages from the channel.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * Returns OK on success.</span></span><br><span class="line"><span class="comment">     * Returns WOULD_BLOCK if the channel is full.</span></span><br><span class="line"><span class="comment">     * Returns DEAD_OBJECT if the channel's peer has been closed.</span></span><br><span class="line"><span class="comment">     * Other errors probably indicate that the channel is broken.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">status_t</span> <span class="title">sendMessage</span><span class="params">(<span class="keyword">const</span> InputMessage* msg)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Receives a message sent by the other endpoint.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * If there is no message present, try again after poll() indicates that the fd</span></span><br><span class="line"><span class="comment">     * is readable.</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     * Returns OK on success.</span></span><br><span class="line"><span class="comment">     * Returns WOULD_BLOCK if there is no message present.</span></span><br><span class="line"><span class="comment">     * Returns DEAD_OBJECT if the channel's peer has been closed.</span></span><br><span class="line"><span class="comment">     * Other errors probably indicate that the channel is broken.</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="function"><span class="keyword">status_t</span> <span class="title">receiveMessage</span><span class="params">(InputMessage* msg)</span></span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Returns a new object that has a duplicate of this channel's fd. */</span></span><br><span class="line">    <span class="function">sp&lt;InputChannel&gt; <span class="title">dup</span><span class="params">()</span> <span class="keyword">const</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    String8 mName;</span><br><span class="line">    <span class="keyword">int</span> mFd;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
 <blockquote>
 <p>  <code>InputChannel</code>包含了一个本地<code>unix socket</code>用于跨进程发送与接收输入信息。</p>
 </blockquote>
 <p>它的接口十分简单，我们就通过<code>sendMessage()</code>与<code>receiveMessage()</code>两个函数实现跨进程通信。</p>
 <p>回到之前，我们通过这个<code>inputChannel</code>的<code>Fd</code>（文件描述符）来获取一个<code>Connection</code>的索引，然后根据这个索引从<code>mConnectionsByFd</code>中获取<code>connection</code>对象。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ssize_t</span> InputDispatcher::getConnectionIndexLocked(<span class="keyword">const</span> sp&lt;InputChannel&gt;&amp; inputChannel) &#123;</span><br><span class="line">    <span class="keyword">ssize_t</span> connectionIndex = mConnectionsByFd.indexOfKey(inputChannel-&gt;getFd());</span><br><span class="line">    <span class="keyword">if</span> (connectionIndex &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        sp&lt;Connection&gt; connection = mConnectionsByFd.valueAt(connectionIndex);</span><br><span class="line">        <span class="keyword">if</span> (connection-&gt;inputChannel.get() == inputChannel.get()) &#123;</span><br><span class="line">            <span class="keyword">return</span> connectionIndex;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">ssize_t</span> <span class="title">InputDispatcher::getConnectionIndexLocked</span><span class="params">(<span class="keyword">const</span> sp&lt;InputChannel&gt;&amp; inputChannel)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">ssize_t</span> connectionIndex = mConnectionsByFd.indexOfKey(inputChannel-&gt;getFd());</span><br><span class="line">    <span class="keyword">if</span> (connectionIndex &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        sp&lt;Connection&gt; connection = mConnectionsByFd.valueAt(connectionIndex);</span><br><span class="line">        <span class="keyword">if</span> (connection-&gt;inputChannel.<span class="built_in">get</span>() == inputChannel.<span class="built_in">get</span>()) &#123;</span><br><span class="line">            <span class="keyword">return</span> connectionIndex;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这个<code>mConnectionByFd</code>又是怎么建立起来的呢？在<code>InputDispatcher</code>中包含了一个<code>registerInputChannel</code>函数：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">status_t</span> InputDispatcher::registerInputChannel(<span class="keyword">const</span> sp&lt;InputChannel&gt;&amp; inputChannel,</span><br><span class="line">        <span class="keyword">const</span> sp&lt;InputWindowHandle&gt;&amp; inputWindowHandle, <span class="keyword">bool</span> monitor) &#123;</span><br><span class="line">...</span><br><span class="line">    &#123; <span class="comment">// acquire lock</span></span><br><span class="line">        AutoMutex _l(mLock);</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">        sp&lt;Connection&gt; connection = <span class="keyword">new</span> Connection(inputChannel, inputWindowHandle, monitor);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> fd = inputChannel-&gt;getFd();</span><br><span class="line">        mConnectionsByFd.add(fd, connection);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (monitor) &#123;</span><br><span class="line">            mMonitoringChannels.push(inputChannel);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mLooper-&gt;addFd(fd, <span class="number">0</span>, ALOOPER_EVENT_INPUT, handleReceiveCallback, <span class="keyword">this</span>); </span><br><span class="line">    &#125; <span class="comment">// release lock</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wake the looper because some connections have changed.</span></span><br><span class="line">    mLooper-&gt;wake();</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">status_t</span> <span class="title">InputDispatcher::registerInputChannel</span><span class="params">(<span class="keyword">const</span> sp&lt;InputChannel&gt;&amp; inputChannel,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> sp&lt;InputWindowHandle&gt;&amp; inputWindowHandle, <span class="keyword">bool</span> monitor)</span> </span>&#123;</span><br><span class="line">...</span><br><span class="line">    &#123; <span class="comment">// acquire lock</span></span><br><span class="line">        AutoMutex _l(mLock);</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">        sp&lt;Connection&gt; connection = <span class="keyword">new</span> Connection(inputChannel, inputWindowHandle, monitor);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> fd = inputChannel-&gt;getFd();</span><br><span class="line">        mConnectionsByFd.add(fd, connection);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (monitor) &#123;</span><br><span class="line">            mMonitoringChannels.push(inputChannel);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mLooper-&gt;addFd(fd, <span class="number">0</span>, ALOOPER_EVENT_INPUT, handleReceiveCallback, <span class="keyword">this</span>); </span><br><span class="line">    &#125; <span class="comment">// release lock</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wake the looper because some connections have changed.</span></span><br><span class="line">    mLooper-&gt;wake();</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>connection</code>对象就是在这里由<code>inputChannel</code>构造并加入到<code>mConnectionsByFd</code>中的。而<code>mConnectionsByFd</code>本身是一个以<code>Fd</code>为索引的键值对：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">KeyedVector&lt;<span class="keyword">int</span>, sp&lt;Connection&gt; &gt; mConnectionsByFd;</span><br></pre></td></tr></table></figure>
 <p>取得<code>connection</code>对象之后，进入到了<code>prepareDispatchCycleLocked()</code>函数中，这个函数对连接的状态是否正常进行检测，连接正常会调用<code>enqueueDispatchEntriesLocked()</code>函数：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> InputDispatcher::enqueueDispatchEntriesLocked(<span class="keyword">nsecs_t</span> currentTime,</span><br><span class="line">        <span class="keyword">const</span> sp&lt;Connection&gt;&amp; connection, EventEntry* eventEntry, <span class="keyword">const</span> InputTarget* inputTarget) &#123;</span><br><span class="line">    <span class="keyword">bool</span> wasEmpty = connection-&gt;outboundQueue.isEmpty();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Enqueue dispatch entries for the requested modes.</span></span><br><span class="line">    enqueueDispatchEntryLocked(connection, eventEntry, inputTarget,</span><br><span class="line">            InputTarget::FLAG_DISPATCH_AS_HOVER_EXIT);</span><br><span class="line">    enqueueDispatchEntryLocked(connection, eventEntry, inputTarget,</span><br><span class="line">            InputTarget::FLAG_DISPATCH_AS_OUTSIDE);</span><br><span class="line">    enqueueDispatchEntryLocked(connection, eventEntry, inputTarget,</span><br><span class="line">            InputTarget::FLAG_DISPATCH_AS_HOVER_ENTER);</span><br><span class="line">    enqueueDispatchEntryLocked(connection, eventEntry, inputTarget,</span><br><span class="line">            InputTarget::FLAG_DISPATCH_AS_IS);</span><br><span class="line">    enqueueDispatchEntryLocked(connection, eventEntry, inputTarget,</span><br><span class="line">            InputTarget::FLAG_DISPATCH_AS_SLIPPERY_EXIT);</span><br><span class="line">    enqueueDispatchEntryLocked(connection, eventEntry, inputTarget,</span><br><span class="line">            InputTarget::FLAG_DISPATCH_AS_SLIPPERY_ENTER);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// If the outbound queue was previously empty, start the dispatch cycle going.</span></span><br><span class="line">    <span class="keyword">if</span> (wasEmpty &amp;&amp; !connection-&gt;outboundQueue.isEmpty()) &#123;</span><br><span class="line">        startDispatchCycleLocked(currentTime, connection);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InputDispatcher::enqueueDispatchEntriesLocked</span><span class="params">(<span class="keyword">nsecs_t</span> currentTime,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> sp&lt;Connection&gt;&amp; connection, EventEntry* eventEntry, <span class="keyword">const</span> InputTarget* inputTarget)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">bool</span> wasEmpty = connection-&gt;outboundQueue.isEmpty();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Enqueue dispatch entries for the requested modes.</span></span><br><span class="line">    enqueueDispatchEntryLocked(connection, eventEntry, inputTarget,</span><br><span class="line">            InputTarget::FLAG_DISPATCH_AS_HOVER_EXIT);</span><br><span class="line">    enqueueDispatchEntryLocked(connection, eventEntry, inputTarget,</span><br><span class="line">            InputTarget::FLAG_DISPATCH_AS_OUTSIDE);</span><br><span class="line">    enqueueDispatchEntryLocked(connection, eventEntry, inputTarget,</span><br><span class="line">            InputTarget::FLAG_DISPATCH_AS_HOVER_ENTER);</span><br><span class="line">    enqueueDispatchEntryLocked(connection, eventEntry, inputTarget,</span><br><span class="line">            InputTarget::FLAG_DISPATCH_AS_IS);</span><br><span class="line">    enqueueDispatchEntryLocked(connection, eventEntry, inputTarget,</span><br><span class="line">            InputTarget::FLAG_DISPATCH_AS_SLIPPERY_EXIT);</span><br><span class="line">    enqueueDispatchEntryLocked(connection, eventEntry, inputTarget,</span><br><span class="line">            InputTarget::FLAG_DISPATCH_AS_SLIPPERY_ENTER);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// If the outbound queue was previously empty, start the dispatch cycle going.</span></span><br><span class="line">    <span class="keyword">if</span> (wasEmpty &amp;&amp; !connection-&gt;outboundQueue.isEmpty()) &#123;</span><br><span class="line">        startDispatchCycleLocked(currentTime, connection);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>中间调用了一系列的<code>enqueueDispatchEntryLocked()</code>函数：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> InputDispatcher::enqueueDispatchEntryLocked(</span><br><span class="line">        <span class="keyword">const</span> sp&lt;Connection&gt;&amp; connection, EventEntry* eventEntry, <span class="keyword">const</span> InputTarget* inputTarget,</span><br><span class="line">        <span class="keyword">int32_t</span> dispatchMode) &#123;</span><br><span class="line">    <span class="keyword">int32_t</span> inputTargetFlags = inputTarget-&gt;flags;</span><br><span class="line">    <span class="keyword">if</span> (!(inputTargetFlags &amp; dispatchMode)) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    inputTargetFlags = (inputTargetFlags &amp; ~InputTarget::FLAG_DISPATCH_MASK) | dispatchMode;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// This is a new event.</span></span><br><span class="line">    <span class="comment">// Enqueue a new dispatch entry onto the outbound queue for this connection.</span></span><br><span class="line">    DispatchEntry* dispatchEntry = <span class="keyword">new</span> DispatchEntry(eventEntry, <span class="comment">// increments ref</span></span><br><span class="line">            inputTargetFlags, inputTarget-&gt;xOffset, inputTarget-&gt;yOffset,</span><br><span class="line">            inputTarget-&gt;scaleFactor);</span><br><span class="line">...</span><br><span class="line">    <span class="comment">// Enqueue the dispatch entry.</span></span><br><span class="line">    connection-&gt;outboundQueue.enqueueAtTail(dispatchEntry);</span><br><span class="line">    traceOutboundQueueLengthLocked(connection);</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InputDispatcher::enqueueDispatchEntryLocked</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> sp&lt;Connection&gt;&amp; connection, EventEntry* eventEntry, <span class="keyword">const</span> InputTarget* inputTarget,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">int32_t</span> dispatchMode)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int32_t</span> inputTargetFlags = inputTarget-&gt;flags;</span><br><span class="line">    <span class="keyword">if</span> (!(inputTargetFlags &amp; dispatchMode)) &#123;</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    inputTargetFlags = (inputTargetFlags &amp; ~InputTarget::FLAG_DISPATCH_MASK) | dispatchMode;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// This is a new event.</span></span><br><span class="line">    <span class="comment">// Enqueue a new dispatch entry onto the outbound queue for this connection.</span></span><br><span class="line">    DispatchEntry* dispatchEntry = <span class="keyword">new</span> DispatchEntry(eventEntry, <span class="comment">// increments ref</span></span><br><span class="line">            inputTargetFlags, inputTarget-&gt;xOffset, inputTarget-&gt;yOffset,</span><br><span class="line">            inputTarget-&gt;scaleFactor);</span><br><span class="line">...</span><br><span class="line">    <span class="comment">// Enqueue the dispatch entry.</span></span><br><span class="line">    connection-&gt;outboundQueue.enqueueAtTail(dispatchEntry);</span><br><span class="line">    traceOutboundQueueLengthLocked(connection);</span><br><span class="line">...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>省略的代码对<code>entry</code>进行了进一步的包装，然后在最后加入到了<code>connection</code>维护的<code>outboundQueue</code>中。</p>
 <p>回到上面，之后调用<code>startDispatchCycleLocked()</code>正式开始分发事件：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">while</span> (connection-&gt;status == Connection::STATUS_NORMAL</span><br><span class="line">          &amp;&amp; !connection-&gt;outboundQueue.isEmpty()) &#123;</span><br><span class="line">      DispatchEntry* dispatchEntry = connection-&gt;outboundQueue.head;</span><br><span class="line">      dispatchEntry-&gt;deliveryTime = currentTime;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// Publish the event.</span></span><br><span class="line">      <span class="keyword">status_t</span> status;</span><br><span class="line">      EventEntry* eventEntry = dispatchEntry-&gt;eventEntry;</span><br><span class="line">      <span class="keyword">switch</span> (eventEntry-&gt;type) &#123;</span><br></pre></td></tr></table></figure>
 <p>从<code>connection</code>的<code>outboundQueue</code>取出<code>entry</code>之后，根据事件类型的不同对事件进一步处理：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> EventEntry::TYPE_MOTION: &#123;</span><br><span class="line">           MotionEntry* motionEntry = <span class="keyword">static_cast</span>&lt;MotionEntry*&gt;(eventEntry);</span><br><span class="line"></span><br><span class="line">           PointerCoords scaledCoords[MAX_POINTERS];</span><br><span class="line">           <span class="keyword">const</span> PointerCoords* usingCoords = motionEntry-&gt;pointerCoords;</span><br><span class="line"></span><br><span class="line">           <span class="comment">// Set the X and Y offset depending on the input source.</span></span><br><span class="line">           <span class="keyword">float</span> xOffset, yOffset, scaleFactor;</span><br><span class="line">           <span class="keyword">if</span> ((motionEntry-&gt;source &amp; AINPUT_SOURCE_CLASS_POINTER)</span><br><span class="line">                   &amp;&amp; !(dispatchEntry-&gt;targetFlags &amp; InputTarget::FLAG_ZERO_COORDS)) &#123;</span><br><span class="line">               scaleFactor = dispatchEntry-&gt;scaleFactor;</span><br><span class="line">               xOffset = dispatchEntry-&gt;xOffset * scaleFactor;</span><br><span class="line">               yOffset = dispatchEntry-&gt;yOffset * scaleFactor;</span><br><span class="line">               <span class="keyword">if</span> (scaleFactor != <span class="number">1.0f</span>) &#123;</span><br><span class="line">                   <span class="keyword">for</span> (<span class="keyword">uint32_t</span> i = <span class="number">0</span>; i &lt; motionEntry-&gt;pointerCount; i++) &#123;</span><br><span class="line">                       scaledCoords[i] = motionEntry-&gt;pointerCoords[i];</span><br><span class="line">                       scaledCoords[i].scale(scaleFactor);</span><br><span class="line">                   &#125;</span><br><span class="line">                   usingCoords = scaledCoords;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               xOffset = <span class="number">0.0f</span>;</span><br><span class="line">               yOffset = <span class="number">0.0f</span>;</span><br><span class="line">               scaleFactor = <span class="number">1.0f</span>;</span><br><span class="line"></span><br><span class="line">               <span class="comment">// We don't want the dispatch target to know.</span></span><br><span class="line">               <span class="keyword">if</span> (dispatchEntry-&gt;targetFlags &amp; InputTarget::FLAG_ZERO_COORDS) &#123;</span><br><span class="line">                   <span class="keyword">for</span> (<span class="keyword">uint32_t</span> i = <span class="number">0</span>; i &lt; motionEntry-&gt;pointerCount; i++) &#123;</span><br><span class="line">                       scaledCoords[i].clear();</span><br><span class="line">                   &#125;</span><br><span class="line">                   usingCoords = scaledCoords;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">case</span> EventEntry::TYPE_MOTION: &#123;</span><br><span class="line">           MotionEntry* motionEntry = <span class="keyword">static_cast</span>&lt;MotionEntry*&gt;(eventEntry);</span><br><span class="line"></span><br><span class="line">           PointerCoords scaledCoords[MAX_POINTERS];</span><br><span class="line">           <span class="keyword">const</span> PointerCoords* usingCoords = motionEntry-&gt;pointerCoords;</span><br><span class="line"></span><br><span class="line">           <span class="comment">// Set the X and Y offset depending on the input source.</span></span><br><span class="line">           <span class="keyword">float</span> xOffset, yOffset, scaleFactor;</span><br><span class="line">           <span class="keyword">if</span> ((motionEntry-&gt;source &amp; AINPUT_SOURCE_CLASS_POINTER)</span><br><span class="line">                   &amp;&amp; !(dispatchEntry-&gt;targetFlags &amp; InputTarget::FLAG_ZERO_COORDS)) &#123;</span><br><span class="line">               scaleFactor = dispatchEntry-&gt;scaleFactor;</span><br><span class="line">               xOffset = dispatchEntry-&gt;xOffset * scaleFactor;</span><br><span class="line">               yOffset = dispatchEntry-&gt;yOffset * scaleFactor;</span><br><span class="line">               <span class="keyword">if</span> (scaleFactor != <span class="number">1.0f</span>) &#123;</span><br><span class="line">                   <span class="keyword">for</span> (<span class="keyword">uint32_t</span> i = <span class="number">0</span>; i &lt; motionEntry-&gt;pointerCount; i++) &#123;</span><br><span class="line">                       scaledCoords[i] = motionEntry-&gt;pointerCoords[i];</span><br><span class="line">                       scaledCoords[i].scale(scaleFactor);</span><br><span class="line">                   &#125;</span><br><span class="line">                   usingCoords = scaledCoords;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               xOffset = <span class="number">0.0f</span>;</span><br><span class="line">               yOffset = <span class="number">0.0f</span>;</span><br><span class="line">               scaleFactor = <span class="number">1.0f</span>;</span><br><span class="line"></span><br><span class="line">               <span class="comment">// We don't want the dispatch target to know.</span></span><br><span class="line">               <span class="keyword">if</span> (dispatchEntry-&gt;targetFlags &amp; InputTarget::FLAG_ZERO_COORDS) &#123;</span><br><span class="line">                   <span class="keyword">for</span> (<span class="keyword">uint32_t</span> i = <span class="number">0</span>; i &lt; motionEntry-&gt;pointerCount; i++) &#123;</span><br><span class="line">                       scaledCoords[i].<span class="built_in">clear</span>();</span><br><span class="line">                   &#125;</span><br><span class="line">                   usingCoords = scaledCoords;</span><br><span class="line">               &#125;</span><br><span class="line">           &#125;</span><br></pre></td></tr></table></figure>
 <p>在对事件的坐标进行解析（缩放）之后，进入下面的发布过程：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">// Publish the motion event.</span></span><br><span class="line">    status = connection-&gt;inputPublisher.publishMotionEvent(dispatchEntry-&gt;seq,</span><br><span class="line">            motionEntry-&gt;deviceId, motionEntry-&gt;source,</span><br><span class="line">            dispatchEntry-&gt;resolvedAction, motionEntry-&gt;actionButton,</span><br><span class="line">            dispatchEntry-&gt;resolvedFlags, motionEntry-&gt;edgeFlags,</span><br><span class="line">            motionEntry-&gt;metaState, motionEntry-&gt;buttonState,</span><br><span class="line">            xOffset, yOffset, motionEntry-&gt;xPrecision, motionEntry-&gt;yPrecision,</span><br><span class="line">            motionEntry-&gt;downTime, motionEntry-&gt;eventTime,</span><br><span class="line">            motionEntry-&gt;pointerCount, motionEntry-&gt;pointerProperties,</span><br><span class="line">            usingCoords);</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>实际上调用了<code>InputPublisher</code>的<code>publishMotionEvent()</code>函数：</p>
@@ -502,7 +451,7 @@
 <p>函数里封装了一个<code>msg</code>，然后最终调用了<code>mChannel</code>的<code>sendMessage()</code>方法进行跨进程通信。</p>
 <hr>
 <p>现在我们到了图中的这一步：</p>
-<p><img src="/images/event1_5.png" alt></p>
+<p><img src="/images/event1_5.png" alt=""></p>
 <p>我们的点击事件来到了建立的<code>socket</code>中，准备与交付给对应的<code>app</code>，我们知道每个<code>app</code>运行在自己的进程中，所以就需要使用<code>socket</code>来进行跨进程通信。</p>
 <hr>
 <h3 id="InputChannel连接建立过程"><a href="#InputChannel连接建立过程" class="headerlink" title="InputChannel连接建立过程"></a>InputChannel连接建立过程</h3><p>本段内容主要参考了</p>
@@ -517,7 +466,7 @@
 <p><code>ViewRootImpl</code>的初始化过程：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">ViewRootImpl</span><span class="params">(Context context, Display display)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    mWindowSession = WindowManagerGlobal.getWindowSession();</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里我们关注的是这个<code>mWindowSession</code>对象的初始化。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IWindowSession <span class="title">getWindowSession</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (WindowManagerGlobal.class) &#123;</span><br><span class="line">        <span class="keyword">if</span> (sWindowSession == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                InputMethodManager imm = InputMethodManager.getInstance(); </span><br><span class="line">                IWindowManager windowManager = getWindowManagerService();</span><br><span class="line">                <span class="comment">// 获取Session对象，利用Binder机制调用系统线程的方法</span></span><br><span class="line">                sWindowSession = windowManager.openSession(</span><br><span class="line">                        <span class="keyword">new</span> IWindowSessionCallback.Stub() &#123;</span><br><span class="line">                            <span class="meta">@Override</span></span><br><span class="line">                            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimatorScaleChanged</span><span class="params">(<span class="keyword">float</span> scale)</span> </span>&#123;</span><br><span class="line">                                ValueAnimator.setDurationScale(scale);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;,</span><br><span class="line">                        imm.getClient(), imm.getInputContext());</span><br><span class="line">            &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">                <span class="keyword">throw</span> e.rethrowFromSystemServer();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sWindowSession;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> IWindowSession <span class="title">getWindowSession</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">synchronized</span> (WindowManagerGlobal<span class="class">.<span class="keyword">class</span>) </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (sWindowSession == <span class="keyword">null</span>) &#123;</span><br><span class="line">            <span class="keyword">try</span> &#123;</span><br><span class="line">                InputMethodManager imm = InputMethodManager.getInstance(); </span><br><span class="line">                IWindowManager windowManager = getWindowManagerService();</span><br><span class="line">                <span class="comment">// 获取Session对象，利用Binder机制调用系统线程的方法</span></span><br><span class="line">                sWindowSession = windowManager.openSession(</span><br><span class="line">                        <span class="keyword">new</span> IWindowSessionCallback.Stub() &#123;</span><br><span class="line">                            <span class="meta">@Override</span></span><br><span class="line">                            <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onAnimatorScaleChanged</span><span class="params">(<span class="keyword">float</span> scale)</span> </span>&#123;</span><br><span class="line">                                ValueAnimator.setDurationScale(scale);</span><br><span class="line">                            &#125;</span><br><span class="line">                        &#125;,</span><br><span class="line">                        imm.getClient(), imm.getInputContext());</span><br><span class="line">            &#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">                <span class="keyword">throw</span> e.rethrowFromSystemServer();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> sWindowSession;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>下面是<code>setView()</code>：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">setView</span><span class="params">(View view, WindowManager.LayoutParams attrs, View panelParentView)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// 服务端过程</span></span><br><span class="line">    res = mWindowSession.addToDisplay(mWindow, mSeq, mWindowAttributes,</span><br><span class="line">        getHostVisibility(), mDisplay.getDisplayId(),</span><br><span class="line">        mAttachInfo.mContentInsets, mAttachInfo.mStableInsets,</span><br><span class="line">        mAttachInfo.mOutsets, mInputChannel);</span><br><span class="line">    ...</span><br><span class="line">    <span class="comment">// 客户端过程</span></span><br><span class="line">    <span class="keyword">if</span> (mInputChannel != <span class="keyword">null</span>) &#123;</span><br><span class="line">        mInputEventReceiver = <span class="keyword">new</span> WindowInputEventReceiver(mInputChannel, Looper.myLooper());</span><br><span class="line">    &#125;</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>上面的两行语句分别的对应两个注册过程的开始，先执行服务端的注册与监听，再执行客户端的注册与监听。</p>
@@ -531,7 +480,7 @@
 <p>调用了<code>native</code>方法：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> jobjectArray <span class="title">android_view_InputChannel_nativeOpenInputChannelPair</span><span class="params">(JNIEnv* env,</span></span></span><br><span class="line"><span class="function"><span class="params">        jclass clazz, jstring nameObj)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    sp&lt;InputChannel&gt; serverChannel;</span><br><span class="line">    sp&lt;InputChannel&gt; clientChannel;</span><br><span class="line">    <span class="keyword">status_t</span> result = InputChannel::openInputChannelPair(name, serverChannel, clientChannel);</span><br><span class="line">    ...</span><br><span class="line">    <span class="keyword">return</span> channelPair;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在这里就分为了<code>serverChannel</code>与<code>clientChannel</code>，作为<code>openInputChannelPair</code>调用的两参数来成对地创建：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">status_t</span> InputChannel::openInputChannelPair(<span class="keyword">const</span> String8&amp; name,</span><br><span class="line">        sp&lt;InputChannel&gt;&amp; outServerChannel, sp&lt;InputChannel&gt;&amp; outClientChannel) &#123;</span><br><span class="line">    <span class="keyword">int</span> sockets[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">if</span> (socketpair(AF_UNIX, SOCK_SEQPACKET, <span class="number">0</span>, sockets)) &#123;</span><br><span class="line">        <span class="keyword">status_t</span> result = -errno;</span><br><span class="line">        ALOGE(<span class="string">"channel '%s' ~ Could not create socket pair.  errno=%d"</span>,</span><br><span class="line">                name.<span class="built_in">string</span>(), errno);</span><br><span class="line">        outServerChannel.clear();</span><br><span class="line">        outClientChannel.clear();</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> bufferSize = SOCKET_BUFFER_SIZE;</span><br><span class="line">    setsockopt(sockets[<span class="number">0</span>], SOL_SOCKET, SO_SNDBUF, &amp;bufferSize, <span class="keyword">sizeof</span>(bufferSize));</span><br><span class="line">    setsockopt(sockets[<span class="number">0</span>], SOL_SOCKET, SO_RCVBUF, &amp;bufferSize, <span class="keyword">sizeof</span>(bufferSize));</span><br><span class="line">    setsockopt(sockets[<span class="number">1</span>], SOL_SOCKET, SO_SNDBUF, &amp;bufferSize, <span class="keyword">sizeof</span>(bufferSize));</span><br><span class="line">    setsockopt(sockets[<span class="number">1</span>], SOL_SOCKET, SO_RCVBUF, &amp;bufferSize, <span class="keyword">sizeof</span>(bufferSize));</span><br><span class="line"></span><br><span class="line">    String8 serverChannelName = name;</span><br><span class="line">    serverChannelName.append(<span class="string">" (server)"</span>);</span><br><span class="line">    outServerChannel = <span class="keyword">new</span> InputChannel(serverChannelName, sockets[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">    String8 clientChannelName = name;</span><br><span class="line">    clientChannelName.append(<span class="string">" (client)"</span>);</span><br><span class="line">    outClientChannel = <span class="keyword">new</span> InputChannel(clientChannelName, sockets[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">status_t</span> <span class="title">InputChannel::openInputChannelPair</span><span class="params">(<span class="keyword">const</span> String8&amp; name,</span></span></span><br><span class="line"><span class="function"><span class="params">        sp&lt;InputChannel&gt;&amp; outServerChannel, sp&lt;InputChannel&gt;&amp; outClientChannel)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sockets[<span class="number">2</span>];</span><br><span class="line">    <span class="keyword">if</span> (socketpair(AF_UNIX, SOCK_SEQPACKET, <span class="number">0</span>, sockets)) &#123;</span><br><span class="line">        <span class="keyword">status_t</span> result = -errno;</span><br><span class="line">        ALOGE(<span class="string">"channel '%s' ~ Could not create socket pair.  errno=%d"</span>,</span><br><span class="line">                name.<span class="built_in">string</span>(), errno);</span><br><span class="line">        outServerChannel.<span class="built_in">clear</span>();</span><br><span class="line">        outClientChannel.<span class="built_in">clear</span>();</span><br><span class="line">        <span class="keyword">return</span> result;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> bufferSize = SOCKET_BUFFER_SIZE;</span><br><span class="line">    setsockopt(sockets[<span class="number">0</span>], SOL_SOCKET, SO_SNDBUF, &amp;bufferSize, <span class="keyword">sizeof</span>(bufferSize));</span><br><span class="line">    setsockopt(sockets[<span class="number">0</span>], SOL_SOCKET, SO_RCVBUF, &amp;bufferSize, <span class="keyword">sizeof</span>(bufferSize));</span><br><span class="line">    setsockopt(sockets[<span class="number">1</span>], SOL_SOCKET, SO_SNDBUF, &amp;bufferSize, <span class="keyword">sizeof</span>(bufferSize));</span><br><span class="line">    setsockopt(sockets[<span class="number">1</span>], SOL_SOCKET, SO_RCVBUF, &amp;bufferSize, <span class="keyword">sizeof</span>(bufferSize));</span><br><span class="line"></span><br><span class="line">    String8 serverChannelName = name;</span><br><span class="line">    serverChannelName.append(<span class="string">" (server)"</span>);</span><br><span class="line">    outServerChannel = <span class="keyword">new</span> InputChannel(serverChannelName, sockets[<span class="number">0</span>]);</span><br><span class="line"></span><br><span class="line">    String8 clientChannelName = name;</span><br><span class="line">    clientChannelName.append(<span class="string">" (client)"</span>);</span><br><span class="line">    outClientChannel = <span class="keyword">new</span> InputChannel(clientChannelName, sockets[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>我们可以看到第4行使用了系统调用<code>socketpair()</code>来创建一对本地<code>socket</code>对象，使用<code>int</code>数组<code>sockets</code>来接收创建好的<code>fd</code>。</p>
 <p>下面使用系统调用<code>setsockopt()</code>来为新建的<code>socket</code>进行配置，设置了<code>socket</code>实体的输入输出<code>buff</code>大小。</p>
 <p>第21、25行调用了<code>Native</code> <code>InputChannel</code>的构造方法以<code>name+(server)</code>或<code>name+(client)</code>作为名字参数与创建好的<code>socket</code>作为<code>fd</code>参数来构造<code>InputChannel</code>对象，它的构造方法：</p>
@@ -541,25 +490,25 @@
 <p>现在我们回到<code>WindowState</code>的<code>openInputChannel()</code>方法中，在成功创建两个<code>InputChannel</code>后，调用了<code>mService.mInputManager.registerInputChannel(mInputChannel, mInputWindowHandle);</code>：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">registerInputChannel</span><span class="params">(InputChannel inputChannel,</span></span></span><br><span class="line"><span class="function"><span class="params">        InputWindowHandle inputWindowHandle)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (inputChannel == <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"inputChannel must not be null."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    nativeRegisterInputChannel(mPtr, inputChannel, inputWindowHandle, <span class="keyword">false</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">nativeRegisterInputChannel</span><span class="params">(JNIEnv* env, jclass <span class="comment">/* clazz */</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        jlong ptr, jobject inputChannelObj, jobject inputWindowHandleObj, jboolean monitor)</span> </span>&#123;</span><br><span class="line">    NativeInputManager* im = <span class="keyword">reinterpret_cast</span>&lt;NativeInputManager*&gt;(ptr);</span><br><span class="line"></span><br><span class="line">    sp&lt;InputChannel&gt; inputChannel = android_view_InputChannel_getInputChannel(env,</span><br><span class="line">            inputChannelObj);</span><br><span class="line">    ...</span><br><span class="line">    sp&lt;InputWindowHandle&gt; inputWindowHandle =</span><br><span class="line">            android_server_InputWindowHandle_getHandle(env, inputWindowHandleObj);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">status_t</span> status = im-&gt;registerInputChannel(</span><br><span class="line">            env, inputChannel, inputWindowHandle, monitor);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">status_t</span> NativeInputManager::registerInputChannel(JNIEnv* <span class="comment">/* env */</span>,</span><br><span class="line">        <span class="keyword">const</span> sp&lt;InputChannel&gt;&amp; inputChannel,</span><br><span class="line">        <span class="keyword">const</span> sp&lt;InputWindowHandle&gt;&amp; inputWindowHandle, <span class="keyword">bool</span> monitor) &#123;</span><br><span class="line">    <span class="keyword">return</span> mInputManager-&gt;getDispatcher()-&gt;registerInputChannel(</span><br><span class="line">            inputChannel, inputWindowHandle, monitor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">status_t</span> <span class="title">NativeInputManager::registerInputChannel</span><span class="params">(JNIEnv* <span class="comment">/* env */</span>,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> sp&lt;InputChannel&gt;&amp; inputChannel,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> sp&lt;InputWindowHandle&gt;&amp; inputWindowHandle, <span class="keyword">bool</span> monitor)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> mInputManager-&gt;getDispatcher()-&gt;registerInputChannel(</span><br><span class="line">            inputChannel, inputWindowHandle, monitor);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p><code>getDispatcher()</code>返回了<code>InputDispatcher</code>对象，这个方法就调用了我们之前提到过的<code>InputDispatcher::registerInputchannel()</code>方法，向<code>InputDispatcher</code>注册了我们创建好的<code>InputChannel</code>服务端。</p>
 <p>我们回顾一下这个方法：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">status_t</span> InputDispatcher::registerInputChannel(<span class="keyword">const</span> sp&lt;InputChannel&gt;&amp; inputChannel,</span><br><span class="line">        <span class="keyword">const</span> sp&lt;InputWindowHandle&gt;&amp; inputWindowHandle, <span class="keyword">bool</span> monitor) &#123;</span><br><span class="line">...</span><br><span class="line">    &#123; <span class="comment">// acquire lock</span></span><br><span class="line">        AutoMutex _l(mLock);</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">        sp&lt;Connection&gt; connection = <span class="keyword">new</span> Connection(inputChannel, inputWindowHandle, monitor);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> fd = inputChannel-&gt;getFd();</span><br><span class="line">        mConnectionsByFd.add(fd, connection);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (monitor) &#123;</span><br><span class="line">            mMonitoringChannels.push(inputChannel);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mLooper-&gt;addFd(fd, <span class="number">0</span>, ALOOPER_EVENT_INPUT, handleReceiveCallback, <span class="keyword">this</span>); </span><br><span class="line">    &#125; <span class="comment">// release lock</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wake the looper because some connections have changed.</span></span><br><span class="line">    mLooper-&gt;wake();</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">status_t</span> <span class="title">InputDispatcher::registerInputChannel</span><span class="params">(<span class="keyword">const</span> sp&lt;InputChannel&gt;&amp; inputChannel,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> sp&lt;InputWindowHandle&gt;&amp; inputWindowHandle, <span class="keyword">bool</span> monitor)</span> </span>&#123;</span><br><span class="line">...</span><br><span class="line">    &#123; <span class="comment">// acquire lock</span></span><br><span class="line">        AutoMutex _l(mLock);</span><br><span class="line"></span><br><span class="line">...</span><br><span class="line">        sp&lt;Connection&gt; connection = <span class="keyword">new</span> Connection(inputChannel, inputWindowHandle, monitor);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> fd = inputChannel-&gt;getFd();</span><br><span class="line">        mConnectionsByFd.add(fd, connection);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (monitor) &#123;</span><br><span class="line">            mMonitoringChannels.push(inputChannel);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        mLooper-&gt;addFd(fd, <span class="number">0</span>, ALOOPER_EVENT_INPUT, handleReceiveCallback, <span class="keyword">this</span>); </span><br><span class="line">    &#125; <span class="comment">// release lock</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Wake the looper because some connections have changed.</span></span><br><span class="line">    mLooper-&gt;wake();</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>将<code>InputChannel</code>的<code>Fd</code>作为索引保存到<code>InputDispatcher</code>中。</p>
 <p>然后调用<code>mLooper</code>的<code>addFd</code>在<code>Native Looper</code>中设置自定义<code>fd</code>进行监听，传入了<code>handleReceiveCallback()</code>函数作为参数，这样一来，在服务端收到消息时就会进行回调。关于<code>Native Looper</code>处理事件的分析可见<a href="http://www.viseator.com/2017/10/22/android_event_1/">另一系列的博文</a>。</p>
 <h4 id="客户端过程"><a href="#客户端过程" class="headerlink" title="客户端过程"></a>客户端过程</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 客户端过程</span></span><br><span class="line"><span class="keyword">if</span> (mInputChannel != <span class="keyword">null</span>) &#123;</span><br><span class="line">    mInputEventReceiver = <span class="keyword">new</span> WindowInputEventReceiver(mInputChannel, Looper.myLooper());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里以客户端<code>InputChannel</code>与当前应用的<code>Looper</code>作为参数，初始化了<code>WindowInputEventReceiver</code>对象：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">InputEventReceiver</span><span class="params">(InputChannel inputChannel, Looper looper)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    mInputChannel = inputChannel;</span><br><span class="line">    mMessageQueue = looper.getQueue();</span><br><span class="line">    mReceiverPtr = nativeInit(<span class="keyword">new</span> WeakReference&lt;InputEventReceiver&gt;(<span class="keyword">this</span>),</span><br><span class="line">            inputChannel, mMessageQueue);</span><br><span class="line"></span><br><span class="line">    mCloseGuard.open(<span class="string">"dispose"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>获取了<code>app</code>进程的消息队列，并调用<code>native</code>方法对<code>mReceiverPtr</code>进行初始化：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> jlong <span class="title">nativeInit</span><span class="params">(JNIEnv* env, jclass clazz, jobject receiverWeak,</span></span></span><br><span class="line"><span class="function"><span class="params">        jobject inputChannelObj, jobject messageQueueObj)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    sp&lt;InputChannel&gt; inputChannel = android_view_InputChannel_getInputChannel(env,</span><br><span class="line">            inputChannelObj); </span><br><span class="line"></span><br><span class="line">    sp&lt;MessageQueue&gt; messageQueue = android_os_MessageQueue_getMessageQueue(env, messageQueueObj);</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    sp&lt;NativeInputEventReceiver&gt; receiver = <span class="keyword">new</span> NativeInputEventReceiver(env,</span><br><span class="line">            receiverWeak, inputChannel, messageQueue);</span><br><span class="line">    <span class="keyword">status_t</span> status = receiver-&gt;initialize();</span><br><span class="line">    ...</span><br><span class="line">    receiver-&gt;incStrong(gInputEventReceiverClassInfo.clazz); <span class="comment">// retain a reference for the object</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">reinterpret_cast</span>&lt;jlong&gt;(receiver.get());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> jlong <span class="title">nativeInit</span><span class="params">(JNIEnv* env, jclass clazz, jobject receiverWeak,</span></span></span><br><span class="line"><span class="function"><span class="params">        jobject inputChannelObj, jobject messageQueueObj)</span> </span>&#123;</span><br><span class="line">    ...</span><br><span class="line">    sp&lt;InputChannel&gt; inputChannel = android_view_InputChannel_getInputChannel(env,</span><br><span class="line">            inputChannelObj); </span><br><span class="line"></span><br><span class="line">    sp&lt;MessageQueue&gt; messageQueue = android_os_MessageQueue_getMessageQueue(env, messageQueueObj);</span><br><span class="line">    ...</span><br><span class="line"></span><br><span class="line">    sp&lt;NativeInputEventReceiver&gt; receiver = <span class="keyword">new</span> NativeInputEventReceiver(env,</span><br><span class="line">            receiverWeak, inputChannel, messageQueue);</span><br><span class="line">    <span class="keyword">status_t</span> status = receiver-&gt;initialize();</span><br><span class="line">    ...</span><br><span class="line">    receiver-&gt;incStrong(gInputEventReceiverClassInfo.clazz); <span class="comment">// retain a reference for the object</span></span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">reinterpret_cast</span>&lt;jlong&gt;(receiver.<span class="built_in">get</span>());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>创建了<code>NativeInputEventReceiver</code>对象，并调用<code>initialize()</code>方法进行初始化：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">status_t</span> NativeInputEventReceiver::initialize() &#123;</span><br><span class="line">    setFdEvents(ALOOPER_EVENT_INPUT);</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> NativeInputEventReceiver::setFdEvents(<span class="keyword">int</span> events) &#123;</span><br><span class="line">    <span class="keyword">if</span> (mFdEvents != events) &#123;</span><br><span class="line">        mFdEvents = events;</span><br><span class="line">        <span class="keyword">int</span> fd = mInputConsumer.getChannel()-&gt;getFd();</span><br><span class="line">        <span class="keyword">if</span> (events) &#123;</span><br><span class="line">            mMessageQueue-&gt;getLooper()-&gt;addFd(fd, <span class="number">0</span>, events, <span class="keyword">this</span>, <span class="literal">NULL</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            mMessageQueue-&gt;getLooper()-&gt;removeFd(fd);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">status_t</span> <span class="title">NativeInputEventReceiver::initialize</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    setFdEvents(ALOOPER_EVENT_INPUT);</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">NativeInputEventReceiver::setFdEvents</span><span class="params">(<span class="keyword">int</span> events)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (mFdEvents != events) &#123;</span><br><span class="line">        mFdEvents = events;</span><br><span class="line">        <span class="keyword">int</span> fd = mInputConsumer.getChannel()-&gt;getFd();</span><br><span class="line">        <span class="keyword">if</span> (events) &#123;</span><br><span class="line">            mMessageQueue-&gt;getLooper()-&gt;addFd(fd, <span class="number">0</span>, events, <span class="keyword">this</span>, <span class="literal">NULL</span>);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            mMessageQueue-&gt;getLooper()-&gt;removeFd(fd);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里将客户端的<code>InputChannel</code>保存的<code>Fd</code>加入到了<code>Native Looper</code>中进行监听，对返回的消息进行处理：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> Looper::addFd(<span class="keyword">int</span> fd, <span class="keyword">int</span> ident, <span class="keyword">int</span> events, <span class="keyword">const</span> sp&lt;LooperCallback&gt;&amp; callback, <span class="keyword">void</span>* data) &#123;</span><br><span class="line">       &#123; <span class="comment">// acquire lock</span></span><br><span class="line">        AutoMutex _l(mLock);</span><br><span class="line"></span><br><span class="line">        Request request;</span><br><span class="line">        request.fd = fd;</span><br><span class="line">        request.ident = ident;</span><br><span class="line">        request.events = events;</span><br><span class="line">        request.seq = mNextRequestSeq++;</span><br><span class="line">        request.callback = callback;</span><br><span class="line">        request.data = data;</span><br><span class="line">        <span class="keyword">if</span> (mNextRequestSeq == <span class="number">-1</span>) mNextRequestSeq = <span class="number">0</span>; <span class="comment">// reserve sequence number -1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">struct</span> epoll_event eventItem;</span><br><span class="line">        request.initEventItem(&amp;eventItem);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">ssize_t</span> requestIndex = mRequests.indexOfKey(fd);</span><br><span class="line">        <span class="keyword">if</span> (requestIndex &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, fd, &amp; eventItem);</span><br><span class="line">            <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                ALOGE(<span class="string">"Error adding epoll events for fd %d: %s"</span>, fd, strerror(errno));</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            mRequests.add(fd, request);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_MOD, fd, &amp; eventItem);</span><br><span class="line">             <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (errno == ENOENT) &#123;</span><br><span class="line">                    epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, fd, &amp; eventItem);</span><br><span class="line">                    ...</span><br><span class="line">                ...</span><br><span class="line">                &#125;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">       </span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Looper::addFd</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">int</span> ident, <span class="keyword">int</span> events, <span class="keyword">const</span> sp&lt;LooperCallback&gt;&amp; callback, <span class="keyword">void</span>* data)</span> </span>&#123;</span><br><span class="line">       &#123; <span class="comment">// acquire lock</span></span><br><span class="line">        AutoMutex _l(mLock);</span><br><span class="line"></span><br><span class="line">        Request request;</span><br><span class="line">        request.fd = fd;</span><br><span class="line">        request.ident = ident;</span><br><span class="line">        request.events = events;</span><br><span class="line">        request.seq = mNextRequestSeq++;</span><br><span class="line">        request.callback = callback;</span><br><span class="line">        request.data = data;</span><br><span class="line">        <span class="keyword">if</span> (mNextRequestSeq == <span class="number">-1</span>) mNextRequestSeq = <span class="number">0</span>; <span class="comment">// reserve sequence number -1</span></span><br><span class="line"></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> <span class="title">eventItem</span>;</span></span><br><span class="line">        request.initEventItem(&amp;eventItem);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">ssize_t</span> requestIndex = mRequests.indexOfKey(fd);</span><br><span class="line">        <span class="keyword">if</span> (requestIndex &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, fd, &amp; eventItem);</span><br><span class="line">            <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                ALOGE(<span class="string">"Error adding epoll events for fd %d: %s"</span>, fd, strerror(errno));</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            mRequests.add(fd, request);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_MOD, fd, &amp; eventItem);</span><br><span class="line">             <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (errno == ENOENT) &#123;</span><br><span class="line">                    epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, fd, &amp; eventItem);</span><br><span class="line">                    ...</span><br><span class="line">                ...</span><br><span class="line">                &#125;</span><br><span class="line">            ...</span><br><span class="line">        &#125;</span><br><span class="line">       </span><br><span class="line">       &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里将<code>NativeInputEventReceiver</code>传入的<code>this</code>作为<code>callback</code>存入到<code>request</code>中， 再以<code>fd</code>为索引向<code>mRequests</code>映射表中加入<code>request</code>，然后以<code>fd</code>作为信号调用<code>epoll_ctl</code>系统调用，利用它对通信过程进行监听，在收到消息之后最终会根据<code>fd</code>找到<code>mRequests</code>中的<code>request</code>保存的<code>callback</code>，即<code>NativeInputEventReceiver</code>对象。</p>
-<p>关于<code>addFd</code>方法的详细分析，可以查看<a href>Native消息机制的博文</a></p>
-<p><img src="/images/event1_6.png" alt></p>
+<p>关于<code>addFd</code>方法的详细分析，可以查看<a href="">Native消息机制的博文</a></p>
+<p><img src="/images/event1_6.png" alt=""></p>
 <h3 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h3><p>现在我们了解了从内核到应用整个触摸事件的传输过程，并且知道了<code>InputChannel</code>在两端的监听建立与触发的函数，至此，触摸事件已经从系统底层来到了我们的应用进程，<a href="http://www.viseator.com/2017/10/07/android_view_event_2/">下一篇博客</a>将从触发函数开始讲解事件从<code>native</code>层真正传入<code>java</code>层的过程。</p>
 
     </div>
@@ -567,23 +516,20 @@
     
     
     
-        
       
-        <div id="reward-container">
+        <div class="reward-container">
   <div></div>
-  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
     打赏
   </button>
   <div id="qr" style="display: none;">
-        
       
-      <div style="display: inline-block">
+      <div style="display: inline-block;">
         <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
         <p>微信支付</p>
       </div>
-        
       
-      <div style="display: inline-block">
+      <div style="display: inline-block;">
         <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
         <p>支付宝</p>
       </div>
@@ -591,98 +537,76 @@
   </div>
 </div>
 
-      
         
 
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>viseator(吴迪)</li>
+    <strong>本文作者： </strong>viseator(吴迪)
+  </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     <a href="https://www.viseator.com/2017/09/14/android_view_event_1/" title="Android 触摸事件分发机制（一）从内核到应用 一切的开始">https://www.viseator.com/2017/09/14/android_view_event_1/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
 </ul>
 </div>
 
-      
 
       <footer class="post-footer">
-          
-            
-          
           <div class="post-tags">
-            
               <a href="/tags/Android/" rel="tag"># Android</a>
-            
               <a href="/tags/View/" rel="tag"># View</a>
-            
           </div>
-        
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-              
                 <a href="/2017/09/05/mr12u_openwrt_mentohust/" rel="next" title="TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）">
                   <i class="fa fa-chevron-left"></i> TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）
                 </a>
-              
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
                 <a href="/2017/10/07/android_view_event_2/" rel="prev" title="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始">
                   Android 触摸事件分发机制（二）原始事件消息传递与分发的开始 <i class="fa fa-chevron-right"></i>
                 </a>
-              
             </div>
           </div>
-        
       </footer>
     
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
   </div>
 
 
           </div>
           
-    
     
   <div class="comments" id="comments">
     <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
   </div>
   
-  
 
         </div>
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -696,84 +620,48 @@
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#触摸事件的来源"><span class="nav-number">2.</span> <span class="nav-text">触摸事件的来源</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#从硬件到内核"><span class="nav-number">2.1.</span> <span class="nav-text">从硬件到内核</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#系统对触摸事件的处理"><span class="nav-number">2.2.</span> <span class="nav-text">系统对触摸事件的处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#EventHub"><span class="nav-number">2.2.1.</span> <span class="nav-text">EventHub</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#InputReader"><span class="nav-number">2.2.2.</span> <span class="nav-text">InputReader</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#InputDispatcher"><span class="nav-number">2.2.3.</span> <span class="nav-text">InputDispatcher</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#InputChannel连接建立过程"><span class="nav-number">2.3.</span> <span class="nav-text">InputChannel连接建立过程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#服务端过程"><span class="nav-number">2.3.1.</span> <span class="nav-text">服务端过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#客户端过程"><span class="nav-number">2.3.2.</span> <span class="nav-text">客户端过程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#小结"><span class="nav-number">2.4.</span> <span class="nav-text">小结</span></a></li></ol></li></ol></div>
-        
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image"
-      src="/images/avatar.jpg"
-      alt="viseator(吴迪)">
+  <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
+    src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
   <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives">
         
           <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-categories">
-        
-          
             <a href="/categories">
           
-        
-        <span class="site-state-item-count">21</span>
-        <span class="site-state-item-name">分类</span>
-        </a>
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
-          
             <a href="/tags">
           
-        
-        <span class="site-state-item-count">26</span>
-        <span class="site-state-item-name">标签</span>
-        </a>
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
-    
   </nav>
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
         <a href="https://github.com/viseator" title="GitHub &rarr; https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
         <a href="mailto:viseator@gmail.com" title="Email &rarr; mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
       </span>
-    
   </div>
   <div class="cc-license motion-element" itemprop="license">
-    
-  
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
@@ -787,31 +675,24 @@
         <li class="links-of-blogroll-item">
           <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
         </li>
-      
     </ul>
   </div>
 
@@ -825,17 +706,24 @@
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2016 – <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.0</div>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.5.0
+  </div>
 
         
 
@@ -847,7 +735,6 @@
 
 
 
-  
   <script>
   function leancloudSelector(url) {
     return document.getElementById(url).querySelector('.leancloud-visitors-count');
@@ -864,7 +751,6 @@
           if (results.length > 0) {
             var counter = results[0];
               leancloudSelector(url).innerText = counter.time + 1;
-            
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .then(response => response.json())
               .catch(error => {
@@ -879,7 +765,6 @@
                 .catch(error => {
                   console.log('Failed to create', error);
                 });
-            
           }
         })
         .catch(error => {
@@ -957,13 +842,20 @@
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
-<script src="/js/schemes/muse.js?v=7.4.0"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/js/next-boot.js?v=7.4.0"></script>
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
 
 
 
@@ -981,13 +873,10 @@
 
 
 
-
-
-
-
   
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.css">
-<script src="//cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js"></script><script src="/js/algolia-search.js?v=7.4.0"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js"></script>
+<script src="/js/algolia-search.js"></script>
 
 
 
@@ -1002,8 +891,6 @@
 
 
 
-
-  
 
   
 

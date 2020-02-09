@@ -1,28 +1,23 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-<meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=7.4.0">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#F5F5F5">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
   <meta name="msapplication-config" content="/images/browserconfig.xml">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+<link rel="stylesheet" href="/css/main.css">
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
@@ -30,7 +25,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    version: '7.4.0',
+    version: '7.5.0',
     exturl: false,
     sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":true,"show_result":true,"style":null},
@@ -60,20 +55,22 @@
 </script>
 
   <meta name="description" content="关于CS:APP《深入理解计算机系统》(Computer Systems: A Programmer’s Perspective;CS:APP)这本书作为CMU核心课程的核心教材，一直被众人所推崇。这本书的主要内容就如它的英文名称那样：以一个程序员的视角看待计算机系统（现在的中文书名翻译给人一种这本书非常精深的错觉）。实际上这本书的内容并没有太过于深入，并且一直都作为计算机科学与技术专业低年级的计">
-<meta name="keywords" content="Computer System,CS:APP">
 <meta property="og:type" content="article">
 <meta property="og:title" content="深入理解计算机系统（CS:APP) - Data Lab详解">
 <meta property="og:url" content="https://www.viseator.com/2017/06/18/CS_APP_DataLab/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="关于CS:APP《深入理解计算机系统》(Computer Systems: A Programmer’s Perspective;CS:APP)这本书作为CMU核心课程的核心教材，一直被众人所推崇。这本书的主要内容就如它的英文名称那样：以一个程序员的视角看待计算机系统（现在的中文书名翻译给人一种这本书非常精深的错觉）。实际上这本书的内容并没有太过于深入，并且一直都作为计算机科学与技术专业低年级的计">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.viseator.com/images/bitCount.jpg">
-<meta property="og:updated_time" content="2018-06-28T08:27:29.000Z">
+<meta property="article:published_time" content="2017-06-18T07:01:01.000Z">
+<meta property="article:modified_time" content="2018-06-28T08:27:29.000Z">
+<meta property="article:author" content="viseator(吴迪)">
+<meta property="article:tag" content="Computer System">
+<meta property="article:tag" content="CS:APP">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="深入理解计算机系统（CS:APP) - Data Lab详解">
-<meta name="twitter:description" content="关于CS:APP《深入理解计算机系统》(Computer Systems: A Programmer’s Perspective;CS:APP)这本书作为CMU核心课程的核心教材，一直被众人所推崇。这本书的主要内容就如它的英文名称那样：以一个程序员的视角看待计算机系统（现在的中文书名翻译给人一种这本书非常精深的错觉）。实际上这本书的内容并没有太过于深入，并且一直都作为计算机科学与技术专业低年级的计">
 <meta name="twitter:image" content="https://www.viseator.com/images/bitCount.jpg">
-  <link rel="canonical" href="https://www.viseator.com/2017/06/18/CS_APP_DataLab/">
+
+<link rel="canonical" href="https://www.viseator.com/2017/06/18/CS_APP_DataLab/">
 
 
 <script id="page-configurations">
@@ -89,16 +86,16 @@
 
   <title>深入理解计算机系统（CS:APP) - Data Lab详解 | viseator's blog</title>
   
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
-  <script>
-    var host = window.location.hostname;
-    if (host !== "localhost" || !true) {
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-93455229-1');
-    }
-  </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-93455229-1');
+      }
+    </script>
 
 
   <script>
@@ -110,8 +107,6 @@
       s.parentNode.insertBefore(hm, s);
     })();
   </script>
-
-
 
 
 
@@ -128,7 +123,6 @@
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -142,11 +136,11 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
 
@@ -162,11 +156,11 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 </div>
 
@@ -174,77 +168,46 @@
 <nav class="site-nav">
   
   <ul id="menu" class="menu">
-      
-      
-      
-        
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section">首页</a>
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories" rel="section">分类</a>
+    <a href="/categories" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section">归档</a>
+    <a href="/archives" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags" rel="section">标签</a>
+    <a href="/tags" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-resource">
 
-    <a href="/2017/03/25/resource_general" rel="section">资源</a>
+    <a href="/2017/03/25/resource_general" rel="section"><i class="fa fa-fw fa-star"></i>资源</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-arch">
 
-    <a href="/categories/Linux/" rel="section">Arch安装</a>
+    <a href="/categories/Linux/" rel="section"><i class="fa fa-fw fa-linux"></i>Arch安装</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-about">
 
-    <a href="/about" rel="section">关于</a>
+    <a href="/about" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
 
   </li>
       <li class="menu-item menu-item-search">
-        <a href="javascript:;" class="popup-trigger">
-        搜索</a>
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
       </li>
-    
   </ul>
-
-    
 
 </nav>
   <div class="site-search">
@@ -279,33 +242,33 @@
   </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content">
+          
+
+          <div class="content">
             
 
-  <div id="posts" class="posts-expand">
-      <article itemscope itemtype="http://schema.org/Article">
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block post">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/06/18/CS_APP_DataLab/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="viseator(吴迪)">
       <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">深入理解计算机系统（CS:APP) - Data Lab详解
-
-          
+        <h2 class="post-title" itemprop="name headline">
+          深入理解计算机系统（CS:APP) - Data Lab详解
         </h2>
 
         <div class="post-meta">
@@ -315,16 +278,8 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              
-                
-              
-
               <time title="创建时间：2017-06-18 15:01:01" itemprop="dateCreated datePublished" datetime="2017-06-18T15:01:01+08:00">2017-06-18</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -332,28 +287,23 @@
                 <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2018-06-28 16:27:29" itemprop="dateModified" datetime="2018-06-28T16:27:29+08:00">2018-06-28</time>
               </span>
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Computer-System/" itemprop="url" rel="index"><span itemprop="name">Computer System</span></a></span>
-
-                
-                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-System/" itemprop="url" rel="index">
+                    <span itemprop="name">Computer System</span>
+                  </a>
+                </span>
                   ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Computer-System/CS-APP/" itemprop="url" rel="index"><span itemprop="name">CS:APP</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Computer-System/CS-APP/" itemprop="url" rel="index">
+                    <span itemprop="name">CS:APP</span>
+                  </a>
+                </span>
             </span>
-          
 
           
             <span id="/2017/06/18/CS_APP_DataLab/" class="post-meta-item leancloud_visitors" data-flag-title="深入理解计算机系统（CS:APP) - Data Lab详解" title="阅读次数">
@@ -363,7 +313,6 @@
               <span class="post-meta-item-text">阅读次数：</span>
               <span class="leancloud-visitors-count"></span>
             </span>
-          
 
         </div>
       </header>
@@ -441,7 +390,7 @@
 <li>重复第2步，直到合成只有1组，组中的数值即为结果</li>
 </ol>
 <p>用图片比较便于理解：</p>
-<p><img src="/images/bitCount.jpg" alt></p>
+<p><img src="/images/bitCount.jpg" alt=""></p>
 <p>可以看到最终的0x0000000F即为1的数量15</p>
 <p>该算法能成功的关键在于一开始中每组中的数值即为每组中1的数量，然后将相邻两组中的数值相加的过程就相当于将之前一级的1的数量汇总，不断重复这个过程就可以将1的数量汇总到最后的一个数中。</p>
 <p>有了算法我们还要考虑如何在题目的限制条件下实现这一算法。</p>
@@ -490,39 +439,39 @@
 </ul>
 <ul>
 <li>操作符使用数量限制：15</li>
-<li>思路：对于正数，我们直接把x右移n位就可以得到向零取整的结果（实际上是向下取整）；对于负数，虽然我们右移n位可以得到结果，但是这个结果是向下取整的，所以我们需要适当地加上1来补为向零取整，那么我们什么时候需要加1呢？整除时当然不用，在不能整除时就都需要加上1来调整，如何判断是否整除？只要移出的位中有一个不为0，那么就表示无法整除。​<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">divpwr2</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">1</span> &lt;&lt; <span class="number">31</span>;</span><br><span class="line">    <span class="keyword">int</span> isALessThanZero = !!(x &amp; a);</span><br><span class="line">    <span class="keyword">int</span> isXHasMoreBit = (!!((~(a &gt;&gt; (<span class="number">32</span> + ~n))) &amp; x));</span><br><span class="line">    <span class="keyword">return</span> (x &gt;&gt; n) + (isXHasMoreBit &amp; isALessThanZero);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>思路：对于正数，我们直接把x右移n位就可以得到向零取整的结果（实际上是向下取整）；对于负数，虽然我们右移n位可以得到结果，但是这个结果是向下取整的，所以我们需要适当地加上1来补为向零取整，那么我们什么时候需要加1呢？整除时当然不用，在不能整除时就都需要加上1来调整，如何判断是否整除？只要移出的位中有一个不为0，那么就表示无法整除。​</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">divpwr2</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> n)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> a = <span class="number">1</span> &lt;&lt; <span class="number">31</span>;</span><br><span class="line">    <span class="keyword">int</span> isALessThanZero = !!(x &amp; a);</span><br><span class="line">    <span class="keyword">int</span> isXHasMoreBit = (!!((~(a &gt;&gt; (<span class="number">32</span> + ~n))) &amp; x));</span><br><span class="line">    <span class="keyword">return</span> (x &gt;&gt; n) + (isXHasMoreBit &amp; isALessThanZero);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="negate"><a href="#negate" class="headerlink" title="negate"></a>negate</h4></li>
+<li><p>要求：计算-x</p>
 </li>
-</ul>
-<h4 id="negate"><a href="#negate" class="headerlink" title="negate"></a>negate</h4><ul>
-<li>要求：计算-x</li>
 <li>操作符使用数量限制：5</li>
-<li>思路：略。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">negate</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; <span class="keyword">return</span> ~x + <span class="number">1</span>; &#125;</span><br></pre></td></tr></table></figure>
+<li><p>思路：略。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">negate</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; <span class="keyword">return</span> ~x + <span class="number">1</span>; &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="isPositive"><a href="#isPositive" class="headerlink" title="isPositive"></a>isPositive</h4></li>
+<li><p>要求：如果x大于0返回1，否则返回0</p>
 </li>
-</ul>
-<h4 id="isPositive"><a href="#isPositive" class="headerlink" title="isPositive"></a>isPositive</h4><ul>
-<li>要求：如果x大于0返回1，否则返回0</li>
 <li>操作符使用数量限制：8</li>
-<li>思路：检测符号位与x是否为0即可。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isPositive</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; <span class="keyword">return</span> !((x &amp; (<span class="number">1</span> &lt;&lt; <span class="number">31</span>)) | !x); &#125;</span><br></pre></td></tr></table></figure>
+<li><p>思路：检测符号位与x是否为0即可。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isPositive</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123; <span class="keyword">return</span> !((x &amp; (<span class="number">1</span> &lt;&lt; <span class="number">31</span>)) | !x); &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="isLessOrEqual"><a href="#isLessOrEqual" class="headerlink" title="isLessOrEqual"></a>isLessOrEqual</h4></li>
+<li><p>要求：如果x小于等于y则返回1，否则返回0</p>
 </li>
-</ul>
-<h4 id="isLessOrEqual"><a href="#isLessOrEqual" class="headerlink" title="isLessOrEqual"></a>isLessOrEqual</h4><ul>
-<li>要求：如果x小于等于y则返回1，否则返回0</li>
 <li>操作符使用数量限制：24</li>
-<li>思路：本题的基本思路是判断x-y得到的值是否小于等于0，但是要考虑溢出带来的影响，首先定义了两个变量xp,yp分别表示x,y是否大于等于0。return的表达式的含义为并并非x大于等于0且y小于0的情况下（&amp;的后半部分），如果x-y小于或等于0或x小于零且y大于等于0，则返回1。<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isLessOrEqual</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> t = <span class="number">1</span> &lt;&lt; <span class="number">31</span>;</span><br><span class="line">    <span class="keyword">int</span> xp = !(x &amp; t);</span><br><span class="line">    <span class="keyword">int</span> yp = !(y &amp; t);</span><br><span class="line">    <span class="keyword">int</span> p = x + ~y + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> (!!(((!xp) &amp; yp) | ((p &amp; t) | !p))) &amp; (!(xp &amp; (!yp)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<li><p>思路：本题的基本思路是判断x-y得到的值是否小于等于0，但是要考虑溢出带来的影响，首先定义了两个变量xp,yp分别表示x,y是否大于等于0。return的表达式的含义为并并非x大于等于0且y小于0的情况下（&amp;的后半部分），如果x-y小于或等于0或x小于零且y大于等于0，则返回1。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">isLessOrEqual</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> t = <span class="number">1</span> &lt;&lt; <span class="number">31</span>;</span><br><span class="line">    <span class="keyword">int</span> xp = !(x &amp; t);</span><br><span class="line">    <span class="keyword">int</span> yp = !(y &amp; t);</span><br><span class="line">    <span class="keyword">int</span> p = x + ~y + <span class="number">1</span>;</span><br><span class="line">    <span class="keyword">return</span> (!!(((!xp) &amp; yp) | ((p &amp; t) | !p))) &amp; (!(xp &amp; (!yp)));</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ilog2"><a href="#ilog2" class="headerlink" title="ilog2"></a>ilog2</h4></li>
+<li><p>要求：返回x求以2为底的对数的结果 向下取整</p>
 </li>
-</ul>
-<h4 id="ilog2"><a href="#ilog2" class="headerlink" title="ilog2"></a>ilog2</h4><ul>
-<li>要求：返回x求以2为底的对数的结果 向下取整</li>
 <li>操作符使用数量限制：90</li>
 <li>思路：本题参照了<a href="http://blog.duskdragon.com/2017/04/04/%E6%B7%B1%E5%85%A5%E7%90%86%E8%A7%A3%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9FDataLab%E5%AE%9E%E9%AA%8C%E6%8A%A5%E5%91%8A/" target="_blank" rel="noopener">陈志浩学长的答案</a>。<br>解题算法的核心思想是二分查找，首先我们要明白这道题实际上想让我们求的是什么，经过观察我们可以得出结论，一个数求以2为底的对数的结果就相当于它二进制中位置最高的1的序号（序号从零开始由低位到高位）。那么我们需要做的就是查找并记录这个位置最高的1的位置。<br>算法过程如下：<ol>
 <li>如果x &gt;&gt; 16的结果大于0，那么可以说明最高位的位置至少是16，那么我们可以将结果的第4位置1（序号编号规则同上），因为2 ^ 4 = 16，反之置0说明结果小于16.</li>
 <li>下面考虑两种情况，如果第1步中x &gt;&gt; 16 大于0，说明我们需要在16位之后的第8位（第24位，相当于再二分）再进行二分查找，如果x &gt;&gt; 16小于0，那我们需要在16位之前的第8位（第8位，相当于再二分）进行查找，那么我们可以得出，下次查找时的范围为x &gt;&gt; (8 + result) (result表示上一步得到的结果（0或16）)，这个+result的意义可以认为是重新确定开始进一步二分查找的位置。<br>如果x &gt;&gt; (8 + result) 的结果大于0，那么说明结果（result)的第3位必为1，相当于在结果上加上了查找到的新位置，反之第3位应该仍为0.</li>
 <li>按照上面的思路继续查找到不能再二分（偏移为x &gt;&gt; (1 + reuslt)），此时result中得到最终的最高位的位置。<br>算法描述起来比较难，参照代码推理几次就可以明白其中的巧妙之处：<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">ilog2</span><span class="params">(<span class="keyword">int</span> x)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> b4 = !!(x &gt;&gt; <span class="number">16</span>);</span><br><span class="line">    <span class="keyword">int</span> b3 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> b2 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> b1 = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">int</span> b0 = <span class="number">0</span>;</span><br><span class="line">    result = b4 &lt;&lt; <span class="number">4</span>;</span><br><span class="line">    b3 = !!(x &gt;&gt; (<span class="number">8</span> + result));</span><br><span class="line">    result = result | (b3 &lt;&lt; <span class="number">3</span>);</span><br><span class="line">    b2 = !!(x &gt;&gt; (<span class="number">4</span> + result));</span><br><span class="line">    result = result | (b2 &lt;&lt; <span class="number">2</span>);</span><br><span class="line">    b1 = !!(x &gt;&gt; (<span class="number">2</span> + result));</span><br><span class="line">    result = result | (b1 &lt;&lt; <span class="number">1</span>);</span><br><span class="line">    b0 = !!(x &gt;&gt; (<span class="number">1</span> + result));</span><br><span class="line">    result = result | b0;</span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
+<h3 id="第二部分-浮点数"><a href="#第二部分-浮点数" class="headerlink" title="第二部分 浮点数"></a>第二部分 浮点数</h3></li>
 </ol>
 </li>
 </ul>
-<h3 id="第二部分-浮点数"><a href="#第二部分-浮点数" class="headerlink" title="第二部分 浮点数"></a>第二部分 浮点数</h3><p>所编写的程序必须满足如下要求：</p>
+<p>所编写的程序必须满足如下要求：</p>
 <ol>
 <li>只能使用函数参数与函数内声明的局部变量</li>
 <li>最多只能使用有限个运算符（等于号、括号不计），可以认为使用的运算符个数越少得分越高</li>
@@ -589,23 +538,20 @@
     
     
     
-        
       
-        <div id="reward-container">
+        <div class="reward-container">
   <div></div>
-  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
     打赏
   </button>
   <div id="qr" style="display: none;">
-        
       
-      <div style="display: inline-block">
+      <div style="display: inline-block;">
         <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
         <p>微信支付</p>
       </div>
-        
       
-      <div style="display: inline-block">
+      <div style="display: inline-block;">
         <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
         <p>支付宝</p>
       </div>
@@ -613,98 +559,76 @@
   </div>
 </div>
 
-      
         
 
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>viseator(吴迪)</li>
+    <strong>本文作者： </strong>viseator(吴迪)
+  </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     <a href="https://www.viseator.com/2017/06/18/CS_APP_DataLab/" title="深入理解计算机系统（CS:APP) - Data Lab详解">https://www.viseator.com/2017/06/18/CS_APP_DataLab/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
 </ul>
 </div>
 
-      
 
       <footer class="post-footer">
-          
-            
-          
           <div class="post-tags">
-            
               <a href="/tags/Computer-System/" rel="tag"># Computer System</a>
-            
               <a href="/tags/CS-APP/" rel="tag"># CS:APP</a>
-            
           </div>
-        
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-              
                 <a href="/2017/05/25/android_google_mvp/" rel="next" title="Android Google官方MVP架构分析">
                   <i class="fa fa-chevron-left"></i> Android Google官方MVP架构分析
                 </a>
-              
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
                 <a href="/2017/06/21/CS_APP_BombLab/" rel="prev" title="深入理解计算机系统（CS:APP) - Bomb Lab详解">
                   深入理解计算机系统（CS:APP) - Bomb Lab详解 <i class="fa fa-chevron-right"></i>
                 </a>
-              
             </div>
           </div>
-        
       </footer>
     
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
   </div>
 
 
           </div>
           
-    
     
   <div class="comments" id="comments">
     <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
   </div>
   
-  
 
         </div>
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -718,84 +642,48 @@
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#关于CS-APP"><span class="nav-number">1.</span> <span class="nav-text">关于CS:APP</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data-Lab"><span class="nav-number">2.</span> <span class="nav-text">Data Lab</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#简介"><span class="nav-number">2.1.</span> <span class="nav-text">简介</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#所用工具"><span class="nav-number">2.2.</span> <span class="nav-text">所用工具</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第一部分-整数"><span class="nav-number">2.3.</span> <span class="nav-text">第一部分 整数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#bitAnd"><span class="nav-number">2.3.1.</span> <span class="nav-text">bitAnd</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#getByte"><span class="nav-number">2.3.2.</span> <span class="nav-text">getByte</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#logicalShift"><span class="nav-number">2.3.3.</span> <span class="nav-text">logicalShift</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bitCount"><span class="nav-number">2.3.4.</span> <span class="nav-text">bitCount</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#bang"><span class="nav-number">2.3.5.</span> <span class="nav-text">bang</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#tmin"><span class="nav-number">2.3.6.</span> <span class="nav-text">tmin</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#fitBits"><span class="nav-number">2.3.7.</span> <span class="nav-text">fitBits</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#divpwr2"><span class="nav-number">2.3.8.</span> <span class="nav-text">divpwr2</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#negate"><span class="nav-number">2.3.9.</span> <span class="nav-text">negate</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#isPositive"><span class="nav-number">2.3.10.</span> <span class="nav-text">isPositive</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#isLessOrEqual"><span class="nav-number">2.3.11.</span> <span class="nav-text">isLessOrEqual</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ilog2"><span class="nav-number">2.3.12.</span> <span class="nav-text">ilog2</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#第二部分-浮点数"><span class="nav-number">2.4.</span> <span class="nav-text">第二部分 浮点数</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#float-neg"><span class="nav-number">2.4.1.</span> <span class="nav-text">float_neg</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#float-i2f"><span class="nav-number">2.4.2.</span> <span class="nav-text">float_i2f</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#float-twice"><span class="nav-number">2.4.3.</span> <span class="nav-text">float_twice</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#实验小结"><span class="nav-number">2.5.</span> <span class="nav-text">实验小结</span></a></li></ol></li></ol></div>
-        
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image"
-      src="/images/avatar.jpg"
-      alt="viseator(吴迪)">
+  <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
+    src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
   <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives">
         
           <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-categories">
-        
-          
             <a href="/categories">
           
-        
-        <span class="site-state-item-count">21</span>
-        <span class="site-state-item-name">分类</span>
-        </a>
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
-          
             <a href="/tags">
           
-        
-        <span class="site-state-item-count">26</span>
-        <span class="site-state-item-name">标签</span>
-        </a>
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
-    
   </nav>
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
         <a href="https://github.com/viseator" title="GitHub &rarr; https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
         <a href="mailto:viseator@gmail.com" title="Email &rarr; mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
       </span>
-    
   </div>
   <div class="cc-license motion-element" itemprop="license">
-    
-  
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
@@ -809,31 +697,24 @@
         <li class="links-of-blogroll-item">
           <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
         </li>
-      
     </ul>
   </div>
 
@@ -847,17 +728,24 @@
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2016 – <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.0</div>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.5.0
+  </div>
 
         
 
@@ -869,7 +757,6 @@
 
 
 
-  
   <script>
   function leancloudSelector(url) {
     return document.getElementById(url).querySelector('.leancloud-visitors-count');
@@ -886,7 +773,6 @@
           if (results.length > 0) {
             var counter = results[0];
               leancloudSelector(url).innerText = counter.time + 1;
-            
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .then(response => response.json())
               .catch(error => {
@@ -901,7 +787,6 @@
                 .catch(error => {
                   console.log('Failed to create', error);
                 });
-            
           }
         })
         .catch(error => {
@@ -979,13 +864,20 @@
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
-<script src="/js/schemes/muse.js?v=7.4.0"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/js/next-boot.js?v=7.4.0"></script>
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
 
 
 
@@ -1003,13 +895,10 @@
 
 
 
-
-
-
-
   
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.css">
-<script src="//cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js"></script><script src="/js/algolia-search.js?v=7.4.0"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js"></script>
+<script src="/js/algolia-search.js"></script>
 
 
 
@@ -1024,8 +913,6 @@
 
 
 
-
-  
 
   
 

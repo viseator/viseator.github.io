@@ -1,28 +1,23 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-<meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=7.4.0">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#F5F5F5">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
   <meta name="msapplication-config" content="/images/browserconfig.xml">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+<link rel="stylesheet" href="/css/main.css">
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
@@ -30,7 +25,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    version: '7.4.0',
+    version: '7.5.0',
     exturl: false,
     sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":true,"show_result":true,"style":null},
@@ -60,20 +55,21 @@
 </script>
 
   <meta name="description" content="编程：在屏幕中间分别显示绿色、绿底红色、白底蓝色的字符串welcome to masm!。 效果图：  采用了双循环嵌套的写法，外层控制输出行数，内层逐字符读取ASCII码与对应行的属性。    把loop s1改为loop s2有惊喜哦  所有实验答案在这里">
-<meta name="keywords" content="Assembly">
 <meta property="og:type" content="article">
 <meta property="og:title" content="王爽汇编语言第三版实验9 双循环实现">
 <meta property="og:url" content="https://www.viseator.com/2017/04/10/assembly_wang_lab_9/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="编程：在屏幕中间分别显示绿色、绿底红色、白底蓝色的字符串welcome to masm!。 效果图：  采用了双循环嵌套的写法，外层控制输出行数，内层逐字符读取ASCII码与对应行的属性。    把loop s1改为loop s2有惊喜哦  所有实验答案在这里">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.viseator.com/images/assembly_9.jpg">
-<meta property="og:updated_time" content="2018-02-02T01:19:07.000Z">
+<meta property="article:published_time" content="2017-04-10T12:44:49.000Z">
+<meta property="article:modified_time" content="2018-02-02T01:19:07.000Z">
+<meta property="article:author" content="viseator(吴迪)">
+<meta property="article:tag" content="Assembly">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="王爽汇编语言第三版实验9 双循环实现">
-<meta name="twitter:description" content="编程：在屏幕中间分别显示绿色、绿底红色、白底蓝色的字符串welcome to masm!。 效果图：  采用了双循环嵌套的写法，外层控制输出行数，内层逐字符读取ASCII码与对应行的属性。    把loop s1改为loop s2有惊喜哦  所有实验答案在这里">
 <meta name="twitter:image" content="https://www.viseator.com/images/assembly_9.jpg">
-  <link rel="canonical" href="https://www.viseator.com/2017/04/10/assembly_wang_lab_9/">
+
+<link rel="canonical" href="https://www.viseator.com/2017/04/10/assembly_wang_lab_9/">
 
 
 <script id="page-configurations">
@@ -89,16 +85,16 @@
 
   <title>王爽汇编语言第三版实验9 双循环实现 | viseator's blog</title>
   
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
-  <script>
-    var host = window.location.hostname;
-    if (host !== "localhost" || !true) {
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-93455229-1');
-    }
-  </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-93455229-1');
+      }
+    </script>
 
 
   <script>
@@ -110,8 +106,6 @@
       s.parentNode.insertBefore(hm, s);
     })();
   </script>
-
-
 
 
 
@@ -128,7 +122,6 @@
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -142,11 +135,11 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
 
@@ -162,11 +155,11 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 </div>
 
@@ -174,77 +167,46 @@
 <nav class="site-nav">
   
   <ul id="menu" class="menu">
-      
-      
-      
-        
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section">首页</a>
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories" rel="section">分类</a>
+    <a href="/categories" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section">归档</a>
+    <a href="/archives" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags" rel="section">标签</a>
+    <a href="/tags" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-resource">
 
-    <a href="/2017/03/25/resource_general" rel="section">资源</a>
+    <a href="/2017/03/25/resource_general" rel="section"><i class="fa fa-fw fa-star"></i>资源</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-arch">
 
-    <a href="/categories/Linux/" rel="section">Arch安装</a>
+    <a href="/categories/Linux/" rel="section"><i class="fa fa-fw fa-linux"></i>Arch安装</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-about">
 
-    <a href="/about" rel="section">关于</a>
+    <a href="/about" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
 
   </li>
       <li class="menu-item menu-item-search">
-        <a href="javascript:;" class="popup-trigger">
-        搜索</a>
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
       </li>
-    
   </ul>
-
-    
 
 </nav>
   <div class="site-search">
@@ -279,33 +241,33 @@
   </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content">
+          
+
+          <div class="content">
             
 
-  <div id="posts" class="posts-expand">
-      <article itemscope itemtype="http://schema.org/Article">
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block post">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/04/10/assembly_wang_lab_9/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="viseator(吴迪)">
       <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">王爽汇编语言第三版实验9 双循环实现
-
-          
+        <h2 class="post-title" itemprop="name headline">
+          王爽汇编语言第三版实验9 双循环实现
         </h2>
 
         <div class="post-meta">
@@ -315,16 +277,8 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              
-                
-              
-
               <time title="创建时间：2017-04-10 20:44:49" itemprop="dateCreated datePublished" datetime="2017-04-10T20:44:49+08:00">2017-04-10</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -332,21 +286,17 @@
                 <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
               </span>
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Assembly/" itemprop="url" rel="index"><span itemprop="name">Assembly</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Assembly/" itemprop="url" rel="index">
+                    <span itemprop="name">Assembly</span>
+                  </a>
+                </span>
             </span>
-          
 
           
             <span id="/2017/04/10/assembly_wang_lab_9/" class="post-meta-item leancloud_visitors" data-flag-title="王爽汇编语言第三版实验9 双循环实现" title="阅读次数">
@@ -356,7 +306,6 @@
               <span class="post-meta-item-text">阅读次数：</span>
               <span class="leancloud-visitors-count"></span>
             </span>
-          
 
         </div>
       </header>
@@ -369,37 +318,34 @@
       
         <p>编程：在屏幕中间分别显示绿色、绿底红色、白底蓝色的字符串<code>welcome to masm!</code>。</p>
 <p>效果图：</p>
-<p><img src="/images/assembly_9.jpg" alt></p>
+<p><img src="/images/assembly_9.jpg" alt=""></p>
 <p>采用了双循环嵌套的写法，外层控制输出行数，内层逐字符读取ASCII码与对应行的属性。</p>
 <blockquote>
 <p>  把<code>loop s1</code>改为<code>loop s2</code>有惊喜哦</p>
 </blockquote>
 <p>所有实验答案<a href="http://blog.duskdragon.com/2017/03/09/%E7%8E%8B%E7%88%BD%E6%B1%87%E7%BC%96%E8%AF%AD%E8%A8%80%E7%AC%AC%E4%B8%89%E7%89%88%E5%AE%9E%E9%AA%8C/" target="_blank" rel="noopener">在这里</a></p>
 <a id="more"></a>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code,ss:data</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">    mov ax,0b800h</span><br><span class="line">    mov ds,ax</span><br><span class="line">    mov bx,1760</span><br><span class="line"></span><br><span class="line">    mov ax,data</span><br><span class="line">    mov ss,ax</span><br><span class="line">    mov si,0</span><br><span class="line"></span><br><span class="line">    mov bp,0</span><br><span class="line">    mov cx,3</span><br><span class="line">s1: mov ss:[19],cx</span><br><span class="line">    mov si,0</span><br><span class="line">    mov cx,16</span><br><span class="line">s2: mov di,si</span><br><span class="line">    add di,di</span><br><span class="line">    mov al,ss:[si]</span><br><span class="line">    mov [bx+64+di],al</span><br><span class="line">    mov al,ss:[16+bp]</span><br><span class="line">    mov [bx+65+di],al</span><br><span class="line">    inc si</span><br><span class="line">    loop s2</span><br><span class="line">    inc bp</span><br><span class="line">    add bx,160</span><br><span class="line">    mov cx,ss:[19]</span><br><span class="line">    loop s1</span><br><span class="line">    mov ax,4c00h</span><br><span class="line">    int 21h</span><br><span class="line">code ends</span><br><span class="line"></span><br><span class="line">data segment</span><br><span class="line">    db &apos;welcome to masm!&apos;</span><br><span class="line">    db 00000010b,00100100b,01110001b</span><br><span class="line">    dw 0</span><br><span class="line">data ends</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">assume cs:code,ss:data</span><br><span class="line"></span><br><span class="line">code segment</span><br><span class="line">    mov ax,0b800h</span><br><span class="line">    mov ds,ax</span><br><span class="line">    mov bx,1760</span><br><span class="line"></span><br><span class="line">    mov ax,data</span><br><span class="line">    mov ss,ax</span><br><span class="line">    mov si,0</span><br><span class="line"></span><br><span class="line">    mov bp,0</span><br><span class="line">    mov cx,3</span><br><span class="line">s1: mov ss:[19],cx</span><br><span class="line">    mov si,0</span><br><span class="line">    mov cx,16</span><br><span class="line">s2: mov di,si</span><br><span class="line">    add di,di</span><br><span class="line">    mov al,ss:[si]</span><br><span class="line">    mov [bx+64+di],al</span><br><span class="line">    mov al,ss:[16+bp]</span><br><span class="line">    mov [bx+65+di],al</span><br><span class="line">    inc si</span><br><span class="line">    loop s2</span><br><span class="line">    inc bp</span><br><span class="line">    add bx,160</span><br><span class="line">    mov cx,ss:[19]</span><br><span class="line">    loop s1</span><br><span class="line">    mov ax,4c00h</span><br><span class="line">    int 21h</span><br><span class="line">code ends</span><br><span class="line"></span><br><span class="line">data segment</span><br><span class="line">    db &#39;welcome to masm!&#39;</span><br><span class="line">    db 00000010b,00100100b,01110001b</span><br><span class="line">    dw 0</span><br><span class="line">data ends</span><br><span class="line"></span><br><span class="line">end</span><br></pre></td></tr></table></figure>
 
     </div>
 
     
     
     
-        
       
-        <div id="reward-container">
+        <div class="reward-container">
   <div></div>
-  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
     打赏
   </button>
   <div id="qr" style="display: none;">
-        
       
-      <div style="display: inline-block">
+      <div style="display: inline-block;">
         <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
         <p>微信支付</p>
       </div>
-        
       
-      <div style="display: inline-block">
+      <div style="display: inline-block;">
         <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
         <p>支付宝</p>
       </div>
@@ -407,96 +353,75 @@
   </div>
 </div>
 
-      
         
 
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>viseator(吴迪)</li>
+    <strong>本文作者： </strong>viseator(吴迪)
+  </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     <a href="https://www.viseator.com/2017/04/10/assembly_wang_lab_9/" title="王爽汇编语言第三版实验9 双循环实现">https://www.viseator.com/2017/04/10/assembly_wang_lab_9/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
 </ul>
 </div>
 
-      
 
       <footer class="post-footer">
-          
-            
-          
           <div class="post-tags">
-            
               <a href="/tags/Assembly/" rel="tag"># Assembly</a>
-            
           </div>
-        
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-              
                 <a href="/2017/04/02/android_property_animation_2/" rel="next" title="Android PropertyAnimation 属性动画（二）弹跳小球实例">
                   <i class="fa fa-chevron-left"></i> Android PropertyAnimation 属性动画（二）弹跳小球实例
                 </a>
-              
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
                 <a href="/2017/05/11/android_lan_messages/" rel="prev" title="Android利用UDP、TCP进行局域网数据传输">
                   Android利用UDP、TCP进行局域网数据传输 <i class="fa fa-chevron-right"></i>
                 </a>
-              
             </div>
           </div>
-        
       </footer>
     
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
   </div>
 
 
           </div>
           
-    
     
   <div class="comments" id="comments">
     <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
   </div>
   
-  
 
         </div>
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -514,78 +439,43 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image"
-      src="/images/avatar.jpg"
-      alt="viseator(吴迪)">
+  <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
+    src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
   <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives">
         
           <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-categories">
-        
-          
             <a href="/categories">
           
-        
-        <span class="site-state-item-count">21</span>
-        <span class="site-state-item-name">分类</span>
-        </a>
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
-          
             <a href="/tags">
           
-        
-        <span class="site-state-item-count">26</span>
-        <span class="site-state-item-name">标签</span>
-        </a>
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
-    
   </nav>
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
         <a href="https://github.com/viseator" title="GitHub &rarr; https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
         <a href="mailto:viseator@gmail.com" title="Email &rarr; mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
       </span>
-    
   </div>
   <div class="cc-license motion-element" itemprop="license">
-    
-  
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
@@ -599,31 +489,24 @@
         <li class="links-of-blogroll-item">
           <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
         </li>
-      
     </ul>
   </div>
 
@@ -637,17 +520,24 @@
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2016 – <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.0</div>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.5.0
+  </div>
 
         
 
@@ -659,7 +549,6 @@
 
 
 
-  
   <script>
   function leancloudSelector(url) {
     return document.getElementById(url).querySelector('.leancloud-visitors-count');
@@ -676,7 +565,6 @@
           if (results.length > 0) {
             var counter = results[0];
               leancloudSelector(url).innerText = counter.time + 1;
-            
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .then(response => response.json())
               .catch(error => {
@@ -691,7 +579,6 @@
                 .catch(error => {
                   console.log('Failed to create', error);
                 });
-            
           }
         })
         .catch(error => {
@@ -769,13 +656,20 @@
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
-<script src="/js/schemes/muse.js?v=7.4.0"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/js/next-boot.js?v=7.4.0"></script>
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
 
 
 
@@ -793,13 +687,10 @@
 
 
 
-
-
-
-
   
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.css">
-<script src="//cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js"></script><script src="/js/algolia-search.js?v=7.4.0"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js"></script>
+<script src="/js/algolia-search.js"></script>
 
 
 
@@ -814,8 +705,6 @@
 
 
 
-
-  
 
   
 

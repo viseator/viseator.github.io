@@ -1,28 +1,23 @@
 <!DOCTYPE html>
-
-
-
-
-
 <html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-<meta name="generator" content="Hexo 3.9.0">
-  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png?v=7.4.0">
-  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png?v=7.4.0">
-  <link rel="mask-icon" href="/images/logo.svg?v=7.4.0" color="#F5F5F5">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
   <meta name="msapplication-config" content="/images/browserconfig.xml">
 
-<link rel="stylesheet" href="/css/main.css?v=7.4.0">
+<link rel="stylesheet" href="/css/main.css">
 
 <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2">
-  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
+  <script src="/lib/pace/pace.min.js"></script>
 
 
 <script id="hexo-configurations">
@@ -30,7 +25,7 @@
   var CONFIG = {
     root: '/',
     scheme: 'Mist',
-    version: '7.4.0',
+    version: '7.5.0',
     exturl: false,
     sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":true,"show_result":true,"style":null},
@@ -60,21 +55,23 @@
 </script>
 
   <meta name="description" content="回顾在上一篇文章中，我们探索了从内核触摸事件传递到InputDispatcher线程，再与应用线程之间建立InputChannel的过程，并且我们已经看到一个最原始的触摸事件被封装成一个msg并通过InputChannel建立的socket通过sendMessage()方法跨线程通信发送给了应用的UI线程。 这篇文章将会看到应用UI线程的消息队列是如何读取传递过来的触摸事件并进行处理、分发的。">
-<meta name="keywords" content="Android,View">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始">
 <meta property="og:url" content="https://www.viseator.com/2017/10/07/android_view_event_2/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
 <meta property="og:description" content="回顾在上一篇文章中，我们探索了从内核触摸事件传递到InputDispatcher线程，再与应用线程之间建立InputChannel的过程，并且我们已经看到一个最原始的触摸事件被封装成一个msg并通过InputChannel建立的socket通过sendMessage()方法跨线程通信发送给了应用的UI线程。 这篇文章将会看到应用UI线程的消息队列是如何读取传递过来的触摸事件并进行处理、分发的。">
-<meta property="og:locale" content="zh-CN">
+<meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.viseator.com/images/event2_1.png">
 <meta property="og:image" content="https://www.viseator.com/images/event2_2.png">
-<meta property="og:updated_time" content="2018-02-02T01:19:07.000Z">
+<meta property="article:published_time" content="2017-10-07T05:00:00.000Z">
+<meta property="article:modified_time" content="2018-02-02T01:19:07.000Z">
+<meta property="article:author" content="viseator(吴迪)">
+<meta property="article:tag" content="Android">
+<meta property="article:tag" content="View">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始">
-<meta name="twitter:description" content="回顾在上一篇文章中，我们探索了从内核触摸事件传递到InputDispatcher线程，再与应用线程之间建立InputChannel的过程，并且我们已经看到一个最原始的触摸事件被封装成一个msg并通过InputChannel建立的socket通过sendMessage()方法跨线程通信发送给了应用的UI线程。 这篇文章将会看到应用UI线程的消息队列是如何读取传递过来的触摸事件并进行处理、分发的。">
 <meta name="twitter:image" content="https://www.viseator.com/images/event2_1.png">
-  <link rel="canonical" href="https://www.viseator.com/2017/10/07/android_view_event_2/">
+
+<link rel="canonical" href="https://www.viseator.com/2017/10/07/android_view_event_2/">
 
 
 <script id="page-configurations">
@@ -90,16 +87,16 @@
 
   <title>Android 触摸事件分发机制（二）原始事件消息传递与分发的开始 | viseator's blog</title>
   
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
-  <script>
-    var host = window.location.hostname;
-    if (host !== "localhost" || !true) {
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'UA-93455229-1');
-    }
-  </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
+    <script>
+      var host = window.location.hostname;
+      if (host !== "localhost" || !true) {
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-93455229-1');
+      }
+    </script>
 
 
   <script>
@@ -111,8 +108,6 @@
       s.parentNode.insertBefore(hm, s);
     })();
   </script>
-
-
 
 
 
@@ -129,7 +124,6 @@
   .use-motion .post-body,
   .use-motion .collection-header { opacity: initial; }
 
-  .use-motion .logo,
   .use-motion .site-title,
   .use-motion .site-subtitle {
     opacity: initial;
@@ -143,11 +137,11 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+<body itemscope itemtype="http://schema.org/WebPage">
   <div class="container use-motion">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-meta">
 
@@ -163,11 +157,11 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="切换导航栏">
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-      <span class="btn-bar"></span>
-    </button>
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
   </div>
 </div>
 
@@ -175,77 +169,46 @@
 <nav class="site-nav">
   
   <ul id="menu" class="menu">
-      
-      
-      
-        
         <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section">首页</a>
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-categories">
 
-    <a href="/categories" rel="section">分类</a>
+    <a href="/categories" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives" rel="section">归档</a>
+    <a href="/archives" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-tags">
 
-    <a href="/tags" rel="section">标签</a>
+    <a href="/tags" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-resource">
 
-    <a href="/2017/03/25/resource_general" rel="section">资源</a>
+    <a href="/2017/03/25/resource_general" rel="section"><i class="fa fa-fw fa-star"></i>资源</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-arch">
 
-    <a href="/categories/Linux/" rel="section">Arch安装</a>
+    <a href="/categories/Linux/" rel="section"><i class="fa fa-fw fa-linux"></i>Arch安装</a>
 
   </li>
-      
-      
-      
-        
         <li class="menu-item menu-item-about">
 
-    <a href="/about" rel="section">关于</a>
+    <a href="/about" rel="section"><i class="fa fa-fw fa-user"></i>关于</a>
 
   </li>
       <li class="menu-item menu-item-search">
-        <a href="javascript:;" class="popup-trigger">
-        搜索</a>
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
       </li>
-    
   </ul>
-
-    
 
 </nav>
   <div class="site-search">
@@ -280,33 +243,33 @@
   </div>
 
 
-    <main id="main" class="main">
+    <main class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content">
+          
+
+          <div class="content">
             
 
-  <div id="posts" class="posts-expand">
-      <article itemscope itemtype="http://schema.org/Article">
+  <div class="posts-expand">
+      
   
   
-  
-  <div class="post-block post">
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/10/07/android_view_event_2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
       <meta itemprop="name" content="viseator(吴迪)">
       <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
-      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="viseator's blog">
     </span>
       <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">Android 触摸事件分发机制（二）原始事件消息传递与分发的开始
-
-          
+        <h2 class="post-title" itemprop="name headline">
+          Android 触摸事件分发机制（二）原始事件消息传递与分发的开始
         </h2>
 
         <div class="post-meta">
@@ -316,16 +279,8 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              
-                
-              
-
               <time title="创建时间：2017-10-07 13:00:00" itemprop="dateCreated datePublished" datetime="2017-10-07T13:00:00+08:00">2017-10-07</time>
             </span>
-          
-            
-
-            
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
@@ -333,28 +288,23 @@
                 <span class="post-meta-item-text">更新于</span>
                 <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
               </span>
-            
-          
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="fa fa-folder-o"></i>
               </span>
               <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a></span>
-
-                
-                
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
                   ，
-                
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Android/View/" itemprop="url" rel="index"><span itemprop="name">View</span></a></span>
-
-                
-                
-              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/View/" itemprop="url" rel="index">
+                    <span itemprop="name">View</span>
+                  </a>
+                </span>
             </span>
-          
 
           
             <span id="/2017/10/07/android_view_event_2/" class="post-meta-item leancloud_visitors" data-flag-title="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始" title="阅读次数">
@@ -364,7 +314,6 @@
               <span class="post-meta-item-text">阅读次数：</span>
               <span class="leancloud-visitors-count"></span>
             </span>
-          
 
         </div>
       </header>
@@ -404,38 +353,38 @@
 <p>在<code>next()</code>方法中我们就调用了<code>nativePollOnce()</code>方法先去处理<code>native</code>中的事件：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">android_os_MessageQueue_nativePollOnce</span><span class="params">(JNIEnv* env, jobject obj,</span></span></span><br><span class="line"><span class="function"><span class="params">        jlong ptr, jint timeoutMillis)</span> </span>&#123;</span><br><span class="line">    NativeMessageQueue* nativeMessageQueue = <span class="keyword">reinterpret_cast</span>&lt;NativeMessageQueue*&gt;(ptr);</span><br><span class="line">    nativeMessageQueue-&gt;pollOnce(env, obj, timeoutMillis);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>调用了<code>nativeMessageQueue</code>的<code>pollOnce()</code>方法：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> NativeMessageQueue::pollOnce(JNIEnv* env, jobject pollObj, <span class="keyword">int</span> timeoutMillis) &#123;</span><br><span class="line">    mPollEnv = env;</span><br><span class="line">    mPollObj = pollObj;</span><br><span class="line">    mLooper-&gt;pollOnce(timeoutMillis);</span><br><span class="line">    mPollObj = <span class="literal">NULL</span>;</span><br><span class="line">    mPollEnv = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (mExceptionObj) &#123;</span><br><span class="line">        env-&gt;Throw(mExceptionObj);</span><br><span class="line">        env-&gt;DeleteLocalRef(mExceptionObj);</span><br><span class="line">        mExceptionObj = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">NativeMessageQueue::pollOnce</span><span class="params">(JNIEnv* env, jobject pollObj, <span class="keyword">int</span> timeoutMillis)</span> </span>&#123;</span><br><span class="line">    mPollEnv = env;</span><br><span class="line">    mPollObj = pollObj;</span><br><span class="line">    mLooper-&gt;pollOnce(timeoutMillis);</span><br><span class="line">    mPollObj = <span class="literal">NULL</span>;</span><br><span class="line">    mPollEnv = <span class="literal">NULL</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (mExceptionObj) &#123;</span><br><span class="line">        env-&gt;Throw(mExceptionObj);</span><br><span class="line">        env-&gt;DeleteLocalRef(mExceptionObj);</span><br><span class="line">        mExceptionObj = <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>调用了<code>native</code> <code>Looper</code>的<code>pollOnce()</code>方法：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> Looper::pollOnce(<span class="keyword">int</span> timeoutMillis, <span class="keyword">int</span>* outFd, <span class="keyword">int</span>* outEvents, <span class="keyword">void</span>** outData) &#123;</span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">        ...</span><br><span class="line">        result = pollInner(timeoutMillis);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Looper::pollOnce</span><span class="params">(<span class="keyword">int</span> timeoutMillis, <span class="keyword">int</span>* outFd, <span class="keyword">int</span>* outEvents, <span class="keyword">void</span>** outData)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">        ...</span><br><span class="line">        result = pollInner(timeoutMillis);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>忽略特殊处理的过程，最终调用了<code>pollInner()</code>方法：（<code>PollInner()</code>的代码比较长，省略了大部分，标记了后面讨论的三个部分）</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> Looper::pollInner(<span class="keyword">int</span> timeoutMillis) &#123;</span><br><span class="line">	...<span class="comment">// 省略初始化过程</span></span><br><span class="line">    <span class="comment">// Poll.</span></span><br><span class="line">    <span class="keyword">int</span> result = POLL_WAKE;</span><br><span class="line">    mResponses.clear();</span><br><span class="line">    mResponseIndex = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// We are about to idle.</span></span><br><span class="line">    mPolling = <span class="literal">true</span>;</span><br><span class="line">	<span class="comment">/*-------1-------*/</span></span><br><span class="line">    <span class="keyword">struct</span> epoll_event eventItems[EPOLL_MAX_EVENTS];</span><br><span class="line">    <span class="keyword">int</span> eventCount = epoll_wait(mEpollFd, eventItems, EPOLL_MAX_EVENTS, timeoutMillis);</span><br><span class="line">	</span><br><span class="line">  	...</span><br><span class="line">	<span class="comment">/*---------------*/</span></span><br><span class="line">	<span class="comment">/*-------2-------*/</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; eventCount; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> fd = eventItems[i].data.fd;</span><br><span class="line">        <span class="keyword">uint32_t</span> epollEvents = eventItems[i].events;</span><br><span class="line">        <span class="keyword">if</span> (fd == mWakeEventFd) &#123;</span><br><span class="line">            <span class="keyword">if</span> (epollEvents &amp; EPOLLIN) &#123;</span><br><span class="line">                awoken();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ALOGW(<span class="string">"Ignoring unexpected epoll events 0x%x on wake event fd."</span>, epollEvents);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">ssize_t</span> requestIndex = mRequests.indexOfKey(fd);</span><br><span class="line">            <span class="keyword">if</span> (requestIndex &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">int</span> events = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span> (epollEvents &amp; EPOLLIN) events |= EVENT_INPUT;</span><br><span class="line">                <span class="keyword">if</span> (epollEvents &amp; EPOLLOUT) events |= EVENT_OUTPUT;</span><br><span class="line">                <span class="keyword">if</span> (epollEvents &amp; EPOLLERR) events |= EVENT_ERROR;</span><br><span class="line">                <span class="keyword">if</span> (epollEvents &amp; EPOLLHUP) events |= EVENT_HANGUP;</span><br><span class="line">                pushResponse(events, mRequests.valueAt(requestIndex));</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ALOGW(<span class="string">"Ignoring unexpected epoll events 0x%x on fd %d that is "</span></span><br><span class="line">                        <span class="string">"no longer registered."</span>, epollEvents, fd);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">Done: ;</span><br><span class="line">	...<span class="comment">// 省略native message处理过程</span></span><br><span class="line">      </span><br><span class="line">    <span class="comment">// Release lock.</span></span><br><span class="line">    mLock.unlock();</span><br><span class="line">	<span class="comment">/*---------------*/</span></span><br><span class="line">  	<span class="comment">/*-------3-------*/</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; mResponses.size(); i++) &#123;</span><br><span class="line">        Response&amp; response = mResponses.editItemAt(i);</span><br><span class="line">        <span class="keyword">if</span> (response.request.ident == POLL_CALLBACK) &#123;</span><br><span class="line">            <span class="keyword">int</span> fd = response.request.fd;</span><br><span class="line">            <span class="keyword">int</span> events = response.events;</span><br><span class="line">            <span class="keyword">void</span>* data = response.request.data;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">int</span> callbackResult = response.request.callback-&gt;handleEvent(fd, events, data);</span><br><span class="line">            <span class="keyword">if</span> (callbackResult == <span class="number">0</span>) &#123;</span><br><span class="line">                removeFd(fd, response.request.seq);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            response.request.callback.clear();</span><br><span class="line">            result = POLL_CALLBACK;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  	<span class="comment">/*---------------*/</span></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Looper::pollInner</span><span class="params">(<span class="keyword">int</span> timeoutMillis)</span> </span>&#123;</span><br><span class="line">	...<span class="comment">// 省略初始化过程</span></span><br><span class="line">    <span class="comment">// Poll.</span></span><br><span class="line">    <span class="keyword">int</span> result = POLL_WAKE;</span><br><span class="line">    mResponses.<span class="built_in">clear</span>();</span><br><span class="line">    mResponseIndex = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// We are about to idle.</span></span><br><span class="line">    mPolling = <span class="literal">true</span>;</span><br><span class="line">	<span class="comment">/*-------1-------*/</span></span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> <span class="title">eventItems</span>[<span class="title">EPOLL_MAX_EVENTS</span>];</span></span><br><span class="line">    <span class="keyword">int</span> eventCount = epoll_wait(mEpollFd, eventItems, EPOLL_MAX_EVENTS, timeoutMillis);</span><br><span class="line">	</span><br><span class="line">  	...</span><br><span class="line">	<span class="comment">/*---------------*/</span></span><br><span class="line">	<span class="comment">/*-------2-------*/</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; eventCount; i++) &#123;</span><br><span class="line">        <span class="keyword">int</span> fd = eventItems[i].data.fd;</span><br><span class="line">        <span class="keyword">uint32_t</span> epollEvents = eventItems[i].events;</span><br><span class="line">        <span class="keyword">if</span> (fd == mWakeEventFd) &#123;</span><br><span class="line">            <span class="keyword">if</span> (epollEvents &amp; EPOLLIN) &#123;</span><br><span class="line">                awoken();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ALOGW(<span class="string">"Ignoring unexpected epoll events 0x%x on wake event fd."</span>, epollEvents);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">ssize_t</span> requestIndex = mRequests.indexOfKey(fd);</span><br><span class="line">            <span class="keyword">if</span> (requestIndex &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">int</span> events = <span class="number">0</span>;</span><br><span class="line">                <span class="keyword">if</span> (epollEvents &amp; EPOLLIN) events |= EVENT_INPUT;</span><br><span class="line">                <span class="keyword">if</span> (epollEvents &amp; EPOLLOUT) events |= EVENT_OUTPUT;</span><br><span class="line">                <span class="keyword">if</span> (epollEvents &amp; EPOLLERR) events |= EVENT_ERROR;</span><br><span class="line">                <span class="keyword">if</span> (epollEvents &amp; EPOLLHUP) events |= EVENT_HANGUP;</span><br><span class="line">                pushResponse(events, mRequests.valueAt(requestIndex));</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ALOGW(<span class="string">"Ignoring unexpected epoll events 0x%x on fd %d that is "</span></span><br><span class="line">                        <span class="string">"no longer registered."</span>, epollEvents, fd);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">Done: ;</span><br><span class="line">	...<span class="comment">// 省略native message处理过程</span></span><br><span class="line">      </span><br><span class="line">    <span class="comment">// Release lock.</span></span><br><span class="line">    mLock.unlock();</span><br><span class="line">	<span class="comment">/*---------------*/</span></span><br><span class="line">  	<span class="comment">/*-------3-------*/</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; mResponses.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">        Response&amp; response = mResponses.editItemAt(i);</span><br><span class="line">        <span class="keyword">if</span> (response.request.ident == POLL_CALLBACK) &#123;</span><br><span class="line">            <span class="keyword">int</span> fd = response.request.fd;</span><br><span class="line">            <span class="keyword">int</span> events = response.events;</span><br><span class="line">            <span class="keyword">void</span>* data = response.request.data;</span><br><span class="line"></span><br><span class="line">            <span class="keyword">int</span> callbackResult = response.request.callback-&gt;handleEvent(fd, events, data);</span><br><span class="line">            <span class="keyword">if</span> (callbackResult == <span class="number">0</span>) &#123;</span><br><span class="line">                removeFd(fd, response.request.seq);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            response.request.callback.<span class="built_in">clear</span>();</span><br><span class="line">            result = POLL_CALLBACK;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  	<span class="comment">/*---------------*/</span></span><br><span class="line">    <span class="keyword">return</span> result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>第一部分中，调用了<code>epoll_wait()</code>函数等待消息，当接收到消息或者发生超时的时候调用返回。</p>
 <p>第二部分对返回的<code>events</code>进行遍历，如果对应的<code>fd</code>为唤醒专用的<code>mWakeEventFd</code>，执行<code>awoken()</code>函数清空管道，这个事件的作用只是为了唤醒<code>Looper</code>对新消息进行处理。</p>
 <p>如果不是<code>mWakeEventFd</code>，说明为我们之前通过<code>addFd()</code>函数添加的自定义<code>fd</code>，我们需要对这个<code>event</code>进行处理，处理函数为<code>pushResponse()</code>：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">ssize_t</span> requestIndex = mRequests.indexOfKey(fd);</span><br><span class="line">pushResponse(events, mRequests.valueAt(requestIndex));</span><br></pre></td></tr></table></figure>
 <p>我们还记得在前面<code>addFd()</code>的过程中已经将<code>fd</code>作为索引，向<code>mRequest</code>中保存了<code>request</code>信息，信息中包含了<code>callback</code>也就是<code>NativeInputEventReceiver</code>对象。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> Looper::pushResponse(<span class="keyword">int</span> events, <span class="keyword">const</span> Request&amp; request) &#123;</span><br><span class="line">    Response response;</span><br><span class="line">    response.events = events;</span><br><span class="line">    response.request = request;</span><br><span class="line">    mResponses.push(response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Looper::pushResponse</span><span class="params">(<span class="keyword">int</span> events, <span class="keyword">const</span> Request&amp; request)</span> </span>&#123;</span><br><span class="line">    Response response;</span><br><span class="line">    response.events = events;</span><br><span class="line">    response.request = request;</span><br><span class="line">    mResponses.push(response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这里将<code>request</code>对象包装成了一个<code>response</code>，然后存入了<code>mResponses</code>中等待后面的处理。</p>
 <p>第三部分中就是对于<code>response</code>的处理过程，主要就是这个调用：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> callbackResult = response.request.callback-&gt;handleEvent(fd, events, data);</span><br></pre></td></tr></table></figure>
 <p>调用了<code>callback</code>的<code>handleEvent()</code>，我们现在知道<code>callback</code>是前面保存的<code>NativeInputEventReceiver</code>对象。</p>
 <p>现在，当原始事件通过建立好的<code>InputChannel</code>的<code>sendMessage()</code>函数发送触摸事件时：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">status_t</span> InputChannel::sendMessage(<span class="keyword">const</span> InputMessage* msg) &#123;</span><br><span class="line">    <span class="keyword">size_t</span> msgLength = msg-&gt;size();</span><br><span class="line">    <span class="keyword">ssize_t</span> nWrite;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        nWrite = ::send(mFd, msg, msgLength, MSG_DONTWAIT | MSG_NOSIGNAL);</span><br><span class="line">    &#125; <span class="keyword">while</span> (nWrite == <span class="number">-1</span> &amp;&amp; errno == EINTR);</span><br><span class="line">	...</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">status_t</span> <span class="title">InputChannel::sendMessage</span><span class="params">(<span class="keyword">const</span> InputMessage* msg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> msgLength = msg-&gt;<span class="built_in">size</span>();</span><br><span class="line">    <span class="keyword">ssize_t</span> nWrite;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        nWrite = ::send(mFd, msg, msgLength, MSG_DONTWAIT | MSG_NOSIGNAL);</span><br><span class="line">    &#125; <span class="keyword">while</span> (nWrite == <span class="number">-1</span> &amp;&amp; errno == EINTR);</span><br><span class="line">	...</span><br><span class="line">    <span class="keyword">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>会直接调用<code>send()</code>函数向<code>fd</code>表示的<code>socket</code>中写入数据，同时在另一边的<code>epoll_wait()</code>调用就会因<code>socket</code>另一端<code>fd</code>数据的到来而唤醒，并通过<code>fd</code>找到注册好的<code>request</code>，进而调用<code>request</code>中的<code>NativeInputEventReceiver</code>的<code>handleEvent()</code>方法，参数就是我们接收到的事件信息与数据。</p>
-<h3 id="handleEvent"><a href="#handleEvent" class="headerlink" title="handleEvent"></a>handleEvent</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">int</span> NativeInputEventReceiver::handleEvent(<span class="keyword">int</span> receiveFd, <span class="keyword">int</span> events, <span class="keyword">void</span>* data) &#123;</span><br><span class="line"> 	...</span><br><span class="line">    <span class="keyword">if</span> (events &amp; ALOOPER_EVENT_INPUT) &#123;</span><br><span class="line">        JNIEnv* env = AndroidRuntime::getJNIEnv();</span><br><span class="line">        <span class="keyword">status_t</span> status = consumeEvents(env, <span class="literal">false</span> <span class="comment">/*consumeBatches*/</span>, <span class="number">-1</span>, <span class="literal">NULL</span>);</span><br><span class="line">        mMessageQueue-&gt;raiseAndClearException(env, <span class="string">"handleReceiveCallback"</span>);</span><br><span class="line">        <span class="keyword">return</span> status == OK || status == NO_MEMORY ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	...</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="handleEvent"><a href="#handleEvent" class="headerlink" title="handleEvent"></a>handleEvent</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">NativeInputEventReceiver::handleEvent</span><span class="params">(<span class="keyword">int</span> receiveFd, <span class="keyword">int</span> events, <span class="keyword">void</span>* data)</span> </span>&#123;</span><br><span class="line"> 	...</span><br><span class="line">    <span class="keyword">if</span> (events &amp; ALOOPER_EVENT_INPUT) &#123;</span><br><span class="line">        JNIEnv* env = AndroidRuntime::getJNIEnv();</span><br><span class="line">        <span class="keyword">status_t</span> status = consumeEvents(env, <span class="literal">false</span> <span class="comment">/*consumeBatches*/</span>, <span class="number">-1</span>, <span class="literal">NULL</span>);</span><br><span class="line">        mMessageQueue-&gt;raiseAndClearException(env, <span class="string">"handleReceiveCallback"</span>);</span><br><span class="line">        <span class="keyword">return</span> status == OK || status == NO_MEMORY ? <span class="number">1</span> : <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	...</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>调用了<code>consumeEvents()</code>函数来处理事件，函数较长，我们拆开来看：</p>
 <p>函数进行初始化过程之后执行了一个无限循环，循环体中的内容如下：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">InputEvent* inputEvent;</span><br><span class="line">       <span class="keyword">status_t</span> status = mInputConsumer.consume(&amp;mInputEventFactory,</span><br><span class="line">               consumeBatches, frameTime, &amp;seq, &amp;inputEvent);</span><br></pre></td></tr></table></figure>
 <p>首先就调用了<code>mInputConsumer</code>对象的<code>consume</code>方法接收并将原始的事件转换为分发过程中标准的<code>MotionEvent</code>：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">status_t</span> result = mChannel-&gt;receiveMessage(&amp;mMsg);</span><br></pre></td></tr></table></figure>
 <p>这里就直接调用了<code>InputChannel</code>的<code>receiveMessage()</code>函数来接收另一端发送来的消息。</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">status_t</span> InputChannel::receiveMessage(InputMessage* msg) &#123;</span><br><span class="line">    <span class="keyword">ssize_t</span> nRead;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        nRead = ::recv(mFd, msg, <span class="keyword">sizeof</span>(InputMessage), MSG_DONTWAIT);</span><br><span class="line">    &#125; <span class="keyword">while</span> (nRead == <span class="number">-1</span> &amp;&amp; errno == EINTR);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">status_t</span> <span class="title">InputChannel::receiveMessage</span><span class="params">(InputMessage* msg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">ssize_t</span> nRead;</span><br><span class="line">    <span class="keyword">do</span> &#123;</span><br><span class="line">        nRead = ::recv(mFd, msg, <span class="keyword">sizeof</span>(InputMessage), MSG_DONTWAIT);</span><br><span class="line">    &#125; <span class="keyword">while</span> (nRead == <span class="number">-1</span> &amp;&amp; errno == EINTR);</span><br><span class="line">    ...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>从<code>socket</code>另一端的<code>fd</code>中读取发送过来的触摸事件消息并存放在了<code>mMsg</code>中，之后进行处理：</p>
 <figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">        <span class="keyword">switch</span> (mMsg.header.type) &#123;</span><br><span class="line">        <span class="keyword">case</span> InputMessage::TYPE_KEY: &#123;</span><br><span class="line">			...</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> AINPUT_EVENT_TYPE_MOTION: &#123;</span><br><span class="line">			...</span><br><span class="line">            MotionEvent* motionEvent = factory-&gt;createMotionEvent();</span><br><span class="line">            <span class="keyword">if</span> (! motionEvent) <span class="keyword">return</span> NO_MEMORY;</span><br><span class="line"></span><br><span class="line">            updateTouchState(&amp;mMsg);</span><br><span class="line">            initializeMotionEvent(motionEvent, &amp;mMsg);</span><br><span class="line">            *outSeq = mMsg.body.motion.seq;</span><br><span class="line">            *outEvent = motionEvent;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> DEBUG_TRANSPORT_ACTIONS</span></span><br><span class="line">            ALOGD(<span class="string">"channel '%s' consumer ~ consumed motion event, seq=%u"</span>,</span><br><span class="line">                    mChannel-&gt;getName().<span class="built_in">string</span>(), *outSeq);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line">              </span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
 <p>这里对事件的类型进行了一个判断，当类型为<code>MOTION</code>即触摸事件时，新建了一个<code>MotionEvent</code>，然后用<code>mMsg</code>去进行初始化：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> InputConsumer::initializeMotionEvent(MotionEvent* event, <span class="keyword">const</span> InputMessage* msg) &#123;</span><br><span class="line">    <span class="keyword">uint32_t</span> pointerCount = msg-&gt;body.motion.pointerCount;</span><br><span class="line">    PointerProperties pointerProperties[pointerCount];</span><br><span class="line">    PointerCoords pointerCoords[pointerCount];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">uint32_t</span> i = <span class="number">0</span>; i &lt; pointerCount; i++) &#123;</span><br><span class="line">        pointerProperties[i].copyFrom(msg-&gt;body.motion.pointers[i].properties);</span><br><span class="line">        pointerCoords[i].copyFrom(msg-&gt;body.motion.pointers[i].coords);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    event-&gt;initialize(</span><br><span class="line">            msg-&gt;body.motion.deviceId,</span><br><span class="line">            msg-&gt;body.motion.source,</span><br><span class="line">            msg-&gt;body.motion.action,</span><br><span class="line">            msg-&gt;body.motion.actionButton,</span><br><span class="line">            msg-&gt;body.motion.flags,</span><br><span class="line">            msg-&gt;body.motion.edgeFlags,</span><br><span class="line">            msg-&gt;body.motion.metaState,</span><br><span class="line">            msg-&gt;body.motion.buttonState,</span><br><span class="line">            msg-&gt;body.motion.xOffset,</span><br><span class="line">            msg-&gt;body.motion.yOffset,</span><br><span class="line">            msg-&gt;body.motion.xPrecision,</span><br><span class="line">            msg-&gt;body.motion.yPrecision,</span><br><span class="line">            msg-&gt;body.motion.downTime,</span><br><span class="line">            msg-&gt;body.motion.eventTime,</span><br><span class="line">            pointerCount,</span><br><span class="line">            pointerProperties,</span><br><span class="line">            pointerCoords);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">InputConsumer::initializeMotionEvent</span><span class="params">(MotionEvent* event, <span class="keyword">const</span> InputMessage* msg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">uint32_t</span> pointerCount = msg-&gt;body.motion.pointerCount;</span><br><span class="line">    PointerProperties pointerProperties[pointerCount];</span><br><span class="line">    PointerCoords pointerCoords[pointerCount];</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">uint32_t</span> i = <span class="number">0</span>; i &lt; pointerCount; i++) &#123;</span><br><span class="line">        pointerProperties[i].copyFrom(msg-&gt;body.motion.pointers[i].properties);</span><br><span class="line">        pointerCoords[i].copyFrom(msg-&gt;body.motion.pointers[i].coords);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    event-&gt;initialize(</span><br><span class="line">            msg-&gt;body.motion.deviceId,</span><br><span class="line">            msg-&gt;body.motion.source,</span><br><span class="line">            msg-&gt;body.motion.action,</span><br><span class="line">            msg-&gt;body.motion.actionButton,</span><br><span class="line">            msg-&gt;body.motion.flags,</span><br><span class="line">            msg-&gt;body.motion.edgeFlags,</span><br><span class="line">            msg-&gt;body.motion.metaState,</span><br><span class="line">            msg-&gt;body.motion.buttonState,</span><br><span class="line">            msg-&gt;body.motion.xOffset,</span><br><span class="line">            msg-&gt;body.motion.yOffset,</span><br><span class="line">            msg-&gt;body.motion.xPrecision,</span><br><span class="line">            msg-&gt;body.motion.yPrecision,</span><br><span class="line">            msg-&gt;body.motion.downTime,</span><br><span class="line">            msg-&gt;body.motion.eventTime,</span><br><span class="line">            pointerCount,</span><br><span class="line">            pointerProperties,</span><br><span class="line">            pointerCoords);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>然后在第14行把它存入了<code>outEvent</code>（也就是<code>consume()</code>函数中传入的<code>inputEvent</code>）中，现在函数返回到<code>NativeInputEventReceiver::consumeEvents()</code>继续处理：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (inputEvent-&gt;getType()) &#123;</span><br><span class="line">          <span class="keyword">case</span> AINPUT_EVENT_TYPE_KEY:</span><br><span class="line">		...</span><br><span class="line"></span><br><span class="line">          <span class="keyword">case</span> AINPUT_EVENT_TYPE_MOTION: &#123;</span><br><span class="line">              <span class="keyword">if</span> (kDebugDispatchCycle) &#123;</span><br><span class="line">                  ALOGD(<span class="string">"channel '%s' ~ Received motion event."</span>, getInputChannelName());</span><br><span class="line">              &#125;</span><br><span class="line">              MotionEvent* motionEvent = <span class="keyword">static_cast</span>&lt;MotionEvent*&gt;(inputEvent);</span><br><span class="line">              <span class="keyword">if</span> ((motionEvent-&gt;getAction() &amp; AMOTION_EVENT_ACTION_MOVE) &amp;&amp; outConsumedBatch) &#123;</span><br><span class="line">                  *outConsumedBatch = <span class="literal">true</span>;</span><br><span class="line">              &#125;</span><br><span class="line">              inputEventObj = android_view_MotionEvent_obtainAsCopy(env, motionEvent);</span><br><span class="line">              <span class="keyword">break</span>;</span><br><span class="line">          &#125;</span><br><span class="line">    		...</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">if</span> (inputEventObj) &#123;</span><br><span class="line">              <span class="keyword">if</span> (kDebugDispatchCycle) &#123;</span><br><span class="line">                  ALOGD(<span class="string">"channel '%s' ~ Dispatching input event."</span>, getInputChannelName());</span><br><span class="line">              &#125;</span><br><span class="line">              env-&gt;CallVoidMethod(receiverObj.get(),</span><br><span class="line">                      gInputEventReceiverClassInfo.dispatchInputEvent, seq, inputEventObj);</span><br><span class="line">         ...</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (inputEvent-&gt;getType()) &#123;</span><br><span class="line">          <span class="keyword">case</span> AINPUT_EVENT_TYPE_KEY:</span><br><span class="line">		...</span><br><span class="line"></span><br><span class="line">          <span class="keyword">case</span> AINPUT_EVENT_TYPE_MOTION: &#123;</span><br><span class="line">              <span class="keyword">if</span> (kDebugDispatchCycle) &#123;</span><br><span class="line">                  ALOGD(<span class="string">"channel '%s' ~ Received motion event."</span>, getInputChannelName());</span><br><span class="line">              &#125;</span><br><span class="line">              MotionEvent* motionEvent = <span class="keyword">static_cast</span>&lt;MotionEvent*&gt;(inputEvent);</span><br><span class="line">              <span class="keyword">if</span> ((motionEvent-&gt;getAction() &amp; AMOTION_EVENT_ACTION_MOVE) &amp;&amp; outConsumedBatch) &#123;</span><br><span class="line">                  *outConsumedBatch = <span class="literal">true</span>;</span><br><span class="line">              &#125;</span><br><span class="line">              inputEventObj = android_view_MotionEvent_obtainAsCopy(env, motionEvent);</span><br><span class="line">              <span class="keyword">break</span>;</span><br><span class="line">          &#125;</span><br><span class="line">    		...</span><br><span class="line">          &#125;</span><br><span class="line"></span><br><span class="line">          <span class="keyword">if</span> (inputEventObj) &#123;</span><br><span class="line">              <span class="keyword">if</span> (kDebugDispatchCycle) &#123;</span><br><span class="line">                  ALOGD(<span class="string">"channel '%s' ~ Dispatching input event."</span>, getInputChannelName());</span><br><span class="line">              &#125;</span><br><span class="line">              env-&gt;CallVoidMethod(receiverObj.<span class="built_in">get</span>(),</span><br><span class="line">                      gInputEventReceiverClassInfo.dispatchInputEvent, seq, inputEventObj);</span><br><span class="line">         ...</span><br><span class="line">      &#125;</span><br></pre></td></tr></table></figure>
 <p>下面就对<code>inputEvent</code>（即为<code>MotionEvent</code>）的类型作了一个判断，对<code>inputEventObj</code>（用于调用<code>java</code>层方法）进行赋值。随后就通过<code>JNI</code> 的<code>CallVoidMethod()</code>方法来调用<code>java</code>层的<code>dispatchInputEvent()</code>方法。这里调用的是<code>java</code>层<code>InputEventReceiver</code>的<code>dispatchInputEvent()</code>方法：</p>
 <p>从这里，我们从<code>Native</code>层跨越到了<code>java</code>层。</p>
 <h2 id="开始分发"><a href="#开始分发" class="headerlink" title="开始分发"></a>开始分发</h2><h3 id="dispatchInputEvent"><a href="#dispatchInputEvent" class="headerlink" title="dispatchInputEvent"></a>dispatchInputEvent</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">dispatchInputEvent</span><span class="params">(<span class="keyword">int</span> seq, InputEvent event)</span> </span>&#123;</span><br><span class="line">    mSeqMap.put(event.getSequenceNumber(), seq);</span><br><span class="line">    onInputEvent(event);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -449,8 +398,8 @@
 <p>在从链表中取出事件之后，对事件的时间戳进行了更新。然后调用<code>deliverInputEvent()</code>方法：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">deliverInputEvent</span><span class="params">(QueuedInputEvent q)</span> </span>&#123;</span><br><span class="line">    Trace.asyncTraceBegin(Trace.TRACE_TAG_VIEW, <span class="string">"deliverInputEvent"</span>, q.mEvent.getSequenceNumber());</span><br><span class="line">    <span class="keyword">if</span> (mInputEventConsistencyVerifier != <span class="keyword">null</span>) &#123;</span><br><span class="line">        mInputEventConsistencyVerifier.onInputEvent(q.mEvent, <span class="number">0</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    InputStage stage;</span><br><span class="line">    <span class="keyword">if</span> (q.shouldSendToSynthesizer()) &#123;</span><br><span class="line">        stage = mSyntheticInputStage;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        stage = q.shouldSkipIme() ? mFirstPostImeInputStage : mFirstInputStage;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (stage != <span class="keyword">null</span>) &#123;</span><br><span class="line">        stage.deliver(q);</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        finishInputEvent(q);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这段代码第一眼看上去比较难懂，<code>Stage</code>让我们联想到了CPU流水线处理过程中的<code>Stage</code>，这里就是进入了一个流水线过程来处理事件：</p>
-<h3 id="流水线事件处理"><a href="#流水线事件处理" class="headerlink" title="流水线事件处理"></a>流水线事件处理</h3><p><img src="/images/event2_1.png" alt></p>
-<p><img src="/images/event2_2.png" alt></p>
+<h3 id="流水线事件处理"><a href="#流水线事件处理" class="headerlink" title="流水线事件处理"></a>流水线事件处理</h3><p><img src="/images/event2_1.png" alt=""></p>
+<p><img src="/images/event2_2.png" alt=""></p>
 <p>首先看到我们可以根据事件类型的需要从<code>mSyntheticInputStage</code> <code>EarlyPostImeInputStage</code> <code>NativePreImeInputStage</code>三个入口进入流水线，而流水线的每一步都对事件进行了不同的处理，并可以通过<code>forward()</code>方法传递到下一个<code>Stage</code>进行处理。并且这里使用的流水线是一个异步流水线，可以允许多个事件同时在里面运行处理，这种架构使得事件处理流程效率非常高。</p>
 <p>那么我们的触摸事件从<code>NativePreImeInputStage</code>进入流水线后会经历什么处理过程呢：</p>
 <p>我们并不是<code>IME</code>的事件，所以直接从<code>EarlyPostImeInputStage</code>开始：</p>
@@ -474,23 +423,20 @@
     
     
     
-        
       
-        <div id="reward-container">
+        <div class="reward-container">
   <div></div>
-  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
     打赏
   </button>
   <div id="qr" style="display: none;">
-        
       
-      <div style="display: inline-block">
+      <div style="display: inline-block;">
         <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
         <p>微信支付</p>
       </div>
-        
       
-      <div style="display: inline-block">
+      <div style="display: inline-block;">
         <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
         <p>支付宝</p>
       </div>
@@ -498,98 +444,76 @@
   </div>
 </div>
 
-      
         
 
 <div>
 <ul class="post-copyright">
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>viseator(吴迪)</li>
+    <strong>本文作者： </strong>viseator(吴迪)
+  </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
     <a href="https://www.viseator.com/2017/10/07/android_view_event_2/" title="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始">https://www.viseator.com/2017/10/07/android_view_event_2/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！</li>
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
 </ul>
 </div>
 
-      
 
       <footer class="post-footer">
-          
-            
-          
           <div class="post-tags">
-            
               <a href="/tags/Android/" rel="tag"># Android</a>
-            
               <a href="/tags/View/" rel="tag"># View</a>
-            
           </div>
-        
 
         
 
           <div class="post-nav">
             <div class="post-nav-next post-nav-item">
-              
                 <a href="/2017/09/14/android_view_event_1/" rel="next" title="Android 触摸事件分发机制（一）从内核到应用 一切的开始">
                   <i class="fa fa-chevron-left"></i> Android 触摸事件分发机制（一）从内核到应用 一切的开始
                 </a>
-              
             </div>
 
             <span class="post-nav-divider"></span>
 
             <div class="post-nav-prev post-nav-item">
-              
                 <a href="/2017/10/22/android_event_1/" rel="prev" title="Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue">
                   Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue <i class="fa fa-chevron-right"></i>
                 </a>
-              
             </div>
           </div>
-        
       </footer>
     
-  </div>
-  
-  
-  
   </article>
+  
+  
+  
 
   </div>
 
 
           </div>
           
-    
     
   <div class="comments" id="comments">
     <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
   </div>
   
-  
 
         </div>
           
   
-  <div class="sidebar-toggle">
-    <div class="sidebar-toggle-line-wrap">
-      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
-      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
-    </div>
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
   </div>
 
   <aside class="sidebar">
     <div class="sidebar-inner">
-        
-        
-        
-        
-      
 
       <ul class="sidebar-nav motion-element">
         <li class="sidebar-nav-toc">
@@ -603,84 +527,48 @@
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
           <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#回顾"><span class="nav-number">1.</span> <span class="nav-text">回顾</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#消息循环"><span class="nav-number">2.</span> <span class="nav-text">消息循环</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Looper"><span class="nav-number">2.1.</span> <span class="nav-text">Looper</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#handleEvent"><span class="nav-number">2.2.</span> <span class="nav-text">handleEvent</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#开始分发"><span class="nav-number">3.</span> <span class="nav-text">开始分发</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#dispatchInputEvent"><span class="nav-number">3.1.</span> <span class="nav-text">dispatchInputEvent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#流水线事件处理"><span class="nav-number">3.2.</span> <span class="nav-text">流水线事件处理</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#EarlyPostImeInputStage"><span class="nav-number">3.2.1.</span> <span class="nav-text">EarlyPostImeInputStage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#NativePostImeInputStage"><span class="nav-number">3.2.2.</span> <span class="nav-text">NativePostImeInputStage</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ViewPostImeInputStage"><span class="nav-number">3.2.3.</span> <span class="nav-text">ViewPostImeInputStage</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a></li></ol></div>
-        
       </div>
       <!--/noindex-->
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image"
-      src="/images/avatar.jpg"
-      alt="viseator(吴迪)">
+  <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
+    src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
   <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
 <div class="site-state-wrap motion-element">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
-        
           <a href="/archives">
         
           <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">文章</span>
         </a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-categories">
-        
-          
             <a href="/categories">
           
-        
-        <span class="site-state-item-count">21</span>
-        <span class="site-state-item-name">分类</span>
-        </a>
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">分类</span></a>
       </div>
-    
-      
-      
       <div class="site-state-item site-state-tags">
-        
-          
             <a href="/tags">
           
-        
-        <span class="site-state-item-count">26</span>
-        <span class="site-state-item-name">标签</span>
-        </a>
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
       </div>
-    
   </nav>
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
         <a href="https://github.com/viseator" title="GitHub &rarr; https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
       </span>
-    
       <span class="links-of-author-item">
-      
-      
-        
-      
-      
-        
-      
         <a href="mailto:viseator@gmail.com" title="Email &rarr; mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
       </span>
-    
   </div>
   <div class="cc-license motion-element" itemprop="license">
-    
-  
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
@@ -694,31 +582,24 @@
         <li class="links-of-blogroll-item">
           <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
         </li>
-      
         <li class="links-of-blogroll-item">
           <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
         </li>
-      
     </ul>
   </div>
 
@@ -732,17 +613,24 @@
       </div>
     </main>
 
-    <footer id="footer" class="footer">
+    <footer class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; 2016 – <span itemprop="copyrightYear">2019</span>
-  <span class="with-love" id="animate">
+        
+
+<div class="copyright">
+  
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
+  </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.4.0</div>
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.5.0
+  </div>
 
         
 
@@ -754,7 +642,6 @@
 
 
 
-  
   <script>
   function leancloudSelector(url) {
     return document.getElementById(url).querySelector('.leancloud-visitors-count');
@@ -771,7 +658,6 @@
           if (results.length > 0) {
             var counter = results[0];
               leancloudSelector(url).innerText = counter.time + 1;
-            
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .then(response => response.json())
               .catch(error => {
@@ -786,7 +672,6 @@
                 .catch(error => {
                   console.log('Failed to create', error);
                 });
-            
           }
         })
         .catch(error => {
@@ -864,13 +749,20 @@
   </div>
 
   
-  <script src="/lib/anime.min.js?v=3.1.0"></script>
-  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
-  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-<script src="/js/utils.js?v=7.4.0"></script><script src="/js/motion.js?v=7.4.0"></script>
-<script src="/js/schemes/muse.js?v=7.4.0"></script>
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
 
-<script src="/js/next-boot.js?v=7.4.0"></script>
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/muse.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
 
 
 
@@ -888,13 +780,10 @@
 
 
 
-
-
-
-
   
 <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.css">
-<script src="//cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js"></script><script src="/js/algolia-search.js?v=7.4.0"></script>
+<script src="//cdn.jsdelivr.net/npm/instantsearch.js@2/dist/instantsearch.min.js"></script>
+<script src="/js/algolia-search.js"></script>
 
 
 
@@ -909,8 +798,6 @@
 
 
 
-
-  
 
   
 
