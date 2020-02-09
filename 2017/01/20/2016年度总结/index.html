@@ -23,11 +23,12 @@
 <script id="hexo-configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
+    hostname: new URL('https://www.viseator.com').hostname,
     root: '/',
     scheme: 'Mist',
-    version: '7.5.0',
+    version: '7.7.1',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    sidebar: {"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},
     copycode: {"enable":true,"show_result":true,"style":null},
     back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
     bookmark: {"enable":false,"color":"#222","save":"auto"},
@@ -35,6 +36,7 @@
     mediumzoom: false,
     lazyload: false,
     pangu: false,
+    comments: {"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},
     algolia: {
       appID: 'HYRROWXF5U',
       apiKey: '24035990f7a74ccf1ec2cf8d264b6207',
@@ -44,13 +46,7 @@
     },
     localsearch: {"enable":false,"trigger":"auto","top_n_per_article":2,"unescape":true,"preload":false},
     path: 'search.xml',
-    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
-    translation: {
-      copy_button: '复制',
-      copy_success: '复制成功',
-      copy_failure: '复制失败'
-    },
-    sidebarPadding: 40
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}
   };
 </script>
 
@@ -75,9 +71,7 @@
   CONFIG.page = {
     sidebar: "",
     isHome: false,
-    isPost: true,
-    isPage: false,
-    isArchive: false
+    isPost: true
   };
 </script>
 
@@ -85,8 +79,7 @@
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
     <script>
-      var host = window.location.hostname;
-      if (host !== "localhost" || !true) {
+      if (CONFIG.hostname === location.hostname) {
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
@@ -365,10 +358,9 @@
     
     
     
-      
         <div class="reward-container">
   <div></div>
-  <button disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
     打赏
   </button>
   <div id="qr" style="display: none;">
@@ -395,7 +387,7 @@
   </li>
   <li class="post-copyright-link">
     <strong>本文链接：</strong>
-    <a href="https://www.viseator.com/2017/01/20/2016%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/" title="2016年度总结">https://www.viseator.com/2017/01/20/2016%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</a>
+    <a href="https://www.viseator.com/2017/01/20/2016%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/" title="2016年度总结">https://www.viseator.com/2017/01/20/2016年度总结/</a>
   </li>
   <li class="post-copyright-license">
     <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
@@ -411,21 +403,18 @@
 
         
 
-          <div class="post-nav">
-            <div class="post-nav-next post-nav-item">
-                <a href="/2016/12/09/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%89%EF%BC%89/" rel="next" title="OpenCV处理拍照表格（三）">
-                  <i class="fa fa-chevron-left"></i> OpenCV处理拍照表格（三）
-                </a>
-            </div>
 
-            <span class="post-nav-divider"></span>
-
-            <div class="post-nav-prev post-nav-item">
-                <a href="/2017/02/05/LeetCode/" rel="prev" title="LeetCode踩坑集锦">
-                  LeetCode踩坑集锦 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2016/12/09/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%89%EF%BC%89/" rel="prev" title="OpenCV处理拍照表格（三）">
+      <i class="fa fa-chevron-left"></i> OpenCV处理拍照表格（三）
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2017/02/05/LeetCode/" rel="next" title="LeetCode踩坑集锦">
+      LeetCode踩坑集锦 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
       </footer>
     
   </article>
@@ -439,10 +428,32 @@
           </div>
           
     
-  <div class="comments" id="comments">
+  <div class="comments">
     <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
   </div>
   
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
 
         </div>
           
@@ -473,8 +484,8 @@
 
       <div class="site-overview-wrap sidebar-panel">
         <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-  <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
-    src="/images/avatar.jpg">
+    <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
+      src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
   <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
@@ -503,10 +514,10 @@
 </div>
   <div class="links-of-author motion-element">
       <span class="links-of-author-item">
-        <a href="https://github.com/viseator" title="GitHub &rarr; https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+        <a href="https://github.com/viseator" title="GitHub → https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:viseator@gmail.com" title="Email &rarr; mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
+        <a href="mailto:viseator@gmail.com" title="Email → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
       </span>
   </div>
   <div class="cc-license motion-element" itemprop="license">
@@ -570,7 +581,7 @@
   <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v4.2.0
   </div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.5.0
+  <div class="theme-info">主题 – <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.7.1
   </div>
 
         
@@ -585,13 +596,14 @@
 
   <script>
   function leancloudSelector(url) {
+    url = encodeURI(url);
     return document.getElementById(url).querySelector('.leancloud-visitors-count');
   }
   if (CONFIG.page.isPost) {
     function addCount(Counter) {
       var visitors = document.querySelector('.leancloud_visitors');
-      var url = visitors.getAttribute('id').trim();
-      var title = visitors.getAttribute('data-flag-title').trim();
+      var url = decodeURI(visitors.getAttribute('id'));
+      var title = visitors.getAttribute('data-flag-title');
 
       Counter('get', `/classes/Counter?where=${JSON.stringify({ url })}`)
         .then(response => response.json())
@@ -602,7 +614,7 @@
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .then(response => response.json())
               .catch(error => {
-                console.log('Failed to save visitor count', error);
+                console.error('Failed to save visitor count', error);
               })
           } else {
               Counter('post', '/classes/Counter', { title: title, url: url, time: 1 })
@@ -611,19 +623,19 @@
                   leancloudSelector(url).innerText = 1;
                 })
                 .catch(error => {
-                  console.log('Failed to create', error);
+                  console.error('Failed to create', error);
                 });
           }
         })
         .catch(error => {
-          console.log('LeanCloud Counter Error', error);
+          console.error('LeanCloud Counter Error', error);
         });
     }
   } else {
     function showTime(Counter) {
       var visitors = document.querySelectorAll('.leancloud_visitors');
       var entries = [...visitors].map(element => {
-        return element.getAttribute('id').trim();
+        return decodeURI(element.getAttribute('id'));
       });
 
       Counter('get', `/classes/Counter?where=${JSON.stringify({ url: { '$in': entries } })}`)
@@ -635,14 +647,11 @@
             });
             return;
           }
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.url;
-            var time = item.time;
+          for (let item of results) {
+            let { url, time } = item;
             leancloudSelector(url).innerText = time;
           }
-          for (var i = 0; i < entries.length; i++) {
-            var url = entries[i];
+          for (let url of entries) {
             var element = leancloudSelector(url);
             if (element.innerText == '') {
               element.innerText = 0;
@@ -650,7 +659,7 @@
           }
         })
         .catch(error => {
-          console.log('LeanCloud Counter Error', error);
+          console.error('LeanCloud Counter Error', error);
         });
     }
   }
@@ -670,8 +679,7 @@
         });
       };
       if (CONFIG.page.isPost) {
-        const localhost = /http:\/\/(localhost|127.0.0.1|0.0.0.0)/;
-        if (localhost.test(document.URL)) return;
+        if (CONFIG.hostname !== location.hostname) return;
         addCount(Counter);
       } else if (document.querySelectorAll('.post-title-link').length >= 1) {
         showTime(Counter);
@@ -680,11 +688,6 @@
   </script>
 
 
-
-
-
-
-        
       </div>
     </footer>
   </div>
@@ -739,12 +742,12 @@
 
 
 
-
   
 
   
 
 <script>
+NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
   window.livereOptions = {
     refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
   };
@@ -756,6 +759,7 @@
     j.async = true;
     e.parentNode.insertBefore(j, e);
   })(document, 'script');
+});
 </script>
 
 </body>
