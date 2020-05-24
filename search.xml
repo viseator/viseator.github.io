@@ -2143,7 +2143,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <li><p>无线网：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wifi-menu</span><br></pre></td></tr></table></figure>
 <p>按界面提示进行操作就可以了。</p>
-<p>如果<code>wifi-menu</code>无法联网，可以尝试下面的方法<a href="https://www.cnblogs.com/houhaibushihai/p/10355683.html" target="_blank" rel="noopener">来源</a>：</p>
+<p>如果<code>wifi-menu</code>无法联网，可以尝试下面的方法<a href="https://www.cnblogs.com/houhaibushihai/p/10355683.html" target="_blank" rel="noopener">(来源)</a>：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">sudo systemctl start wpa_supplicant.service</span><br></pre></td></tr></table></figure>
 <p>使用<code>nmcli</code>查看Wifi列表：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">nmcli dev wifi list</span><br></pre></td></tr></table></figure>
