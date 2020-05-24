@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>https://www.viseator.com/2017/07/02/arch_more/</loc>
+    
+    <lastmod>2020-05-24T03:18:42.129Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/05/19/arch_setup/</loc>
+    
+    <lastmod>2020-05-24T03:17:49.945Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>https://www.viseator.com/2017/05/17/arch_install/</loc>
     
-    <lastmod>2020-05-24T03:13:20.997Z</lastmod>
+    <lastmod>2020-05-24T03:17:20.616Z</lastmod>
     
   </url>
   
@@ -26,20 +40,6 @@
     <loc>https://www.viseator.com/2018/07/02/80x86_asm_c/</loc>
     
     <lastmod>2019-03-19T02:23:38.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/05/19/arch_setup/</loc>
-    
-    <lastmod>2018-10-14T08:32:51.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/07/02/arch_more/</loc>
-    
-    <lastmod>2018-09-12T07:38:36.000Z</lastmod>
     
   </url>
   

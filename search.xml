@@ -1600,6 +1600,14 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <h3 id="虚拟机"><a href="#虚拟机" class="headerlink" title="虚拟机"></a>虚拟机</h3><p>有些时候需要使用<code>windows</code>而不想切换系统或干脆没有<code>windows</code>的情况下，我们可以使用<code>windows</code>虚拟机来代替。当然虚拟机的用处不止于此。</p>
 <p><code>Arch</code>下的虚拟机首先开源的<code>VirtualBox</code>，安装官方源的<code>virtualbox</code> <code>virtualbox-ext-vnc</code> <code>virtualbox-guest-iso</code> <code>virtualbox-host-modules-arch</code>这几个包。</p>
 <p>再去<a href="https://www.virtualbox.org/wiki/Downloads" target="_blank" rel="noopener">官网</a>下载<strong>Oracle VM VirtualBox Extension Pack</strong> ，在设置中导入使用。安装<code>windows</code>的过程不在这里讲解，记得安装之后在<code>windows</code>内安装扩展客户端软件即可。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>如果觉得这篇教程对你有帮助，可以移步我的知乎回答下点个赞，让更多的人可以看到这篇教程，你的支持是我最大的动力：</p>
+<blockquote>
+<p>  Arch Linux 怎么安装？ - viseator的回答 - 知乎<br>  <a href="https://www.zhihu.com/question/21427410/answer/171867330" target="_blank" rel="noopener">https://www.zhihu.com/question/21427410/answer/171867330</a></p>
+</blockquote>
+<p><strong>同时，如果你是想要从事计算机方向的新人，非常推荐看看我的分享：</strong>：</p>
+<p><a href="https://www.viseator.com/2020/05/24/university_1/">从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活</a></p>
+<p>也欢迎关注我的微信公众号VirMe：<br><img src="/images/wechat_channel.jpg" alt=""></p>
+<p>如果安装过程中遇到问题，可以直接在下方评论区/公众号留言或邮件<a href="mailto:viseator@gmail.com">viseator@gmail.com</a>（尽量附上错误信息），我会尽力回复解决。</p>
 ]]></content>
       <categories>
         <category>Linux</category>
@@ -2228,12 +2236,14 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>重新启动后，如果你看到桌面管理器的界面，选择你需要的桌面环境并输入用户名与密码登陆后，看到了熟悉而又陌生的桌面，那么恭喜你，你已经完成了桌面环境的安装！</p>
 <h2 id="你可能需要知道的操作与软件包推荐"><a href="#你可能需要知道的操作与软件包推荐" class="headerlink" title="你可能需要知道的操作与软件包推荐"></a>你可能需要知道的操作与软件包推荐</h2><p>到这里，<code>ArchLinux</code>的安装与基本配置教程已经结束了，笔者在编写过程中基本凭着多次安装的经验与这次安装的记录完成，难免会有疏漏与不正确的地方，还请大家通过下面的评论或邮件(<a href="mailto:viseator@gmail.com">viseator@gmail.com</a>)提出意见与建议。也欢迎你们与我交流安装的问题。</p>
 <p><a href="http://www.viseator.com/2017/07/02/arch_more/">下一篇文章</a>介绍了一些实用的配置（如中文输入法的安装）与软件包等。</p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>如果觉得这篇教程对你有帮助，可以移步我的知乎回答：</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>如果觉得这篇教程对你有帮助，可以移步我的知乎回答下点个赞，让更多的人可以看到这篇教程，你的支持是我最大的动力：</p>
 <blockquote>
 <p>  Arch Linux 怎么安装？ - viseator的回答 - 知乎<br>  <a href="https://www.zhihu.com/question/21427410/answer/171867330" target="_blank" rel="noopener">https://www.zhihu.com/question/21427410/answer/171867330</a></p>
 </blockquote>
-<p>下点个赞，让更多的人可以看到这篇教程，你的支持是我最大的动力。</p>
-<p>如果安装过程中遇到问题，可以直接在下方评论区留言或邮件<a href="mailto:viseator@gmail.com">viseator@gmail.com</a>（尽量附上错误信息），我会尽力回复解决。</p>
+<p><strong>同时，如果你是想要从事计算机方向的新人，非常推荐看看我的分享：</strong>：</p>
+<p><a href="https://www.viseator.com/2020/05/24/university_1/">从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活</a></p>
+<p>也欢迎关注我的微信公众号VirMe：<br><img src="/images/wechat_channel.jpg" alt=""></p>
+<p>如果安装过程中遇到问题，可以直接在下方评论区/公众号留言或邮件<a href="mailto:viseator@gmail.com">viseator@gmail.com</a>（尽量附上错误信息），我会尽力回复解决。</p>
 ]]></content>
       <categories>
         <category>Linux</category>
@@ -2600,8 +2610,10 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <blockquote>
 <p>  Arch Linux 怎么安装？ - viseator的回答 - 知乎<br>  <a href="https://www.zhihu.com/question/21427410/answer/171867330" target="_blank" rel="noopener">https://www.zhihu.com/question/21427410/answer/171867330</a></p>
 </blockquote>
-<p>同时，如果你是想要从事计算机方向的新人，非常推荐看看我的另一系列文章：</p>
-<p>如果安装过程中遇到问题，可以直接在下方评论区留言或邮件<a href="mailto:viseator@gmail.com">viseator@gmail.com</a>（尽量附上错误信息），我会尽力回复解决。</p>
+<p><strong>同时，如果你是想要从事计算机方向的新人，非常推荐看看我的分享：</strong>：</p>
+<p><a href="https://www.viseator.com/2020/05/24/university_1/">从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活</a></p>
+<p>也欢迎关注我的微信公众号VirMe：<br><img src="/images/wechat_channel.jpg" alt=""></p>
+<p>如果安装过程中遇到问题，可以直接在下方评论区/公众号留言或邮件<a href="mailto:viseator@gmail.com">viseator@gmail.com</a>（尽量附上错误信息），我会尽力回复解决。</p>
 ]]></content>
       <categories>
         <category>Linux</category>
