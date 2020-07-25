@@ -2155,7 +2155,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <h3 id="创建交换文件"><a href="#创建交换文件" class="headerlink" title="创建交换文件"></a>创建交换文件</h3><p>交换文件可以在物理内存不足的时候将部分内存暂存到交换文件中，避免系统由于内存不足而完全停止工作。</p>
 <p>之前我们通常采用单独一个分区的方式作为交换分区，现在更推荐采用交换文件的方式，更便于我们的管理。</p>
 <p>分配一块空间用于交换文件，执行：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">fallocate -l 512M /swapfile （请将512M换成需要的大小，只能以M或G为单位）</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">dd <span class="keyword">if</span>=/dev/zero of=/swapfile bs=1M count=512 status=progress （请将512换成需要的大小，单位M）</span><br></pre></td></tr></table></figure>
 <p>交换文件的大小可以自己决定，推荐4G以下的物理内存，交换文件与物理内存一致，4G以上的物理内存，交换文件4-8G。</p>
 <p>更改权限，执行：</p>
 <figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">chmod 600 /swapfile</span><br></pre></td></tr></table></figure>
@@ -2628,7 +2628,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>输入<code>root</code>，再输入之前设置的密码，显示出命令提示符，恭喜你，你已经成功安装<code>ArchLinux</code>！</p>
 <h2 id="安装后配置"><a href="#安装后配置" class="headerlink" title="安装后配置"></a>安装后配置</h2><p>虽然系统安装好了，但是还没有进行基本配置和安装图形界面，所以接下来我们要进行一些必须的配置和图形界面的安装。</p>
 <p>请见下一篇文章：<a href="http://www.viseator.com/2017/05/19/arch_setup/">ArchLinux安装后的必须配置与图形界面安装教程</a></p>
-<h2 id="特别感谢"><a href="#特别感谢" class="headerlink" title="特别感谢"></a>特别感谢</h2><p>评论区中<code>Senrey_Song</code>、<code>YKun</code>、<code>imzhwk</code>、<code>haonan mao</code>、<code>Lichen Zhang</code>、<code>回风</code>、<code>Nee</code>、<code>Wafer</code>、<code>LIU SHIKE</code>、<code>Charles</code>、<code>MegatonZed</code>、<code>beer!code!</code>、<code>禾七</code>、<code>Unira</code>、<code>arc</code>、<code>ZhiChao Li</code>、<code>多听音乐多喝水</code>、<code>AirLongdian</code>对于本教程内容的宝贵建议与指正。</p>
+<h2 id="特别感谢"><a href="#特别感谢" class="headerlink" title="特别感谢"></a>特别感谢</h2><p>评论区中<code>Senrey_Song</code>、<code>YKun</code>、<code>imzhwk</code>、<code>haonan mao</code>、<code>Lichen Zhang</code>、<code>回风</code>、<code>Nee</code>、<code>Wafer</code>、<code>LIU SHIKE</code>、<code>Charles</code>、<code>MegatonZed</code>、<code>beer!code!</code>、<code>禾七</code>、<code>Unira</code>、<code>arc</code>、<code>ZhiChao Li</code>、<code>多听音乐多喝水</code>、<code>AirLongdian</code>、<code>若尘</code>对于本教程内容的宝贵建议与指正。</p>
 <p><code>leccesg</code>、<code>Sophie Spivey</code>、<code>竹林里有冰</code>、<code>王心语</code>通过邮件提供的宝贵建议。</p>
 <h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>如果觉得这篇教程对你有帮助，可以移步我的知乎回答下点个赞，让更多的人可以看到这篇教程，你的支持是我最大的动力：</p>
 <blockquote>
