@@ -2379,12 +2379,30 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 </blockquote>
 </li>
 <li><p>如果你是无线网，请执行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">wifi-menu</span><br></pre></td></tr></table></figure>
-<p>这是一个实用的命令行下联网工具，有字符形式的图形化界面，利用它可以方便地联网，如果它没能起作用，需要进入以下页面查找解决方式：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">iwctl</span><br></pre></td></tr></table></figure>
+<p>会进入一个以[iwd]开头的命令行环境中，接着执行：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">device list</span><br></pre></td></tr></table></figure>
+<p>会列出当前可用的所有网卡设备，如图所示：</p>
+<p><img src="/images/arch27.png" alt=""></p>
+<p>记住<code>Name</code>一列你所使用的无线网卡的名称，比如我的就叫<code>wlan0</code>，下面的命令要用到，<strong>下面命令中请替换成自己的网卡名称</strong></p>
+<p>接着执行下列命令进行无线网络的扫描：（<strong><code>wlan0</code>替换成你自己的网卡名称</strong>）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">station wlan0 scan</span><br></pre></td></tr></table></figure>
+<p>接着执行下列命令列出扫描到的网络：（<strong><code>wlan0</code>替换成你自己的网卡名称</strong>）</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">station wlan0 get-networks</span><br></pre></td></tr></table></figure>
+<p>可以看到当前扫描到的无线网络都展示出来了：</p>
+<p><img src="/images/arch28.png" alt=""></p>
+<p>最后输入下列命令连接指定网络：（<strong><code>wlan0</code>替换成你自己的网卡名称，<code>CatAndPomelo</code>替换成你想连的网络名称</strong>）：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">station wlan0 connect CatAndPomelo</span><br></pre></td></tr></table></figure>
+<p>这时如果网络有密码的话会提示输入密码，输入后回车确认就行：</p>
+<p><img src="/images/arch29.png" alt=""></p>
+<p>注意这里就算密码输入错误也不会有提示的，所以请保证密码正确，如果你是中文无线网名称/密码的话建议先改一下，把密码取消会更方便些。</p>
+<p>顺利的话，此时你已经连接上网络了，执行下面命令退出<code>iwd</code>：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">quit</span><br></pre></td></tr></table></figure>
+<p>连接以后同样可以通过上面的<code>ping</code>命令来进行测试。</p>
+<p><code>iwd</code>是一个实用的命令行下联网工具，利用它可以方便地联网，如果它没能起作用，需要进入以下页面查找解决方式：</p>
 <blockquote>
 <p>  <a href="https://wiki.archlinux.org/index.php/Wireless_network_configuration" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/Wireless_network_configuration</a></p>
 </blockquote>
-<p>连接以后同样可以通过上面的<code>ping</code>命令来进行测试。</p>
 </li>
 </ul>
 <p><strong>注意</strong>：由于部分无线网卡驱动的支持并不完善，所以在这里可能会遇到问题，并且各机型的解决方法都不同，如果不幸遇到无线连不上的问题，可以插有线联网先把系统装好再去慢慢解决。解决问题可以参照：<a href="https://wiki.archlinux.org/index.php/Network_configuration" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/Network_configuration</a></p>
@@ -2610,8 +2628,8 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>输入<code>root</code>，再输入之前设置的密码，显示出命令提示符，恭喜你，你已经成功安装<code>ArchLinux</code>！</p>
 <h2 id="安装后配置"><a href="#安装后配置" class="headerlink" title="安装后配置"></a>安装后配置</h2><p>虽然系统安装好了，但是还没有进行基本配置和安装图形界面，所以接下来我们要进行一些必须的配置和图形界面的安装。</p>
 <p>请见下一篇文章：<a href="http://www.viseator.com/2017/05/19/arch_setup/">ArchLinux安装后的必须配置与图形界面安装教程</a></p>
-<h2 id="特别感谢"><a href="#特别感谢" class="headerlink" title="特别感谢"></a>特别感谢</h2><p>评论区中<code>Senrey_Song</code>、<code>YKun</code>、<code>imzhwk</code>、<code>haonan mao</code>、<code>Lichen Zhang</code>、<code>回风</code>、<code>Nee</code>、<code>Wafer</code>、<code>LIU SHIKE</code>、<code>Charles</code>、<code>MegatonZed</code>、<code>beer!code!</code>、<code>禾七</code>、<code>Unira</code>、<code>arc</code>、<code>ZhiChao Li</code>对于本教程内容的宝贵建议与指正。</p>
-<p><code>leccesg</code>、<code>Sophie Spivey</code>通过邮件提供的宝贵建议。</p>
+<h2 id="特别感谢"><a href="#特别感谢" class="headerlink" title="特别感谢"></a>特别感谢</h2><p>评论区中<code>Senrey_Song</code>、<code>YKun</code>、<code>imzhwk</code>、<code>haonan mao</code>、<code>Lichen Zhang</code>、<code>回风</code>、<code>Nee</code>、<code>Wafer</code>、<code>LIU SHIKE</code>、<code>Charles</code>、<code>MegatonZed</code>、<code>beer!code!</code>、<code>禾七</code>、<code>Unira</code>、<code>arc</code>、<code>ZhiChao Li</code>、<code>多听音乐多喝水</code>对于本教程内容的宝贵建议与指正。</p>
+<p><code>leccesg</code>、<code>Sophie Spivey</code>、<code>竹林里有冰</code>、<code>王心语</code>通过邮件提供的宝贵建议。</p>
 <h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>如果觉得这篇教程对你有帮助，可以移步我的知乎回答下点个赞，让更多的人可以看到这篇教程，你的支持是我最大的动力：</p>
 <blockquote>
 <p>  Arch Linux 怎么安装？ - viseator的回答 - 知乎<br>  <a href="https://www.zhihu.com/question/21427410/answer/171867330" target="_blank" rel="noopener">https://www.zhihu.com/question/21427410/answer/171867330</a></p>
