@@ -4,27 +4,27 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 5.3.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
-  <meta name="msapplication-config" content="/images/browserconfig.xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CAladin:300,300italic,400,400italic,700,700italic%7CPT+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<script id="hexo-configurations">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.viseator.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":2,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.viseator.com","root":"/","images":"/images","scheme":"Mist","version":"8.2.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10}}};
   </script>
-
-  <meta name="description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
+<meta name="description" content="写在前面   这可能是你能找到的最适合你的中文ArchLinux安装教程。  前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍Arch，算上帮朋友装的，这已经是我第四次安装Arch了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="以官方Wiki的方式安装ArchLinux">
 <meta property="og:url" content="https://www.viseator.com/2017/05/17/arch_install/index.html">
@@ -66,10 +66,11 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.viseator.com/images/arch01.jpeg">
 
+
 <link rel="canonical" href="https://www.viseator.com/2017/05/17/arch_install/">
 
 
-<script id="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -78,8 +79,7 @@
     lang   : 'zh-CN'
   };
 </script>
-
-  <title>以官方Wiki的方式安装ArchLinux | viseator's blog</title>
+<title>以官方Wiki的方式安装ArchLinux | viseator's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
     <script>
@@ -90,7 +90,6 @@
         gtag('config', 'UA-93455229-1');
       }
     </script>
-
 
   <script>
     var _hmt = _hmt || [];
@@ -104,52 +103,63 @@
 
 
 
-
   <noscript>
   <style>
-  .use-motion .brand,
+  body { margin-top: 2rem; }
+
   .use-motion .menu-item,
-  .sidebar-inner,
+  .use-motion .sidebar,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle {
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
   </style>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
+      <i class="logo-line"></i>
       <h1 class="site-title">viseator's blog</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">吴迪的博客</p>
   </div>
@@ -163,44 +173,15 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section">首页</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories" rel="section">分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives" rel="section">归档</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags" rel="section">标签</a>
-
-  </li>
-        <li class="menu-item menu-item-resource">
-
-    <a href="/2017/03/25/resource_general" rel="section">资源</a>
-
-  </li>
-        <li class="menu-item menu-item-arch">
-
-    <a href="/categories/Linux/" rel="section">Arch安装</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about" rel="section">关于</a>
-
-  </li>
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories" rel="section">分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags" rel="section">标签</a></li>
+        <li class="menu-item menu-item-resource"><a href="/2017/03/25/resource_general" rel="section">资源</a></li>
+        <li class="menu-item menu-item-arch"><a href="/categories/Linux/" rel="section">Arch安装</a></li>
+        <li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger">搜索
         </a>
@@ -211,623 +192,37 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container"></div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div class="algolia-results">
-  <div id="algolia-stats"></div>
-  <div id="algolia-hits"></div>
-  <div id="algolia-pagination" class="algolia-pagination"></div>
+<div class="search-result-container">
+  <div class="algolia-stats"><hr></div>
+  <div class="algolia-hits"></div>
+  <div class="algolia-pagination"></div>
 </div>
 
-      
     </div>
   </div>
 
 </div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
-            
-
-    
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/05/17/arch_install/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="viseator(吴迪)">
-      <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="viseator's blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          以官方Wiki的方式安装ArchLinux
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-05-17 23:26:29" itemprop="dateCreated datePublished" datetime="2017-05-17T23:26:29+08:00">2017-05-17</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-25 23:16:45" itemprop="dateModified" datetime="2020-07-25T23:16:45+08:00">2020-07-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/Arch/" itemprop="url" rel="index"><span itemprop="name">Arch</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/05/17/arch_install/" class="post-meta-item leancloud_visitors" data-flag-title="以官方Wiki的方式安装ArchLinux" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><blockquote>
-<p>  <strong>这可能是你能找到的最适合你的中文<code>ArchLinux</code>安装教程。</strong></p>
-</blockquote>
-<p>前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍<code>Arch</code>，算上帮朋友装的，这已经是我第四次安装<code>Arch</code>了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。</p>
-<a id="more"></a>
-<p>很多人提起起<code>Arch</code>的第一反应就是安装困难，这种困难有很多原因，也就是接下来我们将会面对的问题。</p>
-<ul>
-<li>没有图形界面的引导：<code>Arch</code>只给我们提供了一个最小的环境，所有的安装操作都需要在命令行中完成，这对于不习惯命令行操作的人来说是最难以跨越的一个坎。许多发行版之所以可以流行开来就是因为他们提供了友好的、流程化的安装过程，这帮很多人解决了学习<code>Linux</code>的第一步：安装一个<code>Linux</code>。</li>
-<li>预备知识的不足与缺乏查找并解决问题的能力：一些对于安装系统比较重要的知识例如系统引导、配置文件的编辑、简单的命令行操作等没有接触过，所以操作时往往摸不着头脑，一旦自己的操作结果与教程不符便不知道如何去解决遇到的问题。</li>
-<li>缺乏合适的教程：安装Arch最好的也是最完备的教程就是官方的<a href="https://wiki.archlinux.org/index.php/installation_guide" target="_blank" rel="noopener">Installation guide</a>与<a href="https://wiki.archlinux.org/" target="_blank" rel="noopener">Wiki</a>，虽然部分内容有中文版，但是中文的翻译有些时候会落后于英文版，不推荐完全依赖于中文Wiki。并且官方Wiki的写作方式更偏向于文档，没有我们所习惯的按步骤编排的安装过程，给不熟悉这种写作方式的同学造成了阅读与使用上的困难。国内的可以找到的教程往往都是时间比较久远，或是没有提及或是忽略了一些新手容易犯错误的地方。</li>
-</ul>
-<blockquote>
-<p>  <strong>本篇教程致力于与现有的Wiki保持一致，并且适当地加入一些适合初学者学习的链接，希望可以让阅读了这篇教程的同学可以提高自己利用现有及以后可能出现的新的Wiki内容的能力。</strong></p>
-</blockquote>
-<p><code>ArchLinux</code>或者是<code>Linux</code>的优点就不在这里多说了，我相信打开这篇教程的同学一定可以从这样的过程中得到很多。</p>
-<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>请一定<strong>仔细阅读教程中的每一个指示</strong>，绝大部分安装失败都是由于没有仔细看教程，遗漏、错输指令导致的。安装的方式根据引导方式的不同会有所不同，所以请按教程中的指示进行，切忌一味地输命令而不管说明。</p>
-<p>对于<strong>硬盘分区相关</strong>的操作，请更加小心检查命令，数据无价。</p>
-<p>下面就正式开始我们的教程。</p>
-<h2 id="安装教程"><a href="#安装教程" class="headerlink" title="安装教程"></a>安装教程</h2><h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><h4 id="安装介质"><a href="#安装介质" class="headerlink" title="安装介质"></a>安装介质</h4><p>在安装之前我们先要准备一个安装介质，在这里只推荐U盘作为安装介质。</p>
-<ol>
-<li><p>到<a href="https://www.archlinux.org/download/" target="_blank" rel="noopener">https://www.archlinux.org/download/</a>页面下方的中国镜像源中下载<code>archlinux-**-x86_64.iso</code>这个<code>iso</code>文件。 </p>
-</li>
-<li><ul>
-<li><p>如果是<code>Linux</code>系统下制作安装介质，推荐使用<code>dd</code>命令，教程：</p>
-<blockquote>
-<p>  <a href="http://www.runoob.com/linux/linux-comm-dd.html" target="_blank" rel="noopener">http://www.runoob.com/linux/linux-comm-dd.html</a></p>
-</blockquote>
-</li>
-<li><p>如果是<code>windows</code>系统下制作安装介质，推荐使用<code>usbwriter</code>这款轻量级的工具，下载链接：</p>
-<blockquote>
-<p>  <a href="https://sourceforge.net/projects/usbwriter/" target="_blank" rel="noopener">https://sourceforge.net/projects/usbwriter/</a></p>
-</blockquote>
-</li>
-</ul>
-</li>
-</ol>
-<h4 id="磁盘准备"><a href="#磁盘准备" class="headerlink" title="磁盘准备"></a>磁盘准备</h4><p>我们需要有一块空闲的磁盘区域来进行安装，这里的空闲指的是<strong>没有被分区</strong>的空间。下面来介绍如何准备这块空间。</p>
-<ul>
-<li><p>在<code>windows</code>下空出一块分区来安装：利用<code>windows</code>自带的磁盘管理工具就可以：</p>
-<ol>
-<li><p>右击<code>windows</code>图标，在弹出菜单中选择磁盘管理（其他版本的<code>windows</code>请自行找到打开磁盘管理的方式）：</p>
-<p><img src="/images/arch01.jpeg" alt=""></p>
-</li>
-<li><p>右击想要删除的分区，选择删除卷（注意这步之后这个分区的所有数据将会丢失）：</p>
-<p><img src="/images/arch02.jpeg" alt=""></p>
-</li>
-</ol>
-</li>
-<li><p>在<code>linux</code>下分出一块区域安装：使用<code>fdisk</code>进行，教程请见链接中的删除分区：</p>
-<blockquote>
-<p>  <a href="http://www.liusuping.com/ubuntu-linux/linux-fdisk-disk.html" target="_blank" rel="noopener">http://www.liusuping.com/ubuntu-linux/linux-fdisk-disk.html</a></p>
-</blockquote>
-</li>
-<li><p>空闲的磁盘（新磁盘）：不需要进行任何操作。</p>
-</li>
-</ul>
-<h3 id="U盘安装"><a href="#U盘安装" class="headerlink" title="U盘安装"></a>U盘安装</h3><p>下面的过程实际上都在刚刚准备好的U盘启动介质上的<code>Linux</code>系统下进行，所以<strong>启动时都应该选择U盘</strong>。</p>
-<h4 id="设置启动顺序"><a href="#设置启动顺序" class="headerlink" title="设置启动顺序"></a>设置启动顺序</h4><p>这一步在不同品牌的电脑上都不一样，所以需要大家自行搜索<strong>自己电脑品牌+启动顺序</strong>这个关键词来进行设置。</p>
-<p>例如我的电脑搜索神舟 启动顺序可以得到如下的结果：</p>
-<blockquote>
-<p>  <a href="https://zhidao.baidu.com/question/170954184.html" target="_blank" rel="noopener">https://zhidao.baidu.com/question/170954184.html</a></p>
-</blockquote>
-<p>一般来说现在的主板都可以不用进入BIOS而快速地切换启动顺序，只要找到相应的快捷键就可以了。</p>
-<h4 id="进入U盘下的Linux系统"><a href="#进入U盘下的Linux系统" class="headerlink" title="进入U盘下的Linux系统"></a>进入U盘下的Linux系统</h4><ol>
-<li><p>按上一步设置好启动顺序，启动之后会看到如下界面（UEFI启动方式的界面可能不同）：</p>
-<p><img src="/images/arch03.jpeg" alt=""></p>
-<p>如果直接进入<code>windows</code>，请检查启动顺序是否设置成功，U盘是否在制作启动介质时成功写入。</p>
-<p>如果没有看到这个界面，请检查U盘是否制作成功，如果多次遇到问题可以考虑换一个U盘。</p>
-<p>选择第一个选项。</p>
-</li>
-<li><p>这时<code>Arch</code>开始加载，你将会看到屏幕显示如下内容：</p>
-<p><img src="/images/arch04.jpeg" alt=""></p>
-<p>加载完成后你将会进入一个有命令提示符的界面：</p>
-<p><img src="/images/arch05.jpeg" alt=""></p>
-<p>如果出现<code>FAIL</code>或是其他错误信息导致无法启动请自行搜索错误信息来获得解决方法。</p>
-<p>这就是<code>Linux</code>的终端界面了，接下来我们将通过在这个界面执行一系列命令来将<code>Arch</code>安装到我们的磁盘上。</p>
-</li>
-</ol>
-<hr>
-<p>下面进行的过程是按照官方<a href="https://wiki.archlinux.org/index.php/installation_guide" target="_blank" rel="noopener">Installation guide</a>为依据进行的，出现的任何问题都可以到链接中的相应部分查找原文找到解决方式。</p>
-<h4 id="检查引导方式"><a href="#检查引导方式" class="headerlink" title="检查引导方式"></a>检查引导方式</h4><p>目前的引导方式主要分为EFI引导+GPT分区表与BIOS(LEGACY)引导+MBR分区表两种，几乎比较新的机器都采用了EFI/GPT引导的方式。关于这部分的内容如果有兴趣可以通过这个链接进行了解：</p>
-<blockquote>
-<p>  <a href="http://www.chinaz.com/server/2016/1017/595444.shtml" target="_blank" rel="noopener">http://www.chinaz.com/server/2016/1017/595444.shtml</a></p>
-</blockquote>
-<p>如果你不知道自己的引导方式，请在命令提示符下执行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /sys/firmware/efi/efivars</span><br></pre></td></tr></table></figure>
-<p>这里的<code>ls</code>是命令，空格后面的一串为路径，作为<code>ls</code>命令的参数。<code>ls</code>命令的作用是显示路径目录下的所有的文件（夹）。</p>
-<hr>
-<p>如果你对命令行下的常用操作（TAB补全、取消命令等）不熟悉，请先学习了解下面部分实用的快捷键或命令：</p>
-<blockquote>
-<p>  <strong>Tab键 命令行自动补全。键入命令或文件名的前几个字符，然后按 [Tab] 键，它会自动补全命令或显示匹配你键入字符的所有命令</strong></p>
-<p>  ↑(Ctrl+p) 显示上一条命令</p>
-<p>  ↓(Ctrl+n) 显示下一条命令</p>
-<p>  Ctrl-C: 终止当前正在执行的命令</p>
-</blockquote>
-<hr>
-<p>输入命令并回车执行后，如果提示</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls: cannot access <span class="string">'/sys/firmware/efi/efivars'</span>: No such file or directory</span><br></pre></td></tr></table></figure>
-<p>表明你是以<code>BIOS</code>方式引导，否则为以<code>EFI</code>方式引导。现在只需要记住这个信息，之后这两种引导类型的安装方式会略有不同（下文中涉及到不同的地方请仔细区别）。</p>
-<hr>
-<p><strong>更新：</strong><br><br>部分同学反馈这种方式并不能100%确认你就是<code>BIOS</code>方式引导的，更加保险的方法是执行<code>fdisk -l</code>查看分区表，如果<strong>你的硬盘（而不是你的U盘）</strong>的<code>Disklabel type</code>属性为<code>gpt</code>并且有一个<code>Type</code>为<code>EFI System</code>的小分区（一般为256M左右，如下图），那么你应该是<code>EFI</code>引导的。<br><br><img src="/images/arch26.png" alt=""></p>
-<hr>
-<h4 id="联网"><a href="#联网" class="headerlink" title="联网"></a>联网</h4><p><code>arch</code>并不能离线安装，因为我们需要联网来下载需要的组件，所以我们首先要连接网络。</p>
-<ul>
-<li><p>如果你是有线网并且路由器支持DHCP的话插上网线后先执行以下命令获取IP地址：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dhcpcd</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>然后执行以下命令来判断网络连接是否正常：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
-<p>如果可以看到类似下面的内容就说明连上了网络：</p>
-<p><img src="/images/arch05.jpg" alt=""></p>
-<blockquote>
-<p>  再次提示用快捷键Ctrl-C可以终止当前正在执行的命令</p>
-</blockquote>
-</li>
-<li><p>如果你是无线网，请执行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iwctl</span><br></pre></td></tr></table></figure>
-<p>会进入一个以[iwd]开头的命令行环境中，接着执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">device list</span><br></pre></td></tr></table></figure>
-<p>会列出当前可用的所有网卡设备，如图所示：</p>
-<p><img src="/images/arch27.png" alt=""></p>
-<p>记住<code>Name</code>一列你所使用的无线网卡的名称，比如我的就叫<code>wlan0</code>，下面的命令要用到，<strong>下面命令中请替换成自己的网卡名称</strong></p>
-<p>接着执行下列命令进行无线网络的扫描：（<strong><code>wlan0</code>替换成你自己的网卡名称</strong>）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">station wlan0 scan</span><br></pre></td></tr></table></figure>
-<p>接着执行下列命令列出扫描到的网络：（<strong><code>wlan0</code>替换成你自己的网卡名称</strong>）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">station wlan0 get-networks</span><br></pre></td></tr></table></figure>
-<p>可以看到当前扫描到的无线网络都展示出来了：</p>
-<p><img src="/images/arch28.png" alt=""></p>
-<p>最后输入下列命令连接指定网络：（<strong><code>wlan0</code>替换成你自己的网卡名称，<code>CatAndPomelo</code>替换成你想连的网络名称</strong>）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">station wlan0 connect CatAndPomelo</span><br></pre></td></tr></table></figure>
-<p>这时如果网络有密码的话会提示输入密码，输入后回车确认就行：</p>
-<p><img src="/images/arch29.png" alt=""></p>
-<p>注意这里就算密码输入错误也不会有提示的，所以请保证密码正确，如果你是中文无线网名称/密码的话建议先改一下，把密码取消会更方便些。</p>
-<p>顺利的话，此时你已经连接上网络了，执行下面命令退出<code>iwd</code>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">quit</span><br></pre></td></tr></table></figure>
-<p>连接以后同样可以通过上面的<code>ping</code>命令来进行测试。</p>
-<p><code>iwd</code>是一个实用的命令行下联网工具，利用它可以方便地联网，如果它没能起作用，需要进入以下页面查找解决方式：</p>
-<blockquote>
-<p>  <a href="https://wiki.archlinux.org/index.php/Wireless_network_configuration" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/Wireless_network_configuration</a></p>
-</blockquote>
-</li>
-</ul>
-<p><strong>注意</strong>：由于部分无线网卡驱动的支持并不完善，所以在这里可能会遇到问题，并且各机型的解决方法都不同，如果不幸遇到无线连不上的问题，可以插有线联网先把系统装好再去慢慢解决。解决问题可以参照：<a href="https://wiki.archlinux.org/index.php/Network_configuration" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/Network_configuration</a></p>
-<h4 id="更新系统时间"><a href="#更新系统时间" class="headerlink" title="更新系统时间"></a>更新系统时间</h4><p>执行如下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl <span class="built_in">set</span>-ntp <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>  正常情况下这样的命令并没有输出，所谓没有消息就是最好的消息</p>
-</blockquote>
-<h4 id="分区与格式化"><a href="#分区与格式化" class="headerlink" title="分区与格式化"></a>分区与格式化</h4><p><strong>特别注意：涉及到分区与格式化的操作要格外注意，命令在回车之前请再三确认知道自己在做什么，并且没有输错命令，否则将会来带来数据的丢失！如果有需要在操作之前请备份重要的数据。</strong></p>
-<p>但是我们也并不要过于惧怕分区与格式化过程，正确操作的情况下不会对你其他数据产生任何影响。</p>
-<h5 id="查看目前的分区情况"><a href="#查看目前的分区情况" class="headerlink" title="查看目前的分区情况"></a>查看目前的分区情况</h5><p>执行命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk -l</span><br></pre></td></tr></table></figure>
-<p>以我的电脑为例：</p>
-<p><img src="/images/arch06.jpg" alt=""></p>
-<p>可以看到我的一块238.5g的硬盘(<code>/dev/sda</code>就代表这块硬盘)，下面列出了<code>/dev/sda*</code>这三个分区，<code>/dev/sda3</code>是我存活下来的家目录，可以看到它的类型为<code>Linux</code>分区。注意看<code>Start</code>与<code>End</code>的数值，这个数值代表扇区号，可以理解成硬盘被划分成了一个个小单元，可以直观地看出来在<code>/dev/sda2</code>的<code>End</code>与<code>/dev/sda3</code>的<code>Start</code>之间空出了一大块未分配的空间，接下来我们将分配这块区域。</p>
-<hr>
-<ul>
-<li>如果你是BIOS/MBR方式引导，<strong>跳过下面创建一个引导分区</strong>的步骤。</li>
-<li>如果你是EFI/GPT方式引导，并且同时安装了其他系统，那么你应该可以在分区列表中发现一个较小的并且类型为EFI的分区（<strong>注意查看硬盘的大小，这个<code>EFI</code>分区有可能是你U盘中的，需要排除</strong>），这是你的引导分区，请记下它的路径（/dev/sdxY)备用，<strong>跳过下面创建一个引导分区</strong>的步骤。</li>
-<li>如果你是EFI/GPT方式引导，但是没有这个较小的并且类型为EFI的引导分区（这种情况一般只会出现在新的硬盘），那么你需要<strong>先创建一个引导分区</strong>。</li>
-</ul>
-<hr>
-<h5 id="创建一个引导分区（仅上面所列的第三种情况需要进行这步）"><a href="#创建一个引导分区（仅上面所列的第三种情况需要进行这步）" class="headerlink" title="创建一个引导分区（仅上面所列的第三种情况需要进行这步）"></a>创建一个引导分区（<strong>仅上面所列的第三种情况需要进行这步</strong>）</h5><p>执行命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk /dev/sdx （请将sdx替换成你要操作的磁盘如sdb sdc等）</span><br></pre></td></tr></table></figure>
-<p>下面你就进入了<code>fdisk</code>的操作环境， 输入<code>m</code>并回车可以查看各命令的作用。</p>
-<ol>
-<li><p><strong>如果你是一块全新的硬盘</strong>：输入<code>g</code>来创建一个全新的gpt分区表，<strong>否则直接进行第2步</strong>。</p>
-</li>
-<li><p>输入<code>n</code>创建一个新的分区，首先会让你选择起始扇区，一般直接回车使用默认数值即可，然后可以输入结束扇区或是分区大小，这里我们输入<code>+512M</code>来创建一个512M的引导分区。</p>
-</li>
-<li><p>这时我们可以输入<code>p</code>来查看新创建的分区。</p>
-</li>
-<li><p>输入<code>t</code>并选择新创建的分区序号来更改分区的类型，输入<code>l</code>可以查看所有支持的类型，输入<code>ef</code>更改分区的类型为<code>EFI</code>。</p>
-</li>
-<li><p>输入<code>w</code>来将之前所有的操作写入磁盘生效，在这之前可以输入<code>p</code>来确认自己的分区表没有错误。</p>
-</li>
-<li><p>输入以下命令来格式化刚刚创建的引导分区：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs.fat -F32 /dev/sdxY （请将sdxY替换为刚创建的分区）</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>现在引导分区就创建好了。</p>
-<h5 id="创建根分区"><a href="#创建根分区" class="headerlink" title="创建根分区"></a>创建根分区</h5><p>输入命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk /dev/sdx （请将sdx替换成你要操作的磁盘如sdb sdc等）</span><br></pre></td></tr></table></figure>
-<ol>
-<li><p><strong>如果你是一块全新的硬盘</strong>（<strong>否则直接进行第2步</strong>）：</p>
-<ol>
-<li><strong>如果你是<code>BIOS/MBR</code>引导方式</strong>：输入<code>o</code>来创建一个全新的<code>MBR</code>分区表。</li>
-<li><strong>如果你在上一步新建了分区表并创建了引导分区</strong>：直接进行步骤2。</li>
-<li><strong>如果你在另一块硬盘中已经有引导分区</strong>：输入<code>g</code>来创建一个全新的<code>gpt</code>分区表。</li>
-</ol>
-</li>
-<li><p>输入<code>n</code>创建一个新的分区，首先会让你选择起始扇区，一般直接回车使用默认数值即可，然后可以输入结束扇区或是分区大小，如果我们想要使创建的分区完全占满空闲的空间，可以直接回车使用默认结束扇区。</p>
-</li>
-<li><p>这时我们可以输入<code>p</code>来查看新创建的分区。</p>
-</li>
-<li><p>输入<code>w</code>来将之前所有的操作写入磁盘生效，在这之前可以输入<code>p</code>来确认自己的分区表没有错误。</p>
-</li>
-<li><p>输入以下命令来格式化刚刚创建的根分区：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs.ext4 /dev/sdxY （请将的sdxY替换为刚创建的分区）</span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-<p>这是我的分区过程供参考：</p>
-<p><img src="/images/arch07.jpg" alt=""></p>
-<p><img src="/images/arch08.jpg" alt=""></p>
-<hr>
-<p><strong>如果你在分区这步遇到了问题</strong>，先看看自己的操作是否与上面的指引一致，如果仍然无法解决可参考<a href="https://www.cnblogs.com/freerqy/p/8502838.html" target="_blank" rel="noopener">https://www.cnblogs.com/freerqy/p/8502838.html</a>这篇文章的“建立硬盘分区”一节尝试使用<code>cfdisk</code>进行分区。</p>
-<h4 id="挂载分区"><a href="#挂载分区" class="headerlink" title="挂载分区"></a>挂载分区</h4><p>执行以下命令将根分区挂载到<code>/mnt</code>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/sdxY /mnt （请将sdxY替换为之前创建的根分区）</span><br></pre></td></tr></table></figure>
-<hr>
-<p><strong>如果你是EFI/GPT引导方式</strong>，执行以下命令创建/boot文件夹并将引导分区挂载到上面。<strong>BIOS/MBR引导方式无需进行这步。</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /mnt/boot</span><br><span class="line">mount /dev/sdxY /mnt/boot （请将sdxY替换为之前创建或是已经存在的引导分区）</span><br></pre></td></tr></table></figure>
-<hr>
-<h4 id="选择镜像源"><a href="#选择镜像源" class="headerlink" title="选择镜像源"></a>选择镜像源</h4><p>因为从这步开始，需要进行一些编辑配置文件的操作，所以需要掌握一些命令行下非常著名的一款编辑器<code>Vim</code>的基本操作，在这里推荐学习下面这个链接中的存活部分，可以完成编辑、复制粘贴与保存工作即可。</p>
-<blockquote>
-<p>  <a href="http://coolshell.cn/articles/5426.html" target="_blank" rel="noopener">http://coolshell.cn/articles/5426.html</a></p>
-</blockquote>
-<hr>
-<p>镜像源是我们下载的软件包的来源，我们需要根据自己的地区选择不同的源来加快下载的速度。</p>
-<p>执行以下命令，用<code>Vim</code>来编辑<code>/etc/pacman.d/mirrorlist</code>这个文件</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/pacman.d/mirrorlist</span><br></pre></td></tr></table></figure>
-<blockquote>
-<p>  提示：输入路径时可以用<code>Tab</code>键补全</p>
-</blockquote>
-<p><img src="/images/arch09.jpg" alt=""></p>
-<p>找到标有<code>China</code>的镜像源，<code>normal</code>模式下按下<code>dd</code>可以剪切光标下的行，按<code>gg</code>回到文件首，按<code>P</code>（注意是大写的）将行粘贴到文件最前面的位置（优先级最高）。</p>
-<p>当然也可以直接手工输入。</p>
-<p>这里推荐使用清华、浙大源：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Server &#x3D; http:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;archlinux&#x2F;$repo&#x2F;os&#x2F;$arch</span><br><span class="line">Server &#x3D; http:&#x2F;&#x2F;mirrors.zju.edu.cn&#x2F;archlinux&#x2F;$repo&#x2F;os&#x2F;$arch</span><br></pre></td></tr></table></figure>
-<p>最后记得用<code>:wq</code>命令保存文件并退出。</p>
-<h4 id="安装基本包"><a href="#安装基本包" class="headerlink" title="安装基本包"></a>安装基本包</h4><p>下面就要安装最基本的<code>ArchLinux</code>包到磁盘上了。这是一个联网下载并安装的过程。</p>
-<p>执行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacstrap /mnt base base-devel linux linux-firmware dhcpcd</span><br></pre></td></tr></table></figure>
-<p>根据下载速度的不同在这里需要等待一段时间，当命令提示符重新出现的时候就可以进行下一步操作了。</p>
-<h4 id="配置Fstab"><a href="#配置Fstab" class="headerlink" title="配置Fstab"></a>配置Fstab</h4><p>生成自动挂载分区的<code>fstab</code>文件，执行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">genfstab -L /mnt &gt;&gt; /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
-<p>由于这步比较重要，所以我们需要输出生成的文件来检查是否正确，执行以下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch10.jpg" alt=""></p>
-<p>如图，可以看到<code>/dev/sda4</code>被挂载到了根分区。</p>
-<p><code>/dev/sda3</code>是我之前存活下来的家目录被挂载到了<code>/home</code>目录（你们没有这条）。</p>
-<p><strong>如果是<code>EFI/GPT</code>引导的还应该有引导分区被挂载到<code>/boot</code>目录</strong>。</p>
-<h4 id="Chroot"><a href="#Chroot" class="headerlink" title="Chroot"></a>Chroot</h4><p><code>Chroot</code>意为<code>Change root</code>，相当于把操纵权交给我们新安装（或已经存在）的<code>Linux</code>系统，<strong>执行了这步以后，我们的操作都相当于在磁盘上新装的系统中进行</strong>。</p>
-<p>执行如下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arch-chroot /mnt</span><br></pre></td></tr></table></figure>
-<hr>
-<p>这里顺便说一下，如果以后我们的系统出现了问题，只要插入U盘并启动， 将我们的系统根分区挂载到了<code>/mnt</code>下（如果有<code>efi</code>分区也要挂载到<code>/mnt/boot</code>下），再通过这条命令就可以进入我们的系统进行修复操作。</p>
-<hr>
-<h4 id="设置时区"><a href="#设置时区" class="headerlink" title="设置时区"></a>设置时区</h4><p>依次执行如下命令设置我们的时区为上海并生成相关文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">hwclock --systohc</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch11.jpg" alt=""></p>
-<h4 id="提前安装必须软件包"><a href="#提前安装必须软件包" class="headerlink" title="提前安装必须软件包"></a>提前安装必须软件包</h4><p>因为我们现在已经<code>Chroot</code>到了新的系统中，只有一些最基本的包（组件），这时候我们就需要自己安装新的包了，下面就要介绍一下<code>ArchLinux</code>下非常强大的包管理工具<code>pacman</code>，大部分情况下，一行命令就可以搞定包与依赖的问题。</p>
-<p>安装包的命令格式为<code>pacman -S 包名</code>，<code>pacman</code>会自动检查这个包所需要的其他包（即为依赖）并一起装上。下面我们就通过<code>pacman</code>来安装一些包，这些包在之后会用上，在这里先提前装好。</p>
-<p>执行如下命令（注意大小写，大小写错误会导致包无法找到）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S vim dialog wpa_supplicant ntfs-3g networkmanager netctl</span><br></pre></td></tr></table></figure>
-<p>一路确认之后包就被成功装上了。</p>
-<p><img src="/images/arch12.jpg" alt=""></p>
-<p>图中只安装了<code>Vim</code>和它的依赖。</p>
-<h4 id="设置Locale"><a href="#设置Locale" class="headerlink" title="设置Locale"></a>设置Locale</h4><p>设置我们使用的语言选项，执行如下命令来编辑<code>/etc/locale.gen</code>文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/locale.gen</span><br></pre></td></tr></table></figure>
-<p>在文件中找到<code>zh_CN.UTF-8 UTF-8</code> <code>zh_HK.UTF-8 UTF-8</code> <code>zh_TW.UTF-8 UTF-8</code> <code>en_US.UTF-8 UTF-8</code>这四行，去掉行首的#号，保存并退出。如图：</p>
-<p><img src="/images/arch13.jpg" alt=""></p>
-<p><img src="/images/arch14.jpg" alt=""></p>
-<p>然后执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">locale-gen</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch15.jpg" alt=""></p>
-<p>打开（不存在时会创建）<code>/etc/locale.conf</code>文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/locale.conf</span><br></pre></td></tr></table></figure>
-<p>在文件的第一行加入以下内容：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LANG=en_US.UTF-8</span><br></pre></td></tr></table></figure>
-<p>保存并退出。</p>
-<h4 id="设置主机名"><a href="#设置主机名" class="headerlink" title="设置主机名"></a>设置主机名</h4><p>打开（不存在时会创建）<code>/etc/hostname</code>文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hostname</span><br></pre></td></tr></table></figure>
-<p>在文件的第一行输入你自己设定的一个<code>myhostname</code></p>
-<p>保存并退出。</p>
-<p>编辑<code>/etc/hosts</code>文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
-<p>在文件末添加如下内容（将<code>myhostname</code>替换成你自己设定的主机名）</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1	localhost</span><br><span class="line">::1		localhost</span><br><span class="line">127.0.1.1	myhostname.localdomain	myhostname</span><br></pre></td></tr></table></figure>
-<p><img src="/images/arch16.png" alt=""></p>
-<p>这里我设置的是<code>viseator</code>。</p>
-<p>保存并退出。</p>
-<h4 id="设置Root密码"><a href="#设置Root密码" class="headerlink" title="设置Root密码"></a>设置Root密码</h4><p><code>Root</code>是<code>Linux</code>中具有最高权限帐户，有些敏感的操作必须通过<code>Root</code>用户进行，比如使用<code>pacman</code>，我们之前进行所有的操作也都是以<code>Root</code>用户进行的，也正是因为<code>Root</code>的权限过高，如果使用不当会造成安全问题，所以我们之后会新建一个普通用户来进行日常的操作。在这里我们需要为<code>Root</code>帐户设置一个密码：</p>
-<p>执行如下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
-<p>按提示设置并确认就可以了。</p>
-<p><img src="/images/arch17.jpg" alt=""></p>
-<hr>
-<p>或许有的人已经发现官方Wiki和一些其他教程资料中的命令是以<code>#</code>或<code>$</code>开头的，这两个符号就对应着命令行中的命令提示符，<code>#</code>代表以<code>Root</code>用户执行命令，<code>$</code>代表以普通用户执行命令，平时使用教程中的命令时应该注意这一点。</p>
-<hr>
-<h4 id="安装Intel-ucode（非IntelCPU可以跳过此步骤）"><a href="#安装Intel-ucode（非IntelCPU可以跳过此步骤）" class="headerlink" title="安装Intel-ucode（非IntelCPU可以跳过此步骤）"></a>安装<code>Intel-ucode</code>（非<code>Intel</code>CPU可以跳过此步骤）</h4><p>直接<code>pacman</code>安装：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S intel-ucode</span><br></pre></td></tr></table></figure>
-<h4 id="安装Bootloader"><a href="#安装Bootloader" class="headerlink" title="安装Bootloader"></a>安装<code>Bootloader</code></h4><p>经常听说很多人因为引导问题导致系统安装失败，多数是因为教程没有统一或是过时的教程引起的，这里只要按照步骤来其实是不难的。</p>
-<p>这里我们安装最流行的<code>Grub2</code>。<strong>（如果曾经装过<code>Linux</code>，记得删掉原来的<code>Grub</code>，否则不可能成功启动）</strong></p>
-<ul>
-<li><p>首先安装<code>os-prober</code>和<code>ntfs-3g</code>这两个包，它可以配合<code>Grub</code>检测已经存在的系统，自动设置启动选项。</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S os-prober ntfs-3g</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<hr>
-<h5 id="如果为BIOS-MBR引导方式："><a href="#如果为BIOS-MBR引导方式：" class="headerlink" title="如果为BIOS/MBR引导方式："></a><strong>如果为BIOS/MBR引导方式：</strong></h5><ul>
-<li><p>安装<code>grub</code>包：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S grub</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>部署<code>grub</code>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub-install --target=i386-pc /dev/sdx （将sdx换成你安装的硬盘）</span><br></pre></td></tr></table></figure>
-<p>注意这里的<code>sdx</code>应该为硬盘（例如<code>/dev/sda</code>），<strong>而不是</strong>形如<code>/dev/sda1</code>这样的分区。</p>
-</li>
-<li><p>生成配置文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><img src="/images/arch18.jpg" alt=""></p>
-<p><strong>如果你没有看到如图所示的提示信息，请仔细检查是否正确完成上面的过程。常见问题如下：</strong></p>
-<ol>
-<li><p>如果报<code>warning failed to connect to lvmetad，falling back to device scanning.</code>错误。参照<a href="https://wiki.archlinux.org/index.php/Install_from_existing_Linux" target="_blank" rel="noopener">wiki</a>中搜索关键词<code>use_lvmetad</code>所在位置，简单的方法是编辑<code>/etc/lvm/lvm.conf</code>这个文件，找到<code>use_lvmetad = 1</code>将<code>1</code>修改为<code>0</code>，保存，重新配置grub。</p>
-</li>
-<li><p>有部分同学反馈后面安装<code>grub</code>包的时候报如下错误：</p>
-<p><img src="/images/arch25.png" alt=""></p>
-<p>是因为实际是<code>UEFI</code>引导的系统没有正确挂载<code>boot</code>分区。首先检查你是不是按照<code>BIOS</code>方式安装的系统，二是检查是否正确挂载<code>/mnt/boot</code>。正确配置好<code>boot</code>分区之后可以从“挂载分区”这步开始重做。</p>
-</li>
-</ol>
-<hr>
-<h5 id="如果为EFI-GPT引导方式："><a href="#如果为EFI-GPT引导方式：" class="headerlink" title="如果为EFI/GPT引导方式："></a><strong>如果为EFI/GPT引导方式：</strong></h5><ul>
-<li><p>安装<code>grub</code>与<code>efibootmgr</code>两个包：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S grub efibootmgr</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>部署<code>grub</code>：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub</span><br></pre></td></tr></table></figure>
-</li>
-<li><p>生成配置文件：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<p><strong>提示信息应与上面的图类似，如果你发现错误，请仔细检查是否正确完成上面的过程。</strong></p>
-<p>如果报<code>warning failed to connect to lvmetad，falling back to device scanning.</code>错误。参照<a href="https://www.pckr.co.uk/arch-grub-mkconfig-lvmetad-failures-inside-chroot-install/" target="_blank" rel="noopener">这篇文章</a>，简单的方法是编辑<code>/etc/lvm/lvm.conf</code>这个文件，找到<code>use_lvmetad = 1</code>将<code>1</code>修改为<code>0</code>，保存，重新配置grub。</p>
-<p>如果报<code>grub-probe: error: cannot find a GRUB drive for /dev/sdb1, check your device.map</code>类似错误，并且<code>sdb1</code>这个地方是你的u盘，这是u盘<code>uefi</code>分区造成的错误，对我们的正常安装没有影响，可以不用理会这条错误。</p>
-<hr>
-<h5 id="安装后检查"><a href="#安装后检查" class="headerlink" title="安装后检查"></a>安装后检查</h5><p><strong>如果你是多系统，请注意上面一节中对<code>os-prober</code>这个包的安装。</strong></p>
-<p><strong>强烈建议使用如下命令检查是否成功生成各系统的入口，如果没有正常生成会出现开机没有系统入口的情况：</strong></p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
-<p>检查接近末尾的<code>menuentry</code>部分是否有<code>windows</code>或其他系统名入口。下图例子中是<code>Arch Linux</code>入口与检测到的<code>windows10</code>入口（安装在<code>/dev/sda1</code>），具体情况可能有不同：</p>
-<p><img src="/images/arch22.jpg" alt=""></p>
-<p><strong>如果你没有看到<code>Arch Linux</code>系统入口或者该文件不存在</strong>，请先检查<code>/boot</code>目录是否正确部署<code>linux</code>内核：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /boot</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
-<p>查看是否有<code>initramfs-linux-fallback.img  initramfs-linux.img  intel-ucode.img  vmlinuz-linux</code>这几个文件，如果都没有，说明<code>linux</code>内核没有被正确部署，很有可能是<code>/boot</code>目录没有被正确挂载导致的，确认<code>/boot</code>目录无误后，可以重新部署<code>linux</code>内核：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S linux</span><br></pre></td></tr></table></figure>
-<p>再重新生成配置文件，就可以找到系统入口。</p>
-<p><strong>如果你已经安装<code>os-prober</code>包并生成配置文件后还是没有生成其他系统的入口</strong>：</p>
-<p><strong>你目前处的U盘安装环境下有可能无法检测到其他系统的入口，请在下一步中重启登陆之后重新运行</strong>：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure></p>
-<p>如果还没有生成其他系统的入口，请参照：</p>
-<blockquote>
-<p>  <a href="https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Combining_the_use_of_UUIDs_and_basic_scripting" target="_blank" rel="noopener">https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Combining_the_use_of_UUIDs_and_basic_scripting</a> </p>
-</blockquote>
-<p>编辑配置文件手动添加引导的分区入口。</p>
-<hr>
-<h5 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h5><p>接下来，你需要进行重启来启动已经安装好的系统，执行如下命令：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
-<p><strong> 如果挂载了<code>/mnt/boot</code>，先<code>umount /mnt/boot</code>，再<code>umount /mnt</code>，否则直接<code>umount /mnt</code>：</strong><br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">umount /mnt/boot</span><br><span class="line">umount /mnt</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure></p>
-<p>注意这个时候你可能会卡在有两行提示的地方无法正常关机，长按电源键强制关机即可，没有影响。</p>
-<p>关机后拔出U盘，启动顺序会自动以硬盘启动，如果一切顺利，那么你将会看到下面的界面：</p>
-<p><img src="/images/arch19.jpg" alt=""></p>
-<p>启动时有可能会有输出信息显示在这里，直接回车就可以了。</p>
-<p>输入<code>root</code>，再输入之前设置的密码，显示出命令提示符，恭喜你，你已经成功安装<code>ArchLinux</code>！</p>
-<h2 id="安装后配置"><a href="#安装后配置" class="headerlink" title="安装后配置"></a>安装后配置</h2><p>虽然系统安装好了，但是还没有进行基本配置和安装图形界面，所以接下来我们要进行一些必须的配置和图形界面的安装。</p>
-<p>请见下一篇文章：<a href="http://www.viseator.com/2017/05/19/arch_setup/">ArchLinux安装后的必须配置与图形界面安装教程</a></p>
-<h2 id="特别感谢"><a href="#特别感谢" class="headerlink" title="特别感谢"></a>特别感谢</h2><p>评论区中<code>Senrey_Song</code>、<code>YKun</code>、<code>imzhwk</code>、<code>haonan mao</code>、<code>Lichen Zhang</code>、<code>回风</code>、<code>Nee</code>、<code>Wafer</code>、<code>LIU SHIKE</code>、<code>Charles</code>、<code>MegatonZed</code>、<code>beer!code!</code>、<code>禾七</code>、<code>Unira</code>、<code>arc</code>、<code>ZhiChao Li</code>、<code>多听音乐多喝水</code>、<code>AirLongdian</code>、<code>若尘</code>对于本教程内容的宝贵建议与指正。</p>
-<p><code>leccesg</code>、<code>Sophie Spivey</code>、<code>竹林里有冰</code>、<code>王心语</code>通过邮件提供的宝贵建议。</p>
-<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>如果觉得这篇教程对你有帮助，可以移步我的知乎回答下点个赞，让更多的人可以看到这篇教程，你的支持是我最大的动力：</p>
-<blockquote>
-<p>  Arch Linux 怎么安装？ - viseator的回答 - 知乎<br>  <a href="https://www.zhihu.com/question/21427410/answer/171867330" target="_blank" rel="noopener">https://www.zhihu.com/question/21427410/answer/171867330</a></p>
-</blockquote>
-<p><strong>同时，如果你是想要从事计算机方向的新人，非常推荐看看我的分享：</strong>：</p>
-<p><a href="https://www.viseator.com/2020/05/24/university_1/">从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活</a></p>
-<p><a href="https://www.viseator.com/2020/07/25/university_2/">从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长</a></p>
-<p>也欢迎关注我的微信公众号VirMe：<br><img src="/images/wechat_channel.jpg" alt=""></p>
-<p>如果安装过程中遇到问题，可以直接在下方评论区/公众号留言或邮件<a href="mailto:viseator@gmail.com">viseator@gmail.com</a>（尽量附上错误信息），我会尽力回复解决。</p>
-
-    </div>
-
-    
-    
-    
-        <div class="reward-container">
-  <div></div>
-  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    打赏
-  </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
-        <p>微信支付</p>
-      </div>
-      
-      <div style="display: inline-block;">
-        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
-        <p>支付宝</p>
-      </div>
-
-  </div>
-</div>
-
         
-
-<div>
-<ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者： </strong>viseator(吴迪)
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://www.viseator.com/2017/05/17/arch_install/" title="以官方Wiki的方式安装ArchLinux">https://www.viseator.com/2017/05/17/arch_install/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
-        
-
-  <div class="followme">
-    <p>欢迎关注我的其它发布渠道</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
-            <span class="icon">
-              <i class="fa fa-wechat"></i>
-            </span>
-
-            <span class="label">微信公众号</span>
-          </a>
-        </div>
-    </div>
-  </div>
-
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Linux/" rel="tag"># Linux</a>
-              <a href="/tags/Arch/" rel="tag"># Arch</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2017/05/11/android_lan_messages/" rel="prev" title="Android利用UDP、TCP进行局域网数据传输">
-      <i class="fa fa-chevron-left"></i> Android利用UDP、TCP进行局域网数据传输
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2017/05/19/arch_setup/" rel="next" title="ArchLinux安装后的必须配置与图形界面安装教程">
-      ArchLinux安装后的必须配置与图形界面安装教程 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
   
-  
-  
-
-
-
-          </div>
-          
-    
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
-  </div>
-  
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
   </div>
 
   <aside class="sidebar">
-    <div class="sidebar-inner">
 
-      <ul class="sidebar-nav motion-element">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
         </li>
@@ -836,26 +231,27 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意事项"><span class="nav-number">1.1.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装教程"><span class="nav-number">2.</span> <span class="nav-text">安装教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#前期准备"><span class="nav-number">2.1.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#安装介质"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装介质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#磁盘准备"><span class="nav-number">2.1.2.</span> <span class="nav-text">磁盘准备</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#U盘安装"><span class="nav-number">2.2.</span> <span class="nav-text">U盘安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#设置启动顺序"><span class="nav-number">2.2.1.</span> <span class="nav-text">设置启动顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#进入U盘下的Linux系统"><span class="nav-number">2.2.2.</span> <span class="nav-text">进入U盘下的Linux系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#检查引导方式"><span class="nav-number">2.2.3.</span> <span class="nav-text">检查引导方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#联网"><span class="nav-number">2.2.4.</span> <span class="nav-text">联网</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#更新系统时间"><span class="nav-number">2.2.5.</span> <span class="nav-text">更新系统时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#分区与格式化"><span class="nav-number">2.2.6.</span> <span class="nav-text">分区与格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#查看目前的分区情况"><span class="nav-number">2.2.6.1.</span> <span class="nav-text">查看目前的分区情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建一个引导分区（仅上面所列的第三种情况需要进行这步）"><span class="nav-number">2.2.6.2.</span> <span class="nav-text">创建一个引导分区（仅上面所列的第三种情况需要进行这步）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#创建根分区"><span class="nav-number">2.2.6.3.</span> <span class="nav-text">创建根分区</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#挂载分区"><span class="nav-number">2.2.7.</span> <span class="nav-text">挂载分区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#选择镜像源"><span class="nav-number">2.2.8.</span> <span class="nav-text">选择镜像源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装基本包"><span class="nav-number">2.2.9.</span> <span class="nav-text">安装基本包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#配置Fstab"><span class="nav-number">2.2.10.</span> <span class="nav-text">配置Fstab</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chroot"><span class="nav-number">2.2.11.</span> <span class="nav-text">Chroot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置时区"><span class="nav-number">2.2.12.</span> <span class="nav-text">设置时区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#提前安装必须软件包"><span class="nav-number">2.2.13.</span> <span class="nav-text">提前安装必须软件包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置Locale"><span class="nav-number">2.2.14.</span> <span class="nav-text">设置Locale</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置主机名"><span class="nav-number">2.2.15.</span> <span class="nav-text">设置主机名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#设置Root密码"><span class="nav-number">2.2.16.</span> <span class="nav-text">设置Root密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Intel-ucode（非IntelCPU可以跳过此步骤）"><span class="nav-number">2.2.17.</span> <span class="nav-text">安装Intel-ucode（非IntelCPU可以跳过此步骤）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#安装Bootloader"><span class="nav-number">2.2.18.</span> <span class="nav-text">安装Bootloader</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#如果为BIOS-MBR引导方式："><span class="nav-number">2.2.18.1.</span> <span class="nav-text">如果为BIOS&#x2F;MBR引导方式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#如果为EFI-GPT引导方式："><span class="nav-number">2.2.18.2.</span> <span class="nav-text">如果为EFI&#x2F;GPT引导方式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#安装后检查"><span class="nav-number">2.2.18.3.</span> <span class="nav-text">安装后检查</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#重启"><span class="nav-number">2.2.18.4.</span> <span class="nav-text">重启</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#安装后配置"><span class="nav-number">3.</span> <span class="nav-text">安装后配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特别感谢"><span class="nav-number">4.</span> <span class="nav-text">特别感谢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最后"><span class="nav-number">5.</span> <span class="nav-text">最后</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="nav-number">1.1.</span> <span class="nav-text">注意事项</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%95%99%E7%A8%8B"><span class="nav-number">2.</span> <span class="nav-text">安装教程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E6%9C%9F%E5%87%86%E5%A4%87"><span class="nav-number">2.1.</span> <span class="nav-text">前期准备</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BB%8B%E8%B4%A8"><span class="nav-number">2.1.1.</span> <span class="nav-text">安装介质</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A3%81%E7%9B%98%E5%87%86%E5%A4%87"><span class="nav-number">2.1.2.</span> <span class="nav-text">磁盘准备</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#U%E7%9B%98%E5%AE%89%E8%A3%85"><span class="nav-number">2.2.</span> <span class="nav-text">U盘安装</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E5%90%AF%E5%8A%A8%E9%A1%BA%E5%BA%8F"><span class="nav-number">2.2.1.</span> <span class="nav-text">设置启动顺序</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5U%E7%9B%98%E4%B8%8B%E7%9A%84Linux%E7%B3%BB%E7%BB%9F"><span class="nav-number">2.2.2.</span> <span class="nav-text">进入U盘下的Linux系统</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E5%BC%95%E5%AF%BC%E6%96%B9%E5%BC%8F"><span class="nav-number">2.2.3.</span> <span class="nav-text">检查引导方式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%81%94%E7%BD%91"><span class="nav-number">2.2.4.</span> <span class="nav-text">联网</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%9B%B4%E6%96%B0%E7%B3%BB%E7%BB%9F%E6%97%B6%E9%97%B4"><span class="nav-number">2.2.5.</span> <span class="nav-text">更新系统时间</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%88%86%E5%8C%BA%E4%B8%8E%E6%A0%BC%E5%BC%8F%E5%8C%96"><span class="nav-number">2.2.6.</span> <span class="nav-text">分区与格式化</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%9F%A5%E7%9C%8B%E7%9B%AE%E5%89%8D%E7%9A%84%E5%88%86%E5%8C%BA%E6%83%85%E5%86%B5"><span class="nav-number">2.2.6.1.</span> <span class="nav-text">查看目前的分区情况</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E4%B8%80%E4%B8%AA%E5%BC%95%E5%AF%BC%E5%88%86%E5%8C%BA%EF%BC%88%E4%BB%85%E4%B8%8A%E9%9D%A2%E6%89%80%E5%88%97%E7%9A%84%E7%AC%AC%E4%B8%89%E7%A7%8D%E6%83%85%E5%86%B5%E9%9C%80%E8%A6%81%E8%BF%9B%E8%A1%8C%E8%BF%99%E6%AD%A5%EF%BC%89"><span class="nav-number">2.2.6.2.</span> <span class="nav-text">创建一个引导分区（仅上面所列的第三种情况需要进行这步）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E6%A0%B9%E5%88%86%E5%8C%BA"><span class="nav-number">2.2.6.3.</span> <span class="nav-text">创建根分区</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8C%82%E8%BD%BD%E5%88%86%E5%8C%BA"><span class="nav-number">2.2.7.</span> <span class="nav-text">挂载分区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%80%89%E6%8B%A9%E9%95%9C%E5%83%8F%E6%BA%90"><span class="nav-number">2.2.8.</span> <span class="nav-text">选择镜像源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%9F%BA%E6%9C%AC%E5%8C%85"><span class="nav-number">2.2.9.</span> <span class="nav-text">安装基本包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%85%8D%E7%BD%AEFstab"><span class="nav-number">2.2.10.</span> <span class="nav-text">配置Fstab</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Chroot"><span class="nav-number">2.2.11.</span> <span class="nav-text">Chroot</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E6%97%B6%E5%8C%BA"><span class="nav-number">2.2.12.</span> <span class="nav-text">设置时区</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8F%90%E5%89%8D%E5%AE%89%E8%A3%85%E5%BF%85%E9%A1%BB%E8%BD%AF%E4%BB%B6%E5%8C%85"><span class="nav-number">2.2.13.</span> <span class="nav-text">提前安装必须软件包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AELocale"><span class="nav-number">2.2.14.</span> <span class="nav-text">设置Locale</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AE%E4%B8%BB%E6%9C%BA%E5%90%8D"><span class="nav-number">2.2.15.</span> <span class="nav-text">设置主机名</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AE%BE%E7%BD%AERoot%E5%AF%86%E7%A0%81"><span class="nav-number">2.2.16.</span> <span class="nav-text">设置Root密码</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Intel-ucode%EF%BC%88%E9%9D%9EIntelCPU%E5%8F%AF%E4%BB%A5%E8%B7%B3%E8%BF%87%E6%AD%A4%E6%AD%A5%E9%AA%A4%EF%BC%89"><span class="nav-number">2.2.17.</span> <span class="nav-text">安装Intel-ucode（非IntelCPU可以跳过此步骤）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AE%89%E8%A3%85Bootloader"><span class="nav-number">2.2.18.</span> <span class="nav-text">安装Bootloader</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E4%B8%BABIOS-MBR%E5%BC%95%E5%AF%BC%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="nav-number">2.2.18.1.</span> <span class="nav-text">如果为BIOS&#x2F;MBR引导方式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%A6%82%E6%9E%9C%E4%B8%BAEFI-GPT%E5%BC%95%E5%AF%BC%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="nav-number">2.2.18.2.</span> <span class="nav-text">如果为EFI&#x2F;GPT引导方式：</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%90%8E%E6%A3%80%E6%9F%A5"><span class="nav-number">2.2.18.3.</span> <span class="nav-text">安装后检查</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%87%8D%E5%90%AF"><span class="nav-number">2.2.18.4.</span> <span class="nav-text">重启</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%90%8E%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">安装后配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%89%B9%E5%88%AB%E6%84%9F%E8%B0%A2"><span class="nav-number">4.</span> <span class="nav-text">特别感谢</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%80%E5%90%8E"><span class="nav-number">5.</span> <span class="nav-text">最后</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
       src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
   <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
-<div class="site-state-wrap motion-element">
+<div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
           <span class="site-state-item-count">36</span>
-          <span class="site-state-item-name">文章</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
@@ -872,85 +268,664 @@
       </div>
   </nav>
 </div>
-  <div class="links-of-author motion-element">
+  <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/viseator" title="GitHub → https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+        <a href="https://github.com/viseator" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;viseator" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:viseator@gmail.com" title="Email → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
+        <a href="mailto:viseator@gmail.com" title="E-Mail → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-  <div class="cc-license motion-element" itemprop="license">
+  <div class="cc-license site-overview-item animated" itemprop="license">
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
       Links
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
+          <a href="https://www.hustunique.com/" title="https:&#x2F;&#x2F;www.hustunique.com&#x2F;" rel="noopener" target="_blank">UniqueStudio</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
+          <a href="http://blog.codedragon.tech/" title="http:&#x2F;&#x2F;blog.codedragon.tech&#x2F;" rel="noopener" target="_blank">BlackDragon</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
+          <a href="http://imzhwk.com/" title="http:&#x2F;&#x2F;imzhwk.com&#x2F;" rel="noopener" target="_blank">imzhwk</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
+          <a href="http://moe.petnakanojo.com/" title="http:&#x2F;&#x2F;moe.petnakanojo.com&#x2F;" rel="noopener" target="_blank">PetnaKanojo</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
+          <a href="http://alexandertang.cn/" title="http:&#x2F;&#x2F;alexandertang.cn&#x2F;" rel="noopener" target="_blank">Alexander</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
+          <a href="https://qzwlecr.github.io/" title="https:&#x2F;&#x2F;qzwlecr.github.io&#x2F;" rel="noopener" target="_blank">qzwlecr</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
+          <a href="http://www.kurokoi.moe/" title="http:&#x2F;&#x2F;www.kurokoi.moe&#x2F;" rel="noopener" target="_blank">Kurokoi</a>
         </li>
     </ul>
   </div>
 
+        </div>
       </div>
-
     </div>
   </aside>
-  <div id="sidebar-dimmer"></div>
+  <div class="sidebar-dimmer"></div>
 
 
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/05/17/arch_install/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="viseator(吴迪)">
+      <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="viseator's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          以官方Wiki的方式安装ArchLinux
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-05-17 23:26:29" itemprop="dateCreated datePublished" datetime="2017-05-17T23:26:29+08:00">2017-05-17</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-07-25 23:16:45" itemprop="dateModified" datetime="2020-07-25T23:16:45+08:00">2020-07-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/Arch/" itemprop="url" rel="index"><span itemprop="name">Arch</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2017/05/17/arch_install/" class="post-meta-item leancloud_visitors" data-flag-title="以官方Wiki的方式安装ArchLinux" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><blockquote>
+<p>  <strong>这可能是你能找到的最适合你的中文<code>ArchLinux</code>安装教程。</strong></p>
+</blockquote>
+<p>前几天硬盘挂了，万幸的是家目录放在了另一块硬盘上所以存活了下来。不得不再重装一遍<code>Arch</code>，算上帮朋友装的，这已经是我第四次安装<code>Arch</code>了。也想借此机会记录这个过程写一篇完全按照官方Wiki指导再加上Wiki上没有重点写出来但是安装过程中会遇到的一些问题的一篇不太一样的安装教程。</p>
+<a id="more"></a>
+
+<p>很多人提起起<code>Arch</code>的第一反应就是安装困难，这种困难有很多原因，也就是接下来我们将会面对的问题。</p>
+<ul>
+<li>  没有图形界面的引导：<code>Arch</code>只给我们提供了一个最小的环境，所有的安装操作都需要在命令行中完成，这对于不习惯命令行操作的人来说是最难以跨越的一个坎。许多发行版之所以可以流行开来就是因为他们提供了友好的、流程化的安装过程，这帮很多人解决了学习<code>Linux</code>的第一步：安装一个<code>Linux</code>。</li>
+<li>  预备知识的不足与缺乏查找并解决问题的能力：一些对于安装系统比较重要的知识例如系统引导、配置文件的编辑、简单的命令行操作等没有接触过，所以操作时往往摸不着头脑，一旦自己的操作结果与教程不符便不知道如何去解决遇到的问题。</li>
+<li>  缺乏合适的教程：安装Arch最好的也是最完备的教程就是官方的<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/installation_guide">Installation guide</a>与<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/">Wiki</a>，虽然部分内容有中文版，但是中文的翻译有些时候会落后于英文版，不推荐完全依赖于中文Wiki。并且官方Wiki的写作方式更偏向于文档，没有我们所习惯的按步骤编排的安装过程，给不熟悉这种写作方式的同学造成了阅读与使用上的困难。国内的可以找到的教程往往都是时间比较久远，或是没有提及或是忽略了一些新手容易犯错误的地方。</li>
+</ul>
+<blockquote>
+<p>  <strong>本篇教程致力于与现有的Wiki保持一致，并且适当地加入一些适合初学者学习的链接，希望可以让阅读了这篇教程的同学可以提高自己利用现有及以后可能出现的新的Wiki内容的能力。</strong></p>
+</blockquote>
+<p><code>ArchLinux</code>或者是<code>Linux</code>的优点就不在这里多说了，我相信打开这篇教程的同学一定可以从这样的过程中得到很多。</p>
+<h3 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h3><p>请一定<strong>仔细阅读教程中的每一个指示</strong>，绝大部分安装失败都是由于没有仔细看教程，遗漏、错输指令导致的。安装的方式根据引导方式的不同会有所不同，所以请按教程中的指示进行，切忌一味地输命令而不管说明。</p>
+<p>对于<strong>硬盘分区相关</strong>的操作，请更加小心检查命令，数据无价。</p>
+<p>下面就正式开始我们的教程。</p>
+<h2 id="安装教程"><a href="#安装教程" class="headerlink" title="安装教程"></a>安装教程</h2><h3 id="前期准备"><a href="#前期准备" class="headerlink" title="前期准备"></a>前期准备</h3><h4 id="安装介质"><a href="#安装介质" class="headerlink" title="安装介质"></a>安装介质</h4><p>在安装之前我们先要准备一个安装介质，在这里只推荐U盘作为安装介质。</p>
+<ol>
+<li><p> 到<a target="_blank" rel="noopener" href="https://www.archlinux.org/download/">https://www.archlinux.org/download/</a>页面下方的中国镜像源中下载<code>archlinux-**-x86_64.iso</code>这个<code>iso</code>文件。 </p>
+</li>
+<li><ul>
+<li><p>如果是<code>Linux</code>系统下制作安装介质，推荐使用<code>dd</code>命令，教程：</p>
+<blockquote>
+<p>  <a target="_blank" rel="noopener" href="http://www.runoob.com/linux/linux-comm-dd.html">http://www.runoob.com/linux/linux-comm-dd.html</a></p>
+</blockquote>
+</li>
+<li><p>如果是<code>windows</code>系统下制作安装介质，推荐使用<code>usbwriter</code>这款轻量级的工具，下载链接：</p>
+<blockquote>
+<p>  <a target="_blank" rel="noopener" href="https://sourceforge.net/projects/usbwriter/">https://sourceforge.net/projects/usbwriter/</a></p>
+</blockquote>
+</li>
+</ul>
+</li>
+</ol>
+<h4 id="磁盘准备"><a href="#磁盘准备" class="headerlink" title="磁盘准备"></a>磁盘准备</h4><p>我们需要有一块空闲的磁盘区域来进行安装，这里的空闲指的是<strong>没有被分区</strong>的空间。下面来介绍如何准备这块空间。</p>
+<ul>
+<li><p>在<code>windows</code>下空出一块分区来安装：利用<code>windows</code>自带的磁盘管理工具就可以：</p>
+<ol>
+<li><p>右击<code>windows</code>图标，在弹出菜单中选择磁盘管理（其他版本的<code>windows</code>请自行找到打开磁盘管理的方式）：</p>
+<p> <img src="/images/arch01.jpeg"></p>
+</li>
+<li><p>右击想要删除的分区，选择删除卷（注意这步之后这个分区的所有数据将会丢失）：</p>
+<p> <img src="/images/arch02.jpeg"></p>
+</li>
+</ol>
+</li>
+<li><p>在<code>linux</code>下分出一块区域安装：使用<code>fdisk</code>进行，教程请见链接中的删除分区：</p>
+<blockquote>
+<p>  <a target="_blank" rel="noopener" href="http://www.liusuping.com/ubuntu-linux/linux-fdisk-disk.html">http://www.liusuping.com/ubuntu-linux/linux-fdisk-disk.html</a></p>
+</blockquote>
+</li>
+<li><p>  空闲的磁盘（新磁盘）：不需要进行任何操作。</p>
+</li>
+</ul>
+<h3 id="U盘安装"><a href="#U盘安装" class="headerlink" title="U盘安装"></a>U盘安装</h3><p>下面的过程实际上都在刚刚准备好的U盘启动介质上的<code>Linux</code>系统下进行，所以<strong>启动时都应该选择U盘</strong>。</p>
+<h4 id="设置启动顺序"><a href="#设置启动顺序" class="headerlink" title="设置启动顺序"></a>设置启动顺序</h4><p>这一步在不同品牌的电脑上都不一样，所以需要大家自行搜索<strong>自己电脑品牌+启动顺序</strong>这个关键词来进行设置。</p>
+<p>例如我的电脑搜索神舟 启动顺序可以得到如下的结果：</p>
+<blockquote>
+<p>  <a target="_blank" rel="noopener" href="https://zhidao.baidu.com/question/170954184.html">https://zhidao.baidu.com/question/170954184.html</a></p>
+</blockquote>
+<p>一般来说现在的主板都可以不用进入BIOS而快速地切换启动顺序，只要找到相应的快捷键就可以了。</p>
+<h4 id="进入U盘下的Linux系统"><a href="#进入U盘下的Linux系统" class="headerlink" title="进入U盘下的Linux系统"></a>进入U盘下的Linux系统</h4><ol>
+<li><p>按上一步设置好启动顺序，启动之后会看到如下界面（UEFI启动方式的界面可能不同）：</p>
+<p> <img src="/images/arch03.jpeg"></p>
+<p> 如果直接进入<code>windows</code>，请检查启动顺序是否设置成功，U盘是否在制作启动介质时成功写入。</p>
+<p> 如果没有看到这个界面，请检查U盘是否制作成功，如果多次遇到问题可以考虑换一个U盘。</p>
+<p> 选择第一个选项。</p>
+</li>
+<li><p>这时<code>Arch</code>开始加载，你将会看到屏幕显示如下内容：</p>
+<p> <img src="/images/arch04.jpeg"></p>
+<p> 加载完成后你将会进入一个有命令提示符的界面：</p>
+<p> <img src="/images/arch05.jpeg"></p>
+<p> 如果出现<code>FAIL</code>或是其他错误信息导致无法启动请自行搜索错误信息来获得解决方法。</p>
+<p> 这就是<code>Linux</code>的终端界面了，接下来我们将通过在这个界面执行一系列命令来将<code>Arch</code>安装到我们的磁盘上。</p>
+</li>
+</ol>
+<hr>
+<p>下面进行的过程是按照官方<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/installation_guide">Installation guide</a>为依据进行的，出现的任何问题都可以到链接中的相应部分查找原文找到解决方式。</p>
+<h4 id="检查引导方式"><a href="#检查引导方式" class="headerlink" title="检查引导方式"></a>检查引导方式</h4><p>目前的引导方式主要分为EFI引导+GPT分区表与BIOS(LEGACY)引导+MBR分区表两种，几乎比较新的机器都采用了EFI/GPT引导的方式。关于这部分的内容如果有兴趣可以通过这个链接进行了解：</p>
+<blockquote>
+<p>  <a target="_blank" rel="noopener" href="http://www.chinaz.com/server/2016/1017/595444.shtml">http://www.chinaz.com/server/2016/1017/595444.shtml</a></p>
+</blockquote>
+<p>如果你不知道自己的引导方式，请在命令提示符下执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls /sys/firmware/efi/efivars</span><br></pre></td></tr></table></figure>
+<p>这里的<code>ls</code>是命令，空格后面的一串为路径，作为<code>ls</code>命令的参数。<code>ls</code>命令的作用是显示路径目录下的所有的文件（夹）。</p>
+<hr>
+<p>如果你对命令行下的常用操作（TAB补全、取消命令等）不熟悉，请先学习了解下面部分实用的快捷键或命令：</p>
+<blockquote>
+<p>  <strong>Tab键 命令行自动补全。键入命令或文件名的前几个字符，然后按 [Tab] 键，它会自动补全命令或显示匹配你键入字符的所有命令</strong></p>
+<p>  ↑(Ctrl+p) 显示上一条命令</p>
+<p>  ↓(Ctrl+n) 显示下一条命令</p>
+<p>  Ctrl-C: 终止当前正在执行的命令</p>
+</blockquote>
+<hr>
+<p>输入命令并回车执行后，如果提示</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ls: cannot access <span class="string">&#x27;/sys/firmware/efi/efivars&#x27;</span>: No such file or directory</span><br></pre></td></tr></table></figure>
+<p>表明你是以<code>BIOS</code>方式引导，否则为以<code>EFI</code>方式引导。现在只需要记住这个信息，之后这两种引导类型的安装方式会略有不同（下文中涉及到不同的地方请仔细区别）。</p>
+<hr>
+<p><strong>更新：</strong><br><br>部分同学反馈这种方式并不能100%确认你就是<code>BIOS</code>方式引导的，更加保险的方法是执行<code>fdisk -l</code>查看分区表，如果<strong>你的硬盘（而不是你的U盘）</strong>的<code>Disklabel type</code>属性为<code>gpt</code>并且有一个<code>Type</code>为<code>EFI System</code>的小分区（一般为256M左右，如下图），那么你应该是<code>EFI</code>引导的。<br><br><img src="/images/arch26.png"></p>
+<hr>
+<h4 id="联网"><a href="#联网" class="headerlink" title="联网"></a>联网</h4><p><code>arch</code>并不能离线安装，因为我们需要联网来下载需要的组件，所以我们首先要连接网络。</p>
+<ul>
+<li><p>如果你是有线网并且路由器支持DHCP的话插上网线后先执行以下命令获取IP地址：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">dhcpcd</span><br></pre></td></tr></table></figure></li>
+<li><p>然后执行以下命令来判断网络连接是否正常：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ping www.baidu.com</span><br></pre></td></tr></table></figure>
+<p>  如果可以看到类似下面的内容就说明连上了网络：</p>
+<p>  <img src="/images/arch05.jpg"></p>
+<blockquote>
+<p>  再次提示用快捷键Ctrl-C可以终止当前正在执行的命令</p>
+</blockquote>
+</li>
+<li><p>如果你是无线网，请执行以下命令：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">iwctl</span><br></pre></td></tr></table></figure>
+<p>  会进入一个以[iwd]开头的命令行环境中，接着执行：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">device list</span><br></pre></td></tr></table></figure>
+<p>  会列出当前可用的所有网卡设备，如图所示：</p>
+<p>  <img src="/images/arch27.png"></p>
+<p>  记住<code>Name</code>一列你所使用的无线网卡的名称，比如我的就叫<code>wlan0</code>，下面的命令要用到，<strong>下面命令中请替换成自己的网卡名称</strong></p>
+<p>  接着执行下列命令进行无线网络的扫描：（**<code>wlan0</code>替换成你自己的网卡名称**）</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">station wlan0 scan</span><br></pre></td></tr></table></figure>
+<p>  接着执行下列命令列出扫描到的网络：（**<code>wlan0</code>替换成你自己的网卡名称**）</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">station wlan0 get-networks</span><br></pre></td></tr></table></figure>
+<p>  可以看到当前扫描到的无线网络都展示出来了：</p>
+<p>  <img src="/images/arch28.png"></p>
+<p>  最后输入下列命令连接指定网络：（**<code>wlan0</code>替换成你自己的网卡名称，<code>CatAndPomelo</code>替换成你想连的网络名称**）：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">station wlan0 connect CatAndPomelo</span><br></pre></td></tr></table></figure>
+<p>  这时如果网络有密码的话会提示输入密码，输入后回车确认就行：</p>
+<p>  <img src="/images/arch29.png"></p>
+<p>  注意这里就算密码输入错误也不会有提示的，所以请保证密码正确，如果你是中文无线网名称/密码的话建议先改一下，把密码取消会更方便些。</p>
+<p>  顺利的话，此时你已经连接上网络了，执行下面命令退出<code>iwd</code>：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">quit</span><br></pre></td></tr></table></figure>
+<p>  连接以后同样可以通过上面的<code>ping</code>命令来进行测试。</p>
+<p>  <code>iwd</code>是一个实用的命令行下联网工具，利用它可以方便地联网，如果它没能起作用，需要进入以下页面查找解决方式：</p>
+<blockquote>
+<p>  <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Wireless_network_configuration">https://wiki.archlinux.org/index.php/Wireless_network_configuration</a></p>
+</blockquote>
+</li>
+</ul>
+<p><strong>注意</strong>：由于部分无线网卡驱动的支持并不完善，所以在这里可能会遇到问题，并且各机型的解决方法都不同，如果不幸遇到无线连不上的问题，可以插有线联网先把系统装好再去慢慢解决。解决问题可以参照：<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Network_configuration">https://wiki.archlinux.org/index.php/Network_configuration</a></p>
+<h4 id="更新系统时间"><a href="#更新系统时间" class="headerlink" title="更新系统时间"></a>更新系统时间</h4><p>执行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">timedatectl set-ntp <span class="literal">true</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>  正常情况下这样的命令并没有输出，所谓没有消息就是最好的消息</p>
+</blockquote>
+<h4 id="分区与格式化"><a href="#分区与格式化" class="headerlink" title="分区与格式化"></a>分区与格式化</h4><p><strong>特别注意：涉及到分区与格式化的操作要格外注意，命令在回车之前请再三确认知道自己在做什么，并且没有输错命令，否则将会来带来数据的丢失！如果有需要在操作之前请备份重要的数据。</strong></p>
+<p>但是我们也并不要过于惧怕分区与格式化过程，正确操作的情况下不会对你其他数据产生任何影响。</p>
+<h5 id="查看目前的分区情况"><a href="#查看目前的分区情况" class="headerlink" title="查看目前的分区情况"></a>查看目前的分区情况</h5><p>执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk -l</span><br></pre></td></tr></table></figure>
+<p>以我的电脑为例：</p>
+<p><img src="/images/arch06.jpg"></p>
+<p>可以看到我的一块238.5g的硬盘(<code>/dev/sda</code>就代表这块硬盘)，下面列出了<code>/dev/sda*</code>这三个分区，<code>/dev/sda3</code>是我存活下来的家目录，可以看到它的类型为<code>Linux</code>分区。注意看<code>Start</code>与<code>End</code>的数值，这个数值代表扇区号，可以理解成硬盘被划分成了一个个小单元，可以直观地看出来在<code>/dev/sda2</code>的<code>End</code>与<code>/dev/sda3</code>的<code>Start</code>之间空出了一大块未分配的空间，接下来我们将分配这块区域。</p>
+<hr>
+<ul>
+<li>  如果你是BIOS/MBR方式引导，<strong>跳过下面创建一个引导分区</strong>的步骤。</li>
+<li>  如果你是EFI/GPT方式引导，并且同时安装了其他系统，那么你应该可以在分区列表中发现一个较小的并且类型为EFI的分区（<strong>注意查看硬盘的大小，这个<code>EFI</code>分区有可能是你U盘中的，需要排除</strong>），这是你的引导分区，请记下它的路径（/dev/sdxY)备用，<strong>跳过下面创建一个引导分区</strong>的步骤。</li>
+<li>  如果你是EFI/GPT方式引导，但是没有这个较小的并且类型为EFI的引导分区（这种情况一般只会出现在新的硬盘），那么你需要<strong>先创建一个引导分区</strong>。</li>
+</ul>
+<hr>
+<h5 id="创建一个引导分区（仅上面所列的第三种情况需要进行这步）"><a href="#创建一个引导分区（仅上面所列的第三种情况需要进行这步）" class="headerlink" title="创建一个引导分区（仅上面所列的第三种情况需要进行这步）"></a>创建一个引导分区（<strong>仅上面所列的第三种情况需要进行这步</strong>）</h5><p>执行命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk /dev/sdx （请将sdx替换成你要操作的磁盘如sdb sdc等）</span><br></pre></td></tr></table></figure>
+<p>下面你就进入了<code>fdisk</code>的操作环境， 输入<code>m</code>并回车可以查看各命令的作用。</p>
+<ol>
+<li><p> <strong>如果你是一块全新的硬盘</strong>：输入<code>g</code>来创建一个全新的gpt分区表，<strong>否则直接进行第2步</strong>。</p>
+</li>
+<li><p> 输入<code>n</code>创建一个新的分区，首先会让你选择起始扇区，一般直接回车使用默认数值即可，然后可以输入结束扇区或是分区大小，这里我们输入<code>+512M</code>来创建一个512M的引导分区。</p>
+</li>
+<li><p> 这时我们可以输入<code>p</code>来查看新创建的分区。</p>
+</li>
+<li><p> 输入<code>t</code>并选择新创建的分区序号来更改分区的类型，输入<code>l</code>可以查看所有支持的类型，输入<code>ef</code>更改分区的类型为<code>EFI</code>。</p>
+</li>
+<li><p> 输入<code>w</code>来将之前所有的操作写入磁盘生效，在这之前可以输入<code>p</code>来确认自己的分区表没有错误。</p>
+</li>
+<li><p>输入以下命令来格式化刚刚创建的引导分区：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs.fat -F32 /dev/sdxY （请将sdxY替换为刚创建的分区）</span><br></pre></td></tr></table></figure>
+<p>现在引导分区就创建好了。</p>
+</li>
+</ol>
+<h5 id="创建根分区"><a href="#创建根分区" class="headerlink" title="创建根分区"></a>创建根分区</h5><p>输入命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">fdisk /dev/sdx （请将sdx替换成你要操作的磁盘如sdb sdc等）</span><br></pre></td></tr></table></figure>
+<ol>
+<li><p><strong>如果你是一块全新的硬盘</strong>（<strong>否则直接进行第2步</strong>）：</p>
+<ol>
+<li> <strong>如果你是<code>BIOS/MBR</code>引导方式</strong>：输入<code>o</code>来创建一个全新的<code>MBR</code>分区表。</li>
+<li> <strong>如果你在上一步新建了分区表并创建了引导分区</strong>：直接进行步骤2。</li>
+<li> <strong>如果你在另一块硬盘中已经有引导分区</strong>：输入<code>g</code>来创建一个全新的<code>gpt</code>分区表。</li>
+</ol>
+</li>
+<li><p> 输入<code>n</code>创建一个新的分区，首先会让你选择起始扇区，一般直接回车使用默认数值即可，然后可以输入结束扇区或是分区大小，如果我们想要使创建的分区完全占满空闲的空间，可以直接回车使用默认结束扇区。</p>
+</li>
+<li><p> 这时我们可以输入<code>p</code>来查看新创建的分区。</p>
+</li>
+<li><p> 输入<code>w</code>来将之前所有的操作写入磁盘生效，在这之前可以输入<code>p</code>来确认自己的分区表没有错误。</p>
+</li>
+<li><p>输入以下命令来格式化刚刚创建的根分区：</p>
+ <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkfs.ext4 /dev/sdxY （请将的sdxY替换为刚创建的分区）</span><br></pre></td></tr></table></figure>
+<p>这是我的分区过程供参考：</p>
+</li>
+</ol>
+<p><img src="/images/arch07.jpg"></p>
+<p><img src="/images/arch08.jpg"></p>
+<hr>
+<p><strong>如果你在分区这步遇到了问题</strong>，先看看自己的操作是否与上面的指引一致，如果仍然无法解决可参考<a target="_blank" rel="noopener" href="https://www.cnblogs.com/freerqy/p/8502838.html">https://www.cnblogs.com/freerqy/p/8502838.html</a>这篇文章的“建立硬盘分区”一节尝试使用<code>cfdisk</code>进行分区。</p>
+<h4 id="挂载分区"><a href="#挂载分区" class="headerlink" title="挂载分区"></a>挂载分区</h4><p>执行以下命令将根分区挂载到<code>/mnt</code>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mount /dev/sdxY /mnt （请将sdxY替换为之前创建的根分区）</span><br></pre></td></tr></table></figure>
+<hr>
+<p><strong>如果你是EFI/GPT引导方式</strong>，执行以下命令创建/boot文件夹并将引导分区挂载到上面。<strong>BIOS/MBR引导方式无需进行这步。</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir /mnt/boot</span><br><span class="line">mount /dev/sdxY /mnt/boot （请将sdxY替换为之前创建或是已经存在的引导分区）</span><br></pre></td></tr></table></figure>
+<hr>
+<h4 id="选择镜像源"><a href="#选择镜像源" class="headerlink" title="选择镜像源"></a>选择镜像源</h4><p>因为从这步开始，需要进行一些编辑配置文件的操作，所以需要掌握一些命令行下非常著名的一款编辑器<code>Vim</code>的基本操作，在这里推荐学习下面这个链接中的存活部分，可以完成编辑、复制粘贴与保存工作即可。</p>
+<blockquote>
+<p>  <a target="_blank" rel="noopener" href="http://coolshell.cn/articles/5426.html">http://coolshell.cn/articles/5426.html</a></p>
+</blockquote>
+<hr>
+<p>镜像源是我们下载的软件包的来源，我们需要根据自己的地区选择不同的源来加快下载的速度。</p>
+<p>执行以下命令，用<code>Vim</code>来编辑<code>/etc/pacman.d/mirrorlist</code>这个文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/pacman.d/mirrorlist</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>  提示：输入路径时可以用<code>Tab</code>键补全</p>
+</blockquote>
+<p><img src="/images/arch09.jpg"></p>
+<p>找到标有<code>China</code>的镜像源，<code>normal</code>模式下按下<code>dd</code>可以剪切光标下的行，按<code>gg</code>回到文件首，按<code>P</code>（注意是大写的）将行粘贴到文件最前面的位置（优先级最高）。</p>
+<p>当然也可以直接手工输入。</p>
+<p>这里推荐使用清华、浙大源：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Server &#x3D; http:&#x2F;&#x2F;mirrors.tuna.tsinghua.edu.cn&#x2F;archlinux&#x2F;$repo&#x2F;os&#x2F;$arch</span><br><span class="line">Server &#x3D; http:&#x2F;&#x2F;mirrors.zju.edu.cn&#x2F;archlinux&#x2F;$repo&#x2F;os&#x2F;$arch</span><br></pre></td></tr></table></figure>
+<p>最后记得用<code>:wq</code>命令保存文件并退出。</p>
+<h4 id="安装基本包"><a href="#安装基本包" class="headerlink" title="安装基本包"></a>安装基本包</h4><p>下面就要安装最基本的<code>ArchLinux</code>包到磁盘上了。这是一个联网下载并安装的过程。</p>
+<p>执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacstrap /mnt base base-devel linux linux-firmware dhcpcd</span><br></pre></td></tr></table></figure>
+<p>根据下载速度的不同在这里需要等待一段时间，当命令提示符重新出现的时候就可以进行下一步操作了。</p>
+<h4 id="配置Fstab"><a href="#配置Fstab" class="headerlink" title="配置Fstab"></a>配置Fstab</h4><p>生成自动挂载分区的<code>fstab</code>文件，执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">genfstab -L /mnt &gt;&gt; /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
+<p>由于这步比较重要，所以我们需要输出生成的文件来检查是否正确，执行以下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat /mnt/etc/fstab</span><br></pre></td></tr></table></figure>
+<p><img src="/images/arch10.jpg"></p>
+<p>如图，可以看到<code>/dev/sda4</code>被挂载到了根分区。</p>
+<p><code>/dev/sda3</code>是我之前存活下来的家目录被挂载到了<code>/home</code>目录（你们没有这条）。</p>
+<p><strong>如果是<code>EFI/GPT</code>引导的还应该有引导分区被挂载到<code>/boot</code>目录</strong>。</p>
+<h4 id="Chroot"><a href="#Chroot" class="headerlink" title="Chroot"></a>Chroot</h4><p><code>Chroot</code>意为<code>Change root</code>，相当于把操纵权交给我们新安装（或已经存在）的<code>Linux</code>系统，<strong>执行了这步以后，我们的操作都相当于在磁盘上新装的系统中进行</strong>。</p>
+<p>执行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arch-chroot /mnt</span><br></pre></td></tr></table></figure>
+<hr>
+<p>这里顺便说一下，如果以后我们的系统出现了问题，只要插入U盘并启动， 将我们的系统根分区挂载到了<code>/mnt</code>下（如果有<code>efi</code>分区也要挂载到<code>/mnt/boot</code>下），再通过这条命令就可以进入我们的系统进行修复操作。</p>
+<hr>
+<h4 id="设置时区"><a href="#设置时区" class="headerlink" title="设置时区"></a>设置时区</h4><p>依次执行如下命令设置我们的时区为上海并生成相关文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime</span><br><span class="line">hwclock --systohc</span><br></pre></td></tr></table></figure>
+<p><img src="/images/arch11.jpg"></p>
+<h4 id="提前安装必须软件包"><a href="#提前安装必须软件包" class="headerlink" title="提前安装必须软件包"></a>提前安装必须软件包</h4><p>因为我们现在已经<code>Chroot</code>到了新的系统中，只有一些最基本的包（组件），这时候我们就需要自己安装新的包了，下面就要介绍一下<code>ArchLinux</code>下非常强大的包管理工具<code>pacman</code>，大部分情况下，一行命令就可以搞定包与依赖的问题。</p>
+<p>安装包的命令格式为<code>pacman -S 包名</code>，<code>pacman</code>会自动检查这个包所需要的其他包（即为依赖）并一起装上。下面我们就通过<code>pacman</code>来安装一些包，这些包在之后会用上，在这里先提前装好。</p>
+<p>执行如下命令（注意大小写，大小写错误会导致包无法找到）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S vim dialog wpa_supplicant ntfs-3g networkmanager netctl</span><br></pre></td></tr></table></figure>
+<p>一路确认之后包就被成功装上了。</p>
+<p><img src="/images/arch12.jpg"></p>
+<p>图中只安装了<code>Vim</code>和它的依赖。</p>
+<h4 id="设置Locale"><a href="#设置Locale" class="headerlink" title="设置Locale"></a>设置Locale</h4><p>设置我们使用的语言选项，执行如下命令来编辑<code>/etc/locale.gen</code>文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/locale.gen</span><br></pre></td></tr></table></figure>
+<p>在文件中找到<code>zh_CN.UTF-8 UTF-8</code> <code>zh_HK.UTF-8 UTF-8</code> <code>zh_TW.UTF-8 UTF-8</code> <code>en_US.UTF-8 UTF-8</code>这四行，去掉行首的#号，保存并退出。如图：</p>
+<p><img src="/images/arch13.jpg"></p>
+<p><img src="/images/arch14.jpg"></p>
+<p>然后执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">locale-gen</span><br></pre></td></tr></table></figure>
+<p><img src="/images/arch15.jpg"></p>
+<p>打开（不存在时会创建）<code>/etc/locale.conf</code>文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/locale.conf</span><br></pre></td></tr></table></figure>
+<p>在文件的第一行加入以下内容：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">LANG=en_US.UTF-8</span><br></pre></td></tr></table></figure>
+<p>保存并退出。</p>
+<h4 id="设置主机名"><a href="#设置主机名" class="headerlink" title="设置主机名"></a>设置主机名</h4><p>打开（不存在时会创建）<code>/etc/hostname</code>文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hostname</span><br></pre></td></tr></table></figure>
+<p>在文件的第一行输入你自己设定的一个<code>myhostname</code></p>
+<p>保存并退出。</p>
+<p>编辑<code>/etc/hosts</code>文件：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/hosts</span><br></pre></td></tr></table></figure>
+<p>在文件末添加如下内容（将<code>myhostname</code>替换成你自己设定的主机名）</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">127.0.0.1	localhost</span><br><span class="line">::1		localhost</span><br><span class="line">127.0.1.1	myhostname.localdomain	myhostname</span><br></pre></td></tr></table></figure>
+<p><img src="/images/arch16.png"></p>
+<p>这里我设置的是<code>viseator</code>。</p>
+<p>保存并退出。</p>
+<h4 id="设置Root密码"><a href="#设置Root密码" class="headerlink" title="设置Root密码"></a>设置Root密码</h4><p><code>Root</code>是<code>Linux</code>中具有最高权限帐户，有些敏感的操作必须通过<code>Root</code>用户进行，比如使用<code>pacman</code>，我们之前进行所有的操作也都是以<code>Root</code>用户进行的，也正是因为<code>Root</code>的权限过高，如果使用不当会造成安全问题，所以我们之后会新建一个普通用户来进行日常的操作。在这里我们需要为<code>Root</code>帐户设置一个密码：</p>
+<p>执行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd</span><br></pre></td></tr></table></figure>
+<p>按提示设置并确认就可以了。</p>
+<p><img src="/images/arch17.jpg"></p>
+<hr>
+<p>或许有的人已经发现官方Wiki和一些其他教程资料中的命令是以<code>#</code>或<code>$</code>开头的，这两个符号就对应着命令行中的命令提示符，<code>#</code>代表以<code>Root</code>用户执行命令，<code>$</code>代表以普通用户执行命令，平时使用教程中的命令时应该注意这一点。</p>
+<hr>
+<h4 id="安装Intel-ucode（非IntelCPU可以跳过此步骤）"><a href="#安装Intel-ucode（非IntelCPU可以跳过此步骤）" class="headerlink" title="安装Intel-ucode（非IntelCPU可以跳过此步骤）"></a>安装<code>Intel-ucode</code>（非<code>Intel</code>CPU可以跳过此步骤）</h4><p>直接<code>pacman</code>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S intel-ucode</span><br></pre></td></tr></table></figure>
+<h4 id="安装Bootloader"><a href="#安装Bootloader" class="headerlink" title="安装Bootloader"></a>安装<code>Bootloader</code></h4><p>经常听说很多人因为引导问题导致系统安装失败，多数是因为教程没有统一或是过时的教程引起的，这里只要按照步骤来其实是不难的。</p>
+<p>这里我们安装最流行的<code>Grub2</code>。<strong>（如果曾经装过<code>Linux</code>，记得删掉原来的<code>Grub</code>，否则不可能成功启动）</strong></p>
+<ul>
+<li><p>首先安装<code>os-prober</code>和<code>ntfs-3g</code>这两个包，它可以配合<code>Grub</code>检测已经存在的系统，自动设置启动选项。</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S os-prober ntfs-3g</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<hr>
+<h5 id="如果为BIOS-MBR引导方式："><a href="#如果为BIOS-MBR引导方式：" class="headerlink" title="如果为BIOS/MBR引导方式："></a><strong>如果为BIOS/MBR引导方式：</strong></h5><ul>
+<li><p>安装<code>grub</code>包：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S grub</span><br></pre></td></tr></table></figure></li>
+<li><p>部署<code>grub</code>：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub-install --target=i386-pc /dev/sdx （将sdx换成你安装的硬盘）</span><br></pre></td></tr></table></figure>
+<p>  注意这里的<code>sdx</code>应该为硬盘（例如<code>/dev/sda</code>），<strong>而不是</strong>形如<code>/dev/sda1</code>这样的分区。</p>
+</li>
+<li><p>生成配置文件：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+<p><img src="/images/arch18.jpg"></p>
+</li>
+</ul>
+<p><strong>如果你没有看到如图所示的提示信息，请仔细检查是否正确完成上面的过程。常见问题如下：</strong></p>
+<ol>
+<li><p>如果报<code>warning failed to connect to lvmetad，falling back to device scanning.</code>错误。参照<a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/Install_from_existing_Linux">wiki</a>中搜索关键词<code>use_lvmetad</code>所在位置，简单的方法是编辑<code>/etc/lvm/lvm.conf</code>这个文件，找到<code>use_lvmetad = 1</code>将<code>1</code>修改为<code>0</code>，保存，重新配置grub。</p>
+</li>
+<li><p>有部分同学反馈后面安装<code>grub</code>包的时候报如下错误：</p>
+<p>  <img src="/images/arch25.png"></p>
+<p>  是因为实际是<code>UEFI</code>引导的系统没有正确挂载<code>boot</code>分区。首先检查你是不是按照<code>BIOS</code>方式安装的系统，二是检查是否正确挂载<code>/mnt/boot</code>。正确配置好<code>boot</code>分区之后可以从“挂载分区”这步开始重做。</p>
+</li>
+</ol>
+<hr>
+<h5 id="如果为EFI-GPT引导方式："><a href="#如果为EFI-GPT引导方式：" class="headerlink" title="如果为EFI/GPT引导方式："></a><strong>如果为EFI/GPT引导方式：</strong></h5><ul>
+<li><p>安装<code>grub</code>与<code>efibootmgr</code>两个包：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S grub efibootmgr</span><br></pre></td></tr></table></figure></li>
+<li><p>部署<code>grub</code>：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub-install --target=x86_64-efi --efi-directory=/boot --bootloader-id=grub</span><br></pre></td></tr></table></figure></li>
+<li><p>生成配置文件：</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure></li>
+<li><p>*提示信息应与上面的图类似，如果你发现错误，请仔细检查是否正确完成上面的过程。**</p>
+</li>
+</ul>
+<p>如果报<code>warning failed to connect to lvmetad，falling back to device scanning.</code>错误。参照<a target="_blank" rel="noopener" href="https://www.pckr.co.uk/arch-grub-mkconfig-lvmetad-failures-inside-chroot-install/">这篇文章</a>，简单的方法是编辑<code>/etc/lvm/lvm.conf</code>这个文件，找到<code>use_lvmetad = 1</code>将<code>1</code>修改为<code>0</code>，保存，重新配置grub。</p>
+<p>如果报<code>grub-probe: error: cannot find a GRUB drive for /dev/sdb1, check your device.map</code>类似错误，并且<code>sdb1</code>这个地方是你的u盘，这是u盘<code>uefi</code>分区造成的错误，对我们的正常安装没有影响，可以不用理会这条错误。</p>
+<hr>
+<h5 id="安装后检查"><a href="#安装后检查" class="headerlink" title="安装后检查"></a>安装后检查</h5><p><strong>如果你是多系统，请注意上面一节中对<code>os-prober</code>这个包的安装。</strong></p>
+<p><strong>强烈建议使用如下命令检查是否成功生成各系统的入口，如果没有正常生成会出现开机没有系统入口的情况：</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+<p>检查接近末尾的<code>menuentry</code>部分是否有<code>windows</code>或其他系统名入口。下图例子中是<code>Arch Linux</code>入口与检测到的<code>windows10</code>入口（安装在<code>/dev/sda1</code>），具体情况可能有不同：</p>
+<p><img src="/images/arch22.jpg"></p>
+<p><strong>如果你没有看到<code>Arch Linux</code>系统入口或者该文件不存在</strong>，请先检查<code>/boot</code>目录是否正确部署<code>linux</code>内核：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> /boot</span><br><span class="line">ls</span><br></pre></td></tr></table></figure>
+<p>查看是否有<code>initramfs-linux-fallback.img  initramfs-linux.img  intel-ucode.img  vmlinuz-linux</code>这几个文件，如果都没有，说明<code>linux</code>内核没有被正确部署，很有可能是<code>/boot</code>目录没有被正确挂载导致的，确认<code>/boot</code>目录无误后，可以重新部署<code>linux</code>内核：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pacman -S linux</span><br></pre></td></tr></table></figure>
+<p>再重新生成配置文件，就可以找到系统入口。</p>
+<p><strong>如果你已经安装<code>os-prober</code>包并生成配置文件后还是没有生成其他系统的入口</strong>：</p>
+<p><strong>你目前处的U盘安装环境下有可能无法检测到其他系统的入口，请在下一步中重启登陆之后重新运行</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">grub-mkconfig -o /boot/grub/grub.cfg</span><br></pre></td></tr></table></figure>
+<p>如果还没有生成其他系统的入口，请参照：</p>
+<blockquote>
+<p>  <a target="_blank" rel="noopener" href="https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Combining_the_use_of_UUIDs_and_basic_scripting">https://wiki.archlinux.org/index.php/GRUB/Tips_and_tricks#Combining_the_use_of_UUIDs_and_basic_scripting</a> </p>
+</blockquote>
+<p>编辑配置文件手动添加引导的分区入口。</p>
+<hr>
+<h5 id="重启"><a href="#重启" class="headerlink" title="重启"></a>重启</h5><p>接下来，你需要进行重启来启动已经安装好的系统，执行如下命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">exit</span></span><br></pre></td></tr></table></figure>
+<p>** 如果挂载了<code>/mnt/boot</code>，先<code>umount /mnt/boot</code>，再<code>umount /mnt</code>，否则直接<code>umount /mnt</code>：**</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">umount /mnt/boot</span><br><span class="line">umount /mnt</span><br><span class="line">reboot</span><br></pre></td></tr></table></figure>
+<p>注意这个时候你可能会卡在有两行提示的地方无法正常关机，长按电源键强制关机即可，没有影响。</p>
+<p>关机后拔出U盘，启动顺序会自动以硬盘启动，如果一切顺利，那么你将会看到下面的界面：</p>
+<p><img src="/images/arch19.jpg"></p>
+<p>启动时有可能会有输出信息显示在这里，直接回车就可以了。</p>
+<p>输入<code>root</code>，再输入之前设置的密码，显示出命令提示符，恭喜你，你已经成功安装<code>ArchLinux</code>！</p>
+<h2 id="安装后配置"><a href="#安装后配置" class="headerlink" title="安装后配置"></a>安装后配置</h2><p>虽然系统安装好了，但是还没有进行基本配置和安装图形界面，所以接下来我们要进行一些必须的配置和图形界面的安装。</p>
+<p>请见下一篇文章：<a href="http://www.viseator.com/2017/05/19/arch_setup/">ArchLinux安装后的必须配置与图形界面安装教程</a></p>
+<h2 id="特别感谢"><a href="#特别感谢" class="headerlink" title="特别感谢"></a>特别感谢</h2><p>评论区中<code>Senrey_Song</code>、<code>YKun</code>、<code>imzhwk</code>、<code>haonan mao</code>、<code>Lichen Zhang</code>、<code>回风</code>、<code>Nee</code>、<code>Wafer</code>、<code>LIU SHIKE</code>、<code>Charles</code>、<code>MegatonZed</code>、<code>beer!code!</code>、<code>禾七</code>、<code>Unira</code>、<code>arc</code>、<code>ZhiChao Li</code>、<code>多听音乐多喝水</code>、<code>AirLongdian</code>、<code>若尘</code>对于本教程内容的宝贵建议与指正。</p>
+<p><code>leccesg</code>、<code>Sophie Spivey</code>、<code>竹林里有冰</code>、<code>王心语</code>通过邮件提供的宝贵建议。</p>
+<h2 id="最后"><a href="#最后" class="headerlink" title="最后"></a>最后</h2><p>如果觉得这篇教程对你有帮助，可以移步我的知乎回答下点个赞，让更多的人可以看到这篇教程，你的支持是我最大的动力：</p>
+<blockquote>
+<p>  Arch Linux 怎么安装？ - viseator的回答 - 知乎<br>  <a target="_blank" rel="noopener" href="https://www.zhihu.com/question/21427410/answer/171867330">https://www.zhihu.com/question/21427410/answer/171867330</a></p>
+</blockquote>
+<p><strong>同时，如果你是想要从事计算机方向的新人，非常推荐看看我的分享：</strong>：</p>
+<p><a href="https://www.viseator.com/2020/05/24/university_1/">从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活</a></p>
+<p><a href="https://www.viseator.com/2020/07/25/university_2/">从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长</a></p>
+<p>也欢迎关注我的微信公众号VirMe：<br><img src="/images/wechat_channel.jpg"></p>
+<p>如果安装过程中遇到问题，可以直接在下方评论区/公众号留言或邮件<a href="mailto:&#x76;&#x69;&#x73;&#101;&#x61;&#116;&#111;&#x72;&#64;&#x67;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#99;&#111;&#109;">&#x76;&#x69;&#x73;&#101;&#x61;&#116;&#111;&#x72;&#64;&#x67;&#x6d;&#x61;&#105;&#x6c;&#x2e;&#99;&#111;&#109;</a>（尽量附上错误信息），我会尽力回复解决。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信">
+        <span>微信</span>
       </div>
-    </main>
+      <div>
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <span>支付宝</span>
+      </div>
 
-    <footer class="footer">
-      <div class="footer-inner">
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>viseator(吴迪)
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://www.viseator.com/2017/05/17/arch_install/" title="以官方Wiki的方式安装ArchLinux">https://www.viseator.com/2017/05/17/arch_install/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
+
+          <span class="label">微信公众号</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Linux/" rel="tag"># Linux</a>
+              <a href="/tags/Arch/" rel="tag"># Arch</a>
+          </div>
+
         
 
-        
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/05/11/android_lan_messages/" rel="prev" title="Android利用UDP、TCP进行局域网数据传输">
+                  <i class="fa fa-chevron-left"></i> Android利用UDP、TCP进行局域网数据传输
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/05/19/arch_setup/" rel="next" title="ArchLinux安装后的必须配置与图形界面安装教程">
+                  ArchLinux安装后的必须配置与图形界面安装教程 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
 
 <div class="copyright">
-  
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
-        
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.8.4/dist/algoliasearch-lite.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.13.1/dist/instantsearch.production.min.js"></script><script src="/js/algolia-search.js"></script>
 
 
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1261494271&web_id=1261494271"></script>
-  </div>
 
 
+
+
+  
 
 
 <script>
@@ -961,15 +936,15 @@
     }
 
     function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = decodeURI(visitors.id);
-      var title = visitors.dataset.flagTitle;
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
 
       Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
         .then(response => response.json())
         .then(({ results }) => {
           if (results.length > 0) {
-            var counter = results[0];
+            const counter = results[0];
             leancloudSelector(url).innerText = counter.time + 1;
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .catch(error => {
@@ -992,8 +967,8 @@
     }
 
     function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
         return decodeURI(element.id);
       });
 
@@ -1001,7 +976,7 @@
         .then(response => response.json())
         .then(({ results }) => {
           for (let url of entries) {
-            let target = results.find(item => item.url === url);
+            const target = results.find(item => item.url === url);
             leancloudSelector(url).innerText = target ? target.time : 0;
           }
         })
@@ -1010,9 +985,9 @@
         });
     }
 
-    let { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
     function fetchData(api_server) {
-      var Counter = (method, url, data) => {
+      const Counter = (method, url, data) => {
         return fetch(`${api_server}/1.1${url}`, {
           method,
           headers: {
@@ -1031,7 +1006,7 @@
       }
     }
 
-    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
 
     if (api_server) {
       fetchData(api_server);
@@ -1046,68 +1021,11 @@
 </script>
 
 
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-  
-<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
-<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
-<script src="/js/algolia-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
 
 <script>
-NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+NexT.utils.loadComments('#lv-container', () => {
   window.livereOptions = {
-    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+    refer: "2017/05/17/arch_install/"
   };
   (function(d, s) {
     var j, e = d.getElementsByTagName(s)[0];

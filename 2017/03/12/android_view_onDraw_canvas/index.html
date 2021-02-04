@@ -4,27 +4,27 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 5.3.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
-  <meta name="msapplication-config" content="/images/browserconfig.xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CAladin:300,300italic,400,400italic,700,700italic%7CPT+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<script id="hexo-configurations">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.viseator.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":2,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.viseator.com","root":"/","images":"/images","scheme":"Mist","version":"8.2.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10}}};
   </script>
-
-  <meta name="description" content="draw()方法经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（省略部分代码） 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647public void draw(Canvas canvas) &amp;#123;">
+<meta name="description" content="draw()方法经过对View的测量与布局过程后，下面就到了真正的View绘制的过程了。这个过程从调用根View的draw()方法开始：（省略部分代码） 1234567891011121314151617181920212223242526272829303132333435363738394041424344454647public void draw(Canvas canvas) &amp;#123;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android View绘制（四）onDraw过程与Canvas Bitmap">
 <meta property="og:url" content="https://www.viseator.com/2017/03/12/android_view_onDraw_canvas/index.html">
@@ -40,10 +40,11 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.viseator.com/images/canvas_bitmap.jpg">
 
+
 <link rel="canonical" href="https://www.viseator.com/2017/03/12/android_view_onDraw_canvas/">
 
 
-<script id="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -52,8 +53,7 @@
     lang   : 'zh-CN'
   };
 </script>
-
-  <title>Android View绘制（四）onDraw过程与Canvas Bitmap | viseator's blog</title>
+<title>Android View绘制（四）onDraw过程与Canvas Bitmap | viseator's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
     <script>
@@ -64,7 +64,6 @@
         gtag('config', 'UA-93455229-1');
       }
     </script>
-
 
   <script>
     var _hmt = _hmt || [];
@@ -78,52 +77,63 @@
 
 
 
-
   <noscript>
   <style>
-  .use-motion .brand,
+  body { margin-top: 2rem; }
+
   .use-motion .menu-item,
-  .sidebar-inner,
+  .use-motion .sidebar,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle {
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
   </style>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
+      <i class="logo-line"></i>
       <h1 class="site-title">viseator's blog</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">吴迪的博客</p>
   </div>
@@ -137,44 +147,15 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section">首页</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories" rel="section">分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives" rel="section">归档</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags" rel="section">标签</a>
-
-  </li>
-        <li class="menu-item menu-item-resource">
-
-    <a href="/2017/03/25/resource_general" rel="section">资源</a>
-
-  </li>
-        <li class="menu-item menu-item-arch">
-
-    <a href="/categories/Linux/" rel="section">Arch安装</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about" rel="section">关于</a>
-
-  </li>
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories" rel="section">分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags" rel="section">标签</a></li>
+        <li class="menu-item menu-item-resource"><a href="/2017/03/25/resource_general" rel="section">资源</a></li>
+        <li class="menu-item menu-item-arch"><a href="/categories/Linux/" rel="section">Arch安装</a></li>
+        <li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger">搜索
         </a>
@@ -185,48 +166,155 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container"></div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div class="algolia-results">
-  <div id="algolia-stats"></div>
-  <div id="algolia-hits"></div>
-  <div id="algolia-pagination" class="algolia-pagination"></div>
+<div class="search-result-container">
+  <div class="algolia-stats"><hr></div>
+  <div class="algolia-hits"></div>
+  <div class="algolia-pagination"></div>
 </div>
 
-      
     </div>
   </div>
 
 </div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#draw-%E6%96%B9%E6%B3%95"><span class="nav-number">1.</span> <span class="nav-text">draw()方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dispatchDraw-%E6%96%B9%E6%B3%95"><span class="nav-number">2.</span> <span class="nav-text">dispatchDraw()方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Canvas-Bitmap-Surface%E9%97%B4%E7%9A%84%E8%81%94%E7%B3%BB"><span class="nav-number">3.</span> <span class="nav-text">Canvas Bitmap Surface间的联系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onDraw-%E6%96%B9%E6%B3%95"><span class="nav-number">4.</span> <span class="nav-text">onDraw()方法</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
+  <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/viseator" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;viseator" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:viseator@gmail.com" title="E-Mail → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hustunique.com/" title="https:&#x2F;&#x2F;www.hustunique.com&#x2F;" rel="noopener" target="_blank">UniqueStudio</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.codedragon.tech/" title="http:&#x2F;&#x2F;blog.codedragon.tech&#x2F;" rel="noopener" target="_blank">BlackDragon</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://imzhwk.com/" title="http:&#x2F;&#x2F;imzhwk.com&#x2F;" rel="noopener" target="_blank">imzhwk</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://moe.petnakanojo.com/" title="http:&#x2F;&#x2F;moe.petnakanojo.com&#x2F;" rel="noopener" target="_blank">PetnaKanojo</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://alexandertang.cn/" title="http:&#x2F;&#x2F;alexandertang.cn&#x2F;" rel="noopener" target="_blank">Alexander</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://qzwlecr.github.io/" title="https:&#x2F;&#x2F;qzwlecr.github.io&#x2F;" rel="noopener" target="_blank">qzwlecr</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.kurokoi.moe/" title="http:&#x2F;&#x2F;www.kurokoi.moe&#x2F;" rel="noopener" target="_blank">Kurokoi</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
 
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
 
-          <div class="content post posts-expand">
-            
+    <div class="main-inner post posts-expand">
 
-    
+
+  
+
+
+<div class="post-block">
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/03/12/android_view_onDraw_canvas/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -243,44 +331,46 @@
           Android View绘制（四）onDraw过程与Canvas Bitmap
         </h1>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2017-03-12 16:29:40" itemprop="dateCreated datePublished" datetime="2017-03-12T16:29:40+08:00">2017-03-12</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/View/" itemprop="url" rel="index"><span itemprop="name">View</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2017-03-12 16:29:40" itemprop="dateCreated datePublished" datetime="2017-03-12T16:29:40+08:00">2017-03-12</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/View/" itemprop="url" rel="index"><span itemprop="name">View</span></a>
+        </span>
+    </span>
 
-          
-            <span id="/2017/03/12/android_view_onDraw_canvas/" class="post-meta-item leancloud_visitors" data-flag-title="Android View绘制（四）onDraw过程与Canvas Bitmap" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
+  
+    <span id="/2017/03/12/android_view_onDraw_canvas/" class="post-meta-item leancloud_visitors" data-flag-title="Android View绘制（四）onDraw过程与Canvas Bitmap" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
 
         </div>
       </header>
@@ -289,19 +379,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-        <h2 id="draw-方法"><a href="#draw-方法" class="headerlink" title="draw()方法"></a>draw()方法</h2><p>经过对<code>View</code>的<a href="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/" target="_blank" rel="noopener">测量</a>与<a href="http://www.viseator.xyz/2017/03/12/android_view_onLayout/" target="_blank" rel="noopener">布局</a>过程后，下面就到了真正的<code>View</code>绘制的过程了。这个过程从调用根<code>View</code>的<code>draw()</code>方法开始：（省略部分代码）</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> privateFlags = mPrivateFlags;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">boolean</span> dirtyOpaque = (privateFlags &amp; PFLAG_DIRTY_MASK) == PFLAG_DIRTY_OPAQUE &amp;&amp;</span><br><span class="line">            (mAttachInfo == <span class="keyword">null</span> || !mAttachInfo.mIgnoreDirtyState);</span><br><span class="line">    mPrivateFlags = (privateFlags &amp; ~PFLAG_DIRTY_MASK) | PFLAG_DRAWN;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Draw traversal performs several drawing steps which must be executed</span></span><br><span class="line"><span class="comment">     * in the appropriate order:</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     *      1. Draw the background</span></span><br><span class="line"><span class="comment">     *      2. If necessary, save the canvas' layers to prepare for fading</span></span><br><span class="line"><span class="comment">     *      3. Draw view's content</span></span><br><span class="line"><span class="comment">     *      4. Draw children</span></span><br><span class="line"><span class="comment">     *      5. If necessary, draw the fading edges and restore layers</span></span><br><span class="line"><span class="comment">     *      6. Draw decorations (scrollbars for instance)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Step 1, draw the background, if needed</span></span><br><span class="line">    <span class="keyword">int</span> saveCount;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!dirtyOpaque) &#123;</span><br><span class="line">        drawBackground(canvas);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// skip step 2 &amp; 5 if possible (common case)</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> viewFlags = mViewFlags;</span><br><span class="line">    <span class="keyword">boolean</span> horizontalEdges = (viewFlags &amp; FADING_EDGE_HORIZONTAL) != <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">boolean</span> verticalEdges = (viewFlags &amp; FADING_EDGE_VERTICAL) != <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (!verticalEdges &amp;&amp; !horizontalEdges) &#123;</span><br><span class="line">        <span class="comment">// Step 3, draw the content</span></span><br><span class="line">        <span class="keyword">if</span> (!dirtyOpaque) onDraw(canvas);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Step 4, draw the children</span></span><br><span class="line">        dispatchDraw(canvas);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Overlay is part of the content and draws beneath Foreground</span></span><br><span class="line">        <span class="keyword">if</span> (mOverlay != <span class="keyword">null</span> &amp;&amp; !mOverlay.isEmpty()) &#123;</span><br><span class="line">            mOverlay.getOverlayView().dispatchDraw(canvas);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Step 6, draw decorations (foreground, scrollbars)</span></span><br><span class="line">        onDrawForeground(canvas);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// we're done...</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+        <h2 id="draw-方法"><a href="#draw-方法" class="headerlink" title="draw()方法"></a>draw()方法</h2><p>经过对<code>View</code>的<a target="_blank" rel="noopener" href="http://www.viseator.xyz/2017/03/10/android_view_onMeasure/">测量</a>与<a target="_blank" rel="noopener" href="http://www.viseator.xyz/2017/03/12/android_view_onLayout/">布局</a>过程后，下面就到了真正的<code>View</code>绘制的过程了。这个过程从调用根<code>View</code>的<code>draw()</code>方法开始：（省略部分代码）</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">draw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> privateFlags = mPrivateFlags;</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">boolean</span> dirtyOpaque = (privateFlags &amp; PFLAG_DIRTY_MASK) == PFLAG_DIRTY_OPAQUE &amp;&amp;</span><br><span class="line">            (mAttachInfo == <span class="keyword">null</span> || !mAttachInfo.mIgnoreDirtyState);</span><br><span class="line">    mPrivateFlags = (privateFlags &amp; ~PFLAG_DIRTY_MASK) | PFLAG_DRAWN;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*</span></span><br><span class="line"><span class="comment">     * Draw traversal performs several drawing steps which must be executed</span></span><br><span class="line"><span class="comment">     * in the appropriate order:</span></span><br><span class="line"><span class="comment">     *</span></span><br><span class="line"><span class="comment">     *      1. Draw the background</span></span><br><span class="line"><span class="comment">     *      2. If necessary, save the canvas&#x27; layers to prepare for fading</span></span><br><span class="line"><span class="comment">     *      3. Draw view&#x27;s content</span></span><br><span class="line"><span class="comment">     *      4. Draw children</span></span><br><span class="line"><span class="comment">     *      5. If necessary, draw the fading edges and restore layers</span></span><br><span class="line"><span class="comment">     *      6. Draw decorations (scrollbars for instance)</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// Step 1, draw the background, if needed</span></span><br><span class="line">    <span class="keyword">int</span> saveCount;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (!dirtyOpaque) &#123;</span><br><span class="line">        drawBackground(canvas);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// skip step 2 &amp; 5 if possible (common case)</span></span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> viewFlags = mViewFlags;</span><br><span class="line">    <span class="keyword">boolean</span> horizontalEdges = (viewFlags &amp; FADING_EDGE_HORIZONTAL) != <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">boolean</span> verticalEdges = (viewFlags &amp; FADING_EDGE_VERTICAL) != <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">if</span> (!verticalEdges &amp;&amp; !horizontalEdges) &#123;</span><br><span class="line">        <span class="comment">// Step 3, draw the content</span></span><br><span class="line">        <span class="keyword">if</span> (!dirtyOpaque) onDraw(canvas);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Step 4, draw the children</span></span><br><span class="line">        dispatchDraw(canvas);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Overlay is part of the content and draws beneath Foreground</span></span><br><span class="line">        <span class="keyword">if</span> (mOverlay != <span class="keyword">null</span> &amp;&amp; !mOverlay.isEmpty()) &#123;</span><br><span class="line">            mOverlay.getOverlayView().dispatchDraw(canvas);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// Step 6, draw decorations (foreground, scrollbars)</span></span><br><span class="line">        onDrawForeground(canvas);</span><br><span class="line"></span><br><span class="line">        <span class="comment">// we&#x27;re done...</span></span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
 <p>这段源码来自于<code>View</code>，过程非常清晰，执行了以下的步骤（如果需要）：</p>
 <ol>
-<li>27-30行进行判断是否跳过注释中的第2、5步，通常情况跳过</li>
-<li>22-24行，进行背景的绘制</li>
-<li>32行，调用<code>onDraw()</code>方法进行自身的绘制</li>
-<li>35行，调用<code>dispatchDraw()</code>方法，进行子<code>View</code>的绘制（调用子<code>View</code>的<code>draw()</code>方法），同时也表明了子<code>View</code>的绘制在自身之后这一顺序</li>
-<li>43行，进行前景的绘制，一般为装饰组件，如滚动条等</li>
+<li> 27-30行进行判断是否跳过注释中的第2、5步，通常情况跳过</li>
+<li> 22-24行，进行背景的绘制</li>
+<li> 32行，调用<code>onDraw()</code>方法进行自身的绘制</li>
+<li> 35行，调用<code>dispatchDraw()</code>方法，进行子<code>View</code>的绘制（调用子<code>View</code>的<code>draw()</code>方法），同时也表明了子<code>View</code>的绘制在自身之后这一顺序</li>
+<li> 43行，进行前景的绘制，一般为装饰组件，如滚动条等</li>
 </ol>
 <a id="more"></a>
+
 <h2 id="dispatchDraw-方法"><a href="#dispatchDraw-方法" class="headerlink" title="dispatchDraw()方法"></a>dispatchDraw()方法</h2><p><code>onDraw()</code>方法先不谈，看看<code>dispatchDraw()</code>方法做了什么，以<code>ViewGroup</code>为例：(省略部分代码)</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">dispatchDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; childrenCount; i++) &#123;</span><br><span class="line">    <span class="keyword">if</span> ((transientChild.mViewFlags &amp; VISIBILITY_MASK) == VISIBLE ||</span><br><span class="line">        transientChild.getAnimation() != <span class="keyword">null</span>) &#123;</span><br><span class="line">      more |= drawChild(canvas, transientChild, drawingTime);</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">drawChild</span><span class="params">(Canvas canvas, View child, <span class="keyword">long</span> drawingTime)</span> </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> child.draw(canvas, <span class="keyword">this</span>, drawingTime);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>简单来看，依次调用了子<code>View</code>的<code>draw()</code>方法。所以对于有子<code>View</code>的<code>ViewGroup</code>， 我们需要重写这个方法来决定子<code>View</code>绘制的顺序。</p>
@@ -324,20 +413,20 @@
 <p>另一种方式是继承于<code>View</code>，可以更为自由地订制各种行为。</p>
 <p><code>Canvas</code>中封装了非常多的方法，下面列举一部分：</p>
 <ul>
-<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawArc(float, float, float, float, float, float, boolean, android.graphics.Paint" target="_blank" rel="noopener">drawArc</a>)(float left, float top, float right, float bottom, float startAngle, float sweepAngle, boolean useCenter, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="noopener">Paint</a> paint)：绘制椭圆</li>
-<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawCircle(float, float, float, android.graphics.Paint" target="_blank" rel="noopener">drawCircle</a>)(float cx, float cy, float radius, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="noopener">Paint</a> paint)：绘制圆形</li>
-<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawColor(int" target="_blank" rel="noopener">drawColor</a>)(int color)：对整个<code>Canvas</code>填充颜色</li>
-<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawLine(float, float, float, float, android.graphics.Paint" target="_blank" rel="noopener">drawLine</a>)(float startX, float startY, float stopX, float stopY, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="noopener">Paint</a> paint)：绘制直线</li>
-<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawLines(float[], int, int, android.graphics.Paint" target="_blank" rel="noopener">drawLines</a>)(float[] pts, int offset, int count, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="noopener">Paint</a> paint)：绘制一系列直线</li>
-<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawPicture(android.graphics.Picture, android.graphics.Rect" target="_blank" rel="noopener">drawPicture</a>)(<a href="https://developer.android.com/reference/android/graphics/Picture.html" target="_blank" rel="noopener">Picture</a> picture, <a href="https://developer.android.com/reference/android/graphics/Rect.html" target="_blank" rel="noopener">Rect</a> dst)：绘制一张图片</li>
-<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawPoint(float, float, android.graphics.Paint" target="_blank" rel="noopener">drawPoint</a>)(float x, float y, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="noopener">Paint</a> paint)：绘制一个点</li>
-<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawPoints(float[], int, int, android.graphics.Paint" target="_blank" rel="noopener">drawPoints</a>)(float[] pts, int offset, int count, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="noopener">Paint</a> paint)：绘制一系列点</li>
-<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawRect(float, float, float, float, android.graphics.Paint" target="_blank" rel="noopener">drawRect</a>)(float left, float top, float right, float bottom, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="noopener">Paint</a> paint)：绘制矩形</li>
-<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawRoundRect(android.graphics.RectF, float, float, android.graphics.Paint" target="_blank" rel="noopener">drawRoundRect</a>)(<a href="https://developer.android.com/reference/android/graphics/RectF.html" target="_blank" rel="noopener">RectF</a> rect, float rx, float ry, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="noopener">Paint</a> paint)：绘制圆角矩形</li>
-<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawText(java.lang.CharSequence, int, int, float, float, android.graphics.Paint" target="_blank" rel="noopener">drawText</a>)(<a href="https://developer.android.com/reference/java/lang/CharSequence.html" target="_blank" rel="noopener">CharSequence</a> text, int start, int end, float x, float y, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="noopener">Paint</a> paint)：绘制文字</li>
-<li><a href="https://developer.android.com/reference/android/graphics/Canvas.html#drawTextOnPath(java.lang.String, android.graphics.Path, float, float, android.graphics.Paint" target="_blank" rel="noopener">drawTextOnPath</a>)(<a href="https://developer.android.com/reference/java/lang/String.html" target="_blank" rel="noopener">String</a> text, <a href="https://developer.android.com/reference/android/graphics/Path.html" target="_blank" rel="noopener">Path</a> path, float hOffset, float vOffset, <a href="https://developer.android.com/reference/android/graphics/Paint.html" target="_blank" rel="noopener">Paint</a> paint)：沿路径绘制文字</li>
+<li>  [drawArc](<a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Canvas.html#drawArc">https://developer.android.com/reference/android/graphics/Canvas.html#drawArc</a>(float, float, float, float, float, float, boolean, android.graphics.Paint))(float left, float top, float right, float bottom, float startAngle, float sweepAngle, boolean useCenter, <a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Paint.html">Paint</a> paint)：绘制椭圆</li>
+<li>  [drawCircle](<a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Canvas.html#drawCircle">https://developer.android.com/reference/android/graphics/Canvas.html#drawCircle</a>(float, float, float, android.graphics.Paint))(float cx, float cy, float radius, <a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Paint.html">Paint</a> paint)：绘制圆形</li>
+<li>  <a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Canvas.html#drawColor(int)">drawColor</a>(int color)：对整个<code>Canvas</code>填充颜色</li>
+<li>  [drawLine](<a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Canvas.html#drawLine">https://developer.android.com/reference/android/graphics/Canvas.html#drawLine</a>(float, float, float, float, android.graphics.Paint))(float startX, float startY, float stopX, float stopY, <a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Paint.html">Paint</a> paint)：绘制直线</li>
+<li>  [drawLines](<a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Canvas.html#drawLines">https://developer.android.com/reference/android/graphics/Canvas.html#drawLines</a>(float[], int, int, android.graphics.Paint))(float[] pts, int offset, int count, <a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Paint.html">Paint</a> paint)：绘制一系列直线</li>
+<li>  [drawPicture](<a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Canvas.html#drawPicture">https://developer.android.com/reference/android/graphics/Canvas.html#drawPicture</a>(android.graphics.Picture, android.graphics.Rect))(<a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Picture.html">Picture</a> picture, <a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Rect.html">Rect</a> dst)：绘制一张图片</li>
+<li>  [drawPoint](<a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Canvas.html#drawPoint">https://developer.android.com/reference/android/graphics/Canvas.html#drawPoint</a>(float, float, android.graphics.Paint))(float x, float y, <a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Paint.html">Paint</a> paint)：绘制一个点</li>
+<li>  [drawPoints](<a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Canvas.html#drawPoints">https://developer.android.com/reference/android/graphics/Canvas.html#drawPoints</a>(float[], int, int, android.graphics.Paint))(float[] pts, int offset, int count, <a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Paint.html">Paint</a> paint)：绘制一系列点</li>
+<li>  [drawRect](<a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Canvas.html#drawRect">https://developer.android.com/reference/android/graphics/Canvas.html#drawRect</a>(float, float, float, float, android.graphics.Paint))(float left, float top, float right, float bottom, <a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Paint.html">Paint</a> paint)：绘制矩形</li>
+<li>  [drawRoundRect](<a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Canvas.html#drawRoundRect">https://developer.android.com/reference/android/graphics/Canvas.html#drawRoundRect</a>(android.graphics.RectF, float, float, android.graphics.Paint))(<a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/RectF.html">RectF</a> rect, float rx, float ry, <a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Paint.html">Paint</a> paint)：绘制圆角矩形</li>
+<li>  [drawText](<a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Canvas.html#drawText">https://developer.android.com/reference/android/graphics/Canvas.html#drawText</a>(java.lang.CharSequence, int, int, float, float, android.graphics.Paint))(<a target="_blank" rel="noopener" href="https://developer.android.com/reference/java/lang/CharSequence.html">CharSequence</a> text, int start, int end, float x, float y, <a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Paint.html">Paint</a> paint)：绘制文字</li>
+<li>  [drawTextOnPath](<a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Canvas.html#drawTextOnPath">https://developer.android.com/reference/android/graphics/Canvas.html#drawTextOnPath</a>(java.lang.String, android.graphics.Path, float, float, android.graphics.Paint))(<a target="_blank" rel="noopener" href="https://developer.android.com/reference/java/lang/String.html">String</a> text, <a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Path.html">Path</a> path, float hOffset, float vOffset, <a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Paint.html">Paint</a> paint)：沿路径绘制文字</li>
 </ul>
-<p>方法的详细信息在<a href="https://developer.android.com/reference/android/graphics/Canvas.html" target="_blank" rel="noopener">官方文档</a>中。</p>
+<p>方法的详细信息在<a target="_blank" rel="noopener" href="https://developer.android.com/reference/android/graphics/Canvas.html">官方文档</a>中。</p>
 <p>我们注意到，许多绘制方法都需要一个<code>Paint</code>参数， 这个<code>Paint</code>可以理解为系统为我们抽象出的一支画笔，我们所绘制的图形都是用这支画笔绘制出来的，当然因此我们就可以对画笔设置颜色、粗细等属性，我们甚至可以用<code>setShader()</code>方法为这个<code>Paint</code>设置一个<code>Shader</code>，来实现各种特殊的动态效果，<code>Shader</code>的使用需要另起一篇博客来讲。</p>
 
     </div>
@@ -345,64 +434,60 @@
     
     
     
-        <div class="reward-container">
+
+    <footer class="post-footer">
+          <div class="reward-container">
   <div></div>
-  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    打赏
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
   </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
-        <p>微信支付</p>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信">
+        <span>微信</span>
       </div>
-      
-      <div style="display: inline-block;">
+      <div>
         <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
-        <p>支付宝</p>
+        <span>支付宝</span>
       </div>
 
   </div>
 </div>
 
-        
+          
 
-<div>
-<ul class="post-copyright">
+<div class="post-copyright">
+<ul>
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>viseator(吴迪)
+      <strong>本文作者： </strong>viseator(吴迪)
   </li>
   <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://www.viseator.com/2017/03/12/android_view_onDraw_canvas/" title="Android View绘制（四）onDraw过程与Canvas Bitmap">https://www.viseator.com/2017/03/12/android_view_onDraw_canvas/</a>
+      <strong>本文链接：</strong>
+      <a href="https://www.viseator.com/2017/03/12/android_view_onDraw_canvas/" title="Android View绘制（四）onDraw过程与Canvas Bitmap">https://www.viseator.com/2017/03/12/android_view_onDraw_canvas/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
   </li>
 </ul>
 </div>
 
-        
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
 
-  <div class="followme">
-    <p>欢迎关注我的其它发布渠道</p>
+  <div class="social-list">
 
-    <div class="social-list">
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
 
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
-            <span class="icon">
-              <i class="fa fa-wechat"></i>
-            </span>
-
-            <span class="label">微信公众号</span>
-          </a>
-        </div>
-    </div>
+          <span class="label">微信公众号</span>
+        </a>
+      </div>
   </div>
+</div>
 
-
-      <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Android/" rel="tag"># Android</a>
               <a href="/tags/View/" rel="tag"># View</a>
@@ -410,34 +495,28 @@
 
         
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2017/03/12/android_view_onLayout/" rel="prev" title="Android View绘制（三）layout过程">
-      <i class="fa fa-chevron-left"></i> Android View绘制（三）layout过程
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2017/03/25/resource_general/" rel="next" title="学习资源收集">
-      学习资源收集 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-
-
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/03/12/android_view_onLayout/" rel="prev" title="Android View绘制（三）layout过程">
+                  <i class="fa fa-chevron-left"></i> Android View绘制（三）layout过程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/03/25/resource_general/" rel="next" title="学习资源收集">
+                  学习资源收集 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-          
-    
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
-  </div>
-  
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -446,7 +525,7 @@
       activeClass = localStorage.getItem('comments_active') || activeClass;
     }
     if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
       if (activeTab) {
         activeTab.click();
       }
@@ -455,148 +534,46 @@
   if (CONFIG.comments.storage) {
     window.addEventListener('tabs:click', event => {
       if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
+      const commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#draw-方法"><span class="nav-number">1.</span> <span class="nav-text">draw()方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dispatchDraw-方法"><span class="nav-number">2.</span> <span class="nav-text">dispatchDraw()方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Canvas-Bitmap-Surface间的联系"><span class="nav-number">3.</span> <span class="nav-text">Canvas Bitmap Surface间的联系</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#onDraw-方法"><span class="nav-number">4.</span> <span class="nav-text">onDraw()方法</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
-      src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
-  <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives">
-        
-          <span class="site-state-item-count">36</span>
-          <span class="site-state-item-name">文章</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories">
-          
-        <span class="site-state-item-count">21</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags">
-          
-        <span class="site-state-item-count">25</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/viseator" title="GitHub → https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:viseator@gmail.com" title="Email → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
-      </span>
-  </div>
-  <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
-  </div>
+  </main>
 
+  <footer class="footer">
+    <div class="footer-inner">
 
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
-      Links
-    </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
-        </li>
-    </ul>
-  </div>
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
 
 <div class="copyright">
-  
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
-        
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.8.4/dist/algoliasearch-lite.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.13.1/dist/instantsearch.production.min.js"></script><script src="/js/algolia-search.js"></script>
 
 
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1261494271&web_id=1261494271"></script>
-  </div>
 
 
+
+
+  
 
 
 <script>
@@ -607,15 +584,15 @@
     }
 
     function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = decodeURI(visitors.id);
-      var title = visitors.dataset.flagTitle;
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
 
       Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
         .then(response => response.json())
         .then(({ results }) => {
           if (results.length > 0) {
-            var counter = results[0];
+            const counter = results[0];
             leancloudSelector(url).innerText = counter.time + 1;
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .catch(error => {
@@ -638,8 +615,8 @@
     }
 
     function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
         return decodeURI(element.id);
       });
 
@@ -647,7 +624,7 @@
         .then(response => response.json())
         .then(({ results }) => {
           for (let url of entries) {
-            let target = results.find(item => item.url === url);
+            const target = results.find(item => item.url === url);
             leancloudSelector(url).innerText = target ? target.time : 0;
           }
         })
@@ -656,9 +633,9 @@
         });
     }
 
-    let { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
     function fetchData(api_server) {
-      var Counter = (method, url, data) => {
+      const Counter = (method, url, data) => {
         return fetch(`${api_server}/1.1${url}`, {
           method,
           headers: {
@@ -677,7 +654,7 @@
       }
     }
 
-    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
 
     if (api_server) {
       fetchData(api_server);
@@ -692,68 +669,11 @@
 </script>
 
 
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-  
-<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
-<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
-<script src="/js/algolia-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
 
 <script>
-NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+NexT.utils.loadComments('#lv-container', () => {
   window.livereOptions = {
-    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+    refer: "2017/03/12/android_view_onDraw_canvas/"
   };
   (function(d, s) {
     var j, e = d.getElementsByTagName(s)[0];

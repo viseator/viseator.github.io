@@ -4,27 +4,27 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 5.3.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
-  <meta name="msapplication-config" content="/images/browserconfig.xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CAladin:300,300italic,400,400italic,700,700italic%7CPT+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<script id="hexo-configurations">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.viseator.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":2,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.viseator.com","root":"/","images":"/images","scheme":"Mist","version":"8.2.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10}}};
   </script>
-
-  <meta name="description" content="写在前面首先原谅我用这样的标题来博得关注和点击，因为思前想后也只有我所拿到的Offer才最能在一定程度上代表能力，为我下面将要分享的内容作背书。 在最开始准备写这篇文章的时候只是想像往常那样放在我的博客上作为自己的回忆和总结，不太想去获得别人的关注；但另一个声音告诉我这些东西和之前的技术文章不太一样，这些经验和教训可能可以帮助到很多刚刚踏入校门的新人们，或多或少地产生一些价值。 既然决定了写这篇文">
+<meta name="description" content="写在前面首先原谅我用这样的标题来博得关注和点击，因为思前想后也只有我所拿到的Offer才最能在一定程度上代表能力，为我下面将要分享的内容作背书。 在最开始准备写这篇文章的时候只是想像往常那样放在我的博客上作为自己的回忆和总结，不太想去获得别人的关注；但另一个声音告诉我这些东西和之前的技术文章不太一样，这些经验和教训可能可以帮助到很多刚刚踏入校门的新人们，或多或少地产生一些价值。 既然决定了写这篇文">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从开始到微信&#x2F;支付宝&#x2F;Airbnb&#x2F;抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长">
 <meta property="og:url" content="https://www.viseator.com/2020/07/25/university_2/index.html">
@@ -46,10 +46,11 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.viseator.com/images/uni/2_1.png">
 
+
 <link rel="canonical" href="https://www.viseator.com/2020/07/25/university_2/">
 
 
-<script id="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -58,8 +59,7 @@
     lang   : 'zh-CN'
   };
 </script>
-
-  <title>从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长 | viseator's blog</title>
+<title>从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长 | viseator's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
     <script>
@@ -70,7 +70,6 @@
         gtag('config', 'UA-93455229-1');
       }
     </script>
-
 
   <script>
     var _hmt = _hmt || [];
@@ -84,52 +83,63 @@
 
 
 
-
   <noscript>
   <style>
-  .use-motion .brand,
+  body { margin-top: 2rem; }
+
   .use-motion .menu-item,
-  .sidebar-inner,
+  .use-motion .sidebar,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle {
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
   </style>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
+      <i class="logo-line"></i>
       <h1 class="site-title">viseator's blog</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">吴迪的博客</p>
   </div>
@@ -143,44 +153,15 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section">首页</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories" rel="section">分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives" rel="section">归档</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags" rel="section">标签</a>
-
-  </li>
-        <li class="menu-item menu-item-resource">
-
-    <a href="/2017/03/25/resource_general" rel="section">资源</a>
-
-  </li>
-        <li class="menu-item menu-item-arch">
-
-    <a href="/categories/Linux/" rel="section">Arch安装</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about" rel="section">关于</a>
-
-  </li>
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories" rel="section">分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags" rel="section">标签</a></li>
+        <li class="menu-item menu-item-resource"><a href="/2017/03/25/resource_general" rel="section">资源</a></li>
+        <li class="menu-item menu-item-arch"><a href="/categories/Linux/" rel="section">Arch安装</a></li>
+        <li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger">搜索
         </a>
@@ -191,48 +172,155 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container"></div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div class="algolia-results">
-  <div id="algolia-stats"></div>
-  <div id="algolia-hits"></div>
-  <div id="algolia-pagination" class="algolia-pagination"></div>
+<div class="search-result-container">
+  <div class="algolia-stats"><hr></div>
+  <div class="algolia-hits"></div>
+  <div class="algolia-pagination"></div>
 </div>
 
-      
     </div>
   </div>
 
 </div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">个人介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E7%9B%AE%E7%9A%84"><span class="nav-number">1.2.</span> <span class="nav-text">文章目的</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E4%BA%8C%EF%BC%89%E8%BF%87%E7%A8%8B%E2%80%94%E2%80%94%E6%8A%80%E6%9C%AF%E5%AD%A6%E4%B9%A0%E4%B8%8E%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF"><span class="nav-number">2.1.</span> <span class="nav-text">（二）过程——技术学习与个人成长</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9C%80%E9%87%8D%E8%A6%81%E7%9A%84%E4%B8%80%E7%82%B9%EF%BC%9A%E4%BB%98%E5%87%BA%E5%A4%A7%E9%87%8F%E7%9A%84%E6%97%B6%E9%97%B4"><span class="nav-number">2.1.1.</span> <span class="nav-text">最重要的一点：付出大量的时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BA%94%E5%B0%BD%E6%97%A9%E7%9F%A5%E9%81%93%E7%9A%84%E4%BA%8B%E6%83%85%EF%BC%9A%E6%96%B9%E6%B3%95%E4%B8%8E%E6%95%88%E7%8E%87"><span class="nav-number">2.1.2.</span> <span class="nav-text">应尽早知道的事情：方法与效率</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8E%A5%E5%8F%97%E4%B8%80%E6%89%8B%E8%B5%84%E6%96%99"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">接受一手资料</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E7%86%9F%E6%82%89%E8%8B%B1%E6%96%87%E7%8E%AF%E5%A2%83"><span class="nav-number">2.1.2.1.1.</span> <span class="nav-text">熟悉英文环境</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Google"><span class="nav-number">2.1.2.1.2.</span> <span class="nav-text">使用Google</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%87%8D%E8%A7%86%E5%B7%A5%E5%85%B7"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">重视工具</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#IDE%E4%B8%8E%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-number">2.1.2.2.1.</span> <span class="nav-text">IDE与快捷键</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Linux"><span class="nav-number">2.1.2.2.2.</span> <span class="nav-text">Linux</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%86%8D%E8%B0%88%E6%95%88%E7%8E%87"><span class="nav-number">2.1.2.3.</span> <span class="nav-text">再谈效率</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7%E5%8F%8A%E5%A6%82%E4%BD%95%E5%AD%A6%E4%B9%A0"><span class="nav-number">2.1.3.</span> <span class="nav-text">基础知识的重要性及如何学习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E5%86%B3%E5%AE%9A%E4%BA%86%E5%AD%A6%E4%B9%A0%E8%83%BD%E5%8A%9B%E5%92%8C%E6%B7%B1%E5%BA%A6"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">基础知识决定了学习能力和深度</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%AD%A6%E4%B9%A0%E8%83%BD%E5%8A%9B"><span class="nav-number">2.1.3.1.1.</span> <span class="nav-text">学习能力</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E6%B7%B1%E5%BA%A6"><span class="nav-number">2.1.3.1.2.</span> <span class="nav-text">技术深度</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E6%98%AF%E9%9D%A2%E8%AF%95%E6%97%B6%E7%9A%84%E9%87%8D%E4%B8%AD%E4%B9%8B%E9%87%8D"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">基础知识是面试时的重中之重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E5%AD%A6%E4%B9%A0%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86"><span class="nav-number">2.1.3.3.</span> <span class="nav-text">如何学习基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B3%E4%BA%8E%E5%AD%A6%E6%A0%A1%E5%BC%80%E8%AE%BE%E7%9A%84%E8%AF%BE%E7%A8%8B"><span class="nav-number">2.1.3.3.1.</span> <span class="nav-text">关于学校开设的课程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E4%B9%A6%E7%B1%8D%E9%80%89%E6%8B%A9"><span class="nav-number">2.1.3.3.2.</span> <span class="nav-text">书籍选择</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E5%85%B7%E4%BD%93%E7%9A%84%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%EF%BC%9F"><span class="nav-number">2.1.3.3.3.</span> <span class="nav-text">具体的学习路线？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#%E9%81%87%E5%88%B0%E9%97%AE%E9%A2%98"><span class="nav-number">2.1.3.3.4.</span> <span class="nav-text">遇到问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86%E4%B9%8B%E5%A4%96"><span class="nav-number">2.1.4.</span> <span class="nav-text">基础知识之外</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%A0%81%E9%87%8F"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">码量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%A1%B9%E7%9B%AE%E3%80%81%E5%A4%96%E5%8C%85%E4%B8%8E%E6%AF%94%E8%B5%9B"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">项目、外包与比赛</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E5%8D%9A%E5%AE%A2"><span class="nav-number">2.1.4.3.</span> <span class="nav-text">技术博客</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%B8%8A%E6%9E%B6%E5%BA%94%E7%94%A8-%E4%B8%8A%E7%BA%BF%E9%A1%B9%E7%9B%AE"><span class="nav-number">2.1.4.4.</span> <span class="nav-text">上架应用&#x2F;上线项目</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BF%83%E6%80%81"><span class="nav-number">2.1.5.</span> <span class="nav-text">心态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%AF%B9%E6%8A%80%E6%9C%AF%E4%BF%9D%E6%8C%81%E6%95%AC%E7%95%8F%E5%BF%83%E2%80%94%E2%80%94%E5%88%87%E5%BF%8C%E8%87%AA%E6%88%91%E8%86%A8%E8%83%80"><span class="nav-number">2.1.5.1.</span> <span class="nav-text">对技术保持敬畏心——切忌自我膨胀</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%9B%B4%E9%9D%A2%E5%9B%B0%E9%9A%BE%EF%BC%8C%E4%BF%9D%E6%8C%81%E8%80%90%E5%BF%83"><span class="nav-number">2.1.5.2.</span> <span class="nav-text">直面困难，保持耐心</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%87%AA%E4%BF%A1%E4%B8%8E%E5%8B%87%E6%B0%94%EF%BC%8C%E5%A4%A7%E8%83%86%E8%B7%A8%E5%87%BA%E7%AC%AC%E4%B8%80%E6%AD%A5"><span class="nav-number">2.1.5.3.</span> <span class="nav-text">自信与勇气，大胆跨出第一步</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E4%B9%8B%E5%A4%96%E7%9A%84%E4%B8%AA%E4%BA%BA%E6%88%90%E9%95%BF"><span class="nav-number">2.1.6.</span> <span class="nav-text">技术之外的个人成长</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
+  <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/viseator" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;viseator" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:viseator@gmail.com" title="E-Mail → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hustunique.com/" title="https:&#x2F;&#x2F;www.hustunique.com&#x2F;" rel="noopener" target="_blank">UniqueStudio</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.codedragon.tech/" title="http:&#x2F;&#x2F;blog.codedragon.tech&#x2F;" rel="noopener" target="_blank">BlackDragon</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://imzhwk.com/" title="http:&#x2F;&#x2F;imzhwk.com&#x2F;" rel="noopener" target="_blank">imzhwk</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://moe.petnakanojo.com/" title="http:&#x2F;&#x2F;moe.petnakanojo.com&#x2F;" rel="noopener" target="_blank">PetnaKanojo</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://alexandertang.cn/" title="http:&#x2F;&#x2F;alexandertang.cn&#x2F;" rel="noopener" target="_blank">Alexander</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://qzwlecr.github.io/" title="https:&#x2F;&#x2F;qzwlecr.github.io&#x2F;" rel="noopener" target="_blank">qzwlecr</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.kurokoi.moe/" title="http:&#x2F;&#x2F;www.kurokoi.moe&#x2F;" rel="noopener" target="_blank">Kurokoi</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
 
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
 
-          <div class="content post posts-expand">
-            
+    <div class="main-inner post posts-expand">
 
-    
+
+  
+
+
+<div class="post-block">
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2020/07/25/university_2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -249,34 +337,36 @@
           从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长
         </h1>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-              
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
 
-              <time title="创建时间：2020-07-25 15:07:32 / 修改时间：23:15:16" itemprop="dateCreated datePublished" datetime="2020-07-25T15:07:32+08:00">2020-07-25</time>
-            </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Summar/" itemprop="url" rel="index"><span itemprop="name">Summar</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2020-07-25 15:07:32 / 修改时间：23:15:16" itemprop="dateCreated datePublished" datetime="2020-07-25T15:07:32+08:00">2020-07-25</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Summar/" itemprop="url" rel="index"><span itemprop="name">Summar</span></a>
+        </span>
+    </span>
 
-          
-            <span id="/2020/07/25/university_2/" class="post-meta-item leancloud_visitors" data-flag-title="从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
+  
+    <span id="/2020/07/25/university_2/" class="post-meta-item leancloud_visitors" data-flag-title="从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
 
         </div>
       </header>
@@ -285,15 +375,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
         <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>首先原谅我用这样的标题来博得关注和点击，因为思前想后也只有我所拿到的Offer才最能在一定程度上代表能力，为我下面将要分享的内容作背书。</p>
 <p>在最开始准备写这篇文章的时候只是想像往常那样放在我的博客上作为自己的回忆和总结，不太想去获得别人的关注；但另一个声音告诉我这些东西和之前的技术文章不太一样，这些经验和教训可能可以帮助到很多刚刚踏入校门的新人们，或多或少地产生一些价值。</p>
 <p>既然决定了写这篇文章是为了创造价值，那么只有分享出来，让更多感兴趣的人看到才能创造更多的价值，这就是此时此刻你能看到这篇文章的原因。</p>
 <a id="more"></a>
+
 <hr>
 <p>由于文章的篇幅已经远超最初的预想，所以会拆成几篇分别在<strong>微信公众号VirMe</strong>发出（确实是公众号最适合创作与分享，还烦请关注），所有文章共用开头部分，特此说明。</p>
-<h2 id="个人介绍"><a href="#个人介绍" class="headerlink" title="个人介绍"></a>个人介绍</h2><p>笔者2016年高考考入华中科技大学计算机科学与技术专业，同年10月份加入学生技术团队<a href="https://hustunique.com/" target="_blank" rel="noopener">联创团队</a>Android组，后任组长。</p>
+<h2 id="个人介绍"><a href="#个人介绍" class="headerlink" title="个人介绍"></a>个人介绍</h2><p>笔者2016年高考考入华中科技大学计算机科学与技术专业，同年10月份加入学生技术团队<a target="_blank" rel="noopener" href="https://hustunique.com/">联创团队</a>Android组，后任组长。</p>
 <p>2017年底（大二寒假）拿到今日头条（字节跳动）深圳研发中心Android开发实习生Offer，在深圳研发中心实习至2018年3月。</p>
 <p>2018年4月加入新成立的今日头条武汉研发中心实习，2019年5月离职。</p>
 <p>2019年春招拿到腾讯（微信）、蚂蚁金服（支付宝）、Airbnb的暑期实习Offer，2019年7月加入微信实习。</p>
@@ -318,7 +407,8 @@
 </ul>
 <p>本文是其中的第二篇，其他文章敬请关注公众号VirMe。</p>
 <h2 id="（二）过程——技术学习与个人成长"><a href="#（二）过程——技术学习与个人成长" class="headerlink" title="（二）过程——技术学习与个人成长"></a>（二）过程——技术学习与个人成长</h2><p>由于本文篇幅过长，层级也比较多，为了避免逻辑混乱和阅读困难，先在这里列出全文的大纲，大家可以先大致了解全文结构和内容。</p>
-<p><img src="/images/uni/2_1.png"></p>
+<img src="/images/uni/2_1.png">
+
 <h3 id="最重要的一点：付出大量的时间"><a href="#最重要的一点：付出大量的时间" class="headerlink" title="最重要的一点：付出大量的时间"></a>最重要的一点：付出大量的时间</h3><p>这是前文说过的团队要求在队时长的内在原因，也是在大学直至以后想要在一个领域取得进步和成就的核心点。这其实也是一句“正确的废话”，勤能补拙、奋发向上、量变引起质变的例子和大道理我们从小不知听过多少遍，但实际上，对很多人来说，这是一个典型的“道理我都懂，但就是做不到”的例子。</p>
 <p>很多人都是靠着高中及其之前的勤奋与努力在高考中战胜了大部分的人考上现在的大学的，很多人也是听着“现在吃点苦，考上大学就轻松了”的所谓鼓励支撑自己度过了高中艰难的时光。</p>
 <p>但大学有的只是自由，轻不轻松则完全取决于个人的目标。有人的地方就有着竞争，大学的学习中能体会到的竞争不像高中的分数排名那样直观与残酷，只要不挂科，我想大部分的情况下都不会有任何外部的压力。如果你的目标是顺利毕业，以我在华科的体会，课外的时间多到一天能打8个小时游戏的同时可以顺利毕业，确实这样的人也不在少数，不过人各有志，目标和行动匹配就好。但我相信点开这篇文章的你目标应该不在于此。</p>
@@ -331,7 +421,8 @@
 <p>而对于计算机的学习来说，不同人之间效率的差距极大，有时候会有数倍之多，这就造成了花同样的时间，一些掌握方法、效率极高的人学到的知识/完成的项目会是其他人的数倍。尽早知道这些方法，意味着尽早积累优势，一些受用终身的东西可以帮助你在漫长的职业生涯中获得极大的回报。很多理念包括提升效率这点本身很多人工作多年后才能意识到，却是大学中团队mentor教会我的第一课，所以与前辈交流经验是很重要的。</p>
 <p>在这里，我就将我和团队所受用的一些方法和理念分享给大家。</p>
 <h4 id="接受一手资料"><a href="#接受一手资料" class="headerlink" title="接受一手资料"></a>接受一手资料</h4><p>刚进入团队的新人都会有着一个相同的第0期任务：配置上网环境（上Google，你懂的）、安装Linux与Linux下开发、使用hexo搭建博客。在第一次新人期的CodeReview时，我的mentor顺手就打开了Google，将我的语言设置成了英文：</p>
-<p><img src="/images/uni/2_2.png"></p>
+<img src="/images/uni/2_2.png">
+
 <p>团队一开始会告诉新人的是：尽可能<strong>使用Google，使用英文，阅读英文资料</strong>。</p>
 <h5 id="熟悉英文环境"><a href="#熟悉英文环境" class="headerlink" title="熟悉英文环境"></a>熟悉英文环境</h5><p>熟悉英文环境的理由很简单：绝大部分计算机领域的一手资料都是英文的，几乎所有经典的计算机书籍都是英文版翻译过来的；Android的官方文档近几年才开始支持中文（抛开翻译质量不谈，有更新的内容一定是先有英文版的），大部分常用开源库的文档只有英文版；更不用说一些新一些的技术了。如果为了方便和一开始的速度而不去熟悉英文环境，除了要面对参差不齐的翻译质量，到了只有英文资料提供的时候就会变得捉襟见肘，非常影响效率。一开始上手时可能会因为生疏导致阅读速度较低，但只要经过一段时间的适应后，阅读速度和能力都会有快速的成长，更可以开始体会很多翻译所完全丧失的原作者的机敏与幽默，会感到原版的内容读起来更加地流畅与易懂（例如英文版的计网-自顶向下和中文版简直是两本书）。</p>
 <p>此外，为了与老外交流，比如去github提issue、去Stackoverflow提问与回答，英文也是到了一定阶段后不可或缺的技能，所以团队也要求代码的注释、git的commit message等也全部用英文。</p>
@@ -339,12 +430,15 @@
 <h5 id="使用Google"><a href="#使用Google" class="headerlink" title="使用Google"></a>使用Google</h5><p>搜索资料与文章是我们除了看书以外学习技术和解决问题的另一大来源，在Google之前有统计的时候团队有学长统计过年搜索次数可达到1.2万次，而搜索结果的质量很大程度上就决定了我们能否找到正确的答案和接受的内容质量。但在英文搜索方面，百度确实做得远不如Google。</p>
 <p>首先，百度的搜索结果是为中文优化的，所以即使你搜索的关键词是纯英文的，得到的结果也大部分会是中文的关联性不强的内容，而Google在设置为英文结果后则不会有这一问题，基本一搜一个准，在一些情况下Google也会展示部分高质量的中文内容。</p>
 <p>其次，由于国外部分技术网站无法访问（包括Android的官方文档和间歇性失联的github），所以百度对这部分网站内容的索引很少，比较明显的是Google搜索各种类/接口/方法出现的前几条结果一定有官方的文档页面（也是最为推荐的了解类库的方式——阅读文档），而百度则是各种博客平台中质量参差不齐的文章（有些时间非常久远，也存在到处转载的重复文章）：</p>
-<p><img src="/images/uni/2_3.png"></p>
+<img src="/images/uni/2_3.png">
+
 <p>虽然CSDN、简书上不乏高质量的博主和文章，奈何低质量的内容实在太多，需要花大量的时间甄别，而官方文档始终是最权威的资料来源，但很多所谓的Android开发者却从来没有打开过官方的文档和guide页面。</p>
 <p>更不用说百度检索不到github的issue、Google issuetracker等这些非常实用的查问题的地方，对Stackoverflow这个几乎能找到所有常见问题的网站的检索能力也很弱，但很多问题确实只有在这些地方才能得到解答：</p>
-<p><img src="/images/uni/2_4.png"></p>
+<img src="/images/uni/2_4.png">
+
 <p>更为搞笑的是，国内还有网站钻起了Stackoverflow上都是英文内容、不便搜索的空子，直接爬取问题和回答再机翻出来，污染了搜索结果：</p>
-<p><img src="/images/uni/2_5.png"></p>
+<img src="/images/uni/2_5.png">
+
 <p>类似的例子数不胜数，就不再举例了。总的来说，熟练使用Google和英文环境，可以很大程度上提高信息的获取效率，更是对解决实际问题有着极大的帮助。</p>
 <h4 id="重视工具"><a href="#重视工具" class="headerlink" title="重视工具"></a>重视工具</h4><p>这部分想讲的是要重视工具的使用以提高开发效率、节省开发时间。工具的含义很广，从我们使用的IDE、编辑器，到操作系统甚至是硬件设备，都是我们开发时会使用的东西。为什么要重视工具呢？因为工具带来的效率提升往往是最为直接的，举个简单的例子，假如你编译一次代码需要10分钟，学会使用make、ccache等工具后编译时间下降到了5分钟，一天编译十次，就节省了50分钟的编译时间，非常直接有效。</p>
 <h5 id="IDE与快捷键"><a href="#IDE与快捷键" class="headerlink" title="IDE与快捷键"></a>IDE与快捷键</h5><p>那么可以从哪些方面入手呢？首先就是学会使用IDE和快捷键，像Android Studio这种IDE从接触Android开发起几乎是形影不离，其强大的功能如果不主动去学习很难了解全面。在我第一次见到mentor如何使用IDE的时候几乎目瞪口呆，各种跳转、重构、代码生成等让我意识到如果不学会这些操作，将会在低下的效率下浪费多少时间。所以非常有必要花上一些时间全面地了解你所使用的IDE的功能，方法也很简单，点开最上方的菜单，一个一个地了解、试验其每一个选项的作用并在以后的使用中加以运用，相信你一定会受益良多。</p>
@@ -369,7 +463,8 @@
 <p>而对基础知识的学习，就是建立完整的知识体系、更加深入地理解计算机（程序）工作原理的过程。一旦学习了汇编语言，对C语言到汇编的对应关系有了了解以后，就能很容易地理解指针是以什么形式存在和被CPU所理解的，这个时候就会对C语言的认识更加深入与清晰。同时，汇编语言又会帮助你在后面的课程中理解操作系统的启动、编译的流程等等知识。</p>
 <p><strong>这是一个滚雪球的过程，对已有知识的充分理解，可以帮助你在能更加容易地学习新的知识的同时不断巩固和加深已有的知识，最终雪球越滚越快也会越来越大。计算机的学习曲线就是一条开始缓慢，而后不断提速直至达到一个人理解能力的极限的曲线，基础知识扎实的同学的学习速度和理解能力会远远超出基础知识不牢靠的同学，拉开越来越大的差距。</strong></p>
 <p>如图所示，可以认为学习能力=学到的技术能力/花费的精力，而大约50%的人由于没有对基础知识足够重视，一直会处于开始时很低的学习能力水平；有大约30%的人在学习完大学所有的课程后意识到基础知识对于学习的帮助，但毕业也意味着失去了最佳的学习基础知识的时机，毕业后很少会有大学中这么完整的时间沉下心来学习基础知识；同时有20%的人毕业时在基础知识上的积累已经越过了开始时增长较慢的过程，达到了较高的水平，这样的知识积累对毕业后的技术成长是非常重要的。</p>
-<p><img src="/images/uni/2_6.png" width="30%" height="30%"></p>
+<img src="/images/uni/2_6.png" width="30%" height="30%">
+
 <p>我在大学中的切身体会就是我把一批人远远地甩在了后面，而在我前面的人同样遥不可及。而这些走在最前面的人通常就是大学之前已经积累了很多计算机知识，入学时的学习能力已经甩开其他人一大截的人。在花同样的时间的前提下，在短期内他们的知识水平会一直比我们高，并且差距也会越来越大。</p>
 <h5 id="技术深度"><a href="#技术深度" class="headerlink" title="技术深度"></a>技术深度</h5><p>更强的学习能力可以带来更深的技术深度，但基础知识对技术深度的影响还不止于此。</p>
 <p>对于Android开发而言：</p>
@@ -443,7 +538,8 @@
 <h4 id="上架应用-上线项目"><a href="#上架应用-上线项目" class="headerlink" title="上架应用/上线项目"></a>上架应用/上线项目</h4><p>上架应用/上线项目其实代表的是真正可以被用户使用的项目，因为一个项目真正有人用才是有价值的，上线和上架意味着这是一个完整的产品，要进行迭代，对用户负责，这和课内做的项目或是一些企业给的项目还是有很大的区别的。因此自己做的项目还是要尽力保证质量，想办法上线运营并进行迭代，把项目做完善才能发挥它最大的价值。</p>
 <h3 id="心态"><a href="#心态" class="headerlink" title="心态"></a>心态</h3><p>前文介绍了很多方法性质的东西，但经历过高三的同学应该都清楚，心态也是成长过程中需要重视的另一方面。</p>
 <h4 id="对技术保持敬畏心——切忌自我膨胀"><a href="#对技术保持敬畏心——切忌自我膨胀" class="headerlink" title="对技术保持敬畏心——切忌自我膨胀"></a>对技术保持敬畏心——切忌自我膨胀</h4><p>学计算机会很容易让人产生成就感，解决一个bug、完成一个功能、实现一个trick，都会让人体验到很强的满足感，这样的反馈是很多人喜欢上编程的原因，但一些人会把这样的成就感变为自己的优越感，会刻意去吹捧一些自己完成了但是别人没完成的东西，在和别人比较后觉得自己掌握了很多东西已经足够了，从而固步自封，对技术浅尝辄止。</p>
-<p><img src="/images/uni/2_7.png" width="30%" height="30%"></p>
+<img src="/images/uni/2_7.png" width="30%" height="30%">
+
 <p>正如前面所说的，任何一个方向都不可能在四年内达到精通的水平，不对技术保持敬畏心有弊无利，因为盲目自大而止步不前更令人惋惜。</p>
 <h4 id="直面困难，保持耐心"><a href="#直面困难，保持耐心" class="headerlink" title="直面困难，保持耐心"></a>直面困难，保持耐心</h4><p>一个比较有意思的事情是，计算机水平比较高的人脾气一般也会比较好，因为学计算机没有足够的耐性不太容易学好。</p>
 <p>还是拿我大一入学装Arch Linux的经历来讲，因为显卡的原因，装完以后一直不正常，那些天每天强制重启电脑几十次，想了各种办法，换不同版本的包、调整配置，一旦调炸了又是几十分钟的重装过程，崩溃的时候真的会想砸电脑。最后折腾两个礼拜以后终于能开机使用了，但是外接显示器还是不正常，又是配置了一个礼拜，重装几次后搞定了。如果没有耐性和毅力，我想不可能能把Linux装好。</p>
@@ -464,7 +560,7 @@
 <p>这是全文的第二部分，介绍了如何在大学阶段学习计算机并获得快速的技术成长。在下一篇文章中，将主要介绍一些实习/工作相关的内容和面试的经验。</p>
 <p><strong>如果以上的内容对你有所帮助，欢迎你把它分享给更多人，谢谢！</strong></p>
 <p>如果有任何想法、疑问、意见或是建议，欢迎关注公众号VirMe留言交流。</p>
-<p><img src="/images/wechat_channel.jpg" alt=""></p>
+<p><img src="/images/wechat_channel.jpg"></p>
 <p><a href="https://www.viseator.com/2020/05/24/university_1/">从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活</a></p>
 <p><a href="https://www.viseator.com/2020/07/25/university_2/">从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长</a></p>
 
@@ -473,95 +569,85 @@
     
     
     
-        <div class="reward-container">
+
+    <footer class="post-footer">
+          <div class="reward-container">
   <div></div>
-  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    打赏
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
   </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
-        <p>微信支付</p>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信">
+        <span>微信</span>
       </div>
-      
-      <div style="display: inline-block;">
+      <div>
         <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
-        <p>支付宝</p>
+        <span>支付宝</span>
       </div>
 
   </div>
 </div>
 
-        
+          
 
-<div>
-<ul class="post-copyright">
+<div class="post-copyright">
+<ul>
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>viseator(吴迪)
+      <strong>本文作者： </strong>viseator(吴迪)
   </li>
   <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://www.viseator.com/2020/07/25/university_2/" title="从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长">https://www.viseator.com/2020/07/25/university_2/</a>
+      <strong>本文链接：</strong>
+      <a href="https://www.viseator.com/2020/07/25/university_2/" title="从开始到微信&#x2F;支付宝&#x2F;Airbnb&#x2F;抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长">https://www.viseator.com/2020/07/25/university_2/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
   </li>
 </ul>
 </div>
 
-        
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
 
-  <div class="followme">
-    <p>欢迎关注我的其它发布渠道</p>
+  <div class="social-list">
 
-    <div class="social-list">
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
 
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
-            <span class="icon">
-              <i class="fa fa-wechat"></i>
-            </span>
-
-            <span class="label">微信公众号</span>
-          </a>
-        </div>
-    </div>
+          <span class="label">微信公众号</span>
+        </a>
+      </div>
   </div>
+</div>
 
-
-      <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Summary/" rel="tag"># Summary</a>
           </div>
 
         
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2020/05/24/university_1/" rel="prev" title="从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活">
-      <i class="fa fa-chevron-left"></i> 从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活
-    </a></div>
-      <div class="post-nav-item"></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-
-
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/05/24/university_1/" rel="prev" title="从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活">
+                  <i class="fa fa-chevron-left"></i> 从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
           </div>
-          
-    
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
-  </div>
-  
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -570,7 +656,7 @@
       activeClass = localStorage.getItem('comments_active') || activeClass;
     }
     if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
       if (activeTab) {
         activeTab.click();
       }
@@ -579,148 +665,46 @@
   if (CONFIG.comments.storage) {
     window.addEventListener('tabs:click', event => {
       if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
+      const commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#个人介绍"><span class="nav-number">1.1.</span> <span class="nav-text">个人介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章目的"><span class="nav-number">1.2.</span> <span class="nav-text">文章目的</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#（二）过程——技术学习与个人成长"><span class="nav-number">2.1.</span> <span class="nav-text">（二）过程——技术学习与个人成长</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#最重要的一点：付出大量的时间"><span class="nav-number">2.1.1.</span> <span class="nav-text">最重要的一点：付出大量的时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#应尽早知道的事情：方法与效率"><span class="nav-number">2.1.2.</span> <span class="nav-text">应尽早知道的事情：方法与效率</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#接受一手资料"><span class="nav-number">2.1.2.1.</span> <span class="nav-text">接受一手资料</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#熟悉英文环境"><span class="nav-number">2.1.2.1.1.</span> <span class="nav-text">熟悉英文环境</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#使用Google"><span class="nav-number">2.1.2.1.2.</span> <span class="nav-text">使用Google</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#重视工具"><span class="nav-number">2.1.2.2.</span> <span class="nav-text">重视工具</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#IDE与快捷键"><span class="nav-number">2.1.2.2.1.</span> <span class="nav-text">IDE与快捷键</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#Linux"><span class="nav-number">2.1.2.2.2.</span> <span class="nav-text">Linux</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#再谈效率"><span class="nav-number">2.1.2.3.</span> <span class="nav-text">再谈效率</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础知识的重要性及如何学习"><span class="nav-number">2.1.3.</span> <span class="nav-text">基础知识的重要性及如何学习</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#基础知识决定了学习能力和深度"><span class="nav-number">2.1.3.1.</span> <span class="nav-text">基础知识决定了学习能力和深度</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#学习能力"><span class="nav-number">2.1.3.1.1.</span> <span class="nav-text">学习能力</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#技术深度"><span class="nav-number">2.1.3.1.2.</span> <span class="nav-text">技术深度</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#基础知识是面试时的重中之重"><span class="nav-number">2.1.3.2.</span> <span class="nav-text">基础知识是面试时的重中之重</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#如何学习基础知识"><span class="nav-number">2.1.3.3.</span> <span class="nav-text">如何学习基础知识</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#关于学校开设的课程"><span class="nav-number">2.1.3.3.1.</span> <span class="nav-text">关于学校开设的课程</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#书籍选择"><span class="nav-number">2.1.3.3.2.</span> <span class="nav-text">书籍选择</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#具体的学习路线？"><span class="nav-number">2.1.3.3.3.</span> <span class="nav-text">具体的学习路线？</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#遇到问题"><span class="nav-number">2.1.3.3.4.</span> <span class="nav-text">遇到问题</span></a></li></ol></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#基础知识之外"><span class="nav-number">2.1.4.</span> <span class="nav-text">基础知识之外</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#码量"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">码量</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#项目、外包与比赛"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">项目、外包与比赛</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#技术博客"><span class="nav-number">2.1.4.3.</span> <span class="nav-text">技术博客</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#上架应用-上线项目"><span class="nav-number">2.1.4.4.</span> <span class="nav-text">上架应用&#x2F;上线项目</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#心态"><span class="nav-number">2.1.5.</span> <span class="nav-text">心态</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#对技术保持敬畏心——切忌自我膨胀"><span class="nav-number">2.1.5.1.</span> <span class="nav-text">对技术保持敬畏心——切忌自我膨胀</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#直面困难，保持耐心"><span class="nav-number">2.1.5.2.</span> <span class="nav-text">直面困难，保持耐心</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#自信与勇气，大胆跨出第一步"><span class="nav-number">2.1.5.3.</span> <span class="nav-text">自信与勇气，大胆跨出第一步</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技术之外的个人成长"><span class="nav-number">2.1.6.</span> <span class="nav-text">技术之外的个人成长</span></a></li></ol></li></ol></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
-      src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
-  <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives">
-        
-          <span class="site-state-item-count">36</span>
-          <span class="site-state-item-name">文章</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories">
-          
-        <span class="site-state-item-count">21</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags">
-          
-        <span class="site-state-item-count">25</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/viseator" title="GitHub → https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:viseator@gmail.com" title="Email → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
-      </span>
-  </div>
-  <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
-  </div>
+  </main>
 
+  <footer class="footer">
+    <div class="footer-inner">
 
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
-      Links
-    </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
-        </li>
-    </ul>
-  </div>
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
 
 <div class="copyright">
-  
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
-        
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.8.4/dist/algoliasearch-lite.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.13.1/dist/instantsearch.production.min.js"></script><script src="/js/algolia-search.js"></script>
 
 
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1261494271&web_id=1261494271"></script>
-  </div>
 
 
+
+
+  
 
 
 <script>
@@ -731,15 +715,15 @@
     }
 
     function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = decodeURI(visitors.id);
-      var title = visitors.dataset.flagTitle;
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
 
       Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
         .then(response => response.json())
         .then(({ results }) => {
           if (results.length > 0) {
-            var counter = results[0];
+            const counter = results[0];
             leancloudSelector(url).innerText = counter.time + 1;
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .catch(error => {
@@ -762,8 +746,8 @@
     }
 
     function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
         return decodeURI(element.id);
       });
 
@@ -771,7 +755,7 @@
         .then(response => response.json())
         .then(({ results }) => {
           for (let url of entries) {
-            let target = results.find(item => item.url === url);
+            const target = results.find(item => item.url === url);
             leancloudSelector(url).innerText = target ? target.time : 0;
           }
         })
@@ -780,9 +764,9 @@
         });
     }
 
-    let { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
     function fetchData(api_server) {
-      var Counter = (method, url, data) => {
+      const Counter = (method, url, data) => {
         return fetch(`${api_server}/1.1${url}`, {
           method,
           headers: {
@@ -801,7 +785,7 @@
       }
     }
 
-    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
 
     if (api_server) {
       fetchData(api_server);
@@ -816,68 +800,11 @@
 </script>
 
 
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-  
-<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
-<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
-<script src="/js/algolia-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
 
 <script>
-NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+NexT.utils.loadComments('#lv-container', () => {
   window.livereOptions = {
-    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+    refer: "2020/07/25/university_2/"
   };
   (function(d, s) {
     var j, e = d.getElementsByTagName(s)[0];

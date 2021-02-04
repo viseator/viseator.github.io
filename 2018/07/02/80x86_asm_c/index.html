@@ -4,27 +4,27 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 5.3.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
-  <meta name="msapplication-config" content="/images/browserconfig.xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CAladin:300,300italic,400,400italic,700,700italic%7CPT+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<script id="hexo-configurations">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.viseator.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":2,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.viseator.com","root":"/","images":"/images","scheme":"Mist","version":"8.2.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10}}};
   </script>
-
-  <meta name="description" content="写在前面在汇编课程中的实验中要求了我们在80x86下实现C语言与汇编代码的混合编程，虽然80x86时代离现代有些久远，但我们仍可以把80x86当作x86的一个简化版本来学习一些重要的概念。 从一个例子开始12345678910111213141516#include &lt;stdio.h&gt;extern int test_fun(void *param);extern int var_fro">
+<meta name="description" content="写在前面在汇编课程中的实验中要求了我们在80x86下实现C语言与汇编代码的混合编程，虽然80x86时代离现代有些久远，但我们仍可以把80x86当作x86的一个简化版本来学习一些重要的概念。 从一个例子开始12345678910111213141516#include &lt;stdio.h&gt;extern int test_fun(void *param);extern int var_fro">
 <meta property="og:type" content="article">
 <meta property="og:title" content="80x86下汇编与C语言的混合编程">
 <meta property="og:url" content="https://www.viseator.com/2018/07/02/80x86_asm_c/index.html">
@@ -41,10 +41,11 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.viseator.com/images/8086asmc1.png">
 
+
 <link rel="canonical" href="https://www.viseator.com/2018/07/02/80x86_asm_c/">
 
 
-<script id="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -53,8 +54,7 @@
     lang   : 'zh-CN'
   };
 </script>
-
-  <title>80x86下汇编与C语言的混合编程 | viseator's blog</title>
+<title>80x86下汇编与C语言的混合编程 | viseator's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
     <script>
@@ -65,7 +65,6 @@
         gtag('config', 'UA-93455229-1');
       }
     </script>
-
 
   <script>
     var _hmt = _hmt || [];
@@ -79,52 +78,63 @@
 
 
 
-
   <noscript>
   <style>
-  .use-motion .brand,
+  body { margin-top: 2rem; }
+
   .use-motion .menu-item,
-  .sidebar-inner,
+  .use-motion .sidebar,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle {
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
   </style>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
+      <i class="logo-line"></i>
       <h1 class="site-title">viseator's blog</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">吴迪的博客</p>
   </div>
@@ -138,44 +148,15 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section">首页</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories" rel="section">分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives" rel="section">归档</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags" rel="section">标签</a>
-
-  </li>
-        <li class="menu-item menu-item-resource">
-
-    <a href="/2017/03/25/resource_general" rel="section">资源</a>
-
-  </li>
-        <li class="menu-item menu-item-arch">
-
-    <a href="/categories/Linux/" rel="section">Arch安装</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about" rel="section">关于</a>
-
-  </li>
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories" rel="section">分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags" rel="section">标签</a></li>
+        <li class="menu-item menu-item-resource"><a href="/2017/03/25/resource_general" rel="section">资源</a></li>
+        <li class="menu-item menu-item-arch"><a href="/categories/Linux/" rel="section">Arch安装</a></li>
+        <li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger">搜索
         </a>
@@ -186,48 +167,155 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container"></div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div class="algolia-results">
-  <div id="algolia-stats"></div>
-  <div id="algolia-hits"></div>
-  <div id="algolia-pagination" class="algolia-pagination"></div>
+<div class="search-result-container">
+  <div class="algolia-stats"><hr></div>
+  <div class="algolia-hits"></div>
+  <div class="algolia-pagination"></div>
 </div>
 
-      
     </div>
   </div>
 
 </div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E4%B8%80%E4%B8%AA%E4%BE%8B%E5%AD%90%E5%BC%80%E5%A7%8B"><span class="nav-number">2.</span> <span class="nav-text">从一个例子开始</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
+  <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/viseator" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;viseator" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:viseator@gmail.com" title="E-Mail → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hustunique.com/" title="https:&#x2F;&#x2F;www.hustunique.com&#x2F;" rel="noopener" target="_blank">UniqueStudio</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.codedragon.tech/" title="http:&#x2F;&#x2F;blog.codedragon.tech&#x2F;" rel="noopener" target="_blank">BlackDragon</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://imzhwk.com/" title="http:&#x2F;&#x2F;imzhwk.com&#x2F;" rel="noopener" target="_blank">imzhwk</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://moe.petnakanojo.com/" title="http:&#x2F;&#x2F;moe.petnakanojo.com&#x2F;" rel="noopener" target="_blank">PetnaKanojo</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://alexandertang.cn/" title="http:&#x2F;&#x2F;alexandertang.cn&#x2F;" rel="noopener" target="_blank">Alexander</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://qzwlecr.github.io/" title="https:&#x2F;&#x2F;qzwlecr.github.io&#x2F;" rel="noopener" target="_blank">qzwlecr</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.kurokoi.moe/" title="http:&#x2F;&#x2F;www.kurokoi.moe&#x2F;" rel="noopener" target="_blank">Kurokoi</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
 
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
 
-          <div class="content post posts-expand">
-            
+    <div class="main-inner post posts-expand">
 
-    
+
+  
+
+
+<div class="post-block">
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2018/07/02/80x86_asm_c/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -244,40 +332,42 @@
           80x86下汇编与C语言的混合编程
         </h1>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2018-07-02 17:30:05" itemprop="dateCreated datePublished" datetime="2018-07-02T17:30:05+08:00">2018-07-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2019-03-19 10:23:38" itemprop="dateModified" datetime="2019-03-19T10:23:38+08:00">2019-03-19</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Assembly/" itemprop="url" rel="index"><span itemprop="name">Assembly</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2018-07-02 17:30:05" itemprop="dateCreated datePublished" datetime="2018-07-02T17:30:05+08:00">2018-07-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2019-03-19 10:23:38" itemprop="dateModified" datetime="2019-03-19T10:23:38+08:00">2019-03-19</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Assembly/" itemprop="url" rel="index"><span itemprop="name">Assembly</span></a>
+        </span>
+    </span>
 
-          
-            <span id="/2018/07/02/80x86_asm_c/" class="post-meta-item leancloud_visitors" data-flag-title="80x86下汇编与C语言的混合编程" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
+  
+    <span id="/2018/07/02/80x86_asm_c/" class="post-meta-item leancloud_visitors" data-flag-title="80x86下汇编与C语言的混合编程" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
 
         </div>
       </header>
@@ -286,21 +376,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
         <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>在汇编课程中的实验中要求了我们在<code>80x86</code>下实现C语言与汇编代码的混合编程，虽然<code>80x86</code>时代离现代有些久远，但我们仍可以把<code>80x86</code>当作<code>x86</code>的一个简化版本来学习一些重要的概念。</p>
-<h2 id="从一个例子开始"><a href="#从一个例子开始" class="headerlink" title="从一个例子开始"></a>从一个例子开始</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="title">test_fun</span><span class="params">(<span class="keyword">void</span> *param)</span></span>;</span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> var_from_asm;</span><br><span class="line"><span class="keyword">int</span> global_init = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> global;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> static_init = <span class="number">1000</span>;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> static_var;</span><br><span class="line"><span class="keyword">char</span> *<span class="built_in">string</span> = <span class="string">"test string"</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> value = <span class="number">666</span>;</span><br><span class="line">    test_fun(&amp;value);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"var from asm:%d\n"</span>, var_from_asm);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"assign from asm:%d\n"</span>, global);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"value passed by stack:%d\n"</span>, global_init);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="从一个例子开始"><a href="#从一个例子开始" class="headerlink" title="从一个例子开始"></a>从一个例子开始</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">extern</span> <span class="keyword">int</span> <span class="title">test_fun</span><span class="params">(<span class="keyword">void</span> *param)</span></span>;</span><br><span class="line"><span class="keyword">extern</span> <span class="keyword">int</span> var_from_asm;</span><br><span class="line"><span class="keyword">int</span> global_init = <span class="number">10</span>;</span><br><span class="line"><span class="keyword">int</span> global;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> static_init = <span class="number">1000</span>;</span><br><span class="line"><span class="keyword">static</span> <span class="keyword">int</span> static_var;</span><br><span class="line"><span class="keyword">char</span> *<span class="built_in">string</span> = <span class="string">&quot;test string&quot;</span>;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> value = <span class="number">666</span>;</span><br><span class="line">    test_fun(&amp;value);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;var from asm:%d\n&quot;</span>, var_from_asm);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;assign from asm:%d\n&quot;</span>, global);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;value passed by stack:%d\n&quot;</span>, global_init);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <a id="more"></a>
+
 <p>可以看到我们在C语言中分别定义了几种类型的变量：初始化过的全局变量、未初始化的全局变量、初始化过的静态变量、未初始化的静态变量与字符串。定义这些变量是为了查看编译后各变量所处的数据段与存放形式。</p>
 <p>同时也声明了一个外部函数<code>test_fun()</code>与一个外部变量<code>var_from_asm</code>，用来测试C语言对<code>asm</code>声明的符号的引用。</p>
 <p>现在我们编译这个C语言文件到汇编文件，使用<code>TC2.0</code>的命令行工具<code>tcc</code>，使用<code>-S</code>参数，即可在同目录生成同名的<code>ASM</code>文件：</p>
-<p><img src="/images/8086asmc1.png" alt=""></p>
+<p><img src="/images/8086asmc1.png"></p>
 <p>我们打开文件，删除一些debug信息后的结果如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line">_TEXT	segment byte public &#39;CODE&#39;</span><br><span class="line">_TEXT	ends</span><br><span class="line">DGROUP	group	_DATA,_BSS</span><br><span class="line">	assume	cs:_TEXT,ds:DGROUP</span><br><span class="line">_DATA	segment word public &#39;DATA&#39;</span><br><span class="line">_DATA	ends</span><br><span class="line">_BSS	segment word public &#39;BSS&#39;</span><br><span class="line">_BSS	ends</span><br><span class="line">_DATA	segment word public &#39;DATA&#39;</span><br><span class="line">_global_init	label	word</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">static_init	label	word</span><br><span class="line">	db	232</span><br><span class="line">	db	3</span><br><span class="line">_string	label	word</span><br><span class="line">	dw	DGROUP:s@</span><br><span class="line">_DATA	ends</span><br><span class="line">_TEXT	segment byte public &#39;CODE&#39;</span><br><span class="line">   ;	</span><br><span class="line">   ;	int main() &#123;</span><br><span class="line">   ;	</span><br><span class="line">	assume	cs:_TEXT</span><br><span class="line">_main	proc	near</span><br><span class="line">	push	bp</span><br><span class="line">	mov	bp,sp</span><br><span class="line">	sub	sp,2</span><br><span class="line">   ;	</span><br><span class="line">   ;	    int value &#x3D; 666;</span><br><span class="line">   ;	</span><br><span class="line">	mov	word ptr [bp-2],666</span><br><span class="line">   ;	</span><br><span class="line">   ;	    test_fun(&amp;value);</span><br><span class="line">   ;	</span><br><span class="line">	lea	ax,word ptr [bp-2]</span><br><span class="line">	push	ax</span><br><span class="line">	call	near ptr _test_fun</span><br><span class="line">	pop	cx</span><br><span class="line">   ;	</span><br><span class="line">   ;	    printf(&quot;var from asm:%d\n&quot;, var_from_asm);</span><br><span class="line">   ;	</span><br><span class="line">	push	word ptr DGROUP:_var_from_asm</span><br><span class="line">	mov	ax,offset DGROUP:s@+12</span><br><span class="line">	push	ax</span><br><span class="line">	call	near ptr _printf</span><br><span class="line">	pop	cx</span><br><span class="line">	pop	cx</span><br><span class="line">   ;	</span><br><span class="line">   ;	    printf(&quot;assign from asm:%d\n&quot;, global);</span><br><span class="line">   ;	</span><br><span class="line">	push	word ptr DGROUP:_global</span><br><span class="line">	mov	ax,offset DGROUP:s@+29</span><br><span class="line">	push	ax</span><br><span class="line">	call	near ptr _printf</span><br><span class="line">	pop	cx</span><br><span class="line">	pop	cx</span><br><span class="line">   ;	</span><br><span class="line">   ;	    printf(&quot;value passed by stack:%d\n&quot;, global_init);</span><br><span class="line">   ;	</span><br><span class="line">	push	word ptr DGROUP:_global_init</span><br><span class="line">	mov	ax,offset DGROUP:s@+49</span><br><span class="line">	push	ax</span><br><span class="line">	call	near ptr _printf</span><br><span class="line">	pop	cx</span><br><span class="line">	pop	cx</span><br><span class="line">   ;	</span><br><span class="line">   ;	    return 0;</span><br><span class="line">   ;	</span><br><span class="line">	xor	ax,ax</span><br><span class="line">	jmp	short @1@58</span><br><span class="line">@1@58:</span><br><span class="line">   ;	</span><br><span class="line">   ;	&#125;</span><br><span class="line">   ;	</span><br><span class="line">	mov	sp,bp</span><br><span class="line">	pop	bp</span><br><span class="line">	ret	</span><br><span class="line">_main	endp</span><br><span class="line">_TEXT	ends</span><br><span class="line">_BSS	segment word public &#39;BSS&#39;</span><br><span class="line">static_var	label	word</span><br><span class="line">	db	2 dup (?)</span><br><span class="line">_global	label	word</span><br><span class="line">	db	2 dup (?)</span><br><span class="line">_BSS	ends</span><br><span class="line">_DATA	segment word public &#39;DATA&#39;</span><br><span class="line">s@	label	byte</span><br><span class="line">	db	&#39;test string&#39;</span><br><span class="line">	db	0</span><br><span class="line">	db	&#39;var from asm:%d&#39;</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">	db	&#39;assign from asm:%d&#39;</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">	db	&#39;value passed by stack:%d&#39;</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">_DATA	ends</span><br><span class="line">_TEXT	segment byte public &#39;CODE&#39;</span><br><span class="line">_TEXT	ends</span><br><span class="line">	public	_main</span><br><span class="line">	public	_string</span><br><span class="line">_static_var	equ	static_var</span><br><span class="line">_static_init	equ	static_init</span><br><span class="line">	public	_global</span><br><span class="line">	public	_global_init</span><br><span class="line">	extrn	_var_from_asm:word</span><br><span class="line">	extrn	_test_fun:near</span><br><span class="line">	extrn	_printf:near</span><br><span class="line">_s@	equ	s@</span><br><span class="line">	end</span><br></pre></td></tr></table></figure>
 <p>首先可以发现几个数据段：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">_TEXT	segment byte public &#39;CODE&#39;</span><br><span class="line">_DATA	segment word public &#39;DATA&#39;</span><br><span class="line">_BSS	segment word public &#39;BSS&#39;</span><br></pre></td></tr></table></figure>
-<p>是不是很熟悉？虽然是<code>80386</code>，但是现代<code>ELF</code>中仍可以见到这几个节的身影。<br><code>DGROUP    group    _DATA,_BSS
-DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号。<br>分析这几个段中的内容，可以发现<code>_TEXT</code>段即运行时的CS段，存放着代码。<br><code>_DATA</code>段中存放着下列内容：</p>
+<p>是不是很熟悉？虽然是<code>80386</code>，但是现代<code>ELF</code>中仍可以见到这几个节的身影。<br><code>DGROUP    group    _DATA,_BSS DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号。<br>分析这几个段中的内容，可以发现<code>_TEXT</code>段即运行时的CS段，存放着代码。<br><code>_DATA</code>段中存放着下列内容：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">_global_init	label	word</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">static_init	label	word</span><br><span class="line">	db	232</span><br><span class="line">	db	3</span><br><span class="line">_string	label	word</span><br><span class="line">	dw	DGROUP:s@</span><br></pre></td></tr></table></figure>
 <p>前两个即已经初始化的全局变量与静态变量。第三个是一个别名，找到它的定义：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">s@	label	byte</span><br><span class="line">	db	&#39;test string&#39;</span><br><span class="line">	db	0</span><br><span class="line">	db	&#39;var from asm:%d&#39;</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">	db	&#39;assign from asm:%d&#39;</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br><span class="line">	db	&#39;value passed by stack:%d&#39;</span><br><span class="line">	db	10</span><br><span class="line">	db	0</span><br></pre></td></tr></table></figure>
@@ -321,107 +409,97 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 <p>而在<code>test_fun</code>中，我们先将<code>bp</code>入栈，将<code>sp</code>赋给<code>bp</code>后，将<code>bp+6</code>位置的值赋给了<code>ax</code>，在函数调用的时候，会先将参数入栈，然后将<code>CS</code>与<code>IP</code>入栈，占用了<code>4</code>个字节的栈空间，函数内调用<code>push bp</code>又占用了<code>2</code>个字节的栈空间，所以传入的参数应该在<code>bp+6</code>的位置上。我们将这个参数值写回到C语言定义的全局变量<code>_global_init</code>中，下一行将<code>_global</code>赋上了<code>100</code>。</p>
 <p>现在，就可以进行编译链接步骤了。</p>
 <p>一般地，我们可以使用C编译器编译<code>test.c</code>生成目标文件，使用<code>TASM</code>汇编编译器编译<code>t.asm</code>生成目标文件，再使用<code>tlink</code>将生成的目标文件与库提供的目标文件进行链接，但是这样做略显麻烦，<code>tcc</code>会调用<code>TASM</code>编译汇编文件，也会将生成的目标文件和库文件一起链接并生成最后的可执行文件，所以我们只要简单地执行<code>tcc test.c t.asm</code>就可以了。</p>
-<p><img src="/images/8086asmc2.png" alt=""></p>
+<p><img src="/images/8086asmc2.png"></p>
 <p>直接运行生成的test.exe，查看结果：</p>
-<p><img src="/images/8086asmc3.png" alt=""></p>
+<p><img src="/images/8086asmc3.png"></p>
 
     </div>
 
     
     
     
-        <div class="reward-container">
+
+    <footer class="post-footer">
+          <div class="reward-container">
   <div></div>
-  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    打赏
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
   </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
-        <p>微信支付</p>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信">
+        <span>微信</span>
       </div>
-      
-      <div style="display: inline-block;">
+      <div>
         <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
-        <p>支付宝</p>
+        <span>支付宝</span>
       </div>
 
   </div>
 </div>
 
-        
+          
 
-<div>
-<ul class="post-copyright">
+<div class="post-copyright">
+<ul>
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>viseator(吴迪)
+      <strong>本文作者： </strong>viseator(吴迪)
   </li>
   <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://www.viseator.com/2018/07/02/80x86_asm_c/" title="80x86下汇编与C语言的混合编程">https://www.viseator.com/2018/07/02/80x86_asm_c/</a>
+      <strong>本文链接：</strong>
+      <a href="https://www.viseator.com/2018/07/02/80x86_asm_c/" title="80x86下汇编与C语言的混合编程">https://www.viseator.com/2018/07/02/80x86_asm_c/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
   </li>
 </ul>
 </div>
 
-        
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
 
-  <div class="followme">
-    <p>欢迎关注我的其它发布渠道</p>
+  <div class="social-list">
 
-    <div class="social-list">
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
 
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
-            <span class="icon">
-              <i class="fa fa-wechat"></i>
-            </span>
-
-            <span class="label">微信公众号</span>
-          </a>
-        </div>
-    </div>
+          <span class="label">微信公众号</span>
+        </a>
+      </div>
   </div>
+</div>
 
-
-      <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Assembly/" rel="tag"># Assembly</a>
           </div>
 
         
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2018/02/09/android_ui_test/" rel="prev" title="Android UI自动化测试技术选择与踩坑">
-      <i class="fa fa-chevron-left"></i> Android UI自动化测试技术选择与踩坑
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2018/07/11/introduce_kotlin/" rel="next" title="Kotlin优势浅析 我们为什么应该使用Kotlin开发新项目">
-      Kotlin优势浅析 我们为什么应该使用Kotlin开发新项目 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-
-
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/02/09/android_ui_test/" rel="prev" title="Android UI自动化测试技术选择与踩坑">
+                  <i class="fa fa-chevron-left"></i> Android UI自动化测试技术选择与踩坑
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2018/07/11/introduce_kotlin/" rel="next" title="Kotlin优势浅析 我们为什么应该使用Kotlin开发新项目">
+                  Kotlin优势浅析 我们为什么应该使用Kotlin开发新项目 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-          
-    
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
-  </div>
-  
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -430,7 +508,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
       activeClass = localStorage.getItem('comments_active') || activeClass;
     }
     if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
       if (activeTab) {
         activeTab.click();
       }
@@ -439,148 +517,46 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
   if (CONFIG.comments.storage) {
     window.addEventListener('tabs:click', event => {
       if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
+      const commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#从一个例子开始"><span class="nav-number">2.</span> <span class="nav-text">从一个例子开始</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
-      src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
-  <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives">
-        
-          <span class="site-state-item-count">36</span>
-          <span class="site-state-item-name">文章</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories">
-          
-        <span class="site-state-item-count">21</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags">
-          
-        <span class="site-state-item-count">25</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/viseator" title="GitHub → https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:viseator@gmail.com" title="Email → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
-      </span>
-  </div>
-  <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
-  </div>
+  </main>
 
+  <footer class="footer">
+    <div class="footer-inner">
 
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
-      Links
-    </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
-        </li>
-    </ul>
-  </div>
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
 
 <div class="copyright">
-  
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
-        
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.8.4/dist/algoliasearch-lite.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.13.1/dist/instantsearch.production.min.js"></script><script src="/js/algolia-search.js"></script>
 
 
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1261494271&web_id=1261494271"></script>
-  </div>
 
 
+
+
+  
 
 
 <script>
@@ -591,15 +567,15 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
     }
 
     function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = decodeURI(visitors.id);
-      var title = visitors.dataset.flagTitle;
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
 
       Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
         .then(response => response.json())
         .then(({ results }) => {
           if (results.length > 0) {
-            var counter = results[0];
+            const counter = results[0];
             leancloudSelector(url).innerText = counter.time + 1;
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .catch(error => {
@@ -622,8 +598,8 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
     }
 
     function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
         return decodeURI(element.id);
       });
 
@@ -631,7 +607,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
         .then(response => response.json())
         .then(({ results }) => {
           for (let url of entries) {
-            let target = results.find(item => item.url === url);
+            const target = results.find(item => item.url === url);
             leancloudSelector(url).innerText = target ? target.time : 0;
           }
         })
@@ -640,9 +616,9 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
         });
     }
 
-    let { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
     function fetchData(api_server) {
-      var Counter = (method, url, data) => {
+      const Counter = (method, url, data) => {
         return fetch(`${api_server}/1.1${url}`, {
           method,
           headers: {
@@ -661,7 +637,7 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
       }
     }
 
-    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
 
     if (api_server) {
       fetchData(api_server);
@@ -676,68 +652,11 @@ DGROUP</code>表示<code>_DATA</code>与<code>_BSS</code>段合成的段标号�
 </script>
 
 
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-  
-<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
-<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
-<script src="/js/algolia-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
 
 <script>
-NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+NexT.utils.loadComments('#lv-container', () => {
   window.livereOptions = {
-    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+    refer: "2018/07/02/80x86_asm_c/"
   };
   (function(d, s) {
     var j, e = d.getElementsByTagName(s)[0];

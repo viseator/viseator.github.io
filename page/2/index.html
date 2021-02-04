@@ -4,27 +4,27 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 5.3.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
-  <meta name="msapplication-config" content="/images/browserconfig.xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CAladin:300,300italic,400,400italic,700,700italic%7CPT+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<script id="hexo-configurations">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.viseator.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":2,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.viseator.com","root":"/","images":"/images","scheme":"Mist","version":"8.2.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10}}};
   </script>
-
-  <meta name="description" content="永远欣赏那些可以行我所不能行之事的人">
+<meta name="description" content="永远欣赏那些可以行我所不能行之事的人">
 <meta property="og:type" content="website">
 <meta property="og:title" content="viseator&#39;s blog">
 <meta property="og:url" content="https://www.viseator.com/page/2/index.html">
@@ -32,16 +32,14 @@
 <meta property="og:description" content="永远欣赏那些可以行我所不能行之事的人">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:author" content="viseator(吴迪)">
-<meta property="article:tag" content="吴迪">
-<meta property="article:tag" content="博客">
-<meta property="article:tag" content="viseator">
-<meta property="article:tag" content="blog">
+<meta property="article:tag" content="吴迪,博客,viseator,blog">
 <meta name="twitter:card" content="summary">
+
 
 <link rel="canonical" href="https://www.viseator.com/page/2/">
 
 
-<script id="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -50,8 +48,7 @@
     lang   : 'zh-CN'
   };
 </script>
-
-  <title>viseator's blog - 吴迪的博客</title>
+<title>viseator's blog - 吴迪的博客</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
     <script>
@@ -62,7 +59,6 @@
         gtag('config', 'UA-93455229-1');
       }
     </script>
-
 
   <script>
     var _hmt = _hmt || [];
@@ -76,52 +72,63 @@
 
 
 
-
   <noscript>
   <style>
-  .use-motion .brand,
+  body { margin-top: 2rem; }
+
   .use-motion .menu-item,
-  .sidebar-inner,
+  .use-motion .sidebar,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle {
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
   </style>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
+      <i class="logo-line"></i>
       <h1 class="site-title">viseator's blog</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">吴迪的博客</p>
   </div>
@@ -135,44 +142,15 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section">首页</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories" rel="section">分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives" rel="section">归档</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags" rel="section">标签</a>
-
-  </li>
-        <li class="menu-item menu-item-resource">
-
-    <a href="/2017/03/25/resource_general" rel="section">资源</a>
-
-  </li>
-        <li class="menu-item menu-item-arch">
-
-    <a href="/categories/Linux/" rel="section">Arch安装</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about" rel="section">关于</a>
-
-  </li>
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories" rel="section">分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags" rel="section">标签</a></li>
+        <li class="menu-item menu-item-resource"><a href="/2017/03/25/resource_general" rel="section">资源</a></li>
+        <li class="menu-item menu-item-arch"><a href="/categories/Linux/" rel="section">Arch安装</a></li>
+        <li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger">搜索
         </a>
@@ -183,47 +161,153 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container"></div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div class="algolia-results">
-  <div id="algolia-stats"></div>
-  <div id="algolia-hits"></div>
-  <div id="algolia-pagination" class="algolia-pagination"></div>
+<div class="search-result-container">
+  <div class="algolia-stats"><hr></div>
+  <div class="algolia-hits"></div>
+  <div class="algolia-pagination"></div>
 </div>
 
-      
     </div>
   </div>
 
 </div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
+  <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/viseator" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;viseator" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:viseator@gmail.com" title="E-Mail → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hustunique.com/" title="https:&#x2F;&#x2F;www.hustunique.com&#x2F;" rel="noopener" target="_blank">UniqueStudio</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.codedragon.tech/" title="http:&#x2F;&#x2F;blog.codedragon.tech&#x2F;" rel="noopener" target="_blank">BlackDragon</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://imzhwk.com/" title="http:&#x2F;&#x2F;imzhwk.com&#x2F;" rel="noopener" target="_blank">imzhwk</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://moe.petnakanojo.com/" title="http:&#x2F;&#x2F;moe.petnakanojo.com&#x2F;" rel="noopener" target="_blank">PetnaKanojo</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://alexandertang.cn/" title="http:&#x2F;&#x2F;alexandertang.cn&#x2F;" rel="noopener" target="_blank">Alexander</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://qzwlecr.github.io/" title="https:&#x2F;&#x2F;qzwlecr.github.io&#x2F;" rel="noopener" target="_blank">qzwlecr</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.kurokoi.moe/" title="http:&#x2F;&#x2F;www.kurokoi.moe&#x2F;" rel="noopener" target="_blank">Kurokoi</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
 
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
 
-          <div class="content index posts-expand">
-            
-      
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/10/24/android_event_2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -237,48 +321,49 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/10/24/android_event_2/" class="post-title-link" itemprop="url">Android 消息机制（二）Handler对消息机制的使用</a>
+          <a href="/2017/10/24/android_event_2/" class="post-title-link" itemprop="url">Android 消息机制（二）Handler对消息机制的使用</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2017-10-24 17:03:43" itemprop="dateCreated datePublished" datetime="2017-10-24T17:03:43+08:00">2017-10-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/Event/" itemprop="url" rel="index"><span itemprop="name">Event</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2017-10-24 17:03:43" itemprop="dateCreated datePublished" datetime="2017-10-24T17:03:43+08:00">2017-10-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/Event/" itemprop="url" rel="index"><span itemprop="name">Event</span></a>
+        </span>
+    </span>
 
-          
-            <span id="/2017/10/24/android_event_2/" class="post-meta-item leancloud_visitors" data-flag-title="Android 消息机制（二）Handler对消息机制的使用" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
+  
+    <span id="/2017/10/24/android_event_2/" class="post-meta-item leancloud_visitors" data-flag-title="Android 消息机制（二）Handler对消息机制的使用" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
 
         </div>
       </header>
@@ -287,8 +372,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <p><a href="http://www.viseator.com/2017/10/22/android_event_1/">Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue</a>中讲述了消息机制的底层实现，下面就从平时所常用的<code>Handler</code>来讲述消息机制的使用。</p>
 <h2 id="Handler"><a href="#Handler" class="headerlink" title="Handler"></a>Handler</h2><p><code>Handler</code>是我们平时进行异步、多线程开发中常用的一个组件，如果在应用主线程中调用阻塞的或者资源消耗量大的任务，会造成UI的更新卡顿，所以我们会将这样的任务放在新的线程中进行操作。当需要通知UI进行更新时，我们会使用<code>Handler</code>创建消息丢入主线程的消息队列，再等待主线程的<code>Handler</code>的处理方法随着消息的处理而被调用，再进行下面的操作。这是<code>Handler</code>的基本用法，它的实现就与消息机制密切相关。</p>
 <p>下面我们就对它的实现进行分析。</p>
@@ -306,18 +389,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/10/22/android_event_1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -331,48 +421,49 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/10/22/android_event_1/" class="post-title-link" itemprop="url">Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue</a>
+          <a href="/2017/10/22/android_event_1/" class="post-title-link" itemprop="url">Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2017-10-22 15:32:19" itemprop="dateCreated datePublished" datetime="2017-10-22T15:32:19+08:00">2017-10-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/Event/" itemprop="url" rel="index"><span itemprop="name">Event</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2017-10-22 15:32:19" itemprop="dateCreated datePublished" datetime="2017-10-22T15:32:19+08:00">2017-10-22</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/Event/" itemprop="url" rel="index"><span itemprop="name">Event</span></a>
+        </span>
+    </span>
 
-          
-            <span id="/2017/10/22/android_event_1/" class="post-meta-item leancloud_visitors" data-flag-title="Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
+  
+    <span id="/2017/10/22/android_event_1/" class="post-meta-item leancloud_visitors" data-flag-title="Android 消息机制（一）消息队列的创建与循环的开始 Looper与MessageQueue" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
 
         </div>
       </header>
@@ -381,8 +472,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>  <strong>本文基于<code>Android 7.1.1 (API 25)</code>的源码分析编写</strong> </p>
 <p>与之前的<a href="http://www.viseator.com/2017/09/14/android_view_event_1/">触摸事件分发机制分析</a>的文章一样，<code>Android</code>系统机制的分析中关键的一环就是事件消息的处理。之前也说过，<code>Android</code>本质上是一个事件驱动的模型，通过各式各样不断产生事件消息的来推动UI、数据的更新与对我们交互的反馈，没有事件消息的产生，就不会有直观的界面的变化，也就不会有应用丰富的功能。</p>
 <p>所以<code>Android</code>的消息机制与其他过程的关系是极其紧密的，例如启动<code>Activity</code>的过程就涉及到<code>ActivityManagerService</code>与应用主进程的通信，产生的通知消息通过<code>Binder</code>机制送入应用主进程的消息队列，再由主进程的消息循环来读取这一消息来进行处理。之前触摸事件分发中也是利用了应用主进程的消息队列来读取我们的触摸事件再进行后续的分发处理。可以说消息队列在各种通信过程中无处不在。</p>
@@ -402,18 +491,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/10/07/android_view_event_2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -427,48 +523,49 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/10/07/android_view_event_2/" class="post-title-link" itemprop="url">Android 触摸事件分发机制（二）原始事件消息传递与分发的开始</a>
+          <a href="/2017/10/07/android_view_event_2/" class="post-title-link" itemprop="url">Android 触摸事件分发机制（二）原始事件消息传递与分发的开始</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2017-10-07 13:00:00" itemprop="dateCreated datePublished" datetime="2017-10-07T13:00:00+08:00">2017-10-07</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/View/" itemprop="url" rel="index"><span itemprop="name">View</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2017-10-07 13:00:00" itemprop="dateCreated datePublished" datetime="2017-10-07T13:00:00+08:00">2017-10-07</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/View/" itemprop="url" rel="index"><span itemprop="name">View</span></a>
+        </span>
+    </span>
 
-          
-            <span id="/2017/10/07/android_view_event_2/" class="post-meta-item leancloud_visitors" data-flag-title="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
+  
+    <span id="/2017/10/07/android_view_event_2/" class="post-meta-item leancloud_visitors" data-flag-title="Android 触摸事件分发机制（二）原始事件消息传递与分发的开始" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
 
         </div>
       </header>
@@ -477,8 +574,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <h2 id="回顾"><a href="#回顾" class="headerlink" title="回顾"></a>回顾</h2><p>在<a href="http://www.viseator.com/2017/09/14/android_view_event_1/">上一篇文章</a>中，我们探索了从内核触摸事件传递到<code>InputDispatcher</code>线程，再与应用线程之间建立<code>InputChannel</code>的过程，并且我们已经看到一个最原始的触摸事件被封装成一个<code>msg</code>并通过<code>InputChannel</code>建立的<code>socket</code>通过<code>sendMessage()</code>方法跨线程通信发送给了应用的UI线程。</p>
 <p>这篇文章将会看到应用UI线程的消息队列是如何读取传递过来的触摸事件并进行处理、分发的。</p>
           <!--noindex-->
@@ -495,18 +590,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/09/14/android_view_event_1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -520,48 +622,49 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/09/14/android_view_event_1/" class="post-title-link" itemprop="url">Android 触摸事件分发机制（一）从内核到应用 一切的开始</a>
+          <a href="/2017/09/14/android_view_event_1/" class="post-title-link" itemprop="url">Android 触摸事件分发机制（一）从内核到应用 一切的开始</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2017-09-14 11:20:38" itemprop="dateCreated datePublished" datetime="2017-09-14T11:20:38+08:00">2017-09-14</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/View/" itemprop="url" rel="index"><span itemprop="name">View</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2017-09-14 11:20:38" itemprop="dateCreated datePublished" datetime="2017-09-14T11:20:38+08:00">2017-09-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/View/" itemprop="url" rel="index"><span itemprop="name">View</span></a>
+        </span>
+    </span>
 
-          
-            <span id="/2017/09/14/android_view_event_1/" class="post-meta-item leancloud_visitors" data-flag-title="Android 触摸事件分发机制（一）从内核到应用 一切的开始" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
+  
+    <span id="/2017/09/14/android_view_event_1/" class="post-meta-item leancloud_visitors" data-flag-title="Android 触摸事件分发机制（一）从内核到应用 一切的开始" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
 
         </div>
       </header>
@@ -570,10 +673,8 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p><strong>本文基于<code>Android 7.1.1 (API 25)</code>的源码分析编写</strong></p>
-<p>安卓是基于触摸操作进行交互的系统，几乎所有的操作都由对屏幕的一次次触摸完成，如何正确处理触摸事件关乎整个应用的操作体验。因此安卓对于触摸事件的分发与处理机制也是我们学习安卓开发的重中之重。同时几乎每一个安卓技术博客中都会对触摸分发机制这一块进行详解，例如比较早期也是最为出名的<a href="http://blog.csdn.net/guolin_blog/article/details/9097463/" target="_blank" rel="noopener">郭霖</a>（《第一行代码》的作者）。现在网络上对于这一块的分析也已经比较详尽了，基本上一篇博客中遗漏的部分都可以在其他博客中找到答案。</p>
+<p>安卓是基于触摸操作进行交互的系统，几乎所有的操作都由对屏幕的一次次触摸完成，如何正确处理触摸事件关乎整个应用的操作体验。因此安卓对于触摸事件的分发与处理机制也是我们学习安卓开发的重中之重。同时几乎每一个安卓技术博客中都会对触摸分发机制这一块进行详解，例如比较早期也是最为出名的<a target="_blank" rel="noopener" href="http://blog.csdn.net/guolin_blog/article/details/9097463/">郭霖</a>（《第一行代码》的作者）。现在网络上对于这一块的分析也已经比较详尽了，基本上一篇博客中遗漏的部分都可以在其他博客中找到答案。</p>
 <p>但是无论别人的文章讲得多好，多么详细，我们都需要自己去打开源码仔细分析好好体会，一是这样一个比较复杂的过程不经历自己的思考很难完全理解，二是随着<code>api</code>版本的推进这部分源码也会发生很多变化，虽然大致思路相同，但是接触到新的内容总是一件好事。</p>
 <p>这也就是我写这篇博文的原因：记录自己思考与分析的过程。</p>
           <!--noindex-->
@@ -590,18 +691,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/09/05/mr12u_openwrt_mentohust/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -615,44 +723,45 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/09/05/mr12u_openwrt_mentohust/" class="post-title-link" itemprop="url">TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）</a>
+          <a href="/2017/09/05/mr12u_openwrt_mentohust/" class="post-title-link" itemprop="url">TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2017-09-05 20:06:16" itemprop="dateCreated datePublished" datetime="2017-09-05T20:06:16+08:00">2017-09-05</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/openwrt/" itemprop="url" rel="index"><span itemprop="name">openwrt</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2017-09-05 20:06:16" itemprop="dateCreated datePublished" datetime="2017-09-05T20:06:16+08:00">2017-09-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/openwrt/" itemprop="url" rel="index"><span itemprop="name">openwrt</span></a>
+        </span>
+    </span>
 
-          
-            <span id="/2017/09/05/mr12u_openwrt_mentohust/" class="post-meta-item leancloud_visitors" data-flag-title="TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
+  
+    <span id="/2017/09/05/mr12u_openwrt_mentohust/" class="post-meta-item leancloud_visitors" data-flag-title="TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
 
         </div>
       </header>
@@ -661,14 +770,12 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>开学学校启用了有线网，由于校园网存在只能单一设备登陆的限制与无线登陆限速，所以想通过路由器刷<code>openwrt</code>再使用<code>mentohust</code>进行校园网的锐捷认证来实现多设备与不限速使用。</p>
 <p>在选择路由器时考虑了如下因素：</p>
 <ol>
-<li>可刷<code>openwrt</code>：只有特定的处理器支持<code>openwrt</code>，支持的路由器型号在官网有一个<a href="https://wiki.openwrt.org/toh/start" target="_blank" rel="noopener">列表</a>，直接参照这个列表选就可以了。</li>
-<li>有电源/usb供电：在寝室使用的话因为有段时间断电但不断网，所以需要自带电源或可用移动电源usb供电。</li>
-<li>性价比高：因为只用于转发校园网，所以可以买便宜一些的。</li>
+<li> 可刷<code>openwrt</code>：只有特定的处理器支持<code>openwrt</code>，支持的路由器型号在官网有一个<a target="_blank" rel="noopener" href="https://wiki.openwrt.org/toh/start">列表</a>，直接参照这个列表选就可以了。</li>
+<li> 有电源/usb供电：在寝室使用的话因为有段时间断电但不断网，所以需要自带电源或可用移动电源usb供电。</li>
+<li> 性价比高：因为只用于转发校园网，所以可以买便宜一些的。</li>
 </ol>
 <p>最终选择了<code>TP-Link mr12u</code>这款路由器，在闲鱼上找了一家同城二手的，45元人民币拿下。</p>
           <!--noindex-->
@@ -685,18 +792,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/07/19/android_context/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -710,44 +824,45 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/07/19/android_context/" class="post-title-link" itemprop="url">Android Context理解与陷阱</a>
+          <a href="/2017/07/19/android_context/" class="post-title-link" itemprop="url">Android Context理解与陷阱</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2017-07-19 19:07:42" itemprop="dateCreated datePublished" datetime="2017-07-19T19:07:42+08:00">2017-07-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2017-07-19 19:07:42" itemprop="dateCreated datePublished" datetime="2017-07-19T19:07:42+08:00">2017-07-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
 
-          
-            <span id="/2017/07/19/android_context/" class="post-meta-item leancloud_visitors" data-flag-title="Android Context理解与陷阱" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
+  
+    <span id="/2017/07/19/android_context/" class="post-meta-item leancloud_visitors" data-flag-title="Android Context理解与陷阱" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
 
         </div>
       </header>
@@ -756,20 +871,18 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <h2 id="Context"><a href="#Context" class="headerlink" title="Context?"></a>Context?</h2><p><code>Context</code>在安卓开发时是一个非常常见的组件，我们会在许多地方使用它，举一些例子：</p>
 <ul>
-<li>启动新的<code>Activity</code> <code>Service</code></li>
-<li>发送广播，接收广播</li>
-<li>填充<code>View</code></li>
-<li>获取资源</li>
+<li>  启动新的<code>Activity</code> <code>Service</code></li>
+<li>  发送广播，接收广播</li>
+<li>  填充<code>View</code></li>
+<li>  获取资源</li>
 </ul>
 <p>相信每一个开发者在看见它时都有过这样一些疑问：</p>
 <ul>
-<li><code>Context</code>是什么</li>
-<li><code>Context</code>的作用</li>
-<li><code>Context</code>从哪里来</li>
+<li>  <code>Context</code>是什么</li>
+<li>  <code>Context</code>的作用</li>
+<li>  <code>Context</code>从哪里来</li>
 </ul>
 <p>同时，我们也经历过需要一个<code>Context</code>但不知道如何去正确获取/传递的情况，事实上不正确地保存一个<code>Context</code>的引用可能会导致部分内存不能被正确GC从而造成事实上的内存泄漏。</p>
 <p>本文将着重对上面这些内容进行讲解。</p>
@@ -787,18 +900,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/07/18/CS_APP_AttackLab/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -812,48 +932,49 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/07/18/CS_APP_AttackLab/" class="post-title-link" itemprop="url">深入理解计算机系统（CS:APP) - Attack Lab详解</a>
+          <a href="/2017/07/18/CS_APP_AttackLab/" class="post-title-link" itemprop="url">深入理解计算机系统（CS:APP) - Attack Lab详解</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2017-07-18 13:47:01" itemprop="dateCreated datePublished" datetime="2017-07-18T13:47:01+08:00">2017-07-18</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Computer-System/" itemprop="url" rel="index"><span itemprop="name">Computer System</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Computer-System/CS-APP/" itemprop="url" rel="index"><span itemprop="name">CS:APP</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2017-07-18 13:47:01" itemprop="dateCreated datePublished" datetime="2017-07-18T13:47:01+08:00">2017-07-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-System/" itemprop="url" rel="index"><span itemprop="name">Computer System</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Computer-System/CS-APP/" itemprop="url" rel="index"><span itemprop="name">CS:APP</span></a>
+        </span>
+    </span>
 
-          
-            <span id="/2017/07/18/CS_APP_AttackLab/" class="post-meta-item leancloud_visitors" data-flag-title="深入理解计算机系统（CS:APP) - Attack Lab详解" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
+  
+    <span id="/2017/07/18/CS_APP_AttackLab/" class="post-meta-item leancloud_visitors" data-flag-title="深入理解计算机系统（CS:APP) - Attack Lab详解" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
 
         </div>
       </header>
@@ -862,11 +983,9 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
-          <h2 id="Attack-Lab"><a href="#Attack-Lab" class="headerlink" title="Attack Lab"></a>Attack Lab</h2><p>实验代码见<a href="https://github.com/viseator/CS-APP-3e-labs" target="_blank" rel="noopener">GitHub</a></p>
+          <h2 id="Attack-Lab"><a href="#Attack-Lab" class="headerlink" title="Attack Lab"></a>Attack Lab</h2><p>实验代码见<a target="_blank" rel="noopener" href="https://github.com/viseator/CS-APP-3e-labs">GitHub</a></p>
 <h3 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h3><p><code>Attack Lab</code>的内容针对的是<code>CS-APP</code>中第三章中关于程序安全性描述中的栈溢出攻击。在这个<code>Lab</code>中，我们需要针对不同的目的编写攻击字符串来填充一个有漏洞的程序的栈来达到执行攻击代码的目的，攻击方式分为代码注入攻击与返回导向编程攻击。本实验也是对旧版本中<code>IA32</code>编写的<code>Buffer Lab</code>的替代。</p>
-<p>我们可以从<a href="http://csapp.cs.cmu.edu/3e/labs.html" target="_blank" rel="noopener"><code>CMU</code>的<code>lab</code>主页</a>来获取自学者版本与实验讲义(Writeup)，讲义中包含了必要的提示、建议与被禁止的操作，从这个<code>lab</code>开始之后的<code>lab</code>对讲义中内容的依赖还是很强的。</p>
+<p>我们可以从<a target="_blank" rel="noopener" href="http://csapp.cs.cmu.edu/3e/labs.html"><code>CMU</code>的<code>lab</code>主页</a>来获取自学者版本与实验讲义(Writeup)，讲义中包含了必要的提示、建议与被禁止的操作，从这个<code>lab</code>开始之后的<code>lab</code>对讲义中内容的依赖还是很强的。</p>
 <blockquote>
 <p>  <strong>特别提示</strong> 本<code>lab</code>的自学者版本需要在运行程序时加上<code>-q</code>参数来避免程序向不存在的评分服务器提交我们的答案导致报错</p>
 </blockquote>
@@ -884,18 +1003,25 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
   
   
 
-      
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/07/02/arch_more/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -909,48 +1035,49 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2017/07/02/arch_more/" class="post-title-link" itemprop="url">ArchLinux你可能需要知道的操作与软件包推荐「持续更新」</a>
+          <a href="/2017/07/02/arch_more/" class="post-title-link" itemprop="url">ArchLinux你可能需要知道的操作与软件包推荐「持续更新」</a>
         </h2>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2017-07-02 10:26:58" itemprop="dateCreated datePublished" datetime="2017-07-02T10:26:58+08:00">2017-07-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-25 23:16:52" itemprop="dateModified" datetime="2020-07-25T23:16:52+08:00">2020-07-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Linux/Arch/" itemprop="url" rel="index"><span itemprop="name">Arch</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2017-07-02 10:26:58" itemprop="dateCreated datePublished" datetime="2017-07-02T10:26:58+08:00">2017-07-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-07-25 23:16:52" itemprop="dateModified" datetime="2020-07-25T23:16:52+08:00">2020-07-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/" itemprop="url" rel="index"><span itemprop="name">Linux</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Linux/Arch/" itemprop="url" rel="index"><span itemprop="name">Arch</span></a>
+        </span>
+    </span>
 
-          
-            <span id="/2017/07/02/arch_more/" class="post-meta-item leancloud_visitors" data-flag-title="ArchLinux你可能需要知道的操作与软件包推荐「持续更新」" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
+  
+    <span id="/2017/07/02/arch_more/" class="post-meta-item leancloud_visitors" data-flag-title="ArchLinux你可能需要知道的操作与软件包推荐「持续更新」" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
 
         </div>
       </header>
@@ -959,8 +1086,6 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
           <h2 id="你可能需要知道的操作与软件包推荐"><a href="#你可能需要知道的操作与软件包推荐" class="headerlink" title="你可能需要知道的操作与软件包推荐"></a>你可能需要知道的操作与软件包推荐</h2><p>在<a href="http://www.viseator.com/2017/05/17/arch_install/">第一篇教程</a>中介绍了<code>ArchLinux</code>的基本安装，<a href="http://www.viseator.com/2017/05/19/arch_setup/">第二篇教程</a>中介绍了必须的设置与图形界面的安装，这篇文章并不是教程，只是推荐一些自己日常使用的操作与软件包。写这篇文章时没有重新安装，所以不会有详细的过程，只是简单地列举应该装的软件包或者是基础的配置，更加细节的内容请查阅相关<code>wiki</code>。</p>
           <!--noindex-->
             <div class="post-button">
@@ -976,24 +1101,21 @@
     
     
     
-      <footer class="post-footer">
+
+    <footer class="post-footer">
         <div class="post-eof"></div>
-      </footer>
+      
+    </footer>
   </article>
-  
-  
-  
+</div>
 
 
-  
+
+
   <nav class="pagination">
     <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
-
-
-          </div>
-          
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -1002,7 +1124,7 @@
       activeClass = localStorage.getItem('comments_active') || activeClass;
     }
     if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
       if (activeTab) {
         activeTab.click();
       }
@@ -1011,147 +1133,46 @@
   if (CONFIG.comments.storage) {
     window.addEventListener('tabs:click', event => {
       if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
+      const commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
-      src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
-  <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives">
-        
-          <span class="site-state-item-count">36</span>
-          <span class="site-state-item-name">文章</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories">
-          
-        <span class="site-state-item-count">21</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags">
-          
-        <span class="site-state-item-count">25</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/viseator" title="GitHub → https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:viseator@gmail.com" title="Email → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
-      </span>
-  </div>
-  <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
-  </div>
+  </main>
 
+  <footer class="footer">
+    <div class="footer-inner">
 
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
-      Links
-    </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
-        </li>
-    </ul>
-  </div>
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
 
 <div class="copyright">
-  
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
-        
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.8.4/dist/algoliasearch-lite.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.13.1/dist/instantsearch.production.min.js"></script><script src="/js/algolia-search.js"></script>
 
 
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1261494271&web_id=1261494271"></script>
-  </div>
 
 
+
+
+  
 
 
 <script>
@@ -1162,15 +1183,15 @@
     }
 
     function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = decodeURI(visitors.id);
-      var title = visitors.dataset.flagTitle;
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
 
       Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
         .then(response => response.json())
         .then(({ results }) => {
           if (results.length > 0) {
-            var counter = results[0];
+            const counter = results[0];
             leancloudSelector(url).innerText = counter.time + 1;
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .catch(error => {
@@ -1193,8 +1214,8 @@
     }
 
     function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
         return decodeURI(element.id);
       });
 
@@ -1202,7 +1223,7 @@
         .then(response => response.json())
         .then(({ results }) => {
           for (let url of entries) {
-            let target = results.find(item => item.url === url);
+            const target = results.find(item => item.url === url);
             leancloudSelector(url).innerText = target ? target.time : 0;
           }
         })
@@ -1211,9 +1232,9 @@
         });
     }
 
-    let { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
     function fetchData(api_server) {
-      var Counter = (method, url, data) => {
+      const Counter = (method, url, data) => {
         return fetch(`${api_server}/1.1${url}`, {
           method,
           headers: {
@@ -1232,7 +1253,7 @@
       }
     }
 
-    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
 
     if (api_server) {
       fetchData(api_server);
@@ -1247,63 +1268,6 @@
 </script>
 
 
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-  
-<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
-<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
-<script src="/js/algolia-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
 
 
 </body>

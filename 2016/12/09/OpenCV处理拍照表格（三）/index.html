@@ -4,27 +4,27 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 5.3.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
-  <meta name="msapplication-config" content="/images/browserconfig.xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CAladin:300,300italic,400,400italic,700,700italic%7CPT+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<script id="hexo-configurations">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.viseator.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":2,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.viseator.com","root":"/","images":"/images","scheme":"Mist","version":"8.2.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10}}};
   </script>
-
-  <meta name="description" content="说明在开始说明直线检测过程前先作个说明，由于直线检测的算法需要遍历每个像素，所以总的耗时比较长，在安卓上跑的时候直线检测的时间可能会长达两分钟，这是在测试过程中不能接受的，所以我将安卓上的代码整个迁移到了Idea中，关于Idea中OpenCV的配置，可以参见这个教程。 这个步骤的目的：这步中我们会检测出整张图片中满足条件的所有直线，再通过筛选选出横的表格框线，再利用检测出的表格框线来提取两个框线之">
+<meta name="description" content="说明在开始说明直线检测过程前先作个说明，由于直线检测的算法需要遍历每个像素，所以总的耗时比较长，在安卓上跑的时候直线检测的时间可能会长达两分钟，这是在测试过程中不能接受的，所以我将安卓上的代码整个迁移到了Idea中，关于Idea中OpenCV的配置，可以参见这个教程。 这个步骤的目的：这步中我们会检测出整张图片中满足条件的所有直线，再通过筛选选出横的表格框线，再利用检测出的表格框线来提取两个框线之">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenCV处理拍照表格（三）">
 <meta property="og:url" content="https://www.viseator.com/2016/12/09/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
@@ -44,10 +44,11 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.viseator.com/images/redLines1.jpg">
 
+
 <link rel="canonical" href="https://www.viseator.com/2016/12/09/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%89%EF%BC%89/">
 
 
-<script id="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -56,8 +57,7 @@
     lang   : 'zh-CN'
   };
 </script>
-
-  <title>OpenCV处理拍照表格（三） | viseator's blog</title>
+<title>OpenCV处理拍照表格（三） | viseator's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
     <script>
@@ -68,7 +68,6 @@
         gtag('config', 'UA-93455229-1');
       }
     </script>
-
 
   <script>
     var _hmt = _hmt || [];
@@ -82,52 +81,63 @@
 
 
 
-
   <noscript>
   <style>
-  .use-motion .brand,
+  body { margin-top: 2rem; }
+
   .use-motion .menu-item,
-  .sidebar-inner,
+  .use-motion .sidebar,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle {
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
   </style>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
+      <i class="logo-line"></i>
       <h1 class="site-title">viseator's blog</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">吴迪的博客</p>
   </div>
@@ -141,44 +151,15 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section">首页</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories" rel="section">分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives" rel="section">归档</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags" rel="section">标签</a>
-
-  </li>
-        <li class="menu-item menu-item-resource">
-
-    <a href="/2017/03/25/resource_general" rel="section">资源</a>
-
-  </li>
-        <li class="menu-item menu-item-arch">
-
-    <a href="/categories/Linux/" rel="section">Arch安装</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about" rel="section">关于</a>
-
-  </li>
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories" rel="section">分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags" rel="section">标签</a></li>
+        <li class="menu-item menu-item-resource"><a href="/2017/03/25/resource_general" rel="section">资源</a></li>
+        <li class="menu-item menu-item-arch"><a href="/categories/Linux/" rel="section">Arch安装</a></li>
+        <li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger">搜索
         </a>
@@ -189,281 +170,37 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container"></div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div class="algolia-results">
-  <div id="algolia-stats"></div>
-  <div id="algolia-hits"></div>
-  <div id="algolia-pagination" class="algolia-pagination"></div>
+<div class="search-result-container">
+  <div class="algolia-stats"><hr></div>
+  <div class="algolia-hits"></div>
+  <div class="algolia-pagination"></div>
 </div>
 
-      
     </div>
   </div>
 
 </div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
-            
-
-    
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2016/12/09/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%89%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="viseator(吴迪)">
-      <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="viseator's blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          OpenCV处理拍照表格（三）
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2016-12-09 16:12:51" itemprop="dateCreated datePublished" datetime="2016-12-09T16:12:51+08:00">2016-12-09</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2016/12/09/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%89%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="OpenCV处理拍照表格（三）" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><p>在开始说明直线检测过程前先作个说明，由于直线检测的算法需要遍历每个像素，所以总的耗时比较长，在安卓上跑的时候直线检测的时间可能会长达两分钟，这是在测试过程中不能接受的，所以我将安卓上的代码整个迁移到了Idea中，关于Idea中<code>OpenCV</code>的配置，可以参见这个<a href="https://medium.com/@aadimator/how-to-set-up-opencv-in-intellij-idea-6eb103c1d45c" target="_blank" rel="noopener">教程</a>。</p>
-<p>这个步骤的目的：这步中我们会检测出整张图片中满足条件的所有直线，再通过筛选选出横的表格框线，再利用检测出的表格框线来提取两个框线之间的内容即为表格中的一行。<br><a id="more"></a></p>
-<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">cutImagesToRows</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ArrayList&lt;Double&gt; lineYs = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    ArrayList&lt;Double&gt; uniqueLineYs = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//lines:a special mat for find lines</span></span><br><span class="line">    Mat lines = <span class="keyword">new</span> Mat();</span><br><span class="line">    <span class="comment">//find lines and store in lines</span></span><br><span class="line">    Imgproc.HoughLinesP(dilateMuchPic, lines, <span class="number">1</span>, Math.PI / <span class="number">180</span>, Y_THRESHOLD,</span><br><span class="line">            Y_MINLINELENGTH, Y_MAXLINEGAP);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//get the lines information from lines and store in lineYs</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lines.rows(); i++) &#123;</span><br><span class="line">        <span class="keyword">double</span>[] points = lines.get(i, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">double</span> y1, y2;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//just need the horizontal lines</span></span><br><span class="line">        y1 = points[<span class="number">1</span>];</span><br><span class="line">        y2 = points[<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// if it slopes, get the average of them, store the y-coordinate</span></span><br><span class="line">        <span class="keyword">if</span> (Math.abs(y1 - y2) &lt; <span class="number">30</span>) &#123;</span><br><span class="line">            lineYs.add((y1 + y2) / <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    getUniqueLines(lineYs, uniqueLineYs, <span class="number">10</span>);</span><br></pre></td></tr></table></figure>
-<p>上面的注释里面讲得比较清楚，另外有一些解释：</p>
-<ul>
-<li><p>前面提到过<code>HoughLinesP</code>这个函数的第二个参数是一个特殊的<code>Mat</code>，也就是代码中的<code>lines</code>，它的<code>col</code>（列）的值为1，<code>row</code>（行）的值为检测出的所有直线 <strong>（这里要注意一下，我手上的书的这两个值正好相反，可能是标准不同，我这里用的是<code>OpenCV 3.1</code>）</strong>。每个<code>row</code>为一个<code>double[4]</code>，四个值分别对应着起始点的x,y坐标，终点的x,y坐标<strong>（图片的左上角为原点）</strong>。两个点连起来就是检测出的直线。可以看到这里我只取了1,3，对应的是起点和终点的y坐标。</p>
-</li>
-<li><p><code>if (Math.abs(y1 - y2) &lt; 30)</code>这句判断的目的是过滤掉竖直的直线（起始点y坐标之差显然大于30），并且允许横线有一定的倾斜（起始点可以有30像素的差距）。找到这样的一对点后，把它们的y坐标取平均值存入一个数组中。</p>
-<p>​</p>
-</li>
-</ul>
-<p>由于图片中一条直线的宽度不可能正好是一个像素，所以必然会出现一条直线检测出很多个y坐标的问题，下面这个方法就是为了找到这些多余的y坐标并取它们的平均值作为最终的y坐标。</p>
-<p><code>getUniqueLines(lineYs, uniqueLineYs, 10);</code>代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * filter the source coordinates, if some values are too close ,get the average of them</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> src    source coordinates list</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> dst    destination coordinate list</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> minGap the minimum gap between coordinates</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">getUniqueLines</span><span class="params">(ArrayList&lt;Double&gt; src, ArrayList&lt;Double&gt; dst, <span class="keyword">int</span> minGap)</span> </span>&#123;</span><br><span class="line">    Collections.sort(src); <span class="comment">//sort the source coordinates list</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; src.size(); i++) &#123;</span><br><span class="line">        <span class="keyword">double</span> sum = src.get(i);</span><br><span class="line">        <span class="keyword">double</span> num = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//when the distance between lines less than minGap, get the average of thema</span></span><br><span class="line">        <span class="keyword">while</span> (i != src.size() - <span class="number">1</span> &amp;&amp; src.get(i + <span class="number">1</span>) - src.get(i) &lt; minGap) &#123;</span><br><span class="line">            num++;</span><br><span class="line">            sum = sum + src.get(i + <span class="number">1</span>);</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (num == <span class="number">1</span>) &#123;</span><br><span class="line">            dst.add(src.get(i));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            dst.add(((sum / num)));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p><code>minGap</code>：直线间距阈值，间距小于这个值的直线被处理。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">blockImages = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; uniqueLineYs.size(); i++) &#123;</span><br><span class="line">    Rect rect;</span><br><span class="line">    <span class="keyword">double</span> y = uniqueLineYs.get(i);</span><br><span class="line">    <span class="comment">//if not the last line</span></span><br><span class="line">    <span class="keyword">if</span> (i != uniqueLineYs.size() - <span class="number">1</span>) &#123;</span><br><span class="line">        rect = <span class="keyword">new</span> Rect((<span class="keyword">int</span>) (srcPic.width() * PADDING_LEFT_RIGHT),</span><br><span class="line">                (<span class="keyword">int</span>) (y + (uniqueLineYs.get(i + <span class="number">1</span>) - y) * PADDING_TOP_BOTTOM),</span><br><span class="line">                (<span class="keyword">int</span>) (srcPic.width() * (<span class="number">1</span> - PADDING_LEFT_RIGHT * <span class="number">2</span>)),</span><br><span class="line">                (<span class="keyword">int</span>) ((uniqueLineYs.get(i + <span class="number">1</span>) - y) * (<span class="number">1</span> - PADDING_TOP_BOTTOM * <span class="number">2</span>)));</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//the last line</span></span><br><span class="line">        rect = <span class="keyword">new</span> Rect((<span class="keyword">int</span>) (srcPic.width() * PADDING_LEFT_RIGHT),</span><br><span class="line">                (<span class="keyword">int</span>) (y + (srcPic.height() - y) * PADDING_TOP_BOTTOM),</span><br><span class="line">                (<span class="keyword">int</span>) (srcPic.width() * (<span class="number">1</span> - PADDING_LEFT_RIGHT * <span class="number">2</span>)),</span><br><span class="line">                (<span class="keyword">int</span>) ((srcPic.height() - y) * (<span class="number">1</span> - PADDING_TOP_BOTTOM * <span class="number">2</span>)));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//cut the source picture to cutMat</span></span><br><span class="line">    Mat cutMat = <span class="keyword">new</span> Mat(srcPic, rect);</span><br><span class="line">    blockImages.add(cutMat);</span><br></pre></td></tr></table></figure>
-<p>这步就是切割了，<code>blockImages</code>就是存放切割后的行图像的<code>ArrayList</code>。</p>
-<p>关于<code>Rect</code>：<code>Rect</code>对象表示一个区域，可以作为<code>Mat</code>的构造参数传入来为目标区域创造一个<code>Mat</code>副本。四个参数分别代表了区域起始点的x,y坐标，区域长度和区域高度。</p>
-<p>可以看到这里我使用了一个<code>PADDING</code>参数，来规定切割时距规定边缘的距离来避免把一些表格的边线切到图像中影响OCR的识别。</p>
-<p>至于上面一篇博客中最后的红线是测试时用</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showMarkedLines</span><span class="params">(Mat src, ArrayList&lt;Double&gt; lines)</span> </span>&#123;</span><br><span class="line">    Mat showLines = <span class="keyword">new</span> Mat();</span><br><span class="line">    Imgproc.cvtColor(src, showLines, COLOR_GRAY2BGR);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">double</span> y : lines) &#123;</span><br><span class="line"></span><br><span class="line">        Point pt1 = <span class="keyword">new</span> Point(<span class="number">0</span>, y);</span><br><span class="line">        Point pt2 = <span class="keyword">new</span> Point(src.width(), y);</span><br><span class="line">        Imgproc.line(showLines, pt1, pt2, <span class="keyword">new</span> Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">3</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    Imgcodecs.imwrite(<span class="string">"C:/Users/visea/Desktop/test/java/cut/"</span> +</span><br><span class="line">            String.valueOf(colNum) +</span><br><span class="line">            <span class="string">".jpg"</span>, showLines);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>打印出来的，这里新建了一个<code>showLines</code>并且把原图像通过<code>Imgproc.cvtColor</code>方法转换成BGR图像并复制到<code>showLines</code>（不转化成彩色格式只能显示灰度图像）。</p>
-<p>打印一条直线也比较简单，只要新建两个<code>Point</code>对象代表起始点和终点，这里我把x坐标设置为图像的起始x坐标，y坐标为之前得到的唯一的y值，所以可以看到画出来的线就是水平并且从开头一直到结束的。</p>
-<p>画直线使用<code>Imgproc.line</code>方法，最后两个参数依次是BGR三个通道的值组成的<code>Scalar</code>对象，代表直线的颜色，以及画出的直线的宽度（以像素为单位）。</p>
-<h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p>最后用<code>Imgcodecs.imwrite</code>将<code>Mat</code>写入文件就可以看到最终的效果了，在测试的时候尤其有用。</p>
-<p><img src="/images/redLines1.jpg" alt="redlines1"></p>
-<p>也可以把<code>blockImages</code>中的图输出出来看结果，因为做的时候没存档，所以只能用之后的图来说明一下了：</p>
-<p><img src="/images/rows1.jpg" alt=""><img src="/images/rows2.jpg" alt=""></p>
-<p>请忽略图中的红线，为之后的步骤绘制出来的，左右不完整是因为我设置了百分之二十的左右的<code>PADDING</code>，为了方便后面的找线与切割。</p>
-<p>当然在找直线的过程中也可以把找到的图片打印出来感觉一下效果，下面分别是调试前出的图和最终参数调试后出来的图：</p>
-<p>调试前：</p>
-<p><img src="/images/blackLines1.jpg" alt=""></p>
-<p>调试后：</p>
-<p><img src="/images/blackLines2.jpg" alt=""></p>
-
-    </div>
-
-    
-    
-    
-        <div class="reward-container">
-  <div></div>
-  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    打赏
-  </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
-        <p>微信支付</p>
-      </div>
-      
-      <div style="display: inline-block;">
-        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
-        <p>支付宝</p>
-      </div>
-
-  </div>
-</div>
-
         
-
-<div>
-<ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者： </strong>viseator(吴迪)
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://www.viseator.com/2016/12/09/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%89%EF%BC%89/" title="OpenCV处理拍照表格（三）">https://www.viseator.com/2016/12/09/OpenCV处理拍照表格（三）/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
-        
-
-  <div class="followme">
-    <p>欢迎关注我的其它发布渠道</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
-            <span class="icon">
-              <i class="fa fa-wechat"></i>
-            </span>
-
-            <span class="label">微信公众号</span>
-          </a>
-        </div>
-    </div>
-  </div>
-
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Java/" rel="tag"># Java</a>
-              <a href="/tags/OpenCV/" rel="tag"># OpenCV</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2016/12/02/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="prev" title="OpenCV处理拍照表格（二）">
-      <i class="fa fa-chevron-left"></i> OpenCV处理拍照表格（二）
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2017/01/20/2016%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/" rel="next" title="2016年度总结">
-      2016年度总结 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
   
-  
-  
-
-
-
-          </div>
-          
-    
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
-  </div>
-  
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
   </div>
 
   <aside class="sidebar">
-    <div class="sidebar-inner">
 
-      <ul class="sidebar-nav motion-element">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
         </li>
@@ -472,26 +209,27 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#说明"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码实现"><span class="nav-number">2.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#效果"><span class="nav-number">3.</span> <span class="nav-text">效果</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%AF%B4%E6%98%8E"><span class="nav-number">1.</span> <span class="nav-text">说明</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="nav-number">2.</span> <span class="nav-text">代码实现</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%95%88%E6%9E%9C"><span class="nav-number">3.</span> <span class="nav-text">效果</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
       src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
   <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
-<div class="site-state-wrap motion-element">
+<div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
           <span class="site-state-item-count">36</span>
-          <span class="site-state-item-name">文章</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
@@ -508,85 +246,324 @@
       </div>
   </nav>
 </div>
-  <div class="links-of-author motion-element">
+  <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/viseator" title="GitHub → https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+        <a href="https://github.com/viseator" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;viseator" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:viseator@gmail.com" title="Email → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
+        <a href="mailto:viseator@gmail.com" title="E-Mail → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-  <div class="cc-license motion-element" itemprop="license">
+  <div class="cc-license site-overview-item animated" itemprop="license">
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
       Links
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
+          <a href="https://www.hustunique.com/" title="https:&#x2F;&#x2F;www.hustunique.com&#x2F;" rel="noopener" target="_blank">UniqueStudio</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
+          <a href="http://blog.codedragon.tech/" title="http:&#x2F;&#x2F;blog.codedragon.tech&#x2F;" rel="noopener" target="_blank">BlackDragon</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
+          <a href="http://imzhwk.com/" title="http:&#x2F;&#x2F;imzhwk.com&#x2F;" rel="noopener" target="_blank">imzhwk</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
+          <a href="http://moe.petnakanojo.com/" title="http:&#x2F;&#x2F;moe.petnakanojo.com&#x2F;" rel="noopener" target="_blank">PetnaKanojo</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
+          <a href="http://alexandertang.cn/" title="http:&#x2F;&#x2F;alexandertang.cn&#x2F;" rel="noopener" target="_blank">Alexander</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
+          <a href="https://qzwlecr.github.io/" title="https:&#x2F;&#x2F;qzwlecr.github.io&#x2F;" rel="noopener" target="_blank">qzwlecr</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
+          <a href="http://www.kurokoi.moe/" title="http:&#x2F;&#x2F;www.kurokoi.moe&#x2F;" rel="noopener" target="_blank">Kurokoi</a>
         </li>
     </ul>
   </div>
 
+        </div>
       </div>
-
     </div>
   </aside>
-  <div id="sidebar-dimmer"></div>
+  <div class="sidebar-dimmer"></div>
 
 
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2016/12/09/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%89%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="viseator(吴迪)">
+      <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="viseator's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenCV处理拍照表格（三）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-12-09 16:12:51" itemprop="dateCreated datePublished" datetime="2016-12-09T16:12:51+08:00">2016-12-09</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2016/12/09/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%89%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="OpenCV处理拍照表格（三）" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h4 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h4><p>在开始说明直线检测过程前先作个说明，由于直线检测的算法需要遍历每个像素，所以总的耗时比较长，在安卓上跑的时候直线检测的时间可能会长达两分钟，这是在测试过程中不能接受的，所以我将安卓上的代码整个迁移到了Idea中，关于Idea中<code>OpenCV</code>的配置，可以参见这个<a target="_blank" rel="noopener" href="https://medium.com/@aadimator/how-to-set-up-opencv-in-intellij-idea-6eb103c1d45c">教程</a>。</p>
+<p>这个步骤的目的：这步中我们会检测出整张图片中满足条件的所有直线，再通过筛选选出横的表格框线，再利用检测出的表格框线来提取两个框线之间的内容即为表格中的一行。</p>
+<a id="more"></a>
+<h4 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">cutImagesToRows</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    ArrayList&lt;Double&gt; lineYs = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line">    ArrayList&lt;Double&gt; uniqueLineYs = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"></span><br><span class="line">    <span class="comment">//lines:a special mat for find lines</span></span><br><span class="line">    Mat lines = <span class="keyword">new</span> Mat();</span><br><span class="line">    <span class="comment">//find lines and store in lines</span></span><br><span class="line">    Imgproc.HoughLinesP(dilateMuchPic, lines, <span class="number">1</span>, Math.PI / <span class="number">180</span>, Y_THRESHOLD,</span><br><span class="line">            Y_MINLINELENGTH, Y_MAXLINEGAP);</span><br><span class="line"></span><br><span class="line">    <span class="comment">//get the lines information from lines and store in lineYs</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; lines.rows(); i++) &#123;</span><br><span class="line">        <span class="keyword">double</span>[] points = lines.get(i, <span class="number">0</span>);</span><br><span class="line">        <span class="keyword">double</span> y1, y2;</span><br><span class="line"></span><br><span class="line">        <span class="comment">//just need the horizontal lines</span></span><br><span class="line">        y1 = points[<span class="number">1</span>];</span><br><span class="line">        y2 = points[<span class="number">3</span>];</span><br><span class="line"></span><br><span class="line">        <span class="comment">// if it slopes, get the average of them, store the y-coordinate</span></span><br><span class="line">        <span class="keyword">if</span> (Math.abs(y1 - y2) &lt; <span class="number">30</span>) &#123;</span><br><span class="line">            lineYs.add((y1 + y2) / <span class="number">2</span>);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    getUniqueLines(lineYs, uniqueLineYs, <span class="number">10</span>);</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>上面的注释里面讲得比较清楚，另外有一些解释：</p>
+<ul>
+<li><p>  前面提到过<code>HoughLinesP</code>这个函数的第二个参数是一个特殊的<code>Mat</code>，也就是代码中的<code>lines</code>，它的<code>col</code>（列）的值为1，<code>row</code>（行）的值为检测出的所有直线 <strong>（这里要注意一下，我手上的书的这两个值正好相反，可能是标准不同，我这里用的是<code>OpenCV 3.1</code>）</strong>。每个<code>row</code>为一个<code>double[4]</code>，四个值分别对应着起始点的x,y坐标，终点的x,y坐标<strong>（图片的左上角为原点）</strong>。两个点连起来就是检测出的直线。可以看到这里我只取了1,3，对应的是起点和终点的y坐标。</p>
+</li>
+<li><p><code>if (Math.abs(y1 - y2) &lt; 30)</code>这句判断的目的是过滤掉竖直的直线（起始点y坐标之差显然大于30），并且允许横线有一定的倾斜（起始点可以有30像素的差距）。找到这样的一对点后，把它们的y坐标取平均值存入一个数组中。</p>
+<p>  ​</p>
+</li>
+</ul>
+<p>由于图片中一条直线的宽度不可能正好是一个像素，所以必然会出现一条直线检测出很多个y坐标的问题，下面这个方法就是为了找到这些多余的y坐标并取它们的平均值作为最终的y坐标。</p>
+<p><code>getUniqueLines(lineYs, uniqueLineYs, 10);</code>代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * filter the source coordinates, if some values are too close ,get the average of them</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> src    source coordinates list</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> dst    destination coordinate list</span></span><br><span class="line"><span class="comment"> * <span class="doctag">@param</span> minGap the minimum gap between coordinates</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">getUniqueLines</span><span class="params">(ArrayList&lt;Double&gt; src, ArrayList&lt;Double&gt; dst, <span class="keyword">int</span> minGap)</span> </span>&#123;</span><br><span class="line">    Collections.sort(src); <span class="comment">//sort the source coordinates list</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; src.size(); i++) &#123;</span><br><span class="line">        <span class="keyword">double</span> sum = src.get(i);</span><br><span class="line">        <span class="keyword">double</span> num = <span class="number">1</span>;</span><br><span class="line">        <span class="comment">//when the distance between lines less than minGap, get the average of thema</span></span><br><span class="line">        <span class="keyword">while</span> (i != src.size() - <span class="number">1</span> &amp;&amp; src.get(i + <span class="number">1</span>) - src.get(i) &lt; minGap) &#123;</span><br><span class="line">            num++;</span><br><span class="line">            sum = sum + src.get(i + <span class="number">1</span>);</span><br><span class="line">            i++;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (num == <span class="number">1</span>) &#123;</span><br><span class="line">            dst.add(src.get(i));</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            dst.add(((sum / num)));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><code>minGap</code>：直线间距阈值，间距小于这个值的直线被处理。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">blockImages = <span class="keyword">new</span> ArrayList&lt;&gt;();</span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; uniqueLineYs.size(); i++) &#123;</span><br><span class="line">    Rect rect;</span><br><span class="line">    <span class="keyword">double</span> y = uniqueLineYs.get(i);</span><br><span class="line">    <span class="comment">//if not the last line</span></span><br><span class="line">    <span class="keyword">if</span> (i != uniqueLineYs.size() - <span class="number">1</span>) &#123;</span><br><span class="line">        rect = <span class="keyword">new</span> Rect((<span class="keyword">int</span>) (srcPic.width() * PADDING_LEFT_RIGHT),</span><br><span class="line">                (<span class="keyword">int</span>) (y + (uniqueLineYs.get(i + <span class="number">1</span>) - y) * PADDING_TOP_BOTTOM),</span><br><span class="line">                (<span class="keyword">int</span>) (srcPic.width() * (<span class="number">1</span> - PADDING_LEFT_RIGHT * <span class="number">2</span>)),</span><br><span class="line">                (<span class="keyword">int</span>) ((uniqueLineYs.get(i + <span class="number">1</span>) - y) * (<span class="number">1</span> - PADDING_TOP_BOTTOM * <span class="number">2</span>)));</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        <span class="comment">//the last line</span></span><br><span class="line">        rect = <span class="keyword">new</span> Rect((<span class="keyword">int</span>) (srcPic.width() * PADDING_LEFT_RIGHT),</span><br><span class="line">                (<span class="keyword">int</span>) (y + (srcPic.height() - y) * PADDING_TOP_BOTTOM),</span><br><span class="line">                (<span class="keyword">int</span>) (srcPic.width() * (<span class="number">1</span> - PADDING_LEFT_RIGHT * <span class="number">2</span>)),</span><br><span class="line">                (<span class="keyword">int</span>) ((srcPic.height() - y) * (<span class="number">1</span> - PADDING_TOP_BOTTOM * <span class="number">2</span>)));</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//cut the source picture to cutMat</span></span><br><span class="line">    Mat cutMat = <span class="keyword">new</span> Mat(srcPic, rect);</span><br><span class="line">    blockImages.add(cutMat);</span><br></pre></td></tr></table></figure>
+<p>这步就是切割了，<code>blockImages</code>就是存放切割后的行图像的<code>ArrayList</code>。</p>
+<p>关于<code>Rect</code>：<code>Rect</code>对象表示一个区域，可以作为<code>Mat</code>的构造参数传入来为目标区域创造一个<code>Mat</code>副本。四个参数分别代表了区域起始点的x,y坐标，区域长度和区域高度。</p>
+<p>可以看到这里我使用了一个<code>PADDING</code>参数，来规定切割时距规定边缘的距离来避免把一些表格的边线切到图像中影响OCR的识别。</p>
+<p>至于上面一篇博客中最后的红线是测试时用</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">showMarkedLines</span><span class="params">(Mat src, ArrayList&lt;Double&gt; lines)</span> </span>&#123;</span><br><span class="line">    Mat showLines = <span class="keyword">new</span> Mat();</span><br><span class="line">    Imgproc.cvtColor(src, showLines, COLOR_GRAY2BGR);</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">double</span> y : lines) &#123;</span><br><span class="line"></span><br><span class="line">        Point pt1 = <span class="keyword">new</span> Point(<span class="number">0</span>, y);</span><br><span class="line">        Point pt2 = <span class="keyword">new</span> Point(src.width(), y);</span><br><span class="line">        Imgproc.line(showLines, pt1, pt2, <span class="keyword">new</span> Scalar(<span class="number">0</span>, <span class="number">0</span>, <span class="number">255</span>), <span class="number">3</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    Imgcodecs.imwrite(<span class="string">&quot;C:/Users/visea/Desktop/test/java/cut/&quot;</span> +</span><br><span class="line">            String.valueOf(colNum) +</span><br><span class="line">            <span class="string">&quot;.jpg&quot;</span>, showLines);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>打印出来的，这里新建了一个<code>showLines</code>并且把原图像通过<code>Imgproc.cvtColor</code>方法转换成BGR图像并复制到<code>showLines</code>（不转化成彩色格式只能显示灰度图像）。</p>
+<p>打印一条直线也比较简单，只要新建两个<code>Point</code>对象代表起始点和终点，这里我把x坐标设置为图像的起始x坐标，y坐标为之前得到的唯一的y值，所以可以看到画出来的线就是水平并且从开头一直到结束的。</p>
+<p>画直线使用<code>Imgproc.line</code>方法，最后两个参数依次是BGR三个通道的值组成的<code>Scalar</code>对象，代表直线的颜色，以及画出的直线的宽度（以像素为单位）。</p>
+<h4 id="效果"><a href="#效果" class="headerlink" title="效果"></a>效果</h4><p>最后用<code>Imgcodecs.imwrite</code>将<code>Mat</code>写入文件就可以看到最终的效果了，在测试的时候尤其有用。</p>
+<p><img src="/images/redLines1.jpg" alt="redlines1"></p>
+<p>也可以把<code>blockImages</code>中的图输出出来看结果，因为做的时候没存档，所以只能用之后的图来说明一下了：</p>
+<p><img src="/images/rows1.jpg"><img src="/images/rows2.jpg"></p>
+<p>请忽略图中的红线，为之后的步骤绘制出来的，左右不完整是因为我设置了百分之二十的左右的<code>PADDING</code>，为了方便后面的找线与切割。</p>
+<p>当然在找直线的过程中也可以把找到的图片打印出来感觉一下效果，下面分别是调试前出的图和最终参数调试后出来的图：</p>
+<p>调试前：</p>
+<p><img src="/images/blackLines1.jpg"></p>
+<p>调试后：</p>
+<p><img src="/images/blackLines2.jpg"></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信">
+        <span>微信</span>
       </div>
-    </main>
+      <div>
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <span>支付宝</span>
+      </div>
 
-    <footer class="footer">
-      <div class="footer-inner">
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>viseator(吴迪)
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://www.viseator.com/2016/12/09/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%89%EF%BC%89/" title="OpenCV处理拍照表格（三）">https://www.viseator.com/2016/12/09/OpenCV处理拍照表格（三）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
+
+          <span class="label">微信公众号</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/OpenCV/" rel="tag"># OpenCV</a>
+          </div>
+
         
 
-        
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2016/12/02/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="prev" title="OpenCV处理拍照表格（二）">
+                  <i class="fa fa-chevron-left"></i> OpenCV处理拍照表格（二）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/01/20/2016%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/" rel="next" title="2016年度总结">
+                  2016年度总结 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
 
 <div class="copyright">
-  
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
-        
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.8.4/dist/algoliasearch-lite.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.13.1/dist/instantsearch.production.min.js"></script><script src="/js/algolia-search.js"></script>
 
 
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1261494271&web_id=1261494271"></script>
-  </div>
 
 
+
+
+  
 
 
 <script>
@@ -597,15 +574,15 @@
     }
 
     function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = decodeURI(visitors.id);
-      var title = visitors.dataset.flagTitle;
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
 
       Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
         .then(response => response.json())
         .then(({ results }) => {
           if (results.length > 0) {
-            var counter = results[0];
+            const counter = results[0];
             leancloudSelector(url).innerText = counter.time + 1;
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .catch(error => {
@@ -628,8 +605,8 @@
     }
 
     function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
         return decodeURI(element.id);
       });
 
@@ -637,7 +614,7 @@
         .then(response => response.json())
         .then(({ results }) => {
           for (let url of entries) {
-            let target = results.find(item => item.url === url);
+            const target = results.find(item => item.url === url);
             leancloudSelector(url).innerText = target ? target.time : 0;
           }
         })
@@ -646,9 +623,9 @@
         });
     }
 
-    let { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
     function fetchData(api_server) {
-      var Counter = (method, url, data) => {
+      const Counter = (method, url, data) => {
         return fetch(`${api_server}/1.1${url}`, {
           method,
           headers: {
@@ -667,7 +644,7 @@
       }
     }
 
-    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
 
     if (api_server) {
       fetchData(api_server);
@@ -682,68 +659,11 @@
 </script>
 
 
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-  
-<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
-<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
-<script src="/js/algolia-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
 
 <script>
-NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+NexT.utils.loadComments('#lv-container', () => {
   window.livereOptions = {
-    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+    refer: "2016/12/09/OpenCV处理拍照表格（三）/"
   };
   (function(d, s) {
     var j, e = d.getElementsByTagName(s)[0];

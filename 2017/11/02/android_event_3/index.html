@@ -4,27 +4,27 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 5.3.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
-  <meta name="msapplication-config" content="/images/browserconfig.xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CAladin:300,300italic,400,400italic,700,700italic%7CPT+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<script id="hexo-configurations">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.viseator.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":2,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.viseator.com","root":"/","images":"/images","scheme":"Mist","version":"8.2.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10}}};
   </script>
-
-  <meta name="description" content="之前的两篇文章讲解了java层消息机制的过程以及使用，中间省略了比较多的代码就是在native层实现的消息机制中使用的。这篇文章就对这一部分进行讲解。 起点我们从第一篇文章知道，Looper.loop()方法被调用后，会启动一个无限循环，而在这个循环中，调用了MessageQueue的next()方法以获取下一条消息，而next()方法中会首先调用nativePollOnce()方法，这个方法的作">
+<meta name="description" content="之前的两篇文章讲解了java层消息机制的过程以及使用，中间省略了比较多的代码就是在native层实现的消息机制中使用的。这篇文章就对这一部分进行讲解。 起点我们从第一篇文章知道，Looper.loop()方法被调用后，会启动一个无限循环，而在这个循环中，调用了MessageQueue的next()方法以获取下一条消息，而next()方法中会首先调用nativePollOnce()方法，这个方法的作">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android 消息机制（三）Native层消息机制">
 <meta property="og:url" content="https://www.viseator.com/2017/11/02/android_event_3/index.html">
@@ -38,10 +38,11 @@
 <meta property="article:tag" content="Event">
 <meta name="twitter:card" content="summary">
 
+
 <link rel="canonical" href="https://www.viseator.com/2017/11/02/android_event_3/">
 
 
-<script id="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -50,8 +51,7 @@
     lang   : 'zh-CN'
   };
 </script>
-
-  <title>Android 消息机制（三）Native层消息机制 | viseator's blog</title>
+<title>Android 消息机制（三）Native层消息机制 | viseator's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
     <script>
@@ -62,7 +62,6 @@
         gtag('config', 'UA-93455229-1');
       }
     </script>
-
 
   <script>
     var _hmt = _hmt || [];
@@ -76,52 +75,63 @@
 
 
 
-
   <noscript>
   <style>
-  .use-motion .brand,
+  body { margin-top: 2rem; }
+
   .use-motion .menu-item,
-  .sidebar-inner,
+  .use-motion .sidebar,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle {
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
   </style>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
+      <i class="logo-line"></i>
       <h1 class="site-title">viseator's blog</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">吴迪的博客</p>
   </div>
@@ -135,44 +145,15 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section">首页</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories" rel="section">分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives" rel="section">归档</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags" rel="section">标签</a>
-
-  </li>
-        <li class="menu-item menu-item-resource">
-
-    <a href="/2017/03/25/resource_general" rel="section">资源</a>
-
-  </li>
-        <li class="menu-item menu-item-arch">
-
-    <a href="/categories/Linux/" rel="section">Arch安装</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about" rel="section">关于</a>
-
-  </li>
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories" rel="section">分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags" rel="section">标签</a></li>
+        <li class="menu-item menu-item-resource"><a href="/2017/03/25/resource_general" rel="section">资源</a></li>
+        <li class="menu-item menu-item-arch"><a href="/categories/Linux/" rel="section">Arch安装</a></li>
+        <li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger">搜索
         </a>
@@ -183,283 +164,37 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container"></div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div class="algolia-results">
-  <div id="algolia-stats"></div>
-  <div id="algolia-hits"></div>
-  <div id="algolia-pagination" class="algolia-pagination"></div>
+<div class="search-result-container">
+  <div class="algolia-stats"><hr></div>
+  <div class="algolia-hits"></div>
+  <div class="algolia-pagination"></div>
 </div>
 
-      
     </div>
   </div>
 
 </div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
-            
-
-    
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/11/02/android_event_3/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="viseator(吴迪)">
-      <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="viseator's blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          Android 消息机制（三）Native层消息机制
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-11-02 15:57:53" itemprop="dateCreated datePublished" datetime="2017-11-02T15:57:53+08:00">2017-11-02</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/Event/" itemprop="url" rel="index"><span itemprop="name">Event</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/11/02/android_event_3/" class="post-meta-item leancloud_visitors" data-flag-title="Android 消息机制（三）Native层消息机制" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <p>之前的两篇文章讲解了<code>java</code>层消息机制的过程以及使用，中间省略了比较多的代码就是在<code>native</code>层实现的消息机制中使用的。这篇文章就对这一部分进行讲解。</p>
-<h2 id="起点"><a href="#起点" class="headerlink" title="起点"></a>起点</h2><p>我们从第一篇文章知道，<code>Looper.loop()</code>方法被调用后，会启动一个无限循环，而在这个循环中，调用了<code>MessageQueue</code>的<code>next()</code>方法以获取下一条消息，而<code>next()</code>方法中会首先调用<code>nativePollOnce()</code>方法，这个方法的作用在之前说过是阻塞，达到超时时间或有新的消息到达时得到<code>eventFd</code>的通知再唤醒消息队列，其实这个方法也是<code>native</code>消息处理的开始。</p>
-<a id="more"></a>
-<h2 id="进入Native层"><a href="#进入Native层" class="headerlink" title="进入Native层"></a>进入Native层</h2><h3 id="android-os-MessageQueue-nativePollOnce"><a href="#android-os-MessageQueue-nativePollOnce" class="headerlink" title="android_os_MessageQueue_nativePollOnce()"></a>android_os_MessageQueue_nativePollOnce()</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">android_os_MessageQueue_nativePollOnce</span><span class="params">(JNIEnv* env, jobject obj,</span></span></span><br><span class="line"><span class="function"><span class="params">        jlong ptr, jint timeoutMillis)</span> </span>&#123;</span><br><span class="line">    NativeMessageQueue* nativeMessageQueue = <span class="keyword">reinterpret_cast</span>&lt;NativeMessageQueue*&gt;(ptr);</span><br><span class="line">    nativeMessageQueue-&gt;pollOnce(env, obj, timeoutMillis);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">NativeMessageQueue::pollOnce</span><span class="params">(JNIEnv* env, jobject pollObj, <span class="keyword">int</span> timeoutMillis)</span> </span>&#123;</span><br><span class="line">    mPollEnv = env;</span><br><span class="line">    mPollObj = pollObj;</span><br><span class="line">    mLooper-&gt;pollOnce(timeoutMillis);</span><br><span class="line">    mPollObj = <span class="literal">NULL</span>;</span><br><span class="line">    mPollEnv = <span class="literal">NULL</span>;</span><br><span class="line">  	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>调用了<code>Native Looper</code>的<code>pollOnce()</code>方法：</p>
-<h3 id="pollOnce"><a href="#pollOnce" class="headerlink" title="pollOnce()"></a>pollOnce()</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">pollOnce</span><span class="params">(<span class="keyword">int</span> timeoutMillis)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> pollOnce(timeoutMillis, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Looper::pollOnce</span><span class="params">(<span class="keyword">int</span> timeoutMillis, <span class="keyword">int</span>* outFd, <span class="keyword">int</span>* outEvents, <span class="keyword">void</span>** outData)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">        <span class="keyword">while</span> (mResponseIndex &lt; mResponses.<span class="built_in">size</span>()) &#123;</span><br><span class="line">            <span class="keyword">const</span> Response&amp; response = mResponses.itemAt(mResponseIndex++);</span><br><span class="line">            <span class="keyword">int</span> ident = response.request.ident;</span><br><span class="line">            <span class="keyword">if</span> (ident &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">int</span> fd = response.request.fd;</span><br><span class="line">                <span class="keyword">int</span> events = response.events;</span><br><span class="line">                <span class="keyword">void</span>* data = response.request.data;</span><br><span class="line">              </span><br><span class="line">                <span class="keyword">if</span> (outFd != <span class="literal">NULL</span>) *outFd = fd;</span><br><span class="line">                <span class="keyword">if</span> (outEvents != <span class="literal">NULL</span>) *outEvents = events;</span><br><span class="line">                <span class="keyword">if</span> (outData != <span class="literal">NULL</span>) *outData = data;</span><br><span class="line">                <span class="keyword">return</span> ident;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (result != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (outFd != <span class="literal">NULL</span>) *outFd = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (outEvents != <span class="literal">NULL</span>) *outEvents = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (outData != <span class="literal">NULL</span>) *outData = <span class="literal">NULL</span>;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        result = pollInner(timeoutMillis);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>我们之前直接跳过了26行之前的内容，现在我们还是不能理解这一段的意义，从程序上看，我们从<code>mResponse</code>容器中取出了一个<code>response</code>并把他的内容放入了传入的地址参数中返回。首先，这个调用中没有传入地址参数，其次，这个<code>mResponse</code>数组是什么呢？</p>
-<p>我们继续先往下看，下面的<code>pollInner()</code>方法比较长也是<code>native</code>消息机制的核心，我们拆成几个部分看。</p>
-<h2 id="pollInner"><a href="#pollInner" class="headerlink" title="pollInner()"></a>pollInner()</h2><h3 id="Request-与-Response"><a href="#Request-与-Response" class="headerlink" title="Request 与 Response"></a>Request 与 Response</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">int</span> result = POLL_WAKE;</span><br><span class="line">   mResponses.<span class="built_in">clear</span>();</span><br><span class="line">   mResponseIndex = <span class="number">0</span>;</span><br><span class="line">   mPolling = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">   <span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> <span class="title">eventItems</span>[<span class="title">EPOLL_MAX_EVENTS</span>];</span></span><br><span class="line">   <span class="keyword">int</span> eventCount = epoll_wait(mEpollFd, eventItems, EPOLL_MAX_EVENTS, timeoutMillis);</span><br><span class="line">   mPolling = <span class="literal">false</span>;</span><br><span class="line">   mLock.lock();</span><br><span class="line">...</span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; eventCount; i++) &#123;</span><br><span class="line">       <span class="keyword">int</span> fd = eventItems[i].data.fd;</span><br><span class="line">       <span class="keyword">uint32_t</span> epollEvents = eventItems[i].events;</span><br><span class="line">       <span class="keyword">if</span> (fd == mWakeEventFd) &#123;</span><br><span class="line">           <span class="keyword">if</span> (epollEvents &amp; EPOLLIN) &#123;</span><br><span class="line">               awoken();</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               ALOGW(<span class="string">"Ignoring unexpected epoll events 0x%x on wake event fd."</span>, epollEvents);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="keyword">ssize_t</span> requestIndex = mRequests.indexOfKey(fd);</span><br><span class="line">           <span class="keyword">if</span> (requestIndex &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">               <span class="keyword">int</span> events = <span class="number">0</span>;</span><br><span class="line">               <span class="keyword">if</span> (epollEvents &amp; EPOLLIN) events |= EVENT_INPUT;</span><br><span class="line">               <span class="keyword">if</span> (epollEvents &amp; EPOLLOUT) events |= EVENT_OUTPUT;</span><br><span class="line">               <span class="keyword">if</span> (epollEvents &amp; EPOLLERR) events |= EVENT_ERROR;</span><br><span class="line">               <span class="keyword">if</span> (epollEvents &amp; EPOLLHUP) events |= EVENT_HANGUP;</span><br><span class="line">               pushResponse(events, mRequests.valueAt(requestIndex));</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               ALOGW(<span class="string">"Ignoring unexpected epoll events 0x%x on fd %d that is "</span></span><br><span class="line">                       <span class="string">"no longer registered."</span>, epollEvents, fd);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
-<p>当第7行系统调用<code>epoll_wait()</code>返回时，说明因注册的<code>fd</code>有消息或达到超时，在第11行就对收到的唤醒<code>events</code>进行遍历，首先判断有消息的<code>fd</code>是不是用于唤醒的<code>mWakeEventFd</code>，如果不是的话，说明是系统调用<code>addFd()</code>方法设置的自定义<code>fd</code>（后面会讲）。那么我们需要对这个事件作出响应。</p>
-<p>第21到28行就对这个<code>event</code>做处理，首先，我们以这个<code>fd</code>为<code>key</code>从<code>mRequests</code>中找到他的索引，这个<code>mRequests</code>是我们在<code>addFd()</code>方法一并注册的以<code>fd</code>为<code>key</code>，<code>Request</code>为<code>value</code>的映射表。找到<code>request</code>之后，28行调用<code>pushResponse()</code>方法去建立<code>response</code>：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Looper::pushResponse</span><span class="params">(<span class="keyword">int</span> events, <span class="keyword">const</span> Request&amp; request)</span> </span>&#123;</span><br><span class="line">    Response response;</span><br><span class="line">    response.events = events;</span><br><span class="line">    response.request = request;</span><br><span class="line">    mResponses.push(response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>现在我们要处理的任务已经被封装成了一个<code>Response</code>对象，等待被处理，那么真正的处理在哪里呢？</p>
-<p>在上面的代码与处理<code>response</code>的代码中间夹着的是处理<code>MessageEnvelope</code>的代码，我们后面再讲这段，现在到处理<code>response</code>的代码：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; mResponses.<span class="built_in">size</span>(); i++) &#123;</span><br><span class="line">    Response&amp; response = mResponses.editItemAt(i);</span><br><span class="line">    <span class="keyword">if</span> (response.request.ident == POLL_CALLBACK) &#123;</span><br><span class="line">        <span class="keyword">int</span> fd = response.request.fd;</span><br><span class="line">        <span class="keyword">int</span> events = response.events;</span><br><span class="line">        <span class="keyword">void</span>* data = response.request.data;</span><br><span class="line">        <span class="keyword">int</span> callbackResult = response.request.callback-&gt;handleEvent(fd, events, data);</span><br><span class="line">        <span class="keyword">if</span> (callbackResult == <span class="number">0</span>) &#123;</span><br><span class="line">            removeFd(fd, response.request.seq);</span><br><span class="line">        &#125;</span><br><span class="line">        response.request.callback.<span class="built_in">clear</span>();</span><br><span class="line">        result = POLL_CALLBACK;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>遍历所有<code>response</code>对象，取出之前注册的<code>request</code>对象的信息，然后调用了<code>request.callback-&gt;handleEvent()</code>方法进行回调，如果该回调返回0，则调用<code>removeFd()</code>方法取消这个<code>fd</code>的注册。</p>
-<p>再梳理一遍这个过程：注册的自定义<code>fd</code>被消息唤醒，从<code>mRequests</code>中以<code>fd</code>为<code>key</code>找到对应的注册好的<code>request</code>对象然后生成<code>response</code>对象，在<code>MessageEnvelop</code>处理完毕之后处理<code>response</code>，调用<code>request</code>中的<code>callback</code>的<code>handleEvent()</code>方法。</p>
-<p>那么<code>addFd()</code>注册自定义<code>fd</code>与<code>removeFd()</code>取消注册是如何实现的呢？</p>
-<h4 id="addFd"><a href="#addFd" class="headerlink" title="addFd()"></a>addFd()</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Looper::addFd</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">int</span> ident, <span class="keyword">int</span> events, <span class="keyword">const</span> sp&lt;LooperCallback&gt;&amp; callback, <span class="keyword">void</span>* data)</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">    &#123; <span class="comment">// acquire lock</span></span><br><span class="line">        AutoMutex _l(mLock);</span><br><span class="line"></span><br><span class="line">        Request request;</span><br><span class="line">        request.fd = fd;</span><br><span class="line">        request.ident = ident;</span><br><span class="line">        request.events = events;</span><br><span class="line">        request.seq = mNextRequestSeq++;</span><br><span class="line">        request.callback = callback;</span><br><span class="line">        request.data = data;</span><br><span class="line">        <span class="keyword">if</span> (mNextRequestSeq == <span class="number">-1</span>) mNextRequestSeq = <span class="number">0</span>; <span class="comment">// reserve sequence number -1</span></span><br><span class="line"></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> <span class="title">eventItem</span>;</span></span><br><span class="line">        request.initEventItem(&amp;eventItem);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">ssize_t</span> requestIndex = mRequests.indexOfKey(fd);</span><br><span class="line">        <span class="keyword">if</span> (requestIndex &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, fd, &amp; eventItem);</span><br><span class="line">            <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                ALOGE(<span class="string">"Error adding epoll events for fd %d: %s"</span>, fd, strerror(errno));</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            mRequests.add(fd, request);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_MOD, fd, &amp; eventItem);</span><br><span class="line">            <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (errno == ENOENT) &#123;</span><br><span class="line">                    epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, fd, &amp; eventItem);</span><br><span class="line">                    <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                        ALOGE(<span class="string">"Error modifying or adding epoll events for fd %d: %s"</span>,</span><br><span class="line">                                fd, strerror(errno));</span><br><span class="line">                        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    scheduleEpollRebuildLocked();</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    ALOGE(<span class="string">"Error modifying epoll events for fd %d: %s"</span>, fd, strerror(errno));</span><br><span class="line">                    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            mRequests.replaceValueAt(requestIndex, request);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="comment">// release lock</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>第6-13行使用传入的参数初始化了<code>request</code>对象，然后16行由<code>request</code>来初始化注册<code>epoll</code>使用的<code>event</code>。19行根据<code>mRequests.indexOfKey()</code>方法取出的值来判断<code>fd</code>是否已经注册，如果未注册，则在20行进行系统调用<code>epoll_ctl()</code>注册新监听并在25行将<code>fd</code>与<code>request</code>存入<code>mRequest</code>，如果已注册，则在27行更新注册并在42行更新<code>request</code>。</p>
-<p>这就是自定义<code>fd</code>设置的过程：保存<code>request</code>并使用<code>epoll_ctl</code>系统调用注册<code>fd</code>的监听。</p>
-<h4 id="removeFd"><a href="#removeFd" class="headerlink" title="removeFd()"></a>removeFd()</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Looper::removeFd</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">int</span> seq)</span> </span>&#123;</span><br><span class="line">    &#123; <span class="comment">// acquire lock</span></span><br><span class="line">        AutoMutex _l(mLock);</span><br><span class="line">        <span class="keyword">ssize_t</span> requestIndex = mRequests.indexOfKey(fd);</span><br><span class="line">        <span class="keyword">if</span> (requestIndex &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (seq != <span class="number">-1</span> &amp;&amp; mRequests.valueAt(requestIndex).seq != seq) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mRequests.removeItemsAt(requestIndex);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_DEL, fd, <span class="literal">NULL</span>);</span><br><span class="line">        <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (seq != <span class="number">-1</span> &amp;&amp; (errno == EBADF || errno == ENOENT)) &#123;</span><br><span class="line">                scheduleEpollRebuildLocked();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ALOGE(<span class="string">"Error removing epoll events for fd %d: %s"</span>, fd, strerror(errno));</span><br><span class="line">                scheduleEpollRebuildLocked();</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="comment">// release lock</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>解除的过程相反，在第11行删除<code>mRequests</code>中的键值对，然后在第13行系统调用<code>epoll_ctl()</code>解除<code>fd</code>的<code>epoll</code>注册。</p>
-<h3 id="MessageEnvelop消息处理"><a href="#MessageEnvelop消息处理" class="headerlink" title="MessageEnvelop消息处理"></a>MessageEnvelop消息处理</h3><p>之前说到，在<code>request</code>生成<code>response</code>到<code>response</code>的处理中间有一段代码执行了<code>MessageEnvelop</code>消息的处理，这个顺序保证了<code>MessageEnvelop</code>优先于<code>fd</code>引起的<code>request</code>的处理。</p>
-<p>现在我们来看这段代码：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">mNextMessageUptime = LLONG_MAX;</span><br><span class="line"><span class="keyword">while</span> (mMessageEnvelopes.<span class="built_in">size</span>() != <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">nsecs_t</span> now = systemTime(SYSTEM_TIME_MONOTONIC);</span><br><span class="line">    <span class="keyword">const</span> MessageEnvelope&amp; messageEnvelope = mMessageEnvelopes.itemAt(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (messageEnvelope.uptime &lt;= now) &#123;</span><br><span class="line">        &#123; <span class="comment">// obtain handler</span></span><br><span class="line">            sp&lt;MessageHandler&gt; handler = messageEnvelope.handler;</span><br><span class="line">            Message message = messageEnvelope.message;</span><br><span class="line">            mMessageEnvelopes.removeAt(<span class="number">0</span>);</span><br><span class="line">            mSendingMessage = <span class="literal">true</span>;</span><br><span class="line">            mLock.unlock();</span><br><span class="line">            handler-&gt;handleMessage(message);</span><br><span class="line">        &#125; <span class="comment">// release handler</span></span><br><span class="line"></span><br><span class="line">        mLock.lock();</span><br><span class="line">        mSendingMessage = <span class="literal">false</span>;</span><br><span class="line">        result = POLL_CALLBACK;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        mNextMessageUptime = messageEnvelope.uptime;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>可以看到<code>mMessageEnvelopes</code>容器中存储了所有的消息，第4行从首位置取出一条消息，随后进行时间判断，如果时间到达，先移出容器，与<code>java</code>层比较相似都是调用了<code>handler</code>的<code>handleMessage()</code>来进行消息的处理。</p>
-<p>那么<code>MessageEnvelope</code>是如何添加的呢？</p>
-<p><code>Native Looper</code>提供了一套与<code>java</code>层<code>MessageQueue</code>类似的方法，用于添加<code>MessageEnvelope</code>：</p>
-<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Looper::sendMessageAtTime</span><span class="params">(<span class="keyword">nsecs_t</span> uptime, <span class="keyword">const</span> sp&lt;MessageHandler&gt;&amp; handler,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> Message&amp; message)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> i = <span class="number">0</span>;</span><br><span class="line">    &#123; <span class="comment">// acquire lock</span></span><br><span class="line">        AutoMutex _l(mLock);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">size_t</span> messageCount = mMessageEnvelopes.<span class="built_in">size</span>();</span><br><span class="line">        <span class="keyword">while</span> (i &lt; messageCount &amp;&amp; uptime &gt;= mMessageEnvelopes.itemAt(i).uptime) &#123;</span><br><span class="line">            i += <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function">MessageEnvelope <span class="title">messageEnvelope</span><span class="params">(uptime, handler, message)</span></span>;</span><br><span class="line">        mMessageEnvelopes.insertAt(messageEnvelope, i, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (mSendingMessage) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="comment">// release lock</span></span><br><span class="line">    <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</span><br><span class="line">        wake();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这段添加<code>MessageEnvelope</code>的代码不需要太多的解释。</p>
-<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>现在我们看到，其实<code>Native</code>中的消息机制有两个方面，一方面是通过<code>addFd()</code>注册的自定义<code>fd</code>触发消息处理，通过<code>mRequests</code>保存的<code>request</code>对象中的<code>callback</code>进行消息处理。另一方面是通过与<code>java</code>层类似的<code>MessageEnvelop</code>消息对象进行处理，调用的是该对象<code>handler</code>域的<code>handleMessage()</code>方法，与<code>java</code>层非常类似。优先级是先处理<code>MessageEnvelop</code>再处理<code>request</code>。</p>
-<h2 id="一些思考"><a href="#一些思考" class="headerlink" title="一些思考"></a>一些思考</h2><p>现在消息机制全部内容分析下来，我们可以看到<code>android</code>的消息机制不算复杂，分为<code>native</code>与<code>java</code>两个部分，这两个部分分别有自己的消息处理机制，其中关键的超时与唤醒部分是借助了<code>linux</code>系统<code>epoll</code>机制来实现的。</p>
-<p>连接<code>java</code>与<code>native</code>层消息处理过程的是<code>next()</code>方法中的<code>nativePollOnce()</code>，<code>java</code>层消息循环先调用它，自身阻塞，进入<code>native</code>的消息处理，在<code>native</code>消息处理完毕后返回，再进行<code>java</code>层的消息处理，正是因为如此，如果我们在处理<code>java</code>层消息的时候执行了耗时或阻塞的任务（甚至阻塞了整个主线程），整个<code>java</code>层的消息循环就会阻塞，也无法进入<code>native</code>层的消息处理，也就无法响应例如触摸事件这样的消息，导致ANR的发生。这也就是我们不应在主线程中执行这类任务的原因。</p>
-
-    </div>
-
-    
-    
-    
-        <div class="reward-container">
-  <div></div>
-  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    打赏
-  </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
-        <p>微信支付</p>
-      </div>
-      
-      <div style="display: inline-block;">
-        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
-        <p>支付宝</p>
-      </div>
-
-  </div>
-</div>
-
         
-
-<div>
-<ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者： </strong>viseator(吴迪)
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://www.viseator.com/2017/11/02/android_event_3/" title="Android 消息机制（三）Native层消息机制">https://www.viseator.com/2017/11/02/android_event_3/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
-        
-
-  <div class="followme">
-    <p>欢迎关注我的其它发布渠道</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
-            <span class="icon">
-              <i class="fa fa-wechat"></i>
-            </span>
-
-            <span class="label">微信公众号</span>
-          </a>
-        </div>
-    </div>
-  </div>
-
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Android/" rel="tag"># Android</a>
-              <a href="/tags/Event/" rel="tag"># Event</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2017/10/24/android_event_2/" rel="prev" title="Android 消息机制（二）Handler对消息机制的使用">
-      <i class="fa fa-chevron-left"></i> Android 消息机制（二）Handler对消息机制的使用
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2017/11/02/android_view_event_3/" rel="next" title="Android 触摸事件分发机制（三）View触摸事件分发机制">
-      Android 触摸事件分发机制（三）View触摸事件分发机制 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
   
-  
-  
-
-
-
-          </div>
-          
-    
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
-  </div>
-  
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
   </div>
 
   <aside class="sidebar">
-    <div class="sidebar-inner">
 
-      <ul class="sidebar-nav motion-element">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
         </li>
@@ -468,26 +203,27 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#起点"><span class="nav-number">1.</span> <span class="nav-text">起点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#进入Native层"><span class="nav-number">2.</span> <span class="nav-text">进入Native层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#android-os-MessageQueue-nativePollOnce"><span class="nav-number">2.1.</span> <span class="nav-text">android_os_MessageQueue_nativePollOnce()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pollOnce"><span class="nav-number">2.2.</span> <span class="nav-text">pollOnce()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pollInner"><span class="nav-number">3.</span> <span class="nav-text">pollInner()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Request-与-Response"><span class="nav-number">3.1.</span> <span class="nav-text">Request 与 Response</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#addFd"><span class="nav-number">3.1.1.</span> <span class="nav-text">addFd()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#removeFd"><span class="nav-number">3.1.2.</span> <span class="nav-text">removeFd()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MessageEnvelop消息处理"><span class="nav-number">3.2.</span> <span class="nav-text">MessageEnvelop消息处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#一些思考"><span class="nav-number">5.</span> <span class="nav-text">一些思考</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B5%B7%E7%82%B9"><span class="nav-number">1.</span> <span class="nav-text">起点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BF%9B%E5%85%A5Native%E5%B1%82"><span class="nav-number">2.</span> <span class="nav-text">进入Native层</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#android-os-MessageQueue-nativePollOnce"><span class="nav-number">2.1.</span> <span class="nav-text">android_os_MessageQueue_nativePollOnce()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#pollOnce"><span class="nav-number">2.2.</span> <span class="nav-text">pollOnce()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pollInner"><span class="nav-number">3.</span> <span class="nav-text">pollInner()</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Request-%E4%B8%8E-Response"><span class="nav-number">3.1.</span> <span class="nav-text">Request 与 Response</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#addFd"><span class="nav-number">3.1.1.</span> <span class="nav-text">addFd()</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#removeFd"><span class="nav-number">3.1.2.</span> <span class="nav-text">removeFd()</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#MessageEnvelop%E6%B6%88%E6%81%AF%E5%A4%84%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">MessageEnvelop消息处理</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%80%E4%BA%9B%E6%80%9D%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">一些思考</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
       src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
   <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
-<div class="site-state-wrap motion-element">
+<div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
           <span class="site-state-item-count">36</span>
-          <span class="site-state-item-name">文章</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
@@ -504,85 +240,326 @@
       </div>
   </nav>
 </div>
-  <div class="links-of-author motion-element">
+  <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/viseator" title="GitHub → https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+        <a href="https://github.com/viseator" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;viseator" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:viseator@gmail.com" title="Email → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
+        <a href="mailto:viseator@gmail.com" title="E-Mail → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-  <div class="cc-license motion-element" itemprop="license">
+  <div class="cc-license site-overview-item animated" itemprop="license">
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
       Links
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
+          <a href="https://www.hustunique.com/" title="https:&#x2F;&#x2F;www.hustunique.com&#x2F;" rel="noopener" target="_blank">UniqueStudio</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
+          <a href="http://blog.codedragon.tech/" title="http:&#x2F;&#x2F;blog.codedragon.tech&#x2F;" rel="noopener" target="_blank">BlackDragon</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
+          <a href="http://imzhwk.com/" title="http:&#x2F;&#x2F;imzhwk.com&#x2F;" rel="noopener" target="_blank">imzhwk</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
+          <a href="http://moe.petnakanojo.com/" title="http:&#x2F;&#x2F;moe.petnakanojo.com&#x2F;" rel="noopener" target="_blank">PetnaKanojo</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
+          <a href="http://alexandertang.cn/" title="http:&#x2F;&#x2F;alexandertang.cn&#x2F;" rel="noopener" target="_blank">Alexander</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
+          <a href="https://qzwlecr.github.io/" title="https:&#x2F;&#x2F;qzwlecr.github.io&#x2F;" rel="noopener" target="_blank">qzwlecr</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
+          <a href="http://www.kurokoi.moe/" title="http:&#x2F;&#x2F;www.kurokoi.moe&#x2F;" rel="noopener" target="_blank">Kurokoi</a>
         </li>
     </ul>
   </div>
 
+        </div>
       </div>
-
     </div>
   </aside>
-  <div id="sidebar-dimmer"></div>
+  <div class="sidebar-dimmer"></div>
 
 
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/11/02/android_event_3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="viseator(吴迪)">
+      <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="viseator's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android 消息机制（三）Native层消息机制
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-11-02 15:57:53" itemprop="dateCreated datePublished" datetime="2017-11-02T15:57:53+08:00">2017-11-02</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/Event/" itemprop="url" rel="index"><span itemprop="name">Event</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2017/11/02/android_event_3/" class="post-meta-item leancloud_visitors" data-flag-title="Android 消息机制（三）Native层消息机制" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>之前的两篇文章讲解了<code>java</code>层消息机制的过程以及使用，中间省略了比较多的代码就是在<code>native</code>层实现的消息机制中使用的。这篇文章就对这一部分进行讲解。</p>
+<h2 id="起点"><a href="#起点" class="headerlink" title="起点"></a>起点</h2><p>我们从第一篇文章知道，<code>Looper.loop()</code>方法被调用后，会启动一个无限循环，而在这个循环中，调用了<code>MessageQueue</code>的<code>next()</code>方法以获取下一条消息，而<code>next()</code>方法中会首先调用<code>nativePollOnce()</code>方法，这个方法的作用在之前说过是阻塞，达到超时时间或有新的消息到达时得到<code>eventFd</code>的通知再唤醒消息队列，其实这个方法也是<code>native</code>消息处理的开始。</p>
+<a id="more"></a>
+
+<h2 id="进入Native层"><a href="#进入Native层" class="headerlink" title="进入Native层"></a>进入Native层</h2><h3 id="android-os-MessageQueue-nativePollOnce"><a href="#android-os-MessageQueue-nativePollOnce" class="headerlink" title="android_os_MessageQueue_nativePollOnce()"></a>android_os_MessageQueue_nativePollOnce()</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">android_os_MessageQueue_nativePollOnce</span><span class="params">(JNIEnv* env, jobject obj,</span></span></span><br><span class="line"><span class="function"><span class="params">        jlong ptr, jint timeoutMillis)</span> </span>&#123;</span><br><span class="line">    NativeMessageQueue* nativeMessageQueue = <span class="keyword">reinterpret_cast</span>&lt;NativeMessageQueue*&gt;(ptr);</span><br><span class="line">    nativeMessageQueue-&gt;pollOnce(env, obj, timeoutMillis);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">NativeMessageQueue::pollOnce</span><span class="params">(JNIEnv* env, jobject pollObj, <span class="keyword">int</span> timeoutMillis)</span> </span>&#123;</span><br><span class="line">    mPollEnv = env;</span><br><span class="line">    mPollObj = pollObj;</span><br><span class="line">    mLooper-&gt;pollOnce(timeoutMillis);</span><br><span class="line">    mPollObj = <span class="literal">NULL</span>;</span><br><span class="line">    mPollEnv = <span class="literal">NULL</span>;</span><br><span class="line">  	...</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>调用了<code>Native Looper</code>的<code>pollOnce()</code>方法：</p>
+<h3 id="pollOnce"><a href="#pollOnce" class="headerlink" title="pollOnce()"></a>pollOnce()</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">pollOnce</span><span class="params">(<span class="keyword">int</span> timeoutMillis)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">return</span> pollOnce(timeoutMillis, <span class="literal">NULL</span>, <span class="literal">NULL</span>, <span class="literal">NULL</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Looper::pollOnce</span><span class="params">(<span class="keyword">int</span> timeoutMillis, <span class="keyword">int</span>* outFd, <span class="keyword">int</span>* outEvents, <span class="keyword">void</span>** outData)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> result = <span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span> (;;) &#123;</span><br><span class="line">        <span class="keyword">while</span> (mResponseIndex &lt; mResponses.size()) &#123;</span><br><span class="line">            <span class="keyword">const</span> Response&amp; response = mResponses.itemAt(mResponseIndex++);</span><br><span class="line">            <span class="keyword">int</span> ident = response.request.ident;</span><br><span class="line">            <span class="keyword">if</span> (ident &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">int</span> fd = response.request.fd;</span><br><span class="line">                <span class="keyword">int</span> events = response.events;</span><br><span class="line">                <span class="keyword">void</span>* data = response.request.data;</span><br><span class="line">              </span><br><span class="line">                <span class="keyword">if</span> (outFd != <span class="literal">NULL</span>) *outFd = fd;</span><br><span class="line">                <span class="keyword">if</span> (outEvents != <span class="literal">NULL</span>) *outEvents = events;</span><br><span class="line">                <span class="keyword">if</span> (outData != <span class="literal">NULL</span>) *outData = data;</span><br><span class="line">                <span class="keyword">return</span> ident;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (result != <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (outFd != <span class="literal">NULL</span>) *outFd = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (outEvents != <span class="literal">NULL</span>) *outEvents = <span class="number">0</span>;</span><br><span class="line">            <span class="keyword">if</span> (outData != <span class="literal">NULL</span>) *outData = <span class="literal">NULL</span>;</span><br><span class="line">            <span class="keyword">return</span> result;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        result = pollInner(timeoutMillis);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>我们之前直接跳过了26行之前的内容，现在我们还是不能理解这一段的意义，从程序上看，我们从<code>mResponse</code>容器中取出了一个<code>response</code>并把他的内容放入了传入的地址参数中返回。首先，这个调用中没有传入地址参数，其次，这个<code>mResponse</code>数组是什么呢？</p>
+<p>我们继续先往下看，下面的<code>pollInner()</code>方法比较长也是<code>native</code>消息机制的核心，我们拆成几个部分看。</p>
+<h2 id="pollInner"><a href="#pollInner" class="headerlink" title="pollInner()"></a>pollInner()</h2><h3 id="Request-与-Response"><a href="#Request-与-Response" class="headerlink" title="Request 与 Response"></a>Request 与 Response</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">int</span> result = POLL_WAKE;</span><br><span class="line">   mResponses.clear();</span><br><span class="line">   mResponseIndex = <span class="number">0</span>;</span><br><span class="line">   mPolling = <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">   <span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> <span class="title">eventItems</span>[<span class="title">EPOLL_MAX_EVENTS</span>];</span></span><br><span class="line">   <span class="keyword">int</span> eventCount = epoll_wait(mEpollFd, eventItems, EPOLL_MAX_EVENTS, timeoutMillis);</span><br><span class="line">   mPolling = <span class="literal">false</span>;</span><br><span class="line">   mLock.lock();</span><br><span class="line">...</span><br><span class="line">   <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; eventCount; i++) &#123;</span><br><span class="line">       <span class="keyword">int</span> fd = eventItems[i].data.fd;</span><br><span class="line">       <span class="keyword">uint32_t</span> epollEvents = eventItems[i].events;</span><br><span class="line">       <span class="keyword">if</span> (fd == mWakeEventFd) &#123;</span><br><span class="line">           <span class="keyword">if</span> (epollEvents &amp; EPOLLIN) &#123;</span><br><span class="line">               awoken();</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               ALOGW(<span class="string">&quot;Ignoring unexpected epoll events 0x%x on wake event fd.&quot;</span>, epollEvents);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">           <span class="keyword">ssize_t</span> requestIndex = mRequests.indexOfKey(fd);</span><br><span class="line">           <span class="keyword">if</span> (requestIndex &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">               <span class="keyword">int</span> events = <span class="number">0</span>;</span><br><span class="line">               <span class="keyword">if</span> (epollEvents &amp; EPOLLIN) events |= EVENT_INPUT;</span><br><span class="line">               <span class="keyword">if</span> (epollEvents &amp; EPOLLOUT) events |= EVENT_OUTPUT;</span><br><span class="line">               <span class="keyword">if</span> (epollEvents &amp; EPOLLERR) events |= EVENT_ERROR;</span><br><span class="line">               <span class="keyword">if</span> (epollEvents &amp; EPOLLHUP) events |= EVENT_HANGUP;</span><br><span class="line">               pushResponse(events, mRequests.valueAt(requestIndex));</span><br><span class="line">           &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">               ALOGW(<span class="string">&quot;Ignoring unexpected epoll events 0x%x on fd %d that is &quot;</span></span><br><span class="line">                       <span class="string">&quot;no longer registered.&quot;</span>, epollEvents, fd);</span><br><span class="line">           &#125;</span><br><span class="line">       &#125;</span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure>
+<p>当第7行系统调用<code>epoll_wait()</code>返回时，说明因注册的<code>fd</code>有消息或达到超时，在第11行就对收到的唤醒<code>events</code>进行遍历，首先判断有消息的<code>fd</code>是不是用于唤醒的<code>mWakeEventFd</code>，如果不是的话，说明是系统调用<code>addFd()</code>方法设置的自定义<code>fd</code>（后面会讲）。那么我们需要对这个事件作出响应。</p>
+<p>第21到28行就对这个<code>event</code>做处理，首先，我们以这个<code>fd</code>为<code>key</code>从<code>mRequests</code>中找到他的索引，这个<code>mRequests</code>是我们在<code>addFd()</code>方法一并注册的以<code>fd</code>为<code>key</code>，<code>Request</code>为<code>value</code>的映射表。找到<code>request</code>之后，28行调用<code>pushResponse()</code>方法去建立<code>response</code>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Looper::pushResponse</span><span class="params">(<span class="keyword">int</span> events, <span class="keyword">const</span> Request&amp; request)</span> </span>&#123;</span><br><span class="line">    Response response;</span><br><span class="line">    response.events = events;</span><br><span class="line">    response.request = request;</span><br><span class="line">    mResponses.push(response);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>现在我们要处理的任务已经被封装成了一个<code>Response</code>对象，等待被处理，那么真正的处理在哪里呢？</p>
+<p>在上面的代码与处理<code>response</code>的代码中间夹着的是处理<code>MessageEnvelope</code>的代码，我们后面再讲这段，现在到处理<code>response</code>的代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">size_t</span> i = <span class="number">0</span>; i &lt; mResponses.size(); i++) &#123;</span><br><span class="line">    Response&amp; response = mResponses.editItemAt(i);</span><br><span class="line">    <span class="keyword">if</span> (response.request.ident == POLL_CALLBACK) &#123;</span><br><span class="line">        <span class="keyword">int</span> fd = response.request.fd;</span><br><span class="line">        <span class="keyword">int</span> events = response.events;</span><br><span class="line">        <span class="keyword">void</span>* data = response.request.data;</span><br><span class="line">        <span class="keyword">int</span> callbackResult = response.request.callback-&gt;handleEvent(fd, events, data);</span><br><span class="line">        <span class="keyword">if</span> (callbackResult == <span class="number">0</span>) &#123;</span><br><span class="line">            removeFd(fd, response.request.seq);</span><br><span class="line">        &#125;</span><br><span class="line">        response.request.callback.clear();</span><br><span class="line">        result = POLL_CALLBACK;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>遍历所有<code>response</code>对象，取出之前注册的<code>request</code>对象的信息，然后调用了<code>request.callback-&gt;handleEvent()</code>方法进行回调，如果该回调返回0，则调用<code>removeFd()</code>方法取消这个<code>fd</code>的注册。</p>
+<p>再梳理一遍这个过程：注册的自定义<code>fd</code>被消息唤醒，从<code>mRequests</code>中以<code>fd</code>为<code>key</code>找到对应的注册好的<code>request</code>对象然后生成<code>response</code>对象，在<code>MessageEnvelop</code>处理完毕之后处理<code>response</code>，调用<code>request</code>中的<code>callback</code>的<code>handleEvent()</code>方法。</p>
+<p>那么<code>addFd()</code>注册自定义<code>fd</code>与<code>removeFd()</code>取消注册是如何实现的呢？</p>
+<h4 id="addFd"><a href="#addFd" class="headerlink" title="addFd()"></a>addFd()</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Looper::addFd</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">int</span> ident, <span class="keyword">int</span> events, <span class="keyword">const</span> sp&lt;LooperCallback&gt;&amp; callback, <span class="keyword">void</span>* data)</span> </span>&#123;</span><br><span class="line">	...</span><br><span class="line">    &#123; <span class="comment">// acquire lock</span></span><br><span class="line">        AutoMutex _l(mLock);</span><br><span class="line"></span><br><span class="line">        Request request;</span><br><span class="line">        request.fd = fd;</span><br><span class="line">        request.ident = ident;</span><br><span class="line">        request.events = events;</span><br><span class="line">        request.seq = mNextRequestSeq++;</span><br><span class="line">        request.callback = callback;</span><br><span class="line">        request.data = data;</span><br><span class="line">        <span class="keyword">if</span> (mNextRequestSeq == <span class="number">-1</span>) mNextRequestSeq = <span class="number">0</span>; <span class="comment">// reserve sequence number -1</span></span><br><span class="line"></span><br><span class="line">        <span class="class"><span class="keyword">struct</span> <span class="title">epoll_event</span> <span class="title">eventItem</span>;</span></span><br><span class="line">        request.initEventItem(&amp;eventItem);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">ssize_t</span> requestIndex = mRequests.indexOfKey(fd);</span><br><span class="line">        <span class="keyword">if</span> (requestIndex &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">int</span> epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, fd, &amp; eventItem);</span><br><span class="line">            <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                ALOGE(<span class="string">&quot;Error adding epoll events for fd %d: %s&quot;</span>, fd, strerror(errno));</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            mRequests.add(fd, request);</span><br><span class="line">        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="keyword">int</span> epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_MOD, fd, &amp; eventItem);</span><br><span class="line">            <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                <span class="keyword">if</span> (errno == ENOENT) &#123;</span><br><span class="line">                    epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_ADD, fd, &amp; eventItem);</span><br><span class="line">                    <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</span><br><span class="line">                        ALOGE(<span class="string">&quot;Error modifying or adding epoll events for fd %d: %s&quot;</span>,</span><br><span class="line">                                fd, strerror(errno));</span><br><span class="line">                        <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">                    &#125;</span><br><span class="line">                    scheduleEpollRebuildLocked();</span><br><span class="line">                &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                    ALOGE(<span class="string">&quot;Error modifying epoll events for fd %d: %s&quot;</span>, fd, strerror(errno));</span><br><span class="line">                    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line">            mRequests.replaceValueAt(requestIndex, request);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="comment">// release lock</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>第6-13行使用传入的参数初始化了<code>request</code>对象，然后16行由<code>request</code>来初始化注册<code>epoll</code>使用的<code>event</code>。19行根据<code>mRequests.indexOfKey()</code>方法取出的值来判断<code>fd</code>是否已经注册，如果未注册，则在20行进行系统调用<code>epoll_ctl()</code>注册新监听并在25行将<code>fd</code>与<code>request</code>存入<code>mRequest</code>，如果已注册，则在27行更新注册并在42行更新<code>request</code>。</p>
+<p>这就是自定义<code>fd</code>设置的过程：保存<code>request</code>并使用<code>epoll_ctl</code>系统调用注册<code>fd</code>的监听。</p>
+<h4 id="removeFd"><a href="#removeFd" class="headerlink" title="removeFd()"></a>removeFd()</h4><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">Looper::removeFd</span><span class="params">(<span class="keyword">int</span> fd, <span class="keyword">int</span> seq)</span> </span>&#123;</span><br><span class="line">    &#123; <span class="comment">// acquire lock</span></span><br><span class="line">        AutoMutex _l(mLock);</span><br><span class="line">        <span class="keyword">ssize_t</span> requestIndex = mRequests.indexOfKey(fd);</span><br><span class="line">        <span class="keyword">if</span> (requestIndex &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (seq != <span class="number">-1</span> &amp;&amp; mRequests.valueAt(requestIndex).seq != seq) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        mRequests.removeItemsAt(requestIndex);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">int</span> epollResult = epoll_ctl(mEpollFd, EPOLL_CTL_DEL, fd, <span class="literal">NULL</span>);</span><br><span class="line">        <span class="keyword">if</span> (epollResult &lt; <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">if</span> (seq != <span class="number">-1</span> &amp;&amp; (errno == EBADF || errno == ENOENT)) &#123;</span><br><span class="line">                scheduleEpollRebuildLocked();</span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                ALOGE(<span class="string">&quot;Error removing epoll events for fd %d: %s&quot;</span>, fd, strerror(errno));</span><br><span class="line">                scheduleEpollRebuildLocked();</span><br><span class="line">                <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="comment">// release lock</span></span><br><span class="line">    <span class="keyword">return</span> <span class="number">1</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>解除的过程相反，在第11行删除<code>mRequests</code>中的键值对，然后在第13行系统调用<code>epoll_ctl()</code>解除<code>fd</code>的<code>epoll</code>注册。</p>
+<h3 id="MessageEnvelop消息处理"><a href="#MessageEnvelop消息处理" class="headerlink" title="MessageEnvelop消息处理"></a>MessageEnvelop消息处理</h3><p>之前说到，在<code>request</code>生成<code>response</code>到<code>response</code>的处理中间有一段代码执行了<code>MessageEnvelop</code>消息的处理，这个顺序保证了<code>MessageEnvelop</code>优先于<code>fd</code>引起的<code>request</code>的处理。</p>
+<p>现在我们来看这段代码：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">mNextMessageUptime = LLONG_MAX;</span><br><span class="line"><span class="keyword">while</span> (mMessageEnvelopes.size() != <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="keyword">nsecs_t</span> now = systemTime(SYSTEM_TIME_MONOTONIC);</span><br><span class="line">    <span class="keyword">const</span> MessageEnvelope&amp; messageEnvelope = mMessageEnvelopes.itemAt(<span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (messageEnvelope.uptime &lt;= now) &#123;</span><br><span class="line">        &#123; <span class="comment">// obtain handler</span></span><br><span class="line">            sp&lt;MessageHandler&gt; handler = messageEnvelope.handler;</span><br><span class="line">            Message message = messageEnvelope.message;</span><br><span class="line">            mMessageEnvelopes.removeAt(<span class="number">0</span>);</span><br><span class="line">            mSendingMessage = <span class="literal">true</span>;</span><br><span class="line">            mLock.unlock();</span><br><span class="line">            handler-&gt;handleMessage(message);</span><br><span class="line">        &#125; <span class="comment">// release handler</span></span><br><span class="line"></span><br><span class="line">        mLock.lock();</span><br><span class="line">        mSendingMessage = <span class="literal">false</span>;</span><br><span class="line">        result = POLL_CALLBACK;</span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        mNextMessageUptime = messageEnvelope.uptime;</span><br><span class="line">        <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>可以看到<code>mMessageEnvelopes</code>容器中存储了所有的消息，第4行从首位置取出一条消息，随后进行时间判断，如果时间到达，先移出容器，与<code>java</code>层比较相似都是调用了<code>handler</code>的<code>handleMessage()</code>来进行消息的处理。</p>
+<p>那么<code>MessageEnvelope</code>是如何添加的呢？</p>
+<p><code>Native Looper</code>提供了一套与<code>java</code>层<code>MessageQueue</code>类似的方法，用于添加<code>MessageEnvelope</code>：</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Looper::sendMessageAtTime</span><span class="params">(<span class="keyword">nsecs_t</span> uptime, <span class="keyword">const</span> sp&lt;MessageHandler&gt;&amp; handler,</span></span></span><br><span class="line"><span class="function"><span class="params">        <span class="keyword">const</span> Message&amp; message)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">size_t</span> i = <span class="number">0</span>;</span><br><span class="line">    &#123; <span class="comment">// acquire lock</span></span><br><span class="line">        AutoMutex _l(mLock);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">size_t</span> messageCount = mMessageEnvelopes.size();</span><br><span class="line">        <span class="keyword">while</span> (i &lt; messageCount &amp;&amp; uptime &gt;= mMessageEnvelopes.itemAt(i).uptime) &#123;</span><br><span class="line">            i += <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="function">MessageEnvelope <span class="title">messageEnvelope</span><span class="params">(uptime, handler, message)</span></span>;</span><br><span class="line">        mMessageEnvelopes.insertAt(messageEnvelope, i, <span class="number">1</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (mSendingMessage) &#123;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125; <span class="comment">// release lock</span></span><br><span class="line">    <span class="keyword">if</span> (i == <span class="number">0</span>) &#123;</span><br><span class="line">        wake();</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这段添加<code>MessageEnvelope</code>的代码不需要太多的解释。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>现在我们看到，其实<code>Native</code>中的消息机制有两个方面，一方面是通过<code>addFd()</code>注册的自定义<code>fd</code>触发消息处理，通过<code>mRequests</code>保存的<code>request</code>对象中的<code>callback</code>进行消息处理。另一方面是通过与<code>java</code>层类似的<code>MessageEnvelop</code>消息对象进行处理，调用的是该对象<code>handler</code>域的<code>handleMessage()</code>方法，与<code>java</code>层非常类似。优先级是先处理<code>MessageEnvelop</code>再处理<code>request</code>。</p>
+<h2 id="一些思考"><a href="#一些思考" class="headerlink" title="一些思考"></a>一些思考</h2><p>现在消息机制全部内容分析下来，我们可以看到<code>android</code>的消息机制不算复杂，分为<code>native</code>与<code>java</code>两个部分，这两个部分分别有自己的消息处理机制，其中关键的超时与唤醒部分是借助了<code>linux</code>系统<code>epoll</code>机制来实现的。</p>
+<p>连接<code>java</code>与<code>native</code>层消息处理过程的是<code>next()</code>方法中的<code>nativePollOnce()</code>，<code>java</code>层消息循环先调用它，自身阻塞，进入<code>native</code>的消息处理，在<code>native</code>消息处理完毕后返回，再进行<code>java</code>层的消息处理，正是因为如此，如果我们在处理<code>java</code>层消息的时候执行了耗时或阻塞的任务（甚至阻塞了整个主线程），整个<code>java</code>层的消息循环就会阻塞，也无法进入<code>native</code>层的消息处理，也就无法响应例如触摸事件这样的消息，导致ANR的发生。这也就是我们不应在主线程中执行这类任务的原因。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信">
+        <span>微信</span>
       </div>
-    </main>
+      <div>
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <span>支付宝</span>
+      </div>
 
-    <footer class="footer">
-      <div class="footer-inner">
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>viseator(吴迪)
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://www.viseator.com/2017/11/02/android_event_3/" title="Android 消息机制（三）Native层消息机制">https://www.viseator.com/2017/11/02/android_event_3/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
+
+          <span class="label">微信公众号</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+              <a href="/tags/Event/" rel="tag"># Event</a>
+          </div>
+
         
 
-        
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/10/24/android_event_2/" rel="prev" title="Android 消息机制（二）Handler对消息机制的使用">
+                  <i class="fa fa-chevron-left"></i> Android 消息机制（二）Handler对消息机制的使用
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/11/02/android_view_event_3/" rel="next" title="Android 触摸事件分发机制（三）View触摸事件分发机制">
+                  Android 触摸事件分发机制（三）View触摸事件分发机制 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
 
 <div class="copyright">
-  
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
-        
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.8.4/dist/algoliasearch-lite.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.13.1/dist/instantsearch.production.min.js"></script><script src="/js/algolia-search.js"></script>
 
 
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1261494271&web_id=1261494271"></script>
-  </div>
 
 
+
+
+  
 
 
 <script>
@@ -593,15 +570,15 @@
     }
 
     function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = decodeURI(visitors.id);
-      var title = visitors.dataset.flagTitle;
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
 
       Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
         .then(response => response.json())
         .then(({ results }) => {
           if (results.length > 0) {
-            var counter = results[0];
+            const counter = results[0];
             leancloudSelector(url).innerText = counter.time + 1;
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .catch(error => {
@@ -624,8 +601,8 @@
     }
 
     function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
         return decodeURI(element.id);
       });
 
@@ -633,7 +610,7 @@
         .then(response => response.json())
         .then(({ results }) => {
           for (let url of entries) {
-            let target = results.find(item => item.url === url);
+            const target = results.find(item => item.url === url);
             leancloudSelector(url).innerText = target ? target.time : 0;
           }
         })
@@ -642,9 +619,9 @@
         });
     }
 
-    let { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
     function fetchData(api_server) {
-      var Counter = (method, url, data) => {
+      const Counter = (method, url, data) => {
         return fetch(`${api_server}/1.1${url}`, {
           method,
           headers: {
@@ -663,7 +640,7 @@
       }
     }
 
-    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
 
     if (api_server) {
       fetchData(api_server);
@@ -678,68 +655,11 @@
 </script>
 
 
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-  
-<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
-<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
-<script src="/js/algolia-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
 
 <script>
-NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+NexT.utils.loadComments('#lv-container', () => {
   window.livereOptions = {
-    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+    refer: "2017/11/02/android_event_3/"
   };
   (function(d, s) {
     var j, e = d.getElementsByTagName(s)[0];

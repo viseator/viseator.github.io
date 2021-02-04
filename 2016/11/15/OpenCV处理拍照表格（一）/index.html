@@ -4,32 +4,32 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 5.3.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
-  <meta name="msapplication-config" content="/images/browserconfig.xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CAladin:300,300italic,400,400italic,700,700italic%7CPT+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<script id="hexo-configurations">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.viseator.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":2,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.viseator.com","root":"/","images":"/images","scheme":"Mist","version":"8.2.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10}}};
   </script>
-
-  <meta name="description" content="环境配置https:&#x2F;&#x2F;www.learn2crack.com&#x2F;2016&#x2F;03&#x2F;setup-opencv-sdk-android-studio.html 非常新的一篇在AS中安装OpenCV的教程，按教程装好了环境并测试通过。 注意教程中没有讲到的是想要使用OpenCV的相关功能，需要安装下载包中apk目录下的对应处理器的OpenCV manager。并在使用OpenCV的活动中加入以下内容：12">
+<meta name="description" content="环境配置https:&#x2F;&#x2F;www.learn2crack.com&#x2F;2016&#x2F;03&#x2F;setup-opencv-sdk-android-studio.html 非常新的一篇在AS中安装OpenCV的教程，按教程装好了环境并测试通过。 注意教程中没有讲到的是想要使用OpenCV的相关功能，需要安装下载包中apk目录下的对应处理器的OpenCV manager。并在使用OpenCV的活动中加入以下内容： 1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="OpenCV处理拍照表格（一）">
 <meta property="og:url" content="https://www.viseator.com/2016/11/15/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
-<meta property="og:description" content="环境配置https:&#x2F;&#x2F;www.learn2crack.com&#x2F;2016&#x2F;03&#x2F;setup-opencv-sdk-android-studio.html 非常新的一篇在AS中安装OpenCV的教程，按教程装好了环境并测试通过。 注意教程中没有讲到的是想要使用OpenCV的相关功能，需要安装下载包中apk目录下的对应处理器的OpenCV manager。并在使用OpenCV的活动中加入以下内容：12">
+<meta property="og:description" content="环境配置https:&#x2F;&#x2F;www.learn2crack.com&#x2F;2016&#x2F;03&#x2F;setup-opencv-sdk-android-studio.html 非常新的一篇在AS中安装OpenCV的教程，按教程装好了环境并测试通过。 注意教程中没有讲到的是想要使用OpenCV的相关功能，需要安装下载包中apk目录下的对应处理器的OpenCV manager。并在使用OpenCV的活动中加入以下内容： 1">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.viseator.com/images/QQ%E6%88%AA%E5%9B%BE20161115205902-300x179.png">
 <meta property="og:image" content="https://www.viseator.com/images/QQ%E6%88%AA%E5%9B%BE20161115205922-300x188.png">
@@ -46,10 +46,11 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.viseator.com/images/QQ%E6%88%AA%E5%9B%BE20161115205902-300x179.png">
 
+
 <link rel="canonical" href="https://www.viseator.com/2016/11/15/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%80%EF%BC%89/">
 
 
-<script id="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -58,8 +59,7 @@
     lang   : 'zh-CN'
   };
 </script>
-
-  <title>OpenCV处理拍照表格（一） | viseator's blog</title>
+<title>OpenCV处理拍照表格（一） | viseator's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
     <script>
@@ -70,7 +70,6 @@
         gtag('config', 'UA-93455229-1');
       }
     </script>
-
 
   <script>
     var _hmt = _hmt || [];
@@ -84,52 +83,63 @@
 
 
 
-
   <noscript>
   <style>
-  .use-motion .brand,
+  body { margin-top: 2rem; }
+
   .use-motion .menu-item,
-  .sidebar-inner,
+  .use-motion .sidebar,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle {
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
   </style>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
+      <i class="logo-line"></i>
       <h1 class="site-title">viseator's blog</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">吴迪的博客</p>
   </div>
@@ -143,44 +153,15 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section">首页</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories" rel="section">分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives" rel="section">归档</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags" rel="section">标签</a>
-
-  </li>
-        <li class="menu-item menu-item-resource">
-
-    <a href="/2017/03/25/resource_general" rel="section">资源</a>
-
-  </li>
-        <li class="menu-item menu-item-arch">
-
-    <a href="/categories/Linux/" rel="section">Arch安装</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about" rel="section">关于</a>
-
-  </li>
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories" rel="section">分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags" rel="section">标签</a></li>
+        <li class="menu-item menu-item-resource"><a href="/2017/03/25/resource_general" rel="section">资源</a></li>
+        <li class="menu-item menu-item-arch"><a href="/categories/Linux/" rel="section">Arch安装</a></li>
+        <li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger">搜索
         </a>
@@ -191,299 +172,37 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container"></div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div class="algolia-results">
-  <div id="algolia-stats"></div>
-  <div id="algolia-hits"></div>
-  <div id="algolia-pagination" class="algolia-pagination"></div>
+<div class="search-result-container">
+  <div class="algolia-stats"><hr></div>
+  <div class="algolia-hits"></div>
+  <div class="algolia-pagination"></div>
 </div>
 
-      
     </div>
   </div>
 
 </div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
-            
-
-    
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2016/11/15/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%80%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="viseator(吴迪)">
-      <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="viseator's blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          OpenCV处理拍照表格（一）
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2016-11-15 21:09:28" itemprop="dateCreated datePublished" datetime="2016-11-15T21:09:28+08:00">2016-11-15</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Java/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2016/11/15/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="OpenCV处理拍照表格（一）" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p><a href="https://www.learn2crack.com/2016/03/setup-opencv-sdk-android-studio.html" target="_blank" rel="noopener">https://www.learn2crack.com/2016/03/setup-opencv-sdk-android-studio.html</a></p>
-<p>非常新的一篇在AS中安装<code>OpenCV</code>的教程，按教程装好了环境并测试通过。</p>
-<p>注意教程中没有讲到的是想要使用<code>OpenCV</code>的相关功能，需要安装下载包中apk目录下的对应处理器的<code>OpenCV manager</code>。并在使用<code>OpenCV</code>的活动中加入以下内容：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> BaseLoaderCallback mLoaderCallback = <span class="keyword">new</span> BaseLoaderCallback(<span class="keyword">this</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Connect to OpenCV manager service and initialize</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onManagerConnected</span><span class="params">(<span class="keyword">int</span> status)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (status)&#123;</span><br><span class="line">            <span class="keyword">case</span> BaseLoaderCallback.SUCCESS:</span><br><span class="line">                Log.i(TAG, <span class="string">"OpenCV Success"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">super</span>.onManagerConnected(status);</span><br><span class="line">                Log.i(TAG, <span class="string">"OpenCV Fail"</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Initialize at every resume</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onResume();</span><br><span class="line">    OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, getApplicationContext(), mLoaderCallback);</span><br><span class="line">    Log.d(TAG, <span class="string">"On Resume OK"</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br><a id="more"></a></p>
-<blockquote>
-<p><a href="http://docs.opencv.org/java/3.1.0/" target="_blank" rel="noopener">http://docs.opencv.org/java/3.1.0/</a>&gt;<br>opencv的官方文档。<br><strong>更正：上面的3.1版的文档并没有详细的方法解释！</strong></p>
-</blockquote>
-<p><strong>所以只能看</strong></p>
-<p><strong><a href="http://docs.opencv.org/java/2.4.11/" target="_blank" rel="noopener">http://docs.opencv.org/java/2.4.11/</a></strong></p>
-<p><strong>2.4.11的。</strong></p>
-<h2 id="处理的大致思路"><a href="#处理的大致思路" class="headerlink" title="处理的大致思路"></a>处理的大致思路</h2><h3 id="目前想到的思路是："><a href="#目前想到的思路是：" class="headerlink" title="目前想到的思路是："></a>目前想到的思路是：</h3><ol>
-<li>图像彩色转灰度</li>
-<li>灰度图像设置阈值后二值化即变成完全黑白</li>
-<li>去除多余的噪点</li>
-<li>边缘识别</li>
-<li>透视变形</li>
-<li>矩形识别</li>
-<li>分割识别出的矩形</li>
-<li>OCR对矩形进行识别，读取数据。</li>
-</ol>
-<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="灰度与二值化"><a href="#灰度与二值化" class="headerlink" title="灰度与二值化"></a>灰度与二值化</h3><p>开始采用OpenCV中<code>BitmapToMat</code>方法，将文件以<code>Bitmap</code>的形式读取，再转换为<code>Mat</code>格式再进行处理。</p>
-<p>后面发现了OpenCV自带的<code>imread</code>方法，传入文件路径和<code>Mat</code>的格式后就可以方便地获得一个<code>Mat</code>对象。</p>
-<p>另外如果在这里采用<code>Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE</code>标签，就可以直接以灰度的形式读取图像，省去了颜色转化的步骤。并且这个<code>Mat</code>的格式就是下面一步二值化要求传入的<code>8UC1</code>（8位单通道）格式。</p>
-<p>下面就是二值化步骤，<code>OpenCV</code>提供了两个函数，第一个是普通的<code>Threshold</code>函数：</p>
-<blockquote>
-<h4 id="threshold"><a href="#threshold" class="headerlink" title="threshold"></a>threshold</h4><p>public static double threshold(<a href="http://docs.opencv.org/java/2.4.11/org/opencv/core/Mat.html" target="_blank" rel="noopener">Mat</a> src,<br><a href="http://docs.opencv.org/java/2.4.11/org/opencv/core/Mat.html" target="_blank" rel="noopener">Mat</a> dst,double thresh,double maxval,int type)<br>     Parameters:<br>     <code>src</code> - input array (single-channel, 8-bit or 32-bit floating point).<br>     <code>dst</code> - output array of the same size and type as <code>src</code>.<br>     <code>thresh</code> - threshold value.<br>     <code>maxval</code> - maximum value to use with the <code>THRESH_BINARY</code> and <code>THRESH_BINARY_INV</code> thresholding types.<br>     <code>type</code> - thresholding type (see the details below).</p>
-</blockquote>
-<p>传入图像，传出图像，阈值，填充的最深颜色，填充方法（达到阈值就填充最深颜色或相反），就可以根据每个像素的灰度值与阈值进行比较来决定填充的值为0或是最深。</p>
-<p>定阈值的方法虽然可以对一张图像通过调整达到最优的效果，但是对于不同光照条件下拍摄出来的照片，因为整体亮度的不同，定阈值显然无法适应所有的情况。</p>
-<p>所以就有了第二种函数，<code>adaptiveThreshold</code>，除了传入上面的这些参数外，增加了三个重要的参数</p>
-<blockquote>
-<h4 id="adaptiveThreshold"><a href="#adaptiveThreshold" class="headerlink" title="adaptiveThreshold"></a>adaptiveThreshold</h4><p>public static void adaptiveThreshold(<a href="http://docs.opencv.org/java/2.4.11/org/opencv/core/Mat.html" target="_blank" rel="noopener" title="class in org.opencv.core">Mat</a> src,<a href="http://docs.opencv.org/java/2.4.11/org/opencv/core/Mat.html" target="_blank" rel="noopener" title="class in org.opencv.core">Mat</a> dst,double maxValue,int adaptiveMethod,int thresholdType,int blockSize,double C)<br>Parameters:<br><code>src</code> - Source 8-bit single-channel image.<br><code>dst</code> - Destination image of the same size and the same type as <code>src</code>.<br><code>maxValue</code> - Non-zero value assigned to the pixels for which the condition is satisfied. See the details below.<br><code>adaptiveMethod</code> - Adaptive thresholding algorithm to use, <code>ADAPTIVE_THRESH_MEAN_C</code> or <code>ADAPTIVE_THRESH_GAUSSIAN_C</code>. See the details below.<br><code>thresholdType</code> - Thresholding type that must be either <code>THRESH_BINARY</code> or <code>THRESH_BINARY_INV</code>.<br><code>blockSize</code> - Size of a pixel neighborhood that is used to calculate a threshold value for the pixel: 3, 5, 7, and so on.<br><code>C</code> - Constant subtracted from the mean or weighted mean (see the details below). Normally, it is positive but may be zero or negative as well.</p>
-</blockquote>
-<p><code>blockSize</code>：对某个像素周围进行采样的范围。<br><code>adaptiveMethod</code>：根据上面的范围求阈值的方法，有两种：</p>
-<ol>
-<li>mean平均，简单地取采样范围内的平均值作为阈值。</li>
-<li>gaussian高斯，以高斯函数为基础，简单地说就是近的地方权重更高、远的地方权重低，来求阈值。</li>
-</ol>
-<p><code>C</code>：求出来的阈值减去的常量。</p>
-<p>这三个参数就是决定二值化效果的关键，我找最优值的方法比较暴力，写了一个嵌套的循环设置这两个值，再输出到文件导出到电脑上用肉眼比较。最后确定的值为17-10。</p>
-<p><code>adaptiveMethod</code>我用的是<code>mean</code>，因为表格相对来说黑白比较明显，并不需要去根据距离的远近来决定阈值。</p>
-<p>17这个值在我的手机拍摄出来的效果里面是最好的，但由于不同拍摄设备的分辨率不同，就造成了笔画所占据的像素的数量的不同，可以想到的是在高分辨率的情况下这个值应该要相应地增大，打个比方说我一个笔画的粗细就有17个像素，那么这个范围内检测出的阈值就会非常高从而导致笔画的残缺不全。</p>
-<p><code>C</code>这个值还是需要经过测试来得出的，设置的不同对最后效果的影响是最大的，直接会决定最后出来的图片是笔画过粗或是笔画残缺。</p>
-<p>下面是处理前后的效果：</p>
-<p><img src="/images/QQ截图20161115205902-300x179.png" alt="qq%e6%88%aa%e5%9b%be20161115205902"><img src="/images/QQ截图20161115205922-300x188.png" alt="qq%e6%88%aa%e5%9b%be20161115205922"></p>
-<p>可以看到二值化以后的图像只有黑白两色，但是明显有许多的噪点。</p>
-<h3 id="去噪"><a href="#去噪" class="headerlink" title="去噪"></a>去噪</h3><p>二值化之后就是去噪了，去噪的目的是把图像中的独立的点去掉。</p>
-<p>去噪的方法是腐蚀，跟字面意思一样，就是缩小图案的范围，当图像的范围本身就很小时（噪点就是一个个这样的独立点），缩小后自然就不见了。</p>
-<p>可以想到，在去噪后，部分笔画也随之缩小甚至细的地方会直接消失，所以腐蚀之后要再进行一步膨胀，即把图案的边缘扩大。</p>
-<p>因为噪点已经消失，所以也不会因扩大而回来，但笔画依然存在，就会膨胀而得到弥补，也顺便可以补一下残缺的地方。</p>
-<p>原理大概就是这样，<strong>但是由于OpenCV的这两个操作针对的是图像中的亮点（白色的地方被认为是亮点），而我们的表格又是白底黑字的，实际上黑色的部分是我们想要处理的部分，所以我将这两步交换了，相当于是对黑色的地方先腐蚀后膨胀。</strong></p>
-<p>下面是代码实现：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Mat kernelDilate = Imgproc.getStructuringElement(Imgproc.MORPH_DILATE, <span class="keyword">new</span> Size(<span class="number">2</span>, <span class="number">2</span>));</span><br><span class="line">Imgproc.dilate(srcPic, srcPic, kernelDilate);</span><br><span class="line">Imgcodecs.imwrite(<span class="string">"/storage/sdcard/pic/test/afterErode.jpg"</span>, srcPic);</span><br><span class="line">Mat kernelErode = Imgproc.getStructuringElement(Imgproc.MORPH_ERODE, <span class="keyword">new</span> Size(<span class="number">2</span>, <span class="number">2</span>));</span><br><span class="line">Imgproc.erode(srcPic, srcPic, kernelErode);</span><br><span class="line">Imgcodecs.imwrite(<span class="string">"/storage/sdcard/pic/test/afterDilate.jpg"</span>, srcPic);</span><br></pre></td></tr></table></figure><br>参数中有一个<code>Kernel</code>，这个就是处理图像的核，具体的内容不展开，我们利用<code>getStructuringElement</code>函数可以构建特定的处理核，这个函数第一个参数是构建的核的类型，除了用于代码中用到的膨胀和腐蚀的类型，还有<code>ract</code>、<code>cross</code>、<code>ellipse</code>等不同的形状，后面的<code>size</code>就是我们设置的重点了，指的是核的大小，可以理解成检测的范围，对于大的噪点自然需要大的范围，但是也意味着笔画细节丢失也更加严重。对于膨胀操作，则可以理解成膨胀的像素数，这个数值越大，最后的结果中的笔画也就越粗。</p>
-<p>下面是上述代码的结果对比：</p>
-<p><img src="/images/QQ截图20161115205922-300x188.png" alt="qq%e6%88%aa%e5%9b%be20161115205922">之前</p>
-<p><img src="/images/QQ截图20161115202014-300x207.png" alt="qq%e6%88%aa%e5%9b%be20161115202014"> <img src="/images/QQ截图20161115202029-300x212.png" alt="qq%e6%88%aa%e5%9b%be20161115202029"> <img src="/images/QQ截图20161115202050-300x205.png" alt="qq%e6%88%aa%e5%9b%be20161115202050"> <img src="/images/QQ截图20161115202107-300x196.png" alt="qq%e6%88%aa%e5%9b%be20161115202107"></p>
-<p>设置了四种不同的参数，可以看到噪点基本都被去除，最后的细节不尽相同。</p>
-
-    </div>
-
-    
-    
-    
-        <div class="reward-container">
-  <div></div>
-  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    打赏
-  </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
-        <p>微信支付</p>
-      </div>
-      
-      <div style="display: inline-block;">
-        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
-        <p>支付宝</p>
-      </div>
-
-  </div>
-</div>
-
         
-
-<div>
-<ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者： </strong>viseator(吴迪)
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://www.viseator.com/2016/11/15/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%80%EF%BC%89/" title="OpenCV处理拍照表格（一）">https://www.viseator.com/2016/11/15/OpenCV处理拍照表格（一）/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
-        
-
-  <div class="followme">
-    <p>欢迎关注我的其它发布渠道</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
-            <span class="icon">
-              <i class="fa fa-wechat"></i>
-            </span>
-
-            <span class="label">微信公众号</span>
-          </a>
-        </div>
-    </div>
-  </div>
-
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Java/" rel="tag"># Java</a>
-              <a href="/tags/OpenCV/" rel="tag"># OpenCV</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item"></div>
-      <div class="post-nav-item">
-    <a href="/2016/12/02/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="OpenCV处理拍照表格（二）">
-      OpenCV处理拍照表格（二） <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
   
-  
-  
-
-
-
-          </div>
-          
-    
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
-  </div>
-  
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
   </div>
 
   <aside class="sidebar">
-    <div class="sidebar-inner">
 
-      <ul class="sidebar-nav motion-element">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
         </li>
@@ -492,26 +211,27 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#环境配置"><span class="nav-number">1.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理的大致思路"><span class="nav-number">2.</span> <span class="nav-text">处理的大致思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#目前想到的思路是："><span class="nav-number">2.1.</span> <span class="nav-text">目前想到的思路是：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#灰度与二值化"><span class="nav-number">3.1.</span> <span class="nav-text">灰度与二值化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#threshold"><span class="nav-number">3.1.1.</span> <span class="nav-text">threshold</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#adaptiveThreshold"><span class="nav-number">3.1.2.</span> <span class="nav-text">adaptiveThreshold</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#去噪"><span class="nav-number">3.2.</span> <span class="nav-text">去噪</span></a></li></ol></li></ol></div>
-      </div>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE"><span class="nav-number">1.</span> <span class="nav-text">环境配置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%84%E7%90%86%E7%9A%84%E5%A4%A7%E8%87%B4%E6%80%9D%E8%B7%AF"><span class="nav-number">2.</span> <span class="nav-text">处理的大致思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%9B%AE%E5%89%8D%E6%83%B3%E5%88%B0%E7%9A%84%E6%80%9D%E8%B7%AF%E6%98%AF%EF%BC%9A"><span class="nav-number">2.1.</span> <span class="nav-text">目前想到的思路是：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%9E%E7%8E%B0"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%81%B0%E5%BA%A6%E4%B8%8E%E4%BA%8C%E5%80%BC%E5%8C%96"><span class="nav-number">3.1.</span> <span class="nav-text">灰度与二值化</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#threshold"><span class="nav-number">3.1.1.</span> <span class="nav-text">threshold</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#adaptiveThreshold"><span class="nav-number">3.1.2.</span> <span class="nav-text">adaptiveThreshold</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8E%BB%E5%99%AA"><span class="nav-number">3.2.</span> <span class="nav-text">去噪</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
       src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
   <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
-<div class="site-state-wrap motion-element">
+<div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
           <span class="site-state-item-count">36</span>
-          <span class="site-state-item-name">文章</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
@@ -528,85 +248,347 @@
       </div>
   </nav>
 </div>
-  <div class="links-of-author motion-element">
+  <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/viseator" title="GitHub → https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+        <a href="https://github.com/viseator" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;viseator" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:viseator@gmail.com" title="Email → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
+        <a href="mailto:viseator@gmail.com" title="E-Mail → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-  <div class="cc-license motion-element" itemprop="license">
+  <div class="cc-license site-overview-item animated" itemprop="license">
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
       Links
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
+          <a href="https://www.hustunique.com/" title="https:&#x2F;&#x2F;www.hustunique.com&#x2F;" rel="noopener" target="_blank">UniqueStudio</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
+          <a href="http://blog.codedragon.tech/" title="http:&#x2F;&#x2F;blog.codedragon.tech&#x2F;" rel="noopener" target="_blank">BlackDragon</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
+          <a href="http://imzhwk.com/" title="http:&#x2F;&#x2F;imzhwk.com&#x2F;" rel="noopener" target="_blank">imzhwk</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
+          <a href="http://moe.petnakanojo.com/" title="http:&#x2F;&#x2F;moe.petnakanojo.com&#x2F;" rel="noopener" target="_blank">PetnaKanojo</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
+          <a href="http://alexandertang.cn/" title="http:&#x2F;&#x2F;alexandertang.cn&#x2F;" rel="noopener" target="_blank">Alexander</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
+          <a href="https://qzwlecr.github.io/" title="https:&#x2F;&#x2F;qzwlecr.github.io&#x2F;" rel="noopener" target="_blank">qzwlecr</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
+          <a href="http://www.kurokoi.moe/" title="http:&#x2F;&#x2F;www.kurokoi.moe&#x2F;" rel="noopener" target="_blank">Kurokoi</a>
         </li>
     </ul>
   </div>
 
+        </div>
       </div>
-
     </div>
   </aside>
-  <div id="sidebar-dimmer"></div>
+  <div class="sidebar-dimmer"></div>
 
 
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2016/11/15/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%80%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="viseator(吴迪)">
+      <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="viseator's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          OpenCV处理拍照表格（一）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2016-11-15 21:09:28" itemprop="dateCreated datePublished" datetime="2016-11-15T21:09:28+08:00">2016-11-15</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/" itemprop="url" rel="index"><span itemprop="name">Java</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Java/OpenCV/" itemprop="url" rel="index"><span itemprop="name">OpenCV</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2016/11/15/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%80%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="OpenCV处理拍照表格（一）" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="环境配置"><a href="#环境配置" class="headerlink" title="环境配置"></a>环境配置</h2><p><a target="_blank" rel="noopener" href="https://www.learn2crack.com/2016/03/setup-opencv-sdk-android-studio.html">https://www.learn2crack.com/2016/03/setup-opencv-sdk-android-studio.html</a></p>
+<p>非常新的一篇在AS中安装<code>OpenCV</code>的教程，按教程装好了环境并测试通过。</p>
+<p>注意教程中没有讲到的是想要使用<code>OpenCV</code>的相关功能，需要安装下载包中apk目录下的对应处理器的<code>OpenCV manager</code>。并在使用<code>OpenCV</code>的活动中加入以下内容：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> BaseLoaderCallback mLoaderCallback = <span class="keyword">new</span> BaseLoaderCallback(<span class="keyword">this</span>) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//Connect to OpenCV manager service and initialize</span></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onManagerConnected</span><span class="params">(<span class="keyword">int</span> status)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">switch</span> (status)&#123;</span><br><span class="line">            <span class="keyword">case</span> BaseLoaderCallback.SUCCESS:</span><br><span class="line">                Log.i(TAG, <span class="string">&quot;OpenCV Success&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            <span class="keyword">default</span>:</span><br><span class="line">                <span class="keyword">super</span>.onManagerConnected(status);</span><br><span class="line">                Log.i(TAG, <span class="string">&quot;OpenCV Fail&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Initialize at every resume</span></span><br><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onResume</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="keyword">super</span>.onResume();</span><br><span class="line">    OpenCVLoader.initAsync(OpenCVLoader.OPENCV_VERSION_3_1_0, getApplicationContext(), mLoaderCallback);</span><br><span class="line">    Log.d(TAG, <span class="string">&quot;On Resume OK&quot;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<a id="more"></a>
+
+<blockquote>
+<p><a target="_blank" rel="noopener" href="http://docs.opencv.org/java/3.1.0/">http://docs.opencv.org/java/3.1.0/</a>&gt;<br>opencv的官方文档。<br><strong>更正：上面的3.1版的文档并没有详细的方法解释！</strong></p>
+</blockquote>
+<p><strong>所以只能看</strong></p>
+<p><strong><a target="_blank" rel="noopener" href="http://docs.opencv.org/java/2.4.11/">http://docs.opencv.org/java/2.4.11/</a></strong></p>
+<p><strong>2.4.11的。</strong></p>
+<h2 id="处理的大致思路"><a href="#处理的大致思路" class="headerlink" title="处理的大致思路"></a>处理的大致思路</h2><h3 id="目前想到的思路是："><a href="#目前想到的思路是：" class="headerlink" title="目前想到的思路是："></a>目前想到的思路是：</h3><ol>
+<li>图像彩色转灰度</li>
+<li>灰度图像设置阈值后二值化即变成完全黑白</li>
+<li>去除多余的噪点</li>
+<li>边缘识别</li>
+<li>透视变形</li>
+<li>矩形识别</li>
+<li>分割识别出的矩形</li>
+<li>OCR对矩形进行识别，读取数据。</li>
+</ol>
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><h3 id="灰度与二值化"><a href="#灰度与二值化" class="headerlink" title="灰度与二值化"></a>灰度与二值化</h3><p>开始采用OpenCV中<code>BitmapToMat</code>方法，将文件以<code>Bitmap</code>的形式读取，再转换为<code>Mat</code>格式再进行处理。</p>
+<p>后面发现了OpenCV自带的<code>imread</code>方法，传入文件路径和<code>Mat</code>的格式后就可以方便地获得一个<code>Mat</code>对象。</p>
+<p>另外如果在这里采用<code>Imgcodecs.CV_LOAD_IMAGE_GRAYSCALE</code>标签，就可以直接以灰度的形式读取图像，省去了颜色转化的步骤。并且这个<code>Mat</code>的格式就是下面一步二值化要求传入的<code>8UC1</code>（8位单通道）格式。</p>
+<p>下面就是二值化步骤，<code>OpenCV</code>提供了两个函数，第一个是普通的<code>Threshold</code>函数：</p>
+<blockquote>
+<h4 id="threshold"><a href="#threshold" class="headerlink" title="threshold"></a>threshold</h4><p>public static double threshold(<a target="_blank" rel="noopener" href="http://docs.opencv.org/java/2.4.11/org/opencv/core/Mat.html">Mat</a> src,<br><a target="_blank" rel="noopener" href="http://docs.opencv.org/java/2.4.11/org/opencv/core/Mat.html">Mat</a> dst,double thresh,double maxval,int type)<br>     Parameters:<br>     <code>src</code> - input array (single-channel, 8-bit or 32-bit floating point).<br>     <code>dst</code> - output array of the same size and type as <code>src</code>.<br>     <code>thresh</code> - threshold value.<br>     <code>maxval</code> - maximum value to use with the <code>THRESH_BINARY</code> and <code>THRESH_BINARY_INV</code> thresholding types.<br>     <code>type</code> - thresholding type (see the details below).</p>
+</blockquote>
+<p>传入图像，传出图像，阈值，填充的最深颜色，填充方法（达到阈值就填充最深颜色或相反），就可以根据每个像素的灰度值与阈值进行比较来决定填充的值为0或是最深。</p>
+<p>定阈值的方法虽然可以对一张图像通过调整达到最优的效果，但是对于不同光照条件下拍摄出来的照片，因为整体亮度的不同，定阈值显然无法适应所有的情况。</p>
+<p>所以就有了第二种函数，<code>adaptiveThreshold</code>，除了传入上面的这些参数外，增加了三个重要的参数</p>
+<blockquote>
+<h4 id="adaptiveThreshold"><a href="#adaptiveThreshold" class="headerlink" title="adaptiveThreshold"></a>adaptiveThreshold</h4><p>public static void adaptiveThreshold(<a target="_blank" rel="noopener" href="http://docs.opencv.org/java/2.4.11/org/opencv/core/Mat.html" title="class in org.opencv.core">Mat</a> src,<a target="_blank" rel="noopener" href="http://docs.opencv.org/java/2.4.11/org/opencv/core/Mat.html" title="class in org.opencv.core">Mat</a> dst,double maxValue,int adaptiveMethod,int thresholdType,int blockSize,double C)<br>Parameters:<br><code>src</code> - Source 8-bit single-channel image.<br><code>dst</code> - Destination image of the same size and the same type as <code>src</code>.<br><code>maxValue</code> - Non-zero value assigned to the pixels for which the condition is satisfied. See the details below.<br><code>adaptiveMethod</code> - Adaptive thresholding algorithm to use, <code>ADAPTIVE_THRESH_MEAN_C</code> or <code>ADAPTIVE_THRESH_GAUSSIAN_C</code>. See the details below.<br><code>thresholdType</code> - Thresholding type that must be either <code>THRESH_BINARY</code> or <code>THRESH_BINARY_INV</code>.<br><code>blockSize</code> - Size of a pixel neighborhood that is used to calculate a threshold value for the pixel: 3, 5, 7, and so on.<br><code>C</code> - Constant subtracted from the mean or weighted mean (see the details below). Normally, it is positive but may be zero or negative as well.</p>
+</blockquote>
+<p><code>blockSize</code>：对某个像素周围进行采样的范围。<br><code>adaptiveMethod</code>：根据上面的范围求阈值的方法，有两种：</p>
+<ol>
+<li>mean平均，简单地取采样范围内的平均值作为阈值。</li>
+<li>gaussian高斯，以高斯函数为基础，简单地说就是近的地方权重更高、远的地方权重低，来求阈值。</li>
+</ol>
+<p><code>C</code>：求出来的阈值减去的常量。</p>
+<p>这三个参数就是决定二值化效果的关键，我找最优值的方法比较暴力，写了一个嵌套的循环设置这两个值，再输出到文件导出到电脑上用肉眼比较。最后确定的值为17-10。</p>
+<p><code>adaptiveMethod</code>我用的是<code>mean</code>，因为表格相对来说黑白比较明显，并不需要去根据距离的远近来决定阈值。</p>
+<p>17这个值在我的手机拍摄出来的效果里面是最好的，但由于不同拍摄设备的分辨率不同，就造成了笔画所占据的像素的数量的不同，可以想到的是在高分辨率的情况下这个值应该要相应地增大，打个比方说我一个笔画的粗细就有17个像素，那么这个范围内检测出的阈值就会非常高从而导致笔画的残缺不全。</p>
+<p><code>C</code>这个值还是需要经过测试来得出的，设置的不同对最后效果的影响是最大的，直接会决定最后出来的图片是笔画过粗或是笔画残缺。</p>
+<p>下面是处理前后的效果：</p>
+<p><img src="/images/QQ%E6%88%AA%E5%9B%BE20161115205902-300x179.png" alt="qq%e6%88%aa%e5%9b%be20161115205902"><img src="/images/QQ%E6%88%AA%E5%9B%BE20161115205922-300x188.png" alt="qq%e6%88%aa%e5%9b%be20161115205922"></p>
+<p>可以看到二值化以后的图像只有黑白两色，但是明显有许多的噪点。</p>
+<h3 id="去噪"><a href="#去噪" class="headerlink" title="去噪"></a>去噪</h3><p>二值化之后就是去噪了，去噪的目的是把图像中的独立的点去掉。</p>
+<p>去噪的方法是腐蚀，跟字面意思一样，就是缩小图案的范围，当图像的范围本身就很小时（噪点就是一个个这样的独立点），缩小后自然就不见了。</p>
+<p>可以想到，在去噪后，部分笔画也随之缩小甚至细的地方会直接消失，所以腐蚀之后要再进行一步膨胀，即把图案的边缘扩大。</p>
+<p>因为噪点已经消失，所以也不会因扩大而回来，但笔画依然存在，就会膨胀而得到弥补，也顺便可以补一下残缺的地方。</p>
+<p>原理大概就是这样，<strong>但是由于OpenCV的这两个操作针对的是图像中的亮点（白色的地方被认为是亮点），而我们的表格又是白底黑字的，实际上黑色的部分是我们想要处理的部分，所以我将这两步交换了，相当于是对黑色的地方先腐蚀后膨胀。</strong></p>
+<p>下面是代码实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Mat kernelDilate = Imgproc.getStructuringElement(Imgproc.MORPH_DILATE, <span class="keyword">new</span> Size(<span class="number">2</span>, <span class="number">2</span>));</span><br><span class="line">Imgproc.dilate(srcPic, srcPic, kernelDilate);</span><br><span class="line">Imgcodecs.imwrite(<span class="string">&quot;/storage/sdcard/pic/test/afterErode.jpg&quot;</span>, srcPic);</span><br><span class="line">Mat kernelErode = Imgproc.getStructuringElement(Imgproc.MORPH_ERODE, <span class="keyword">new</span> Size(<span class="number">2</span>, <span class="number">2</span>));</span><br><span class="line">Imgproc.erode(srcPic, srcPic, kernelErode);</span><br><span class="line">Imgcodecs.imwrite(<span class="string">&quot;/storage/sdcard/pic/test/afterDilate.jpg&quot;</span>, srcPic);</span><br></pre></td></tr></table></figure>
+<p>参数中有一个<code>Kernel</code>，这个就是处理图像的核，具体的内容不展开，我们利用<code>getStructuringElement</code>函数可以构建特定的处理核，这个函数第一个参数是构建的核的类型，除了用于代码中用到的膨胀和腐蚀的类型，还有<code>ract</code>、<code>cross</code>、<code>ellipse</code>等不同的形状，后面的<code>size</code>就是我们设置的重点了，指的是核的大小，可以理解成检测的范围，对于大的噪点自然需要大的范围，但是也意味着笔画细节丢失也更加严重。对于膨胀操作，则可以理解成膨胀的像素数，这个数值越大，最后的结果中的笔画也就越粗。</p>
+<p>下面是上述代码的结果对比：</p>
+<p><img src="/images/QQ%E6%88%AA%E5%9B%BE20161115205922-300x188.png" alt="qq%e6%88%aa%e5%9b%be20161115205922">之前</p>
+<p><img src="/images/QQ%E6%88%AA%E5%9B%BE20161115202014-300x207.png" alt="qq%e6%88%aa%e5%9b%be20161115202014"> <img src="/images/QQ%E6%88%AA%E5%9B%BE20161115202029-300x212.png" alt="qq%e6%88%aa%e5%9b%be20161115202029"> <img src="/images/QQ%E6%88%AA%E5%9B%BE20161115202050-300x205.png" alt="qq%e6%88%aa%e5%9b%be20161115202050"> <img src="/images/QQ%E6%88%AA%E5%9B%BE20161115202107-300x196.png" alt="qq%e6%88%aa%e5%9b%be20161115202107"></p>
+<p>设置了四种不同的参数，可以看到噪点基本都被去除，最后的细节不尽相同。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信">
+        <span>微信</span>
       </div>
-    </main>
+      <div>
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <span>支付宝</span>
+      </div>
 
-    <footer class="footer">
-      <div class="footer-inner">
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>viseator(吴迪)
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://www.viseator.com/2016/11/15/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%80%EF%BC%89/" title="OpenCV处理拍照表格（一）">https://www.viseator.com/2016/11/15/OpenCV处理拍照表格（一）/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
+
+          <span class="label">微信公众号</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Java/" rel="tag"># Java</a>
+              <a href="/tags/OpenCV/" rel="tag"># OpenCV</a>
+          </div>
+
         
 
-        
+          <div class="post-nav">
+            <div class="post-nav-item">
+            </div>
+            <div class="post-nav-item">
+                <a href="/2016/12/02/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%BA%8C%EF%BC%89/" rel="next" title="OpenCV处理拍照表格（二）">
+                  OpenCV处理拍照表格（二） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
 
 <div class="copyright">
-  
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
-        
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.8.4/dist/algoliasearch-lite.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.13.1/dist/instantsearch.production.min.js"></script><script src="/js/algolia-search.js"></script>
 
 
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1261494271&web_id=1261494271"></script>
-  </div>
 
 
+
+
+  
 
 
 <script>
@@ -617,15 +599,15 @@
     }
 
     function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = decodeURI(visitors.id);
-      var title = visitors.dataset.flagTitle;
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
 
       Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
         .then(response => response.json())
         .then(({ results }) => {
           if (results.length > 0) {
-            var counter = results[0];
+            const counter = results[0];
             leancloudSelector(url).innerText = counter.time + 1;
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .catch(error => {
@@ -648,8 +630,8 @@
     }
 
     function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
         return decodeURI(element.id);
       });
 
@@ -657,7 +639,7 @@
         .then(response => response.json())
         .then(({ results }) => {
           for (let url of entries) {
-            let target = results.find(item => item.url === url);
+            const target = results.find(item => item.url === url);
             leancloudSelector(url).innerText = target ? target.time : 0;
           }
         })
@@ -666,9 +648,9 @@
         });
     }
 
-    let { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
     function fetchData(api_server) {
-      var Counter = (method, url, data) => {
+      const Counter = (method, url, data) => {
         return fetch(`${api_server}/1.1${url}`, {
           method,
           headers: {
@@ -687,7 +669,7 @@
       }
     }
 
-    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
 
     if (api_server) {
       fetchData(api_server);
@@ -702,68 +684,11 @@
 </script>
 
 
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-  
-<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
-<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
-<script src="/js/algolia-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
 
 <script>
-NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+NexT.utils.loadComments('#lv-container', () => {
   window.livereOptions = {
-    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+    refer: "2016/11/15/OpenCV处理拍照表格（一）/"
   };
   (function(d, s) {
     var j, e = d.getElementsByTagName(s)[0];

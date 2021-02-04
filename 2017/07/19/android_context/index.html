@@ -4,32 +4,32 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 5.3.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
-  <meta name="msapplication-config" content="/images/browserconfig.xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CAladin:300,300italic,400,400italic,700,700italic%7CPT+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<script id="hexo-configurations">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.viseator.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":2,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.viseator.com","root":"/","images":"/images","scheme":"Mist","version":"8.2.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10}}};
   </script>
-
-  <meta name="description" content="Context?Context在安卓开发时是一个非常常见的组件，我们会在许多地方使用它，举一些例子：  启动新的Activity Service 发送广播，接收广播 填充View 获取资源  相信每一个开发者在看见它时都有过这样一些疑问：  Context是什么 Context的作用 Context从哪里来  同时，我们也经历过需要一个Context但不知道如何去正确获取&#x2F;传递的情况，事实上不正确">
+<meta name="description" content="Context?Context在安卓开发时是一个非常常见的组件，我们会在许多地方使用它，举一些例子：    启动新的Activity Service   发送广播，接收广播   填充View   获取资源  相信每一个开发者在看见它时都有过这样一些疑问：    Context是什么   Context的作用   Context从哪里来  同时，我们也经历过需要一个Context但不知道如何去正确获">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Context理解与陷阱">
 <meta property="og:url" content="https://www.viseator.com/2017/07/19/android_context/index.html">
 <meta property="og:site_name" content="viseator&#39;s blog">
-<meta property="og:description" content="Context?Context在安卓开发时是一个非常常见的组件，我们会在许多地方使用它，举一些例子：  启动新的Activity Service 发送广播，接收广播 填充View 获取资源  相信每一个开发者在看见它时都有过这样一些疑问：  Context是什么 Context的作用 Context从哪里来  同时，我们也经历过需要一个Context但不知道如何去正确获取&#x2F;传递的情况，事实上不正确">
+<meta property="og:description" content="Context?Context在安卓开发时是一个非常常见的组件，我们会在许多地方使用它，举一些例子：    启动新的Activity Service   发送广播，接收广播   填充View   获取资源  相信每一个开发者在看见它时都有过这样一些疑问：    Context是什么   Context的作用   Context从哪里来  同时，我们也经历过需要一个Context但不知道如何去正确获">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://www.viseator.com/images/context01.png">
 <meta property="article:published_time" content="2017-07-19T11:07:42.000Z">
@@ -39,10 +39,11 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.viseator.com/images/context01.png">
 
+
 <link rel="canonical" href="https://www.viseator.com/2017/07/19/android_context/">
 
 
-<script id="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -51,8 +52,7 @@
     lang   : 'zh-CN'
   };
 </script>
-
-  <title>Android Context理解与陷阱 | viseator's blog</title>
+<title>Android Context理解与陷阱 | viseator's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
     <script>
@@ -63,7 +63,6 @@
         gtag('config', 'UA-93455229-1');
       }
     </script>
-
 
   <script>
     var _hmt = _hmt || [];
@@ -77,52 +76,63 @@
 
 
 
-
   <noscript>
   <style>
-  .use-motion .brand,
+  body { margin-top: 2rem; }
+
   .use-motion .menu-item,
-  .sidebar-inner,
+  .use-motion .sidebar,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle {
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
   </style>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
+      <i class="logo-line"></i>
       <h1 class="site-title">viseator's blog</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">吴迪的博客</p>
   </div>
@@ -136,44 +146,15 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section">首页</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories" rel="section">分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives" rel="section">归档</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags" rel="section">标签</a>
-
-  </li>
-        <li class="menu-item menu-item-resource">
-
-    <a href="/2017/03/25/resource_general" rel="section">资源</a>
-
-  </li>
-        <li class="menu-item menu-item-arch">
-
-    <a href="/categories/Linux/" rel="section">Arch安装</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about" rel="section">关于</a>
-
-  </li>
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories" rel="section">分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags" rel="section">标签</a></li>
+        <li class="menu-item menu-item-resource"><a href="/2017/03/25/resource_general" rel="section">资源</a></li>
+        <li class="menu-item menu-item-arch"><a href="/categories/Linux/" rel="section">Arch安装</a></li>
+        <li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger">搜索
         </a>
@@ -184,48 +165,155 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container"></div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div class="algolia-results">
-  <div id="algolia-stats"></div>
-  <div id="algolia-hits"></div>
-  <div id="algolia-pagination" class="algolia-pagination"></div>
+<div class="search-result-container">
+  <div class="algolia-stats"><hr></div>
+  <div class="algolia-hits"></div>
+  <div class="algolia-pagination"></div>
 </div>
 
-      
     </div>
   </div>
 
 </div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Context"><span class="nav-number">1.</span> <span class="nav-text">Context?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Context%E7%9A%84%E5%AE%9A%E4%B9%89"><span class="nav-number">2.</span> <span class="nav-text">Context的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Context%E4%BB%8E%E5%93%AA%E9%87%8C%E6%9D%A5"><span class="nav-number">3.</span> <span class="nav-text">Context从哪里来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Context%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="nav-number">4.</span> <span class="nav-text">Context的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Context%E4%B8%AD%E5%B0%81%E8%A3%85%E7%9A%84%E4%BF%A1%E6%81%AF"><span class="nav-number">4.1.</span> <span class="nav-text">Context中封装的信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Context%E7%9A%84%E4%BD%9C%E7%94%A8-1"><span class="nav-number">4.2.</span> <span class="nav-text">Context的作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Context%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="nav-number">5.</span> <span class="nav-text">Context的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Context%E5%88%86%E7%B1%BB"><span class="nav-number">5.1.</span> <span class="nav-text">Context分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Activity-Service"><span class="nav-number">5.1.1.</span> <span class="nav-text">Activity&#x2F;Service</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Application"><span class="nav-number">5.1.2.</span> <span class="nav-text">Application</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BroadcastReciver"><span class="nav-number">5.1.3.</span> <span class="nav-text">BroadcastReciver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ContentProvider"><span class="nav-number">5.1.4.</span> <span class="nav-text">ContentProvider</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8Context%E6%97%B6%E7%9A%84%E9%99%B7%E9%98%B1"><span class="nav-number">5.2.</span> <span class="nav-text">使用Context时的陷阱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%80%BB%E6%98%AF%E4%BD%BF%E7%94%A8application%E4%BD%9C%E4%B8%BAcontext"><span class="nav-number">5.3.</span> <span class="nav-text">为什么不总是使用application作为context</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E4%BD%BF%E7%94%A8%E6%AD%A3%E7%A1%AE%E7%9A%84Context"><span class="nav-number">5.4.</span> <span class="nav-text">如何使用正确的Context</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">6.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
+  <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/viseator" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;viseator" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:viseator@gmail.com" title="E-Mail → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hustunique.com/" title="https:&#x2F;&#x2F;www.hustunique.com&#x2F;" rel="noopener" target="_blank">UniqueStudio</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.codedragon.tech/" title="http:&#x2F;&#x2F;blog.codedragon.tech&#x2F;" rel="noopener" target="_blank">BlackDragon</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://imzhwk.com/" title="http:&#x2F;&#x2F;imzhwk.com&#x2F;" rel="noopener" target="_blank">imzhwk</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://moe.petnakanojo.com/" title="http:&#x2F;&#x2F;moe.petnakanojo.com&#x2F;" rel="noopener" target="_blank">PetnaKanojo</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://alexandertang.cn/" title="http:&#x2F;&#x2F;alexandertang.cn&#x2F;" rel="noopener" target="_blank">Alexander</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://qzwlecr.github.io/" title="https:&#x2F;&#x2F;qzwlecr.github.io&#x2F;" rel="noopener" target="_blank">qzwlecr</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.kurokoi.moe/" title="http:&#x2F;&#x2F;www.kurokoi.moe&#x2F;" rel="noopener" target="_blank">Kurokoi</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
 
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
 
-          <div class="content post posts-expand">
-            
+    <div class="main-inner post posts-expand">
 
-    
+
+  
+
+
+<div class="post-block">
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/07/19/android_context/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -242,40 +330,42 @@
           Android Context理解与陷阱
         </h1>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2017-07-19 19:07:42" itemprop="dateCreated datePublished" datetime="2017-07-19T19:07:42+08:00">2017-07-19</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2017-07-19 19:07:42" itemprop="dateCreated datePublished" datetime="2017-07-19T19:07:42+08:00">2017-07-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
 
-          
-            <span id="/2017/07/19/android_context/" class="post-meta-item leancloud_visitors" data-flag-title="Android Context理解与陷阱" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
+  
+    <span id="/2017/07/19/android_context/" class="post-meta-item leancloud_visitors" data-flag-title="Android Context理解与陷阱" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
 
         </div>
       </header>
@@ -284,24 +374,23 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
         <h2 id="Context"><a href="#Context" class="headerlink" title="Context?"></a>Context?</h2><p><code>Context</code>在安卓开发时是一个非常常见的组件，我们会在许多地方使用它，举一些例子：</p>
 <ul>
-<li>启动新的<code>Activity</code> <code>Service</code></li>
-<li>发送广播，接收广播</li>
-<li>填充<code>View</code></li>
-<li>获取资源</li>
+<li>  启动新的<code>Activity</code> <code>Service</code></li>
+<li>  发送广播，接收广播</li>
+<li>  填充<code>View</code></li>
+<li>  获取资源</li>
 </ul>
 <p>相信每一个开发者在看见它时都有过这样一些疑问：</p>
 <ul>
-<li><code>Context</code>是什么</li>
-<li><code>Context</code>的作用</li>
-<li><code>Context</code>从哪里来</li>
+<li>  <code>Context</code>是什么</li>
+<li>  <code>Context</code>的作用</li>
+<li>  <code>Context</code>从哪里来</li>
 </ul>
 <p>同时，我们也经历过需要一个<code>Context</code>但不知道如何去正确获取/传递的情况，事实上不正确地保存一个<code>Context</code>的引用可能会导致部分内存不能被正确GC从而造成事实上的内存泄漏。</p>
 <p>本文将着重对上面这些内容进行讲解。</p>
 <a id="more"></a>
+
 <h2 id="Context的定义"><a href="#Context的定义" class="headerlink" title="Context的定义"></a>Context的定义</h2><p>字面上解释，<code>Context</code>意为“环境”，这个解释比较符合它的作用。</p>
 <p>官方文档中对<code>Context</code>的解释是：</p>
 <blockquote>
@@ -312,18 +401,18 @@
 <p><code>Context</code>就是系统为我们提供上述功能的一个接口，我们需要使用它去完成与系统的信息交换。</p>
 <h2 id="Context从哪里来"><a href="#Context从哪里来" class="headerlink" title="Context从哪里来"></a>Context从哪里来</h2><p><code>Context</code>作为一个依赖于系统的类，<code>SDK</code>中只给了我们一个抽象类，具体的实现由系统完成，下文举例使用的<code>ContextImpl</code>就是<code>AOSP</code>中安卓源码对于<code>Context</code>的一个实现。</p>
 <h2 id="Context的作用"><a href="#Context的作用" class="headerlink" title="Context的作用"></a>Context的作用</h2><h3 id="Context中封装的信息"><a href="#Context中封装的信息" class="headerlink" title="Context中封装的信息"></a>Context中封装的信息</h3><p>我们可以看看<code>Context</code>里面包含了哪些东西（部分）。</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> String mBasePackageName; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> String mOpPackageName; <span class="comment">//软件包名</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Resources mResources;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> ResourcesManager mResourcesManager; <span class="comment">//用于管理资源文件</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Display mDisplay; <span class="comment">//为View填充等提供屏幕尺寸、像素密度等信息</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> DisplayAdjustments mDisplayAdjustments = <span class="keyword">new</span> DisplayAdjustments();</span><br><span class="line"><span class="keyword">private</span> Resources.Theme mTheme = <span class="keyword">null</span>; <span class="comment">//主题信息</span></span><br><span class="line"><span class="keyword">private</span> File mCacheDir;</span><br><span class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</span><br><span class="line"><span class="keyword">private</span> File mCodeCacheDir;</span><br><span class="line">...</span><br><span class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</span><br><span class="line"><span class="keyword">private</span> File[] mExternalObbDirs;</span><br><span class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</span><br><span class="line"><span class="keyword">private</span> File[] mExternalFilesDirs;</span><br><span class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</span><br><span class="line"><span class="keyword">private</span> File[] mExternalCacheDirs;</span><br><span class="line"><span class="meta">@GuardedBy</span>(<span class="string">"mSync"</span>)</span><br><span class="line"><span class="keyword">private</span> File[] mExternalMediaDirs; <span class="comment">//各种文件路径</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> String mBasePackageName; </span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> String mOpPackageName; <span class="comment">//软件包名</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Resources mResources;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> ResourcesManager mResourcesManager; <span class="comment">//用于管理资源文件</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> Display mDisplay; <span class="comment">//为View填充等提供屏幕尺寸、像素密度等信息</span></span><br><span class="line"><span class="keyword">private</span> <span class="keyword">final</span> DisplayAdjustments mDisplayAdjustments = <span class="keyword">new</span> DisplayAdjustments();</span><br><span class="line"><span class="keyword">private</span> Resources.Theme mTheme = <span class="keyword">null</span>; <span class="comment">//主题信息</span></span><br><span class="line"><span class="keyword">private</span> File mCacheDir;</span><br><span class="line"><span class="meta">@GuardedBy(&quot;mSync&quot;)</span></span><br><span class="line"><span class="keyword">private</span> File mCodeCacheDir;</span><br><span class="line">...</span><br><span class="line"><span class="meta">@GuardedBy(&quot;mSync&quot;)</span></span><br><span class="line"><span class="keyword">private</span> File[] mExternalObbDirs;</span><br><span class="line"><span class="meta">@GuardedBy(&quot;mSync&quot;)</span></span><br><span class="line"><span class="keyword">private</span> File[] mExternalFilesDirs;</span><br><span class="line"><span class="meta">@GuardedBy(&quot;mSync&quot;)</span></span><br><span class="line"><span class="keyword">private</span> File[] mExternalCacheDirs;</span><br><span class="line"><span class="meta">@GuardedBy(&quot;mSync&quot;)</span></span><br><span class="line"><span class="keyword">private</span> File[] mExternalMediaDirs; <span class="comment">//各种文件路径</span></span><br></pre></td></tr></table></figure>
 <p>这些域的存在为功能提供了必要的信息，例如在<code>LayoutInflater</code>填充<code>View</code>时需要一个<code>context</code>作为参数，我们查看这个<code>context</code>如何被使用：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> XmlResourceParser childParser = context.getResources().getLayout(layout);</span><br></pre></td></tr></table></figure>
 <p>我们传入的<code>ResourceId</code>最终会被通过<code>context</code>的<code>getResource()</code>方法获取的<code>Resource</code>对象的<code>getLayout()</code>方法定位到对应的<code>xml</code>文件提供给<code>Inflater</code>进行解析。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Apply a theme wrapper, if allowed and one is specified.</span></span><br><span class="line"><span class="keyword">if</span> (!ignoreThemeAttr) &#123;</span><br><span class="line">    <span class="keyword">final</span> TypedArray ta = context.obtainStyledAttributes(attrs, ATTRS_THEME);</span><br><span class="line">    <span class="keyword">final</span> <span class="keyword">int</span> themeResId = ta.getResourceId(<span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">    <span class="keyword">if</span> (themeResId != <span class="number">0</span>) &#123;</span><br><span class="line">        context = <span class="keyword">new</span> ContextThemeWrapper(context, themeResId);</span><br><span class="line">    &#125;</span><br><span class="line">    ta.recycle();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>在这里调用了<code>context</code>的<code>obtainStyledAttributes()</code>方法：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> TypedArray <span class="title">obtainStyledAttributes</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        AttributeSet set, @StyleableRes <span class="keyword">int</span>[] attrs)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> getTheme().obtainStyledAttributes(set, attrs, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> TypedArray <span class="title">obtainStyledAttributes</span><span class="params">(</span></span></span><br><span class="line"><span class="function"><span class="params">        AttributeSet set, <span class="meta">@StyleableRes</span> <span class="keyword">int</span>[] attrs)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> getTheme().obtainStyledAttributes(set, attrs, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>最终使用了<code>context</code>中存放的主题信息为填充的<code>view</code>设置属性。</p>
 <p>现在我们知道，我们存放在<code>res</code>文件夹下的内容（布局文件、字符串文件、图片、主题……）都需要通过一个<code>context</code>去向系统获取。</p>
 <p>那么为什么在启动<code>activity</code>、启动<code>service</code>、发送广播时都需要使用<code>context</code>呢？因为这些操作与系统是紧密相关的，我们知道启动这些东西都需要使用一个叫<code>intent</code>的东西（关于<code>intent</code>的内容会在另外的文章讲），以<code>startActivity()</code>方法为例，我们一路向上追溯，可以发现启动<code>activity</code>最终是由<code>AcitivityManagerNative.getDefault()</code>的本地方法<code>startActivity()</code>执行的：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">    intent.migrateExtraStreamToClipData();</span><br><span class="line">    intent.prepareToLeaveProcess();</span><br><span class="line">    <span class="keyword">int</span> result = ActivityManagerNative.getDefault().startActivity(</span><br><span class="line">        whoThread, who.getBasePackageName(), intent,</span><br><span class="line">        intent.resolveTypeIfNeeded(who.getContentResolver()), token,</span><br><span class="line">        target != <span class="keyword">null</span> ? target.mEmbeddedID : <span class="keyword">null</span>, requestCode, <span class="number">0</span>, <span class="keyword">null</span>, options);</span><br><span class="line">    checkStartActivityResult(result, intent);</span><br><span class="line">&#125; <span class="keyword">catch</span> (RemoteException e) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>这个时候我们发现，传入的<code>context</code>已经变成了上面代码中的<code>who</code>，利用这个 <code>context</code>获取了包名与方法的第四个参数<code>who.getContentResolver()</code>。它的作用是提供信息来解析<code>intent</code>的<a href="https://en.wikipedia.org/wiki/Media_type" target="_blank" rel="noopener"><code>MIME type</code></a>，帮助系统决定<code>intent</code>的目标。</p>
+<p>这个时候我们发现，传入的<code>context</code>已经变成了上面代码中的<code>who</code>，利用这个 <code>context</code>获取了包名与方法的第四个参数<code>who.getContentResolver()</code>。它的作用是提供信息来解析<code>intent</code>的<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Media_type"><code>MIME type</code></a>，帮助系统决定<code>intent</code>的目标。</p>
 <p>可以看到<code>context</code>在这里同样起到了一个提供必要信息的作用。</p>
 <h3 id="Context的作用-1"><a href="#Context的作用-1" class="headerlink" title="Context的作用"></a>Context的作用</h3><p>在这里再重复一遍上面说过的话，配合之前的例子，是不是可以更好地理解了呢？</p>
 <blockquote>
@@ -351,13 +440,13 @@
 <p>我们只修改了一处，第7行中我们使用<code>context.getApplicationContext()</code>这个方法来获取<code>Application</code>这个单例，而不是直接保存<code>context</code>本身，这样就可以保证不会出现某<code>context</code>因为被这个单例引用而不能回收的情况。而<code>Application</code>本身是单例这个特性保证了生命周期的一致，不会造成内存的浪费。</p>
 <h3 id="为什么不总是使用application作为context"><a href="#为什么不总是使用application作为context" class="headerlink" title="为什么不总是使用application作为context"></a>为什么不总是使用<code>application</code>作为<code>context</code></h3><p>既然它是一个单例，那么我们为什么不直接在任何地方都只使用它呢？</p>
 <p>这是因为各种<code>context</code>的能力有所不同：</p>
-<p><img src="/images/context01.png" alt=""></p>
+<p><img src="/images/context01.png"></p>
 <p>（图片出处见文末）</p>
 <p>对几个注解的地方作说明：</p>
 <ol>
-<li>一个<code>application</code>可以启动一个<code>activity</code>，但是需要新建一个<code>task</code>，在特殊情况下可以这么做，但是这不是一个好的行为因为这会导致一个不寻常的返回栈。</li>
-<li>虽然这是合法的，但是会导致填充出来的<code>view</code>使用系统默认的主题而不是我们设置的主题。</li>
-<li>如果接收器是<code>null</code>的话是被允许的，通常在4.2及以上的版本中用来获取一个粘性广播的当前值。</li>
+<li> 一个<code>application</code>可以启动一个<code>activity</code>，但是需要新建一个<code>task</code>，在特殊情况下可以这么做，但是这不是一个好的行为因为这会导致一个不寻常的返回栈。</li>
+<li> 虽然这是合法的，但是会导致填充出来的<code>view</code>使用系统默认的主题而不是我们设置的主题。</li>
+<li> 如果接收器是<code>null</code>的话是被允许的，通常在4.2及以上的版本中用来获取一个粘性广播的当前值。</li>
 </ol>
 <p>我们可以发现与<code>UI</code>有关的操作除<code>activity</code>之外都不能完成，在其他地方这些<code>context</code>能做的事情都差不多。</p>
 <p>但是我们回过头来想，这三个与<code>UI</code>相关的操作一般都不会在一个<code>activity</code>之外进行，这个特性很大程度上就是系统为我们设计成这样的，如果我们试图去用一个<code>Application</code>去显示一个<code>dialog</code>就会导致异常的抛出和应用的崩溃。</p>
@@ -366,107 +455,97 @@
 <p>如果真的遇到了这样的情况：我们不得不保存一个<code>activity</code>在一个比该<code>Activity</code>生命周期长的类中以进行<code>UI</code>操作，就说明我们的设计是有问题的，系统的设计决定了我们不应该去进行这样的操作。</p>
 <p>所以我们可以得出结论：</p>
 <p>我们应该在<code>Activity</code>/<code>Service</code>的生命周期范围内直接使用该<code>Activity</code>/<code>Service</code>作为<code>context</code>，在它们的范围之外的类，应该使用<code>Application</code>单例这个<code>context</code>（并且不应该出现<code>UI</code>操作）。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://possiblemobile.com/2013/06/context/" target="_blank" rel="noopener">https://possiblemobile.com/2013/06/context/</a></p>
-<p><a href="https://web.archive.org/web/20170621005334/http://levinotik.tumblr.com/post/15783237959/demystifying-context-in-android" target="_blank" rel="noopener">https://web.archive.org/web/20170621005334/http://levinotik.tumblr.com/post/15783237959/demystifying-context-in-android</a></p>
-<p><a href="http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.1.1_r1/android/app/ContextImpl.java?av=f" target="_blank" rel="noopener">http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.1.1_r1/android/app/ContextImpl.java?av=f</a></p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a target="_blank" rel="noopener" href="https://possiblemobile.com/2013/06/context/">https://possiblemobile.com/2013/06/context/</a></p>
+<p><a target="_blank" rel="noopener" href="https://web.archive.org/web/20170621005334/http://levinotik.tumblr.com/post/15783237959/demystifying-context-in-android">https://web.archive.org/web/20170621005334/http://levinotik.tumblr.com/post/15783237959/demystifying-context-in-android</a></p>
+<p><a target="_blank" rel="noopener" href="http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.1.1_r1/android/app/ContextImpl.java?av=f">http://grepcode.com/file/repository.grepcode.com/java/ext/com.google.android/android/5.1.1_r1/android/app/ContextImpl.java?av=f</a></p>
 
     </div>
 
     
     
     
-        <div class="reward-container">
+
+    <footer class="post-footer">
+          <div class="reward-container">
   <div></div>
-  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    打赏
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
   </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
-        <p>微信支付</p>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信">
+        <span>微信</span>
       </div>
-      
-      <div style="display: inline-block;">
+      <div>
         <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
-        <p>支付宝</p>
+        <span>支付宝</span>
       </div>
 
   </div>
 </div>
 
-        
+          
 
-<div>
-<ul class="post-copyright">
+<div class="post-copyright">
+<ul>
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>viseator(吴迪)
+      <strong>本文作者： </strong>viseator(吴迪)
   </li>
   <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://www.viseator.com/2017/07/19/android_context/" title="Android Context理解与陷阱">https://www.viseator.com/2017/07/19/android_context/</a>
+      <strong>本文链接：</strong>
+      <a href="https://www.viseator.com/2017/07/19/android_context/" title="Android Context理解与陷阱">https://www.viseator.com/2017/07/19/android_context/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
   </li>
 </ul>
 </div>
 
-        
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
 
-  <div class="followme">
-    <p>欢迎关注我的其它发布渠道</p>
+  <div class="social-list">
 
-    <div class="social-list">
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
 
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
-            <span class="icon">
-              <i class="fa fa-wechat"></i>
-            </span>
-
-            <span class="label">微信公众号</span>
-          </a>
-        </div>
-    </div>
+          <span class="label">微信公众号</span>
+        </a>
+      </div>
   </div>
+</div>
 
-
-      <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Android/" rel="tag"># Android</a>
           </div>
 
         
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2017/07/18/CS_APP_AttackLab/" rel="prev" title="深入理解计算机系统（CS:APP) - Attack Lab详解">
-      <i class="fa fa-chevron-left"></i> 深入理解计算机系统（CS:APP) - Attack Lab详解
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2017/09/05/mr12u_openwrt_mentohust/" rel="next" title="TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）">
-      TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载） <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-
-
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/07/18/CS_APP_AttackLab/" rel="prev" title="深入理解计算机系统（CS:APP) - Attack Lab详解">
+                  <i class="fa fa-chevron-left"></i> 深入理解计算机系统（CS:APP) - Attack Lab详解
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/09/05/mr12u_openwrt_mentohust/" rel="next" title="TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载）">
+                  TP-Link mr12u-v1刷openwrt+mentohust交叉编译（附文件下载） <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-          
-    
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
-  </div>
-  
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -475,7 +554,7 @@
       activeClass = localStorage.getItem('comments_active') || activeClass;
     }
     if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
       if (activeTab) {
         activeTab.click();
       }
@@ -484,148 +563,46 @@
   if (CONFIG.comments.storage) {
     window.addEventListener('tabs:click', event => {
       if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
+      const commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Context"><span class="nav-number">1.</span> <span class="nav-text">Context?</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Context的定义"><span class="nav-number">2.</span> <span class="nav-text">Context的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Context从哪里来"><span class="nav-number">3.</span> <span class="nav-text">Context从哪里来</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Context的作用"><span class="nav-number">4.</span> <span class="nav-text">Context的作用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Context中封装的信息"><span class="nav-number">4.1.</span> <span class="nav-text">Context中封装的信息</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Context的作用-1"><span class="nav-number">4.2.</span> <span class="nav-text">Context的作用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Context的使用"><span class="nav-number">5.</span> <span class="nav-text">Context的使用</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Context分类"><span class="nav-number">5.1.</span> <span class="nav-text">Context分类</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Activity-Service"><span class="nav-number">5.1.1.</span> <span class="nav-text">Activity&#x2F;Service</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Application"><span class="nav-number">5.1.2.</span> <span class="nav-text">Application</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#BroadcastReciver"><span class="nav-number">5.1.3.</span> <span class="nav-text">BroadcastReciver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#ContentProvider"><span class="nav-number">5.1.4.</span> <span class="nav-text">ContentProvider</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#使用Context时的陷阱"><span class="nav-number">5.2.</span> <span class="nav-text">使用Context时的陷阱</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么不总是使用application作为context"><span class="nav-number">5.3.</span> <span class="nav-text">为什么不总是使用application作为context</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#如何使用正确的Context"><span class="nav-number">5.4.</span> <span class="nav-text">如何使用正确的Context</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">6.</span> <span class="nav-text">Reference</span></a></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
-      src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
-  <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives">
-        
-          <span class="site-state-item-count">36</span>
-          <span class="site-state-item-name">文章</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories">
-          
-        <span class="site-state-item-count">21</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags">
-          
-        <span class="site-state-item-count">25</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/viseator" title="GitHub → https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:viseator@gmail.com" title="Email → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
-      </span>
-  </div>
-  <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
-  </div>
+  </main>
 
+  <footer class="footer">
+    <div class="footer-inner">
 
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
-      Links
-    </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
-        </li>
-    </ul>
-  </div>
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
 
 <div class="copyright">
-  
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
-        
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.8.4/dist/algoliasearch-lite.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.13.1/dist/instantsearch.production.min.js"></script><script src="/js/algolia-search.js"></script>
 
 
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1261494271&web_id=1261494271"></script>
-  </div>
 
 
+
+
+  
 
 
 <script>
@@ -636,15 +613,15 @@
     }
 
     function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = decodeURI(visitors.id);
-      var title = visitors.dataset.flagTitle;
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
 
       Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
         .then(response => response.json())
         .then(({ results }) => {
           if (results.length > 0) {
-            var counter = results[0];
+            const counter = results[0];
             leancloudSelector(url).innerText = counter.time + 1;
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .catch(error => {
@@ -667,8 +644,8 @@
     }
 
     function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
         return decodeURI(element.id);
       });
 
@@ -676,7 +653,7 @@
         .then(response => response.json())
         .then(({ results }) => {
           for (let url of entries) {
-            let target = results.find(item => item.url === url);
+            const target = results.find(item => item.url === url);
             leancloudSelector(url).innerText = target ? target.time : 0;
           }
         })
@@ -685,9 +662,9 @@
         });
     }
 
-    let { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
     function fetchData(api_server) {
-      var Counter = (method, url, data) => {
+      const Counter = (method, url, data) => {
         return fetch(`${api_server}/1.1${url}`, {
           method,
           headers: {
@@ -706,7 +683,7 @@
       }
     }
 
-    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
 
     if (api_server) {
       fetchData(api_server);
@@ -721,68 +698,11 @@
 </script>
 
 
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-  
-<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
-<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
-<script src="/js/algolia-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
 
 <script>
-NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+NexT.utils.loadComments('#lv-container', () => {
   window.livereOptions = {
-    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+    refer: "2017/07/19/android_context/"
   };
   (function(d, s) {
     var j, e = d.getElementsByTagName(s)[0];

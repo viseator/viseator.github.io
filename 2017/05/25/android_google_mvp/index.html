@@ -4,27 +4,27 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 5.3.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
-  <meta name="msapplication-config" content="/images/browserconfig.xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CAladin:300,300italic,400,400italic,700,700italic%7CPT+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<script id="hexo-configurations">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.viseator.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":2,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.viseator.com","root":"/","images":"/images","scheme":"Mist","version":"8.2.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10}}};
   </script>
-
-  <meta name="description" content="写在前面关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：    https:&#x2F;&#x2F;segmentfault.com&#x2F;a&#x2F;1190000003927200  本文的重点是对Google官方写的一个MVP架构实现的Demo进行简单的分析来看看谷歌实现的Android MVP架构是怎么搭建的。 谷歌官方的架构Demo地址：    https:&#x2F;&#x2F;github.com&#x2F;googlesamples&#x2F;an">
+<meta name="description" content="写在前面关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：    https:&#x2F;&#x2F;segmentfault.com&#x2F;a&#x2F;1190000003927200  本文的重点是对Google官方写的一个MVP架构实现的Demo进行简单的分析来看看谷歌实现的Android MVP架构是怎么搭建的。 谷歌官方的架构Demo地址：    https:&#x2F;&#x2F;github.com&#x2F;googlesamples&#x2F;an">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Android Google官方MVP架构分析">
 <meta property="og:url" content="https://www.viseator.com/2017/05/25/android_google_mvp/index.html">
@@ -41,10 +41,11 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.viseator.com/images/android_mvp_uml.jpg">
 
+
 <link rel="canonical" href="https://www.viseator.com/2017/05/25/android_google_mvp/">
 
 
-<script id="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -53,8 +54,7 @@
     lang   : 'zh-CN'
   };
 </script>
-
-  <title>Android Google官方MVP架构分析 | viseator's blog</title>
+<title>Android Google官方MVP架构分析 | viseator's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
     <script>
@@ -65,7 +65,6 @@
         gtag('config', 'UA-93455229-1');
       }
     </script>
-
 
   <script>
     var _hmt = _hmt || [];
@@ -79,52 +78,63 @@
 
 
 
-
   <noscript>
   <style>
-  .use-motion .brand,
+  body { margin-top: 2rem; }
+
   .use-motion .menu-item,
-  .sidebar-inner,
+  .use-motion .sidebar,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle {
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
   </style>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
+      <i class="logo-line"></i>
       <h1 class="site-title">viseator's blog</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">吴迪的博客</p>
   </div>
@@ -138,44 +148,15 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section">首页</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories" rel="section">分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives" rel="section">归档</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags" rel="section">标签</a>
-
-  </li>
-        <li class="menu-item menu-item-resource">
-
-    <a href="/2017/03/25/resource_general" rel="section">资源</a>
-
-  </li>
-        <li class="menu-item menu-item-arch">
-
-    <a href="/categories/Linux/" rel="section">Arch安装</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about" rel="section">关于</a>
-
-  </li>
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories" rel="section">分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags" rel="section">标签</a></li>
+        <li class="menu-item menu-item-resource"><a href="/2017/03/25/resource_general" rel="section">资源</a></li>
+        <li class="menu-item menu-item-arch"><a href="/categories/Linux/" rel="section">Arch安装</a></li>
+        <li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger">搜索
         </a>
@@ -186,283 +167,37 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container"></div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div class="algolia-results">
-  <div id="algolia-stats"></div>
-  <div id="algolia-hits"></div>
-  <div id="algolia-pagination" class="algolia-pagination"></div>
+<div class="search-result-container">
+  <div class="algolia-stats"><hr></div>
+  <div class="algolia-hits"></div>
+  <div class="algolia-pagination"></div>
 </div>
 
-      
     </div>
   </div>
 
 </div>
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
-
-          <div class="content post posts-expand">
-            
-
-    
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/05/25/android_google_mvp/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="viseator(吴迪)">
-      <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="viseator's blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          Android Google官方MVP架构分析
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2017-05-25 20:54:08" itemprop="dateCreated datePublished" datetime="2017-05-25T20:54:08+08:00">2017-05-25</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
-                </span>
-                  ，
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/Architecture/" itemprop="url" rel="index"><span itemprop="name">Architecture</span></a>
-                </span>
-            </span>
-
-          
-            <span id="/2017/05/25/android_google_mvp/" class="post-meta-item leancloud_visitors" data-flag-title="Android Google官方MVP架构分析" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：</p>
-<blockquote>
-<p>  <a href="https://segmentfault.com/a/1190000003927200" target="_blank" rel="noopener">https://segmentfault.com/a/1190000003927200</a></p>
-</blockquote>
-<p>本文的重点是对Google官方写的一个MVP架构实现的Demo进行简单的分析来看看谷歌实现的Android MVP架构是怎么搭建的。</p>
-<p>谷歌官方的架构Demo地址：</p>
-<blockquote>
-<p>  <a href="https://github.com/googlesamples/android-architecture" target="_blank" rel="noopener">https://github.com/googlesamples/android-architecture</a></p>
-</blockquote>
-<p>本文所讲解的为：</p>
-<blockquote>
-<p>  <a href="https://github.com/googlesamples/android-architecture/tree/todo-mvp" target="_blank" rel="noopener">https://github.com/googlesamples/android-architecture/tree/todo-mvp</a></p>
-</blockquote>
-<p>需要读者参照源码查看本文。</p>
-<p>我将这个todo应用的框架提炼出来（同时也意味着丢失了很多的实现细节，但可以将架构看得更加清晰），制作了一张伪<code>UML</code>图（为了简化，没有遵循<code>UML</code>的规范），下面我们参照着表中的内容进行分析：</p>
-<a id="more"></a>
-<p><img src="/images/android_mvp_uml.jpg" alt=""></p>
-<h2 id="BaseView与BasePresenter"><a href="#BaseView与BasePresenter" class="headerlink" title="BaseView与BasePresenter"></a>BaseView与BasePresenter</h2><p>可以看到它们是独立于包外的两个基础接口，之后的所有<code>View</code>与<code>Presenter</code>接口都将继承它们，所以应该将一些通用的方法写在这两个<code>Base</code>接口中。</p>
-<h2 id="tasks包"><a href="#tasks包" class="headerlink" title="tasks包"></a>tasks包</h2><p>整个app中<code>tasks</code>、<code>taskdetail</code>、<code>statistics</code>三个包对应着的就是三个<code>Activity</code>，可以看到每一个包中包含了对应的<code>Activity</code>、<code>View</code> 、<code>Presenter</code>与<code>Contract</code>类和其他工具组件，通过这样的方式构成了应用的一个组成单元（每一个<code>Activity</code>与其对应的<code>View</code>和实现逻辑的<code>Presenter</code>）。</p>
-<p>图中我只展现了<code>tasks</code>这一个包，其他的包内部的结构也是一样的。</p>
-<h3 id="TasksContract接口"><a href="#TasksContract接口" class="headerlink" title="TasksContract接口"></a>TasksContract接口</h3><p><code>TasksContract</code>接口包含两个接口，分别是继承了<code>BaseView</code>与<code>BasePresenter</code>的<code>View</code>与<code>Presenter</code>。</p>
-<p>我们可以将<code>Contract</code>接口视为管理<code>View</code>与<code>Presenter</code>需要实现的方法的汇总接口，这些方法在实例类中实际上都是通过接口来进行调用的，这样就可以避免依赖于某一个特定类的方法来进行处理，从而可以有多种实现<code>View</code>与<code>Presenter</code>的方式，便于进行单元测试（可以看到源代码中就有很多单元测试的内容，但是在这篇文章中我们将它们忽略）。</p>
-<p>一切与更新UI有关的逻辑都应该放在<code>TasksContract.View</code>接口中。</p>
-<p>一切与业务有关的逻辑都应该放在<code>TaskContract.Presenter</code>接口中。</p>
-<h3 id="TasksFragment与TasksPresenter"><a href="#TasksFragment与TasksPresenter" class="headerlink" title="TasksFragment与TasksPresenter"></a>TasksFragment与TasksPresenter</h3><p><code>TasksFragment</code>与<code>TaskPresenter</code>分别是<code>TasksContract.View</code>与<code>TaskContract.Presenter</code>接口的实例。</p>
-<p><code>TaskActivity</code>在初始化时会先创建<code>TasksFragment</code>实例，再将其作为构造参数传递给<code>TaskPresenter</code>，<code>TaskPresenter</code>在构造方法中又会调用<code>TasksFragment</code>的<code>setPresenter</code>方法将自身传递给<code>TasksFragment</code>。这样<code>Presenter</code>与<code>View</code>就分别存有了一份对方的引用。</p>
-<p>构造完成后，当用户与UI进行交互，<code>View</code>一律调用<code>Presenter</code>的相关方法来进行交互事件的处理或请求数据更新。如果有新的内容需要呈现在UI上，则由<code>Presenter</code>调用<code>View</code>的相关方法来进行更新。<code>Presenter</code>则负责与上一级的数据存储池进行交互来更新数据或是获取新的数据。</p>
-<p>可以看到<code>Presenter</code>充当了一个“中介”，<code>View</code>的所有请求都将交由<code>Presenter</code>进行处理，而<code>View</code>现在需要做的只有提供相应方法供<code>Presenter</code>进行调用，避免了将大量业务逻辑写在<code>View</code>中。同时也避免了<code>View</code>与数据的直接交互，而是由<code>Presenter</code>“单线操作”，降低了耦合度。</p>
-<h2 id="Data包"><a href="#Data包" class="headerlink" title="Data包"></a>Data包</h2><h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>这里的<code>Task</code>是一个<a href="https://en.wikipedia.org/wiki/Plain_old_Java_object" target="_blank" rel="noopener"><code>POJO</code></a>类，用于表示储存的数据。</p>
-<h3 id="source包"><a href="#source包" class="headerlink" title="source包"></a>source包</h3><h4 id="TaskDataSource接口"><a href="#TaskDataSource接口" class="headerlink" title="TaskDataSource接口"></a>TaskDataSource接口</h4><p><code>TaskDataSource</code>接口定义了所有可以的用于操作数据的对象的方法，换句话说，无论数据的来源是什么，我们都可以通过调用实现了这个接口的对象的方法来操纵数据。</p>
-<h4 id="GetTaskCallback与LoadTasksCallback"><a href="#GetTaskCallback与LoadTasksCallback" class="headerlink" title="GetTaskCallback与LoadTasksCallback"></a>GetTaskCallback与LoadTasksCallback</h4><p>注意到用于获取数据的方法的参数都利用了<code>callback</code>进行回调来传递数据。这样做主要因为数据的获取有可能是异步的，使用回调机制可以避免线程因为等待数据而阻塞。</p>
-<h4 id="local包与remote包"><a href="#local包与remote包" class="headerlink" title="local包与remote包"></a>local包与remote包</h4><p>这两个包分别存放着一个实现了<code>TaskDataSource</code>接口的类，他们就代表了从本地缓存获取数据与从远端获取数据。当然与获取数据有关的其他类也应该放在这个包下。</p>
-<h4 id="TaskRepository"><a href="#TaskRepository" class="headerlink" title="TaskRepository"></a>TaskRepository</h4><p>有了从本地与远端获取数据的类，那么就应该有一个类对它们进行管理，我们希望的是有本地缓存时读取本地缓存，没有时就从远端的获取数据。在更为复杂的情况下，我们需要处理来自远端的请求并与本地的数据进行同步。</p>
-<p><code>TaskRepository</code>就是用于管理所有的这些数据来源并统一成一个<code>TaskDataSource</code>暴露给<code>Presenter</code>来操作数据，而这些数据管理逻辑就被隐藏在了<code>TaskRepository</code>中。</p>
-<p>值得注意的是，源码中在<code>TaskRepository</code>中还实现了一个内存缓存，可以避免从其他两个低速来源中获取数据。</p>
-
-    </div>
-
-    
-    
-    
-        <div class="reward-container">
-  <div></div>
-  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    打赏
-  </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
-        <p>微信支付</p>
-      </div>
-      
-      <div style="display: inline-block;">
-        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
-        <p>支付宝</p>
-      </div>
-
-  </div>
-</div>
-
         
-
-<div>
-<ul class="post-copyright">
-  <li class="post-copyright-author">
-    <strong>本文作者： </strong>viseator(吴迪)
-  </li>
-  <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://www.viseator.com/2017/05/25/android_google_mvp/" title="Android Google官方MVP架构分析">https://www.viseator.com/2017/05/25/android_google_mvp/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
-  </li>
-</ul>
-</div>
-
-        
-
-  <div class="followme">
-    <p>欢迎关注我的其它发布渠道</p>
-
-    <div class="social-list">
-
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
-            <span class="icon">
-              <i class="fa fa-wechat"></i>
-            </span>
-
-            <span class="label">微信公众号</span>
-          </a>
-        </div>
-    </div>
-  </div>
-
-
-      <footer class="post-footer">
-          <div class="post-tags">
-              <a href="/tags/Android/" rel="tag"># Android</a>
-              <a href="/tags/MVP/" rel="tag"># MVP</a>
-              <a href="/tags/Architecture/" rel="tag"># Architecture</a>
-          </div>
-
-        
-
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2017/05/19/arch_setup/" rel="prev" title="ArchLinux安装后的必须配置与图形界面安装教程">
-      <i class="fa fa-chevron-left"></i> ArchLinux安装后的必须配置与图形界面安装教程
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2017/06/18/CS_APP_DataLab/" rel="next" title="深入理解计算机系统（CS:APP) - Data Lab详解">
-      深入理解计算机系统（CS:APP) - Data Lab详解 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
   
-  
-  
-
-
-
-          </div>
-          
-    
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
-  </div>
-  
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
   </div>
 
   <aside class="sidebar">
-    <div class="sidebar-inner">
 
-      <ul class="sidebar-nav motion-element">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
         </li>
@@ -471,26 +206,27 @@
         </li>
       </ul>
 
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BaseView与BasePresenter"><span class="nav-number">2.</span> <span class="nav-text">BaseView与BasePresenter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tasks包"><span class="nav-number">3.</span> <span class="nav-text">tasks包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TasksContract接口"><span class="nav-number">3.1.</span> <span class="nav-text">TasksContract接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TasksFragment与TasksPresenter"><span class="nav-number">3.2.</span> <span class="nav-text">TasksFragment与TasksPresenter</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data包"><span class="nav-number">4.</span> <span class="nav-text">Data包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Task"><span class="nav-number">4.1.</span> <span class="nav-text">Task</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#source包"><span class="nav-number">4.2.</span> <span class="nav-text">source包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TaskDataSource接口"><span class="nav-number">4.2.1.</span> <span class="nav-text">TaskDataSource接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GetTaskCallback与LoadTasksCallback"><span class="nav-number">4.2.2.</span> <span class="nav-text">GetTaskCallback与LoadTasksCallback</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#local包与remote包"><span class="nav-number">4.2.3.</span> <span class="nav-text">local包与remote包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TaskRepository"><span class="nav-number">4.2.4.</span> <span class="nav-text">TaskRepository</span></a></li></ol></li></ol></li></ol></div>
-      </div>
-      <!--/noindex-->
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#BaseView%E4%B8%8EBasePresenter"><span class="nav-number">2.</span> <span class="nav-text">BaseView与BasePresenter</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tasks%E5%8C%85"><span class="nav-number">3.</span> <span class="nav-text">tasks包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#TasksContract%E6%8E%A5%E5%8F%A3"><span class="nav-number">3.1.</span> <span class="nav-text">TasksContract接口</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#TasksFragment%E4%B8%8ETasksPresenter"><span class="nav-number">3.2.</span> <span class="nav-text">TasksFragment与TasksPresenter</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Data%E5%8C%85"><span class="nav-number">4.</span> <span class="nav-text">Data包</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Task"><span class="nav-number">4.1.</span> <span class="nav-text">Task</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#source%E5%8C%85"><span class="nav-number">4.2.</span> <span class="nav-text">source包</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#TaskDataSource%E6%8E%A5%E5%8F%A3"><span class="nav-number">4.2.1.</span> <span class="nav-text">TaskDataSource接口</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#GetTaskCallback%E4%B8%8ELoadTasksCallback"><span class="nav-number">4.2.2.</span> <span class="nav-text">GetTaskCallback与LoadTasksCallback</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#local%E5%8C%85%E4%B8%8Eremote%E5%8C%85"><span class="nav-number">4.2.3.</span> <span class="nav-text">local包与remote包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#TaskRepository"><span class="nav-number">4.2.4.</span> <span class="nav-text">TaskRepository</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
       src="/images/avatar.jpg">
   <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
   <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
-<div class="site-state-wrap motion-element">
+<div class="site-state-wrap site-overview-item animated">
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
           <a href="/archives">
         
           <span class="site-state-item-count">36</span>
-          <span class="site-state-item-name">文章</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
@@ -507,85 +243,326 @@
       </div>
   </nav>
 </div>
-  <div class="links-of-author motion-element">
+  <div class="links-of-author site-overview-item animated">
       <span class="links-of-author-item">
-        <a href="https://github.com/viseator" title="GitHub → https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
+        <a href="https://github.com/viseator" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;viseator" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
       </span>
       <span class="links-of-author-item">
-        <a href="mailto:viseator@gmail.com" title="Email → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
+        <a href="mailto:viseator@gmail.com" title="E-Mail → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
       </span>
   </div>
-  <div class="cc-license motion-element" itemprop="license">
+  <div class="cc-license site-overview-item animated" itemprop="license">
     <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
   </div>
 
 
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
       Links
     </div>
     <ul class="links-of-blogroll-list">
         <li class="links-of-blogroll-item">
-          <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
+          <a href="https://www.hustunique.com/" title="https:&#x2F;&#x2F;www.hustunique.com&#x2F;" rel="noopener" target="_blank">UniqueStudio</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
+          <a href="http://blog.codedragon.tech/" title="http:&#x2F;&#x2F;blog.codedragon.tech&#x2F;" rel="noopener" target="_blank">BlackDragon</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
+          <a href="http://imzhwk.com/" title="http:&#x2F;&#x2F;imzhwk.com&#x2F;" rel="noopener" target="_blank">imzhwk</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
+          <a href="http://moe.petnakanojo.com/" title="http:&#x2F;&#x2F;moe.petnakanojo.com&#x2F;" rel="noopener" target="_blank">PetnaKanojo</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
+          <a href="http://alexandertang.cn/" title="http:&#x2F;&#x2F;alexandertang.cn&#x2F;" rel="noopener" target="_blank">Alexander</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
+          <a href="https://qzwlecr.github.io/" title="https:&#x2F;&#x2F;qzwlecr.github.io&#x2F;" rel="noopener" target="_blank">qzwlecr</a>
         </li>
         <li class="links-of-blogroll-item">
-          <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
+          <a href="http://www.kurokoi.moe/" title="http:&#x2F;&#x2F;www.kurokoi.moe&#x2F;" rel="noopener" target="_blank">Kurokoi</a>
         </li>
     </ul>
   </div>
 
+        </div>
       </div>
-
     </div>
   </aside>
-  <div id="sidebar-dimmer"></div>
+  <div class="sidebar-dimmer"></div>
 
 
+    </header>
+
+    
+  <div class="back-to-top" role="button">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2017/05/25/android_google_mvp/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="viseator(吴迪)">
+      <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="viseator's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Android Google官方MVP架构分析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2017-05-25 20:54:08" itemprop="dateCreated datePublished" datetime="2017-05-25T20:54:08+08:00">2017-05-25</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2018-02-02 09:19:07" itemprop="dateModified" datetime="2018-02-02T09:19:07+08:00">2018-02-02</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+          ，
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/Architecture/" itemprop="url" rel="index"><span itemprop="name">Architecture</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2017/05/25/android_google_mvp/" class="post-meta-item leancloud_visitors" data-flag-title="Android Google官方MVP架构分析" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h2><p>关于MVP模式的基本介绍与优缺点可以参见下面这篇文章：</p>
+<blockquote>
+<p>  <a target="_blank" rel="noopener" href="https://segmentfault.com/a/1190000003927200">https://segmentfault.com/a/1190000003927200</a></p>
+</blockquote>
+<p>本文的重点是对Google官方写的一个MVP架构实现的Demo进行简单的分析来看看谷歌实现的Android MVP架构是怎么搭建的。</p>
+<p>谷歌官方的架构Demo地址：</p>
+<blockquote>
+<p>  <a target="_blank" rel="noopener" href="https://github.com/googlesamples/android-architecture">https://github.com/googlesamples/android-architecture</a></p>
+</blockquote>
+<p>本文所讲解的为：</p>
+<blockquote>
+<p>  <a target="_blank" rel="noopener" href="https://github.com/googlesamples/android-architecture/tree/todo-mvp">https://github.com/googlesamples/android-architecture/tree/todo-mvp</a></p>
+</blockquote>
+<p>需要读者参照源码查看本文。</p>
+<p>我将这个todo应用的框架提炼出来（同时也意味着丢失了很多的实现细节，但可以将架构看得更加清晰），制作了一张伪<code>UML</code>图（为了简化，没有遵循<code>UML</code>的规范），下面我们参照着表中的内容进行分析：</p>
+<a id="more"></a>
+
+<p><img src="/images/android_mvp_uml.jpg"></p>
+<h2 id="BaseView与BasePresenter"><a href="#BaseView与BasePresenter" class="headerlink" title="BaseView与BasePresenter"></a>BaseView与BasePresenter</h2><p>可以看到它们是独立于包外的两个基础接口，之后的所有<code>View</code>与<code>Presenter</code>接口都将继承它们，所以应该将一些通用的方法写在这两个<code>Base</code>接口中。</p>
+<h2 id="tasks包"><a href="#tasks包" class="headerlink" title="tasks包"></a>tasks包</h2><p>整个app中<code>tasks</code>、<code>taskdetail</code>、<code>statistics</code>三个包对应着的就是三个<code>Activity</code>，可以看到每一个包中包含了对应的<code>Activity</code>、<code>View</code> 、<code>Presenter</code>与<code>Contract</code>类和其他工具组件，通过这样的方式构成了应用的一个组成单元（每一个<code>Activity</code>与其对应的<code>View</code>和实现逻辑的<code>Presenter</code>）。</p>
+<p>图中我只展现了<code>tasks</code>这一个包，其他的包内部的结构也是一样的。</p>
+<h3 id="TasksContract接口"><a href="#TasksContract接口" class="headerlink" title="TasksContract接口"></a>TasksContract接口</h3><p><code>TasksContract</code>接口包含两个接口，分别是继承了<code>BaseView</code>与<code>BasePresenter</code>的<code>View</code>与<code>Presenter</code>。</p>
+<p>我们可以将<code>Contract</code>接口视为管理<code>View</code>与<code>Presenter</code>需要实现的方法的汇总接口，这些方法在实例类中实际上都是通过接口来进行调用的，这样就可以避免依赖于某一个特定类的方法来进行处理，从而可以有多种实现<code>View</code>与<code>Presenter</code>的方式，便于进行单元测试（可以看到源代码中就有很多单元测试的内容，但是在这篇文章中我们将它们忽略）。</p>
+<p>一切与更新UI有关的逻辑都应该放在<code>TasksContract.View</code>接口中。</p>
+<p>一切与业务有关的逻辑都应该放在<code>TaskContract.Presenter</code>接口中。</p>
+<h3 id="TasksFragment与TasksPresenter"><a href="#TasksFragment与TasksPresenter" class="headerlink" title="TasksFragment与TasksPresenter"></a>TasksFragment与TasksPresenter</h3><p><code>TasksFragment</code>与<code>TaskPresenter</code>分别是<code>TasksContract.View</code>与<code>TaskContract.Presenter</code>接口的实例。</p>
+<p><code>TaskActivity</code>在初始化时会先创建<code>TasksFragment</code>实例，再将其作为构造参数传递给<code>TaskPresenter</code>，<code>TaskPresenter</code>在构造方法中又会调用<code>TasksFragment</code>的<code>setPresenter</code>方法将自身传递给<code>TasksFragment</code>。这样<code>Presenter</code>与<code>View</code>就分别存有了一份对方的引用。</p>
+<p>构造完成后，当用户与UI进行交互，<code>View</code>一律调用<code>Presenter</code>的相关方法来进行交互事件的处理或请求数据更新。如果有新的内容需要呈现在UI上，则由<code>Presenter</code>调用<code>View</code>的相关方法来进行更新。<code>Presenter</code>则负责与上一级的数据存储池进行交互来更新数据或是获取新的数据。</p>
+<p>可以看到<code>Presenter</code>充当了一个“中介”，<code>View</code>的所有请求都将交由<code>Presenter</code>进行处理，而<code>View</code>现在需要做的只有提供相应方法供<code>Presenter</code>进行调用，避免了将大量业务逻辑写在<code>View</code>中。同时也避免了<code>View</code>与数据的直接交互，而是由<code>Presenter</code>“单线操作”，降低了耦合度。</p>
+<h2 id="Data包"><a href="#Data包" class="headerlink" title="Data包"></a>Data包</h2><h3 id="Task"><a href="#Task" class="headerlink" title="Task"></a>Task</h3><p>这里的<code>Task</code>是一个<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Plain_old_Java_object"><code>POJO</code></a>类，用于表示储存的数据。</p>
+<h3 id="source包"><a href="#source包" class="headerlink" title="source包"></a>source包</h3><h4 id="TaskDataSource接口"><a href="#TaskDataSource接口" class="headerlink" title="TaskDataSource接口"></a>TaskDataSource接口</h4><p><code>TaskDataSource</code>接口定义了所有可以的用于操作数据的对象的方法，换句话说，无论数据的来源是什么，我们都可以通过调用实现了这个接口的对象的方法来操纵数据。</p>
+<h4 id="GetTaskCallback与LoadTasksCallback"><a href="#GetTaskCallback与LoadTasksCallback" class="headerlink" title="GetTaskCallback与LoadTasksCallback"></a>GetTaskCallback与LoadTasksCallback</h4><p>注意到用于获取数据的方法的参数都利用了<code>callback</code>进行回调来传递数据。这样做主要因为数据的获取有可能是异步的，使用回调机制可以避免线程因为等待数据而阻塞。</p>
+<h4 id="local包与remote包"><a href="#local包与remote包" class="headerlink" title="local包与remote包"></a>local包与remote包</h4><p>这两个包分别存放着一个实现了<code>TaskDataSource</code>接口的类，他们就代表了从本地缓存获取数据与从远端获取数据。当然与获取数据有关的其他类也应该放在这个包下。</p>
+<h4 id="TaskRepository"><a href="#TaskRepository" class="headerlink" title="TaskRepository"></a>TaskRepository</h4><p>有了从本地与远端获取数据的类，那么就应该有一个类对它们进行管理，我们希望的是有本地缓存时读取本地缓存，没有时就从远端的获取数据。在更为复杂的情况下，我们需要处理来自远端的请求并与本地的数据进行同步。</p>
+<p><code>TaskRepository</code>就是用于管理所有的这些数据来源并统一成一个<code>TaskDataSource</code>暴露给<code>Presenter</code>来操作数据，而这些数据管理逻辑就被隐藏在了<code>TaskRepository</code>中。</p>
+<p>值得注意的是，源码中在<code>TaskRepository</code>中还实现了一个内存缓存，可以避免从其他两个低速来源中获取数据。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信">
+        <span>微信</span>
       </div>
-    </main>
+      <div>
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <span>支付宝</span>
+      </div>
 
-    <footer class="footer">
-      <div class="footer-inner">
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>viseator(吴迪)
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://www.viseator.com/2017/05/25/android_google_mvp/" title="Android Google官方MVP架构分析">https://www.viseator.com/2017/05/25/android_google_mvp/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
+
+          <span class="label">微信公众号</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+              <a href="/tags/MVP/" rel="tag"># MVP</a>
+              <a href="/tags/Architecture/" rel="tag"># Architecture</a>
+          </div>
+
         
 
-        
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2017/05/19/arch_setup/" rel="prev" title="ArchLinux安装后的必须配置与图形界面安装教程">
+                  <i class="fa fa-chevron-left"></i> ArchLinux安装后的必须配置与图形界面安装教程
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2017/06/18/CS_APP_DataLab/" rel="next" title="深入理解计算机系统（CS:APP) - Data Lab详解">
+                  深入理解计算机系统（CS:APP) - Data Lab详解 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
 
 <div class="copyright">
-  
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
-        
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.8.4/dist/algoliasearch-lite.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.13.1/dist/instantsearch.production.min.js"></script><script src="/js/algolia-search.js"></script>
 
 
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1261494271&web_id=1261494271"></script>
-  </div>
 
 
+
+
+  
 
 
 <script>
@@ -596,15 +573,15 @@
     }
 
     function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = decodeURI(visitors.id);
-      var title = visitors.dataset.flagTitle;
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
 
       Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
         .then(response => response.json())
         .then(({ results }) => {
           if (results.length > 0) {
-            var counter = results[0];
+            const counter = results[0];
             leancloudSelector(url).innerText = counter.time + 1;
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .catch(error => {
@@ -627,8 +604,8 @@
     }
 
     function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
         return decodeURI(element.id);
       });
 
@@ -636,7 +613,7 @@
         .then(response => response.json())
         .then(({ results }) => {
           for (let url of entries) {
-            let target = results.find(item => item.url === url);
+            const target = results.find(item => item.url === url);
             leancloudSelector(url).innerText = target ? target.time : 0;
           }
         })
@@ -645,9 +622,9 @@
         });
     }
 
-    let { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
     function fetchData(api_server) {
-      var Counter = (method, url, data) => {
+      const Counter = (method, url, data) => {
         return fetch(`${api_server}/1.1${url}`, {
           method,
           headers: {
@@ -666,7 +643,7 @@
       }
     }
 
-    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
 
     if (api_server) {
       fetchData(api_server);
@@ -681,68 +658,11 @@
 </script>
 
 
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-  
-<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
-<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
-<script src="/js/algolia-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
 
 <script>
-NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+NexT.utils.loadComments('#lv-container', () => {
   window.livereOptions = {
-    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+    refer: "2017/05/25/android_google_mvp/"
   };
   (function(d, s) {
     var j, e = d.getElementsByTagName(s)[0];

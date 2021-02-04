@@ -4,295 +4,628 @@
   <url>
     <loc>https://www.viseator.com/2017/07/02/arch_more/</loc>
     
-    <lastmod>2020-07-25T15:16:52.256Z</lastmod>
+    <lastmod>2020-07-25</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/2017/05/17/arch_install/</loc>
     
-    <lastmod>2020-07-25T15:16:45.904Z</lastmod>
+    <lastmod>2020-07-25</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/2017/05/19/arch_setup/</loc>
     
-    <lastmod>2020-07-25T15:16:37.411Z</lastmod>
+    <lastmod>2020-07-25</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/2020/07/25/university_2/</loc>
     
-    <lastmod>2020-07-25T15:15:16.670Z</lastmod>
+    <lastmod>2020-07-25</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/2020/05/24/university_1/</loc>
     
-    <lastmod>2020-07-25T15:15:12.180Z</lastmod>
+    <lastmod>2020-07-25</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/about/index.html</loc>
     
-    <lastmod>2020-07-25T05:15:56.368Z</lastmod>
+    <lastmod>2020-07-25</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/2018/07/02/80x86_asm_c/</loc>
     
-    <lastmod>2019-03-19T02:23:38.000Z</lastmod>
+    <lastmod>2019-03-19</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/2018/09/07/android_JSBridge/</loc>
     
-    <lastmod>2018-09-07T09:44:50.000Z</lastmod>
+    <lastmod>2018-09-07</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/2018/07/11/introduce_kotlin/</loc>
     
-    <lastmod>2018-07-11T06:37:44.000Z</lastmod>
+    <lastmod>2018-07-11</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/2017/06/21/CS_APP_BombLab/</loc>
     
-    <lastmod>2018-07-01T04:52:14.000Z</lastmod>
+    <lastmod>2018-07-01</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/2017/06/18/CS_APP_DataLab/</loc>
     
-    <lastmod>2018-06-28T08:27:29.000Z</lastmod>
+    <lastmod>2018-06-28</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/2017/11/02/android_view_event_3/</loc>
     
-    <lastmod>2018-05-24T11:59:03.000Z</lastmod>
+    <lastmod>2018-05-24</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/2018/02/09/android_ui_test/</loc>
     
-    <lastmod>2018-02-11T06:45:20.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/eula_text.html</loc>
-    
-    <lastmod>2018-02-02T01:19:16.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/tags/index.html</loc>
-    
-    <lastmod>2018-02-02T01:19:16.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/googleplayprivacy/index.html</loc>
-    
-    <lastmod>2018-02-02T01:19:16.000Z</lastmod>
+    <lastmod>2018-02-11</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/categories/index.html</loc>
     
-    <lastmod>2018-02-02T01:19:16.000Z</lastmod>
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/googleplayprivacy/index.html</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/index.html</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/eula_text.html</loc>
+    
+    <lastmod>2018-02-02</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/images/manifest.json</loc>
     
-    <lastmod>2018-02-02T01:19:10.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/02/14/DiffInGeneric/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/04/02/android_property_animation_2/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/07/19/android_context/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/02/05/LeetCode/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/11/02/android_event_3/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/09/05/mr12u_openwrt_mentohust/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/07/18/CS_APP_AttackLab/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/10/24/android_event_2/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/10/22/android_event_1/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2016/11/15/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/10/07/android_view_event_2/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/05/11/android_lan_messages/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    <lastmod>2018-02-02</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/2017/01/20/2016%E5%B9%B4%E5%BA%A6%E6%80%BB%E7%BB%93/</loc>
     
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    <lastmod>2018-02-02</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/03/25/resource_general/</loc>
+    <loc>https://www.viseator.com/2017/02/14/DiffInGeneric/</loc>
     
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/04/10/assembly_wang_lab_9/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    <lastmod>2018-02-02</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/09/14/android_view_event_1/</loc>
+    <loc>https://www.viseator.com/2017/02/05/LeetCode/</loc>
     
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/03/10/android_view_onMeasure/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    <lastmod>2018-02-02</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.viseator.com/2017/03/12/android_view_onLayout/</loc>
+    <loc>https://www.viseator.com/2016/11/15/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%80%EF%BC%89/</loc>
     
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/03/09/android_view_lifeCycle/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2017/05/25/android_google_mvp/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>https://www.viseator.com/2016/12/02/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%BA%8C%EF%BC%89/</loc>
-    
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    <lastmod>2018-02-02</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/2016/12/09/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%B8%89%EF%BC%89/</loc>
     
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2016/12/02/OpenCV%E5%A4%84%E7%90%86%E6%8B%8D%E7%85%A7%E8%A1%A8%E6%A0%BC%EF%BC%88%E4%BA%8C%EF%BC%89/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/07/19/android_context/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/10/24/android_event_2/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/11/02/android_event_3/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/05/25/android_google_mvp/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/05/11/android_lan_messages/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/2017/03/26/android_property_animation_1/</loc>
     
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/04/02/android_property_animation_2/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/03/09/android_view_lifeCycle/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
     
   </url>
   
   <url>
     <loc>https://www.viseator.com/2017/03/12/android_view_onDraw_canvas/</loc>
     
-    <lastmod>2018-02-02T01:19:07.000Z</lastmod>
+    <lastmod>2018-02-02</lastmod>
     
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/03/12/android_view_onLayout/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/03/10/android_view_onMeasure/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/04/10/assembly_wang_lab_9/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/09/05/mr12u_openwrt_mentohust/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/03/25/resource_general/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/07/18/CS_APP_AttackLab/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/10/22/android_event_1/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/10/07/android_view_event_2/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/2017/09/14/android_view_event_1/</loc>
+    
+    <lastmod>2018-02-02</lastmod>
+    
+  </url>
+  
+
+  <url>
+    <loc>https://www.viseator.com/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  
+  <url>
+    <loc>https://www.viseator.com/tags/Summary/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/Android/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/UI/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/Assembly/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/Java/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/Algorithm/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/LeetCode/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/OpenCV/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/Event/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/MVP/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/Architecture/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/Network/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/Animation/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/Test/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/View/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/LifeCycle/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/Linux/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/Arch/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/openwrt/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/Resource/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/Computer-System/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/CS-APP/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/Hybrid/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/JSBridge/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/tags/Kotlin/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Summary/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Android/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Assembly/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Java/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Algorithm/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Linux/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/openwrt/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Resource/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Android/UI/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Algorithm/LeetCode/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Java/OpenCV/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Android/Event/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Android/Architecture/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Android/Test/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Android/View/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Linux/Arch/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Computer-System/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Android/Hybrid/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Android/Kotlin/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Computer-System/CS-APP/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.viseator.com/categories/Summar/</loc>
+    <lastmod>2021-02-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
   </url>
   
 </urlset>

@@ -4,27 +4,27 @@
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
 <meta name="theme-color" content="#F5F5F5">
-<meta name="generator" content="Hexo 4.2.0">
+<meta name="generator" content="Hexo 5.3.0">
+
+
   <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
   <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
   <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
   <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
   <link rel="manifest" href="/images/manifest.json">
-  <meta name="msapplication-config" content="/images/browserconfig.xml">
 
 <link rel="stylesheet" href="/css/main.css">
 
-<link rel="stylesheet" href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic|Aladin:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
-<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/lib/pace/pace-theme-minimal.min.css">
-  <script src="/lib/pace/pace.min.js"></script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CAladin:300,300italic,400,400italic,700,700italic%7CPT+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
 
-<script id="hexo-configurations">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.2/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
     var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"www.viseator.com","root":"/","scheme":"Mist","version":"7.8.0","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":true,"show_result":true,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":2,"unescape":true,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+    var CONFIG = {"hostname":"www.viseator.com","root":"/","images":"/images","scheme":"Mist","version":"8.2.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10}}};
   </script>
-
-  <meta name="description" content="写在前面首先原谅我用这样的标题来博得关注和点击，因为思前想后也只有我所拿到的Offer才最能在一定程度上代表能力，为我下面将要分享的内容作背书。 在最开始准备写这篇文章的时候只是想像往常那样放在我的博客上作为自己的回忆和总结，不太想去获得别人的关注；但另一个声音告诉我这些东西和之前的技术文章不太一样，这些经验和教训可能可以帮助到很多刚刚踏入校门的新人们，或多或少地产生一些价值。 既然决定了写这篇文">
+<meta name="description" content="写在前面首先原谅我用这样的标题来博得关注和点击，因为思前想后也只有我所拿到的Offer才最能在一定程度上代表能力，为我下面将要分享的内容作背书。 在最开始准备写这篇文章的时候只是想像往常那样放在我的博客上作为自己的回忆和总结，不太想去获得别人的关注；但另一个声音告诉我这些东西和之前的技术文章不太一样，这些经验和教训可能可以帮助到很多刚刚踏入校门的新人们，或多或少地产生一些价值。 既然决定了写这篇文">
 <meta property="og:type" content="article">
 <meta property="og:title" content="从开始到微信&#x2F;支付宝&#x2F;Airbnb&#x2F;抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活">
 <meta property="og:url" content="https://www.viseator.com/2020/05/24/university_1/index.html">
@@ -51,10 +51,11 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://www.viseator.com/images/uni/1_1.png">
 
+
 <link rel="canonical" href="https://www.viseator.com/2020/05/24/university_1/">
 
 
-<script id="page-configurations">
+<script class="page-configurations">
   // https://hexo.io/docs/variables.html
   CONFIG.page = {
     sidebar: "",
@@ -63,8 +64,7 @@
     lang   : 'zh-CN'
   };
 </script>
-
-  <title>从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活 | viseator's blog</title>
+<title>从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活 | viseator's blog</title>
   
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
     <script>
@@ -75,7 +75,6 @@
         gtag('config', 'UA-93455229-1');
       }
     </script>
-
 
   <script>
     var _hmt = _hmt || [];
@@ -89,52 +88,63 @@
 
 
 
-
   <noscript>
   <style>
-  .use-motion .brand,
+  body { margin-top: 2rem; }
+
   .use-motion .menu-item,
-  .sidebar-inner,
+  .use-motion .sidebar,
   .use-motion .post-block,
   .use-motion .pagination,
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-header { opacity: initial; }
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
 
   .use-motion .site-title,
-  .use-motion .site-subtitle {
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
     opacity: initial;
     top: initial;
   }
 
-  .use-motion .logo-line-before i { left: initial; }
-  .use-motion .logo-line-after i { right: initial; }
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
   </style>
 </noscript>
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="container use-motion">
-    <div class="headband"></div>
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
 
+  <main class="main">
     <header class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-container">
   <div class="site-nav-toggle">
-    <div class="toggle" aria-label="切换导航栏">
-      <span class="toggle-line toggle-line-first"></span>
-      <span class="toggle-line toggle-line-middle"></span>
-      <span class="toggle-line toggle-line-last"></span>
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
     </div>
   </div>
 
   <div class="site-meta">
 
     <a href="/" class="brand" rel="start">
-      <span class="logo-line-before"><i></i></span>
+      <i class="logo-line"></i>
       <h1 class="site-title">viseator's blog</h1>
-      <span class="logo-line-after"><i></i></span>
+      <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">吴迪的博客</p>
   </div>
@@ -148,44 +158,15 @@
 
 
 
-
 <nav class="site-nav">
-  <ul id="menu" class="menu">
-        <li class="menu-item menu-item-home">
-
-    <a href="/" rel="section">首页</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories" rel="section">分类</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives" rel="section">归档</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags" rel="section">标签</a>
-
-  </li>
-        <li class="menu-item menu-item-resource">
-
-    <a href="/2017/03/25/resource_general" rel="section">资源</a>
-
-  </li>
-        <li class="menu-item menu-item-arch">
-
-    <a href="/categories/Linux/" rel="section">Arch安装</a>
-
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about" rel="section">关于</a>
-
-  </li>
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories" rel="section">分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags" rel="section">标签</a></li>
+        <li class="menu-item menu-item-resource"><a href="/2017/03/25/resource_general" rel="section">资源</a></li>
+        <li class="menu-item menu-item-arch"><a href="/categories/Linux/" rel="section">Arch安装</a></li>
+        <li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li>
       <li class="menu-item menu-item-search">
         <a role="button" class="popup-trigger">搜索
         </a>
@@ -196,48 +177,155 @@
 
 
   <div class="search-pop-overlay">
-    <div class="popup search-popup">
-        <div class="search-header">
+    <div class="popup search-popup"><div class="search-header">
   <span class="search-icon">
     <i class="fa fa-search"></i>
   </span>
   <div class="search-input-container"></div>
-  <span class="popup-btn-close">
+  <span class="popup-btn-close" role="button">
     <i class="fa fa-times-circle"></i>
   </span>
 </div>
-<div class="algolia-results">
-  <div id="algolia-stats"></div>
-  <div id="algolia-hits"></div>
-  <div id="algolia-pagination" class="algolia-pagination"></div>
+<div class="search-result-container">
+  <div class="algolia-stats"><hr></div>
+  <div class="algolia-hits"></div>
+  <div class="algolia-pagination"></div>
 </div>
 
-      
     </div>
   </div>
 
 </div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%86%99%E5%9C%A8%E5%89%8D%E9%9D%A2"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%AA%E4%BA%BA%E4%BB%8B%E7%BB%8D"><span class="nav-number">1.1.</span> <span class="nav-text">个人介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%87%E7%AB%A0%E7%9B%AE%E7%9A%84"><span class="nav-number">1.2.</span> <span class="nav-text">文章目的</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%AD%A3%E6%96%87"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89%E5%BC%80%E5%A7%8B%E2%80%94%E2%80%94%E6%AD%A5%E5%85%A5%E5%A4%A7%E5%AD%A6%E7%94%9F%E6%B4%BB"><span class="nav-number">2.1.</span> <span class="nav-text">（一）开始——步入大学生活</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9%E8%AE%A1%E7%AE%97%E6%9C%BA%E4%B8%93%E4%B8%9A%EF%BC%9F"><span class="nav-number">2.1.1.</span> <span class="nav-text">为什么选择计算机专业？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%A7%91%E7%8F%AD%E4%B8%8E%E9%9D%9E%E7%A7%91%E7%8F%AD"><span class="nav-number">2.1.2.</span> <span class="nav-text">科班与非科班</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%B7%AF%E7%BA%BF%E9%80%89%E6%8B%A9%EF%BC%88%E5%B7%A5%E4%BD%9C-%E8%AF%BB%E7%A0%94-%E5%87%BA%E5%9B%BD%EF%BC%89"><span class="nav-number">2.1.3.</span> <span class="nav-text">路线选择（工作&#x2F;读研&#x2F;出国）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E6%96%B9%E5%90%91%E9%80%89%E6%8B%A9"><span class="nav-number">2.1.4.</span> <span class="nav-text">技术方向选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%AE%97%E6%B3%95%E4%B8%8E%E5%B7%A5%E7%A8%8B"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">算法与工程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%89%80%E8%B0%93%E2%80%9C%E5%A4%A9%E8%8A%B1%E6%9D%BF%E2%80%9D"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">所谓“天花板”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8F%AF%E4%BB%A5%E8%AF%95%E9%94%99"><span class="nav-number">2.1.4.3.</span> <span class="nav-text">可以试错</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8A%80%E6%9C%AF%E5%9B%A2%E9%98%9F"><span class="nav-number">2.1.5.</span> <span class="nav-text">技术团队</span></a></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
+  <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">36</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/viseator" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;viseator" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:viseator@gmail.com" title="E-Mail → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hustunique.com/" title="https:&#x2F;&#x2F;www.hustunique.com&#x2F;" rel="noopener" target="_blank">UniqueStudio</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.codedragon.tech/" title="http:&#x2F;&#x2F;blog.codedragon.tech&#x2F;" rel="noopener" target="_blank">BlackDragon</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://imzhwk.com/" title="http:&#x2F;&#x2F;imzhwk.com&#x2F;" rel="noopener" target="_blank">imzhwk</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://moe.petnakanojo.com/" title="http:&#x2F;&#x2F;moe.petnakanojo.com&#x2F;" rel="noopener" target="_blank">PetnaKanojo</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://alexandertang.cn/" title="http:&#x2F;&#x2F;alexandertang.cn&#x2F;" rel="noopener" target="_blank">Alexander</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://qzwlecr.github.io/" title="https:&#x2F;&#x2F;qzwlecr.github.io&#x2F;" rel="noopener" target="_blank">qzwlecr</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.kurokoi.moe/" title="http:&#x2F;&#x2F;www.kurokoi.moe&#x2F;" rel="noopener" target="_blank">Kurokoi</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
     </header>
 
     
-  <div class="back-to-top">
+  <div class="back-to-top" role="button">
     <i class="fa fa-arrow-up"></i>
     <span>0%</span>
   </div>
 
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
 
-    <main class="main">
-      <div class="main-inner">
-        <div class="content-wrap">
-          
 
-          <div class="content post posts-expand">
-            
+    <div class="main-inner post posts-expand">
 
-    
+
+  
+
+
+<div class="post-block">
   
   
-  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2020/05/24/university_1/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -254,40 +342,42 @@
           从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活
         </h1>
 
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2020-05-24 10:30:32" itemprop="dateCreated datePublished" datetime="2020-05-24T10:30:32+08:00">2020-05-24</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-07-25 23:15:12" itemprop="dateModified" datetime="2020-07-25T23:15:12+08:00">2020-07-25</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Summar/" itemprop="url" rel="index"><span itemprop="name">Summar</span></a>
-                </span>
-            </span>
+      <time title="创建时间：2020-05-24 10:30:32" itemprop="dateCreated datePublished" datetime="2020-05-24T10:30:32+08:00">2020-05-24</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-07-25 23:15:12" itemprop="dateModified" datetime="2020-07-25T23:15:12+08:00">2020-07-25</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Summar/" itemprop="url" rel="index"><span itemprop="name">Summar</span></a>
+        </span>
+    </span>
 
-          
-            <span id="/2020/05/24/university_1/" class="post-meta-item leancloud_visitors" data-flag-title="从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活" title="阅读次数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              <span class="post-meta-item-text">阅读次数：</span>
-              <span class="leancloud-visitors-count"></span>
-            </span>
+  
+    <span id="/2020/05/24/university_1/" class="post-meta-item leancloud_visitors" data-flag-title="从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
 
         </div>
       </header>
@@ -296,15 +386,14 @@
     
     
     <div class="post-body" itemprop="articleBody">
-
-      
         <h1 id="写在前面"><a href="#写在前面" class="headerlink" title="写在前面"></a>写在前面</h1><p>首先原谅我用这样的标题来博得关注和点击，因为思前想后也只有我所拿到的Offer才最能在一定程度上代表能力，为我下面将要分享的内容作背书。</p>
 <p>在最开始准备写这篇文章的时候只是想像往常那样放在我的博客上作为自己的回忆和总结，不太想去获得别人的关注；但另一个声音告诉我这些东西和之前的技术文章不太一样，这些经验和教训可能可以帮助到很多刚刚踏入校门的新人们，或多或少地产生一些价值。</p>
 <p>既然决定了写这篇文章是为了创造价值，那么只有分享出来，让更多感兴趣的人看到才能创造更多的价值，这就是此时此刻你能看到这篇文章的原因。</p>
 <a id="more"></a>
+
 <hr>
 <p>由于文章的篇幅已经远超最初的预想，所以会拆成几篇分别在<strong>微信公众号VirMe</strong>发出（确实是公众号最适合创作与分享，还烦请关注），所有文章共用开头部分，特此说明。</p>
-<h2 id="个人介绍"><a href="#个人介绍" class="headerlink" title="个人介绍"></a>个人介绍</h2><p>笔者2016年高考考入华中科技大学计算机科学与技术专业，同年10月份加入学生技术团队<a href="https://hustunique.com/" target="_blank" rel="noopener">联创团队</a>Android组，后任组长。</p>
+<h2 id="个人介绍"><a href="#个人介绍" class="headerlink" title="个人介绍"></a>个人介绍</h2><p>笔者2016年高考考入华中科技大学计算机科学与技术专业，同年10月份加入学生技术团队<a target="_blank" rel="noopener" href="https://hustunique.com/">联创团队</a>Android组，后任组长。</p>
 <p>2017年底（大二寒假）拿到今日头条（字节跳动）深圳研发中心Android开发实习生Offer，在深圳研发中心实习至2018年3月。</p>
 <p>2018年4月加入新成立的今日头条武汉研发中心实习，2019年5月离职。</p>
 <p>2019年春招拿到腾讯（微信）、蚂蚁金服（支付宝）、Airbnb的暑期实习Offer，2019年7月加入微信实习。</p>
@@ -338,18 +427,21 @@
 <p>这四个答案可以分为两类，一类是有强烈的外在驱动：当下风口、就业前景、收入水平；另一类则是自己的自驱力：我想要学。</p>
 <p>确实，当下的计算机行业，在一阵阵的热潮之中，一直处于人才供不应求的阶段，由此也带来了相对较高的收益，在这样的背景下，计算机专业的录取分数线也水涨船高，在很多省份的录取分数已经超过了华科最王牌的机械、光电专业。我高考时619分就能进的计算机，三年后学弟的录取分数却高达650。不得不说这是一些家长和同学的功利心理导致的。但现实是残酷的，在被我问过这个问题的同学中，往往答案是后两种的同学最终进了团队，在技术上早早地取得优势，在能力上也远远超出了其他同学。</p>
 <p>背后的原因其实很明显，大学的专业本来就是为了满足不同人发挥不同的兴趣特长而设立的，而在逐利的背景下，大批怀揣着高薪梦想，觉得录取到计算机专业就高枕无忧的同学涌入，殊不知就算是华科的计算机系，每年都会有不少的同学因为不能完成基本的课业而被退学，到了大四面临着无法按时毕业，在招聘季为了一份工作焦头烂额，更是有<strong>80%以上</strong>的同学本科毕业时甚至写不出一个没Bug的快速排序。</p>
-<p><img src="/images/uni/1_1.png" width="60%" height="60%"/></p>
+<img src="/images/uni/1_1.png" width="60%" height="60%"/>
+
 <p><strong>行业决定下限</strong>，这句话不假，只要你在大学四年中<strong>认真完成所有学校设立的课程</strong>，完成学业后可以比较轻松地找到一份“还算不错”的工作（华为每年都会在华科统一价批发走一大批学生），薪资也可以轻松超过绝大多数其他专业的同届同学。但是这并不代表不用付出相应的努力，计算机是一门知识非常系统的学科，也是一门学习曲线一开始较为陡峭的学科，这意味着从一开始就需要付出很大努力并且短期内很难看到直接的收益，从基础的数据结构、算法、C语言学起，对于一个刚接触计算机科学的新人来说无不是抽象且晦涩的，在我刚开始学习它们的很长一段时间里我都会问自己这些东西有什么用，为什么我写的程序只能在终端里面输出一些字符，怎么才能写出那种有界面能用的软件呢？事实上这些知识的作用在一段时间后才会体现出来，例如当需要自己使用C语言实现操作系统的一部分、需要理解操作系统线程调度算法、需要设计编译原理的抽象语法树时，没有前置的技术积累将会使得后续知识的学习变得寸步难行。</p>
-<p><img src="/images/uni/1_2.png" alt=""></p>
+<p><img src="/images/uni/1_2.png"></p>
 <p>有很大一部分同学在真正开始学习计算机时并没有意识到这一点，在刚进入大学失去外在的束缚并且时间较为宽裕的情况下，没有付出足够的时间在这些基础的较为枯燥的课程上，导致在后面的课程中处处碰壁，使得没有完全掌握的内容越来越多，最终自暴自弃，失去了在宝贵的大学四年中更加深入地学习这些通用课程的机会。</p>
 <p>而能支撑我们从一开始学习看似枯燥的知识到后面持续不断的付出与深入的，很多时候只有自己的自驱力，因为我喜欢计算机，才会心甘情愿付出比别人多几倍的时间；才会在别人翘课、游戏、参加各种活动的时候静下心来对着屏幕上的字符；才会在遇到一个又一个Bug的时候花上几个小时的时间去调试。这样的自驱力对于计算机的学习至关重要。</p>
 <p>对我而言，在小学的时候因为数学好，被选去参加NOIP（信息学技术竞赛），那时候还是写的BASIC语言，虽然初中后因为县城的条件，没有再继续下去，但这段经历让我意识到什么是我真正热爱的、愿意付出自己所有的热情去做的事情。所以在高考成绩出来以后，不用十分钟我就确认了自己的志愿：华科的计算机、信安与软件。回想起来，就算一开始遇到了很多困难（大一的时候光是装Linux就装了两个礼拜……），也从来没有想过放弃，靠着兴趣确实做成了很多事情。</p>
 <p>事实上，有着计算机兴趣并成功考入计算机专业的人是幸运的少数，对于自身没有多大兴趣又想毕业时拿到头部企业的高薪Offer的同学，我觉得对于功利的追求不会让一个人走得太远，但是兴趣是可以培养的，任何一门学科学到深入都是充满魅力的，尤其是计算机这种非常容易取得满足与成就感的学科（当然这点也不尽然是好事，后续文章会谈）。我相信任何一个有志于从事这个行业的同学都可以在不断深入的过程中找到自己的乐趣。</p>
 <h3 id="科班与非科班"><a href="#科班与非科班" class="headerlink" title="科班与非科班"></a>科班与非科班</h3><p>在接触到的很多想加入团队或是想应聘头条或是腾讯的同学中，有不少不是计算机专业的，也就是所谓的非科班，他们常问的一个问题是，非科班的身份会不会对找工作有很大的影响？其实这个问题和另一个热门问题很相似：如何看待培训班培养出来的程序员。</p>
-<p><img src="/images/uni/1_3.png" alt=""></p>
+<p><img src="/images/uni/1_3.png"></p>
 <p>在我看来，科班或者非科班就像985、211一样，都是一个人身上的tag，它们常被人用作评判一个人的标准之一，在没有其他任何可以参考的信息时，这些tag就成了衡量个人水平的唯一标准。但计算机的情况并非如此，在评判一个人能否胜任工作岗位时，这些tag的影响力远不如实实在在的实习经验和项目经验，这些项目往往能体现一个人的真实能力，而技术面试可以很容易判断作假的经历与项目。但在技术面试中，还有更重要的一部分，也是科班与非科班最容易体现出的区别。</p>
 <p>前面说过，基础知识的积累决定了后续知识的学习能力，而科班则提供了从底层开始向上扩展的课程体系（虽然不尽完善与及时），但培训班和一些非科班同学则将重点放在了最上层和浅显的知识学习，也就是工作中直接接触，可以直接创造价值的那部分。因为在有限的时间内，对于这些知识的快速学习是最有助于看到成效和容易被接受的。把这部分知识学好了，能不能干活呢？或许可以，但是很少有没有系统的计算机知识的人可以深入到问题的背后探究其本质，这也是我们常自嘲“面向StackOverFlow/Github编程”和“Copy&amp;Paste工程师”真正所指的那批人。急功近利的后果是程序运作基本原理知识的缺失、是分析与解决根源问题的能力的缺失、是分析与设计复杂系统的潜力的缺失等等，最重要的是失去了底层能力的积累也就失去了进一步深入学习的基本能力，导致在技术道路上的停滞不前。</p>
-<p><img src="/images/uni/1_4.png" width="60%" height="60%"/><br><img src="/images/uni/1_5.png" width="60%" height="60%"/></p>
+<img src="/images/uni/1_4.png" width="60%" height="60%"/>
+<img src="/images/uni/1_5.png" width="60%" height="60%"/>
+
 <p>任何有过比较深入的编程经验的程序员都深知基础知识对于从业者的重要性，它在一定程度上代表了一个程序员的潜力与未来，这是为什么各个大厂的招聘要求与面试中都有着对基础知识的考察，非科班同学比较容易缺失的这点就成了就业中的劣势，也造成了一部分公司与面试官的成见。那么非科班的同学是不是就一定没机会与科班同学竞争了呢？绝对不是，但往往需要付出更多。除了需要自学与科班同学相同的基础知识之外，为了顺利毕业也要同时保证本学科的课程可以顺利过关，同时没有合理的安排、教师的指导与考试的束缚，非科班的同学需要更强的自驱力来克服上述的这些困难。</p>
 <p>不过，我所认识的非科班的同学（也大都是团队的）最后体现出的能力与结果却都远远强于科班的大部分同学。微信同组有高我一届的船海学院学长大三暑假去了腾讯IEG的游戏引擎组实习，秋招又通过四轮面试加入了微信团队；和我大二一起拿到深圳头条实习Offer的同学是电信学院的；团队同组的机械学院同学大三加入了武汉头条，还从Android开发转到了iOS开发……这样的例子数不胜数，甚至我这届的团队队长也是所谓非科班的。我想，正如上一节所说的那样，也正是非科班的身份和强大的兴趣支持他们不断地付出更多的努力，最终走上了自己想要的路。</p>
 <h3 id="路线选择（工作-读研-出国）"><a href="#路线选择（工作-读研-出国）" class="headerlink" title="路线选择（工作/读研/出国）"></a>路线选择（工作/读研/出国）</h3><p>本科的同学都会面临这样的问题，在四年本科结束以后，该做什么？这个问题对于计算机专业的同学，可能更加困难。相对于其他专业，计算机同学工作和出国的比例会更高一些，以华科为例，每年计院+软院选择工作、读研和出国的毕业生比例大概为5:3:2。在这里不过多分析各个方向的优劣，每个人的情况不同，也没有任何一个方向会比其他两个有明显的优势，每个人的选择都需要结合自身的情况做出选择，也需要为自己的选择负责，因为每个选择都意味着得与失，每个人想要的生活不同，参考别人的选择并无多大意义，更加值得参考的是选择背后的逻辑。</p>
@@ -365,13 +457,15 @@
 <p>前文已经多次提到基础知识对于计算机从业者的重要性，如何学习基础知识这点会在后续文章单独讲，在这里想讲的是除开通用知识之外，在就业时通常需要选择一个特定的岗位，也就是需要我们对一个特定领域的知识有深入的了解。</p>
 <p>为什么需要对一个方向深入了解呢？你可能听过一个高大上的词叫全栈工程师，指的是掌握多个领域技术，可以独立承担完整链路的开发工作的工程师，为什么不以成为全栈作为自己的技术方向呢？</p>
 <p>事实上，在短短的大学四年中，从零开始到完全掌握一个技术方向都不太可能，更不用说掌握多个技术方向了。我在大学里几乎从一开始就在学习Android开发的内容，三年的经验到了公司里还是会被一年工作经验的同事吊打，大量实际的开发经验和校园中能接触到的项目经验不可同日而语。计算机科学与技术是一门知识体系庞大，分支众多的学科，对于零基础的新人，学习基础知识已经需要花费大量的时间，大部分的毕业生也只能做到深入了解一个方向的知识。基于这一点，国内公司大都会设置不同方向的开发岗位，培养某一方向上的专家工程师。</p>
-<p><img src="/images/uni/1_6.png" width="60%" height="60%"/></p>
+<img src="/images/uni/1_6.png" width="60%" height="60%"/>
+
 <p>那么应该怎样选择技术方向呢？首先记住一点：各个技术方向<strong>没有优劣之分，只是各有特点。</strong></p>
 <h4 id="算法与工程"><a href="#算法与工程" class="headerlink" title="算法与工程"></a>算法与工程</h4><p>但在选择方向这一问题上，有着很多因为不了解、功利心或是从众心理造成的现象。在我刚进入大学的2016年，如果抓住一个计算机的新生问“你对哪个方向比较感兴趣？”，听到的回答十有八九会是“算法”，因为在很多刚接触计算机的新人眼里，“算法”听上去是充满难度与挑战、十分重要且核心的计算机领域，加上算法工程师的薪资通常也会高出其他岗位，它自然就成了很多人的理想出路；但他们没有看到的是，对很多人来说，算法的学习过程是十分枯燥无趣的，也需要有一定的数学基础和抽象思维能力，不是每个人都适合这样的学习路线，很多人兴致勃勃买了《算法导论》，但到毕业时却不曾读完一遍，这就是不了解和功利心带来的困境。</p>
 <p>到了近两年，随着人工智能的火热，新生的回答更多的变成了“想学人工智能”，同样的原因，只不过来得更加猛烈。但对于人工智能的学习，只要稍作了解，就会知道人工智能技术远没有想象的那样高大上，更不用说继续深造几乎是这一路线的唯一选择。</p>
 <p>抛开上述问题，即使你在了解之后真的对算法和人工智能感兴趣，并且也能接受它们的学习路线，你还是会面临一个极大的问题——<strong>工程岗和算法岗供需关系的极度不平衡</strong>。</p>
 <p>下面是2019秋招时一名资深HR的朋友圈比较直接地说明了这一问题，在这里分享给大家（已经找不到来源，如有侵权，请联系删除）：</p>
-<p><img src="/images/uni/1_7.png" width="50%" height="50%"/></p>
+<img src="/images/uni/1_7.png" width="50%" height="50%"/>
+
 <p>图中提到了几个问题：</p>
 <p>工程岗（客户端、前端、后台、游戏等）目前供不应求，尤其是客户端与前端，头条在19年更是为客户端专门设立了几万元的签字费、并放宽招聘要求到不要求有客户端开发经验以吸引学生投递，即使如此19年还是剩下了大量的工程岗hc没有招满，其他公司的情况也大致如此。这样的情况到了20年还是没有得到缓解，甚至愈演愈烈。</p>
 <p>另一边，算法岗的情况却是严重的供过于求，有如千军万马过独木桥，比较靠前公司的算法岗更是神仙打架。</p>
@@ -387,7 +481,7 @@
 <p>虽然一开始可能只是照着书本或者网上写一些自己也不懂什么作用的代码，但是一旦学会查阅文档，了解每个接口的作用与行为后，我们将会对系统的行为有进一步的了解。</p>
 <p>当跨越熟悉接口这一阶段、有了对系统行为的初步认知后，我们已经可以独立完成简单的应用了，但当应用的逻辑进一步复杂化时，难免会遇到问题，在查阅资料，解决问题的过程中，为了完全理解系统的行为，我们将会跨出非常重要的一步：阅读系统源码（Android的系统源码是开源的）。由此开始，我们对于Android的学习不再仅限于开发应用、绘制界面本身，而是<strong>开始深入地探究一个系统背后的运行原理与设计理念。</strong></p>
 <p>而Android作为一个非常成熟的操作系统，有着庞大而又清晰的分层设计：</p>
-<p><img src="/images/uni/1_8.png" alt=""></p>
+<p><img src="/images/uni/1_8.png"></p>
 <p>纵向来看，Android自上而下地贯穿了应用层面到系统内核层面；横向来看，Android的各个子系统、子模块间相互独立，又有着交互与通信；Android同时也是一个基于Linux的操作系统，借由Android我们也可以一窥Linux的种种概念，例如几乎所有的Linux进程间通信方式在Android的源码中都有所体现，同时Android又根据自身的需求设计了大名鼎鼎的进程间通信框架Binder，从对Binder通信机制的学习中，我们可以看到一个驱动级别的组件，是如何通过系统和框架的层层封装，转变为我们日常开发中所能见到的Java层的AIDL工具。我也曾为了弄清楚“触摸事件道到底是哪里来的？”这一问题，<a href="https://www.viseator.com/2017/09/14/android_view_event_1/">顺着源码从Android SDK一路看到了触摸驱动</a>。而这样的例子数不胜数，每次深入探究的过程，都是充满趣味和最终的成就感的。</p>
 <p>系统地阅读Android源码的过程，既是对软件架构与设计的理解和学习，又可以深入到系统底层实现中，理解操作系统的方方面面。可以说，这样的过程将我们零散的、琐碎的计算机知识有效地组织了起来，打通了我们从应用直至系统的整个知识体系，同时又可以驱使我们去不断补充相关知识，从各个方面提升自己的能力。</p>
 <p>看到这里，你还会认为对Android开发的学习只是画画界面这么简单吗？事实上，这样“<strong>以技术方向为切入点，深入学习计算机的方方面面</strong>”的学习方式已经成了团队成员进行技术学习的宗旨之一（具体见后续文章），带来的结果是每个人在拥有对技术方向的深入了解的同时，在计算机的基础知识和全面认识方面的综合能力也远超他人，这也就解释了为什么很多队员在毕业后可以很轻松地转向另一个方向，团队Android组往届学长有去阿里做前端的、去美团做后端的，我在微信的岗位实际上也是游戏方向，并且在很短的时间内上手了iOS开发。</p>
@@ -395,11 +489,11 @@
 <p>那么，应该如何学习呢？这个问题是下篇文章的重点，在这里就先吊个胃口了。</p>
 <h4 id="可以试错"><a href="#可以试错" class="headerlink" title="可以试错"></a>可以试错</h4><p>既然真正学习的是计算机基础知识，那么选择的方向其实在一开始并不是那么重要，如果发现自己一开始对这个方向的了解出现了偏差，在毕业后并不想从事这个方向的工作，完全可以选择换一个方向，学到的基础知识永远不会作废。大学中一个极大的优势就是可以近乎无成本地试错。在毕业真正走向工作岗位后，主动对自己的岗位做出调整的机会就小很多，也要付出相应的代价。</p>
 <p>所以，大胆地选择一个方向吧，没有什么可以担心的，Follow Your Heart!</p>
-<h3 id="技术团队"><a href="#技术团队" class="headerlink" title="技术团队"></a>技术团队</h3><p>在本文的最后一部分，谈谈我在前文多次提到的<a href="https://hustunique.com/" target="_blank" rel="noopener">联创团队</a>及这样一个团队（或是类似的组织、实验室、甚至是学习小组等）能给我们带来什么。</p>
+<h3 id="技术团队"><a href="#技术团队" class="headerlink" title="技术团队"></a>技术团队</h3><p>在本文的最后一部分，谈谈我在前文多次提到的<a target="_blank" rel="noopener" href="https://hustunique.com/">联创团队</a>及这样一个团队（或是类似的组织、实验室、甚至是学习小组等）能给我们带来什么。</p>
 <p>首先介绍下我所加入的联创团队，联创团队是华科的一个学生技术团队，至今已经有20年的历史。很多人第一反应会是：这是个社团吗？其实团队和社团完全不同，我们没有真正意义上的指导老师，是一个纯学生组织，完全由学生自己负责团队的一切事务；但是我们却隶属于华中科技大学的启明学院，在学院的大楼中有自己独立的办公场地，是学院提供支持的创新团队，图为启明学院大楼、团队场地。</p>
-<p><img src="/images/uni/1_9.png" alt=""><br><img src="/images/uni/1_10.png" alt=""></p>
+<p><img src="/images/uni/1_9.png"><br><img src="/images/uni/1_10.png"></p>
 <p>团队因兴趣而起，由一批志同道合的学生创立，联创二字就意为“联众人之志，创非凡之事”。团队成员曾在微软创新杯中多次取得名次；在2016世界大学生超算大赛获得全球第一名；举办了国内第一个面向大学生的Unique Hack-Day（编程马拉松）并延续六届。</p>
-<p><img src="/images/uni/1_11.png" alt=""></p>
+<p><img src="/images/uni/1_11.png"></p>
 <p>目前团队内部按照兴趣分为了Android/iOS/Web/Game/AI/Design/PM/Lab八个组，在每年进行两次主要的招新和一次夏令营招新，招新会设置一轮笔试、一轮组内面试、一轮熬夜测试和最后的群体面试，比较有特色的是熬夜测试，新人会被要求在一个晚上的时间内（21点-次日7点）完成各组的编程题目，可以查阅任何资料，目的是考查热情和短时间内的学习能力。经过层层面试筛选出来的新人还需要经历一个学期的实习期，需要完成布置的项目任务。</p>
 <p>这样的经历是非常难忘，我至今还记得那晚是我第一次为了一个目标如此投入，为了完成那六道题目忘记了时间的流逝和身体的困倦，大概也是从那时候开始明白全身心的投入可以完成怎样之前不曾想象的事情。</p>
 <p>这一套严格的招新标准已经在团队实行了多年，本着宁缺毋滥的原则，目的是为了筛选出真正对计算机有学习热情，并且有不错的学习能力的同学。事实上每年能加入团队的新人每组都在个位数，甚至经常会出现一个不招的情况。</p>
@@ -412,13 +506,13 @@
 <p>我的大学叫联创</p>
 </blockquote>
 <p>这句话到了我这里依然成立。</p>
-<p><img src="/images/uni/1_12.png" alt=""></p>
+<p><img src="/images/uni/1_12.png"></p>
 <p>一个人的力量终究是有限的，当这条路上有人陪伴的时候才能走得更远，所以，如果你的学校有类似的组织，非常推荐你尝试加入。如果没有，我相信总会有和你志同道合的人等待着你，也同样会有已经走上这条路的学长愿意去与你分享这些经验，我也是其中的一员。</p>
 <hr>
 <p>这是全文的第一部分，介绍了在刚进入大学时需要思考的一些问题。在下一篇文章中，将主要会介绍一些在大学中学习计算机的一些方法与经验。</p>
 <p><strong>如果以上的内容对你有所帮助，欢迎你把它分享给更多人，谢谢！</strong></p>
 <p>如果有任何想法、疑问、意见或是建议，欢迎关注公众号VirMe留言交流。</p>
-<p><img src="/images/wechat_channel.jpg" alt=""></p>
+<p><img src="/images/wechat_channel.jpg"></p>
 <p><a href="https://www.viseator.com/2020/05/24/university_1/">从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活</a></p>
 <p><a href="https://www.viseator.com/2020/07/25/university_2/">从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长</a></p>
 
@@ -427,98 +521,88 @@
     
     
     
-        <div class="reward-container">
+
+    <footer class="post-footer">
+          <div class="reward-container">
   <div></div>
-  <button onclick="var qr = document.getElementById('qr'); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
-    打赏
+  <button onclick="document.querySelector('.post-reward').classList.toggle('active');">
+    赞赏
   </button>
-  <div id="qr" style="display: none;">
-      
-      <div style="display: inline-block;">
-        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信支付">
-        <p>微信支付</p>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信">
+        <span>微信</span>
       </div>
-      
-      <div style="display: inline-block;">
+      <div>
         <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
-        <p>支付宝</p>
+        <span>支付宝</span>
       </div>
 
   </div>
 </div>
 
-        
+          
 
-<div>
-<ul class="post-copyright">
+<div class="post-copyright">
+<ul>
   <li class="post-copyright-author">
-    <strong>本文作者： </strong>viseator(吴迪)
+      <strong>本文作者： </strong>viseator(吴迪)
   </li>
   <li class="post-copyright-link">
-    <strong>本文链接：</strong>
-    <a href="https://www.viseator.com/2020/05/24/university_1/" title="从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活">https://www.viseator.com/2020/05/24/university_1/</a>
+      <strong>本文链接：</strong>
+      <a href="https://www.viseator.com/2020/05/24/university_1/" title="从开始到微信&#x2F;支付宝&#x2F;Airbnb&#x2F;抖音Offer——我的大学客户端开发学习之路（一）开始——步入大学生活">https://www.viseator.com/2020/05/24/university_1/</a>
   </li>
   <li class="post-copyright-license">
-    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fa fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
   </li>
 </ul>
 </div>
 
-        
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
 
-  <div class="followme">
-    <p>欢迎关注我的其它发布渠道</p>
+  <div class="social-list">
 
-    <div class="social-list">
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
 
-        <div class="social-item">
-          <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
-            <span class="icon">
-              <i class="fa fa-wechat"></i>
-            </span>
-
-            <span class="label">微信公众号</span>
-          </a>
-        </div>
-    </div>
+          <span class="label">微信公众号</span>
+        </a>
+      </div>
   </div>
+</div>
 
-
-      <footer class="post-footer">
           <div class="post-tags">
               <a href="/tags/Summary/" rel="tag"># Summary</a>
           </div>
 
         
 
-
-        
-    <div class="post-nav">
-      <div class="post-nav-item">
-    <a href="/2018/09/07/android_JSBridge/" rel="prev" title="Android JSBridge原理与实现">
-      <i class="fa fa-chevron-left"></i> Android JSBridge原理与实现
-    </a></div>
-      <div class="post-nav-item">
-    <a href="/2020/07/25/university_2/" rel="next" title="从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长">
-      从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长 <i class="fa fa-chevron-right"></i>
-    </a></div>
-    </div>
-      </footer>
-    
-  </article>
-  
-  
-  
-
-
-
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/09/07/android_JSBridge/" rel="prev" title="Android JSBridge原理与实现">
+                  <i class="fa fa-chevron-left"></i> Android JSBridge原理与实现
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/07/25/university_2/" rel="next" title="从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长">
+                  从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
           </div>
-          
-    
-  <div class="comments">
-    <div id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
-  </div>
-  
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
 
 <script>
   window.addEventListener('tabs:register', () => {
@@ -527,7 +611,7 @@
       activeClass = localStorage.getItem('comments_active') || activeClass;
     }
     if (activeClass) {
-      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
       if (activeTab) {
         activeTab.click();
       }
@@ -536,148 +620,46 @@
   if (CONFIG.comments.storage) {
     window.addEventListener('tabs:click', event => {
       if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      let commentClass = event.target.classList[1];
+      const commentClass = event.target.classList[1];
       localStorage.setItem('comments_active', commentClass);
     });
   }
 </script>
-
-        </div>
-          
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line toggle-line-first"></span>
-    <span class="toggle-line toggle-line-middle"></span>
-    <span class="toggle-line toggle-line-last"></span>
-  </div>
-
-  <aside class="sidebar">
-    <div class="sidebar-inner">
-
-      <ul class="sidebar-nav motion-element">
-        <li class="sidebar-nav-toc">
-          文章目录
-        </li>
-        <li class="sidebar-nav-overview">
-          站点概览
-        </li>
-      </ul>
-
-      <!--noindex-->
-      <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#写在前面"><span class="nav-number">1.</span> <span class="nav-text">写在前面</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#个人介绍"><span class="nav-number">1.1.</span> <span class="nav-text">个人介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#文章目的"><span class="nav-number">1.2.</span> <span class="nav-text">文章目的</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#（一）开始——步入大学生活"><span class="nav-number">2.1.</span> <span class="nav-text">（一）开始——步入大学生活</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#为什么选择计算机专业？"><span class="nav-number">2.1.1.</span> <span class="nav-text">为什么选择计算机专业？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#科班与非科班"><span class="nav-number">2.1.2.</span> <span class="nav-text">科班与非科班</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#路线选择（工作-读研-出国）"><span class="nav-number">2.1.3.</span> <span class="nav-text">路线选择（工作&#x2F;读研&#x2F;出国）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技术方向选择"><span class="nav-number">2.1.4.</span> <span class="nav-text">技术方向选择</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#算法与工程"><span class="nav-number">2.1.4.1.</span> <span class="nav-text">算法与工程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#所谓“天花板”"><span class="nav-number">2.1.4.2.</span> <span class="nav-text">所谓“天花板”</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#可以试错"><span class="nav-number">2.1.4.3.</span> <span class="nav-text">可以试错</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#技术团队"><span class="nav-number">2.1.5.</span> <span class="nav-text">技术团队</span></a></li></ol></li></ol></li></ol></div>
-      </div>
-      <!--/noindex-->
-
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
-      src="/images/avatar.jpg">
-  <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
-  <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
 </div>
-<div class="site-state-wrap motion-element">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives">
-        
-          <span class="site-state-item-count">36</span>
-          <span class="site-state-item-name">文章</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories">
-          
-        <span class="site-state-item-count">21</span>
-        <span class="site-state-item-name">分类</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags">
-          
-        <span class="site-state-item-count">25</span>
-        <span class="site-state-item-name">标签</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author motion-element">
-      <span class="links-of-author-item">
-        <a href="https://github.com/viseator" title="GitHub → https://github.com/viseator" rel="noopener" target="_blank"><i class="fa fa-fw fa-github-alt"></i>GitHub</a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:viseator@gmail.com" title="Email → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>Email</a>
-      </span>
-  </div>
-  <div class="cc-license motion-element" itemprop="license">
-    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
-  </div>
+  </main>
 
+  <footer class="footer">
+    <div class="footer-inner">
 
-  <div class="links-of-blogroll motion-element">
-    <div class="links-of-blogroll-title">
-      <i class="fa fa-fw fa-link"></i>
-      Links
-    </div>
-    <ul class="links-of-blogroll-list">
-        <li class="links-of-blogroll-item">
-          <a href="https://www.hustunique.com/" title="https://www.hustunique.com/" rel="noopener" target="_blank">UniqueStudio</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://blog.codedragon.tech/" title="http://blog.codedragon.tech/" rel="noopener" target="_blank">BlackDragon</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://imzhwk.com/" title="http://imzhwk.com/" rel="noopener" target="_blank">imzhwk</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://moe.petnakanojo.com/" title="http://moe.petnakanojo.com/" rel="noopener" target="_blank">PetnaKanojo</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://alexandertang.cn/" title="http://alexandertang.cn/" rel="noopener" target="_blank">Alexander</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="https://qzwlecr.github.io/" title="https://qzwlecr.github.io/" rel="noopener" target="_blank">qzwlecr</a>
-        </li>
-        <li class="links-of-blogroll-item">
-          <a href="http://www.kurokoi.moe/" title="http://www.kurokoi.moe/" rel="noopener" target="_blank">Kurokoi</a>
-        </li>
-    </ul>
-  </div>
-
-      </div>
-
-    </div>
-  </aside>
-  <div id="sidebar-dimmer"></div>
-
-
-      </div>
-    </main>
-
-    <footer class="footer">
-      <div class="footer-inner">
-        
-
-        
 
 <div class="copyright">
-  
   &copy; 2016 – 
-  <span itemprop="copyrightYear">2020</span>
+  <span itemprop="copyrightYear">2021</span>
   <span class="with-love">
     <i class="fa fa-rocket"></i>
   </span>
   <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
 </div>
-  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://mist.theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
   </div>
 
-        
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdn.jsdelivr.net/npm/algoliasearch@4.8.4/dist/algoliasearch-lite.umd.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/instantsearch.js@4.13.1/dist/instantsearch.production.min.js"></script><script src="/js/algolia-search.js"></script>
 
 
-  <div style="display: none;">
-    <script src="//s95.cnzz.com/z_stat.php?id=1261494271&web_id=1261494271"></script>
-  </div>
 
 
+
+
+  
 
 
 <script>
@@ -688,15 +670,15 @@
     }
 
     function addCount(Counter) {
-      var visitors = document.querySelector('.leancloud_visitors');
-      var url = decodeURI(visitors.id);
-      var title = visitors.dataset.flagTitle;
+      const visitors = document.querySelector('.leancloud_visitors');
+      const url = decodeURI(visitors.id);
+      const title = visitors.dataset.flagTitle;
 
       Counter('get', '/classes/Counter?where=' + encodeURIComponent(JSON.stringify({ url })))
         .then(response => response.json())
         .then(({ results }) => {
           if (results.length > 0) {
-            var counter = results[0];
+            const counter = results[0];
             leancloudSelector(url).innerText = counter.time + 1;
             Counter('put', '/classes/Counter/' + counter.objectId, { time: { '__op': 'Increment', 'amount': 1 } })
               .catch(error => {
@@ -719,8 +701,8 @@
     }
 
     function showTime(Counter) {
-      var visitors = document.querySelectorAll('.leancloud_visitors');
-      var entries = [...visitors].map(element => {
+      const visitors = document.querySelectorAll('.leancloud_visitors');
+      const entries = [...visitors].map(element => {
         return decodeURI(element.id);
       });
 
@@ -728,7 +710,7 @@
         .then(response => response.json())
         .then(({ results }) => {
           for (let url of entries) {
-            let target = results.find(item => item.url === url);
+            const target = results.find(item => item.url === url);
             leancloudSelector(url).innerText = target ? target.time : 0;
           }
         })
@@ -737,9 +719,9 @@
         });
     }
 
-    let { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
+    const { app_id, app_key, server_url } = {"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false};
     function fetchData(api_server) {
-      var Counter = (method, url, data) => {
+      const Counter = (method, url, data) => {
         return fetch(`${api_server}/1.1${url}`, {
           method,
           headers: {
@@ -758,7 +740,7 @@
       }
     }
 
-    let api_server = app_id.slice(-9) !== '-MdYXbMMI' ? server_url : `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com`;
+    const api_server = app_id.slice(-9) === '-MdYXbMMI' ? `https://${app_id.slice(0, 8).toLowerCase()}.api.lncldglobal.com` : server_url;
 
     if (api_server) {
       fetchData(api_server);
@@ -773,68 +755,11 @@
 </script>
 
 
-      </div>
-    </footer>
-  </div>
-
-  
-  <script src="/lib/anime.min.js"></script>
-  <script src="/lib/velocity/velocity.min.js"></script>
-  <script src="/lib/velocity/velocity.ui.min.js"></script>
-
-<script src="/js/utils.js"></script>
-
-<script src="/js/motion.js"></script>
-
-
-<script src="/js/schemes/muse.js"></script>
-
-
-<script src="/js/next-boot.js"></script>
-
-
-
-
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-
-
-
-  
-<script src="//cdn.jsdelivr.net/npm/algoliasearch@4/dist/algoliasearch-lite.umd.js"></script>
-<script src="//cdn.jsdelivr.net/npm/instantsearch.js@4/dist/instantsearch.production.min.js"></script>
-<script src="/js/algolia-search.js"></script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  
 
 <script>
-NexT.utils.loadComments(document.querySelector('#lv-container'), () => {
+NexT.utils.loadComments('#lv-container', () => {
   window.livereOptions = {
-    refer: location.pathname.replace(CONFIG.root, '').replace('index.html', '')
+    refer: "2020/05/24/university_1/"
   };
   (function(d, s) {
     var j, e = d.getElementsByTagName(s)[0];
