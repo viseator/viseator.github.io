@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#F5F5F5"><meta name="generator" content="Hexo 6.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#F5F5F5">
+  <link rel="manifest" href="/images/manifest.json">
+
+<link rel="stylesheet" href="/css/main.css">
+
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic%7CAladin:300,300italic,400,400italic,700,700italic%7CPT+Mono:300,300italic,400,400italic,700,700italic&display=swap&subset=latin,latin-ext">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css" integrity="sha256-DfWjNxDkM94fVBWx1H5BMMp0Zq7luBlV8QRcSES7s+0=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"www.viseator.com","root":"/","images":"/images","scheme":"Mist","darkmode":false,"version":"8.12.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":null},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"livere","storage":true,"lazyload":false,"nav":null,"activeClass":"livere"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"algolia":{"appID":"HYRROWXF5U","apiKey":"24035990f7a74ccf1ec2cf8d264b6207","indexName":"vir","hits":{"per_page":10}}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="背景近期，微信小游戏支持了视频号一键开播，将微信升级到最新版本，打开腾讯系小游戏（如跳一跳、欢乐斗地主等），在右上角菜单就可以看到发起直播的按钮一键成为游戏主播了： 微信小游戏出于性能和安全等一系列考虑，运行在一个独立的进程中，在该环境中不会初始化视频号直播相关的模块，这就意味着小游戏的音视频数据必须跨进程传输到主进程进行推流，给我们实现小游戏直播带来了一系列挑战。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="【微信小游戏直播】Android跨进程渲染推流实践">
+<meta property="og:url" content="https://www.viseator.com/2022/06/08/android_live/index.html">
+<meta property="og:site_name" content="viseator&#39;s blog">
+<meta property="og:description" content="背景近期，微信小游戏支持了视频号一键开播，将微信升级到最新版本，打开腾讯系小游戏（如跳一跳、欢乐斗地主等），在右上角菜单就可以看到发起直播的按钮一键成为游戏主播了： 微信小游戏出于性能和安全等一系列考虑，运行在一个独立的进程中，在该环境中不会初始化视频号直播相关的模块，这就意味着小游戏的音视频数据必须跨进程传输到主进程进行推流，给我们实现小游戏直播带来了一系列挑战。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://www.viseator.com/images/android_live_1.png">
+<meta property="og:image" content="https://www.viseator.com/images/android_live_2.png">
+<meta property="og:image" content="https://www.viseator.com/images/android_live_3.png">
+<meta property="og:image" content="https://www.viseator.com/images/android_live_4.png">
+<meta property="og:image" content="https://www.viseator.com/images/android_live_5.png">
+<meta property="og:image" content="https://www.viseator.com/images/android_live_6.png">
+<meta property="og:image" content="https://www.viseator.com/images/android_live_7.png">
+<meta property="og:image" content="https://www.viseator.com/images/android_live_8.png">
+<meta property="og:image" content="https://www.viseator.com/images/android_live_9.png">
+<meta property="og:image" content="https://www.viseator.com/images/android_live_10.jpg">
+<meta property="og:image" content="https://www.viseator.com/images/android_live_11.png">
+<meta property="og:image" content="https://www.viseator.com/images/android_live_12.png">
+<meta property="og:image" content="https://www.viseator.com/images/android_live_13.jpg">
+<meta property="article:published_time" content="2022-06-08T08:45:42.000Z">
+<meta property="article:modified_time" content="2022-06-08T09:12:52.499Z">
+<meta property="article:author" content="viseator(吴迪)">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://www.viseator.com/images/android_live_1.png">
+
+
+<link rel="canonical" href="https://www.viseator.com/2022/06/08/android_live/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://www.viseator.com/2022/06/08/android_live/","path":"2022/06/08/android_live/","title":"【微信小游戏直播】Android跨进程渲染推流实践"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>【微信小游戏直播】Android跨进程渲染推流实践 | viseator's blog</title>
+  
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-93455229-1"></script>
+  <script class="next-config" data-name="google_analytics" type="application/json">{"tracking_id":"UA-93455229-1","only_pageview":false}</script>
+  <script src="/js/third-party/analytics/google-analytics.js"></script>
+
+  <script src="/js/third-party/analytics/baidu-analytics.js"></script>
+  <script async src="https://hm.baidu.com/hm.js?825cced91f7243ff630582af2a1a81d7"></script>
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">viseator's blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">吴迪的博客</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section">首页</a></li><li class="menu-item menu-item-categories"><a href="/categories" rel="section">分类</a></li><li class="menu-item menu-item-archives"><a href="/archives" rel="section">归档</a></li><li class="menu-item menu-item-tags"><a href="/tags" rel="section">标签</a></li><li class="menu-item menu-item-resource"><a href="/2017/03/25/resource_general" rel="section">资源</a></li><li class="menu-item menu-item-arch"><a href="/categories/Linux/" rel="section">Arch安装</a></li><li class="menu-item menu-item-about"><a href="/about" rel="section">关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger">搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container"></div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container">
+  <div class="algolia-stats"><hr></div>
+  <div class="algolia-hits"></div>
+  <div class="algolia-pagination"></div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">背景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%86%E9%A2%91%E9%87%87%E9%9B%86%E6%8E%A8%E6%B5%81"><span class="nav-number">2.</span> <span class="nav-text">视频采集推流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BD%95%E5%B1%8F%E9%87%87%E9%9B%86%EF%BC%9F"><span class="nav-number">2.1.</span> <span class="nav-text">录屏采集？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E6%B8%B8%E6%88%8F%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84"><span class="nav-number">2.2.</span> <span class="nav-text">小游戏渲染架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%BD%95%E5%B1%8F%E6%97%B6%E7%9A%84%E6%83%85%E5%86%B5"><span class="nav-number">2.3.</span> <span class="nav-text">小游戏录屏时的情况</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%94%B9%E9%80%A0%E5%BD%95%E5%B1%8F%E6%96%B9%E6%A1%88%EF%BC%9F"><span class="nav-number">2.4.</span> <span class="nav-text">改造录屏方案？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E8%BF%9B%E7%A8%8B%E6%B8%B2%E6%9F%93%E6%96%B9%E6%A1%88"><span class="nav-number">2.5.</span> <span class="nav-text">跨进程渲染方案</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%BC%E5%AE%B9%E6%80%A7%E4%B8%8E%E6%80%A7%E8%83%BD"><span class="nav-number">2.6.</span> <span class="nav-text">兼容性与性能</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93"><span class="nav-number">2.7.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9F%B3%E9%A2%91%E9%87%87%E9%9B%86%E6%8E%A8%E6%B5%81"><span class="nav-number">3.</span> <span class="nav-text">音频采集推流</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88%E9%80%89%E6%8B%A9"><span class="nav-number">3.1.</span> <span class="nav-text">方案选择</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%A8%E8%BF%9B%E7%A8%8B%E9%9F%B3%E9%A2%91%E6%95%B0%E6%8D%AE%E4%BC%A0%E8%BE%93"><span class="nav-number">3.2.</span> <span class="nav-text">跨进程音频数据传输</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#LocalSocket%E7%9A%84%E5%AE%89%E5%85%A8%E6%80%A7"><span class="nav-number">3.2.1.</span> <span class="nav-text">LocalSocket的安全性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B0%8F%E7%BB%93-1"><span class="nav-number">3.3.</span> <span class="nav-text">小结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%B8%A6%E6%9D%A5%E7%9A%84%E9%97%AE%E9%A2%98"><span class="nav-number">4.</span> <span class="nav-text">多进程带来的问题</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#glFinish%E9%80%A0%E6%88%90%E6%B8%B2%E6%9F%93%E6%8E%A8%E6%B5%81%E5%B8%A7%E7%8E%87%E4%B8%A5%E9%87%8D%E4%B8%8B%E9%99%8D"><span class="nav-number">4.1.</span> <span class="nav-text">glFinish造成渲染推流帧率严重下降</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%90%8E%E5%8F%B0%E8%BF%9B%E7%A8%8B%E4%BC%98%E5%85%88%E7%BA%A7%E9%97%AE%E9%A2%98"><span class="nav-number">4.2.</span> <span class="nav-text">后台进程优先级问题</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93%E4%B8%8E%E5%B1%95%E6%9C%9B"><span class="nav-number">5.</span> <span class="nav-text">总结与展望</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="viseator(吴迪)"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">viseator(吴迪)</p>
+  <div class="site-description" itemprop="description">永远欣赏那些可以行我所不能行之事的人</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives">
+          <span class="site-state-item-count">37</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories">
+        <span class="site-state-item-count">21</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/viseator" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;viseator" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:viseator@gmail.com" title="E-Mail → mailto:viseator@gmail.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" class="cc-opacity" rel="noopener" target="_blank"><img src="https://cdnjs.cloudflare.com/ajax/libs/creativecommons-vocabulary/2020.11.3/assets/license_badges/small/by_nc_sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+  <div class="links-of-blogroll site-overview-item animated">
+    <div class="links-of-blogroll-title"><i class="fa fa-link fa-fw"></i>
+      Links
+    </div>
+    <ul class="links-of-blogroll-list">
+        <li class="links-of-blogroll-item">
+          <a href="https://www.hustunique.com/" title="https:&#x2F;&#x2F;www.hustunique.com&#x2F;" rel="noopener" target="_blank">UniqueStudio</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://blog.codedragon.tech/" title="http:&#x2F;&#x2F;blog.codedragon.tech&#x2F;" rel="noopener" target="_blank">BlackDragon</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://imzhwk.com/" title="http:&#x2F;&#x2F;imzhwk.com&#x2F;" rel="noopener" target="_blank">imzhwk</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://moe.petnakanojo.com/" title="http:&#x2F;&#x2F;moe.petnakanojo.com&#x2F;" rel="noopener" target="_blank">PetnaKanojo</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://alexandertang.cn/" title="http:&#x2F;&#x2F;alexandertang.cn&#x2F;" rel="noopener" target="_blank">Alexander</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="https://qzwlecr.github.io/" title="https:&#x2F;&#x2F;qzwlecr.github.io&#x2F;" rel="noopener" target="_blank">qzwlecr</a>
+        </li>
+        <li class="links-of-blogroll-item">
+          <a href="http://www.kurokoi.moe/" title="http:&#x2F;&#x2F;www.kurokoi.moe&#x2F;" rel="noopener" target="_blank">Kurokoi</a>
+        </li>
+    </ul>
+  </div>
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.viseator.com/2022/06/08/android_live/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="viseator(吴迪)">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="viseator's blog">
+      <meta itemprop="description" content="永远欣赏那些可以行我所不能行之事的人">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="【微信小游戏直播】Android跨进程渲染推流实践 | viseator's blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          【微信小游戏直播】Android跨进程渲染推流实践
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2022-06-08 16:45:42 / 修改时间：17:12:52" itemprop="dateCreated datePublished" datetime="2022-06-08T16:45:42+08:00">2022-06-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Android/" itemprop="url" rel="index"><span itemprop="name">Android</span></a>
+        </span>
+    </span>
+
+  
+    <span id="/2022/06/08/android_live/" class="post-meta-item leancloud_visitors" data-flag-title="【微信小游戏直播】Android跨进程渲染推流实践" title="阅读次数">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">阅读次数：</span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h1><p>近期，微信小游戏支持了视频号一键开播，将微信升级到最新版本，打开腾讯系小游戏（如跳一跳、欢乐斗地主等），在右上角菜单就可以看到发起直播的按钮一键成为游戏主播了：<br><img src="/images/android_live_1.png" width="30%"></p>
+<p>微信小游戏出于性能和安全等一系列考虑，运行在一个独立的进程中，在该环境中不会初始化视频号直播相关的模块，这就意味着小游戏的音视频数据必须跨进程传输到主进程进行推流，给我们实现小游戏直播带来了一系列挑战。</p>
+<span id="more"></span>
+<h1 id="视频采集推流"><a href="#视频采集推流" class="headerlink" title="视频采集推流"></a>视频采集推流</h1><h2 id="录屏采集？"><a href="#录屏采集？" class="headerlink" title="录屏采集？"></a>录屏采集？</h2><p>小游戏直播本质上就是把主播手机屏幕上的内容展示给观众，自然而然地我们可以想到采用系统的录屏接口<code>MediaProjection</code>进行视频数据的采集，这种方案有这些优点：</p>
+<ol>
+<li>系统接口，实现简单，兼容性和稳定性有一定保证</li>
+<li>后期可以扩展成通用的录屏直播</li>
+<li>对游戏性能影响较小，经测试对帧率影响在10%以内</li>
+<li><strong>可以直接在主进程进行数据处理及推流，不用处理小游戏跨进程的问题</strong></li>
+</ol>
+<p>这也是抖音采用的录屏直播方案，通用性比较强，可以直播包括但不限于游戏等内容：<br><img src="/images/android_live_2.png" alt="#auto#400px"></p>
+<p>但是最终这个方案被否决了，主要出于以下考虑：</p>
+<ol>
+<li>需要展示系统授权弹窗（如上图）</li>
+<li>需要谨慎处理切出小游戏后暂停画面推流的情况，否则可能录制到主播的其他界面，有隐私风险</li>
+<li>最关键的一点：<strong>产品设计上需要在小游戏上展示一个评论挂件（如下图），便于主播查看直播评论以及进行互动，录屏直播会让观众也看到这个组件，影响观看体验的同时会暴露一些只有主播才能看到的数据：</strong><br><img src="/images/android_live_3.png" width="30%"></img><br><img src="/images/android_live_4.png" width="30%"></img></li>
+</ol>
+<p>转念一想，既然小游戏的渲染完全是由我们控制的，为了更好的直播体验，能否将小游戏渲染的内容跨进程传输到主进程来进行推流呢？</p>
+<h2 id="小游戏渲染架构"><a href="#小游戏渲染架构" class="headerlink" title="小游戏渲染架构"></a>小游戏渲染架构</h2><p>为了更好地描述我们采用的方案，这里先简单介绍一下小游戏的渲染架构：<br><img src="/images/android_live_5.png"><br>可以看到图中左半边表示在前台的小游戏进程，其中<code>MagicBrush</code>为小游戏渲染引擎，它接收来自于小游戏代码的渲染指令调用，将画面渲染到在屏的<code>SurfaceView</code>提供的<code>Surface</code>上。整个过程主进程在后台不参与。</p>
+<h2 id="小游戏录屏时的情况"><a href="#小游戏录屏时的情况" class="headerlink" title="小游戏录屏时的情况"></a>小游戏录屏时的情况</h2><p>小游戏之前支持过游戏内容的录制，和直播原理上类似，都需要获取当前小游戏的画面内容，录屏启用时小游戏会切换到如下的模式进行渲染：<br><img src="/images/android_live_6.png"><br>可以看到，<code>MagicBrush</code>的输出目标不再是在屏的<code>SurfaceView</code>，而是<code>Renderer</code>产生的一个<code>SurfaceTexture</code>，这里先介绍一下<code>Renderer</code>的作用：</p>
+<blockquote>
+<p><code>Renderer</code>是一个独立的渲染模块，表示一个独立的GL环境，它可以创建<code>SurfaceTexture</code>作为输入，收到<code>SurfaceTexture</code>的<a target="_blank" rel="noopener" href="https://developer.android.google.cn/reference/kotlin/android/graphics/SurfaceTexture.OnFrameAvailableListener?hl=en#onFrameAvailable(android.graphics.SurfaceTexture)%E5%9B%9E%E8%B0%83%E5%90%8E%E9%80%9A%E8%BF%87[%60updateTexImage%60](%60https://developer.android.google.cn/reference/kotlin/android/graphics/SurfaceTexture?hl=en#updateteximage%60"><code>onFrameAvailable</code></a>方法将图像数据转换为类型是<code>GL_TEXTURE_EXTERNAL_OES</code>的纹理参与后续的渲染过程，并可以将渲染结果输出到另一个<code>Surface</code>上。</p>
+</blockquote>
+<p>下面逐步对图中过程进行解释：</p>
+<ul>
+<li><ol>
+<li><code>MagicBrush</code>接收来自小游戏代码的渲染指令调用，将小游戏内容渲染到第一个<code>Renderer</code>所创建的<code>SurfaceTexture</code>上</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>随后这个<code>Renderer</code>做了两件事情：</li>
+</ol>
+<ul>
+<li>2.1 将得到的小游戏画面纹理再次渲染到了在屏的<code>Surface</code>上</li>
+<li>2.2 提供纹理<code>ID</code>给到第二个<code>Renderer</code>（这里两个<code>Renderer</code>通过<a target="_blank" rel="noopener" href="https://www.khronos.org/registry/EGL/sdk/docs/man/html/eglCreateContext.xhtml">共享<code>GLContext</code></a>来实现共享纹理）</li>
+</ul>
+</li>
+<li><ol start="3">
+<li>第二个<code>Renderer</code>将第一个<code>Renderer</code>提供的纹理渲染到mp4编码器提供的输入<code>SurfaceTexture</code>上，最终编码器编码产生mp4录屏文件</li>
+</ol>
+</li>
+</ul>
+<h2 id="改造录屏方案？"><a href="#改造录屏方案？" class="headerlink" title="改造录屏方案？"></a>改造录屏方案？</h2><p>可以看到，录屏方案中通过一个<code>Renderer</code>负责将游戏内容上屏，另一个<code>Renderer</code>将同样的纹理渲染到编码器上的方式实现了录制游戏内容，直播其实类似，是不是只要将编码器替换为直播的推流模块就可以了呢？</p>
+<p>确实如此，但还缺少关键的一环：推流模块运行在主进程，我们需要实现跨进程传输图像数据！<strong>如何跨进程呢？</strong></p>
+<p>说到跨进程，可能我们脑海里蹦出的第一反应就是<code>Binder</code>、<code>Socket</code>、共享内存等等传统的IPC通信方法，但仔细一想，系统提供的<code>SurfaceView</code>是非常特殊的一个<code>View</code>组件，它不经过传统的<code>View</code>树来参与绘制，而是直接经由系统的<code>SurfaceFlinger</code>来合成到屏幕上，而<code>SurfaceFlinger</code>运行在系统进程上，我们绘制在<code>SurfaceView</code>所提供的<code>Surface</code>上的内容必然是可以跨进程进行传输的，而<code>Surface</code>跨进程的方法很简单——它本身就实现了<code>Parcelable</code>接口，这意味着我们可以用<code>Binder</code>直接跨进程传输<code>Surface</code>对象（原理可以参考<a target="_blank" rel="noopener" href="https://www.programmersought.com/article/97521686354/">链接</a>）。于是我们有了下面这个初步方案：<br><img src="/images/android_live_7.png"><br>可以看到，第3步不再是渲染到mp4编码器上，而是渲染到主进程跨进程传输过来的<code>Surface</code>上，主进程的这个<code>Surface</code>是通过一个<code>Renderer</code>创建的<code>SurfaceTexture</code>包装而来的，现在小游戏进程作为生产者向这个<code>Surface</code>渲染画面，当一帧渲染完毕后，主进程的<code>SurfaceTexture</code>就会收到<code>onFrameAvailable</code>回调通知图像数据已经准备完毕，随之通过<code>updateTexImage</code>获取到对应的纹理数据，这里由于直播推流模块只支持<code>GL_TEXTURE_2D</code>类型的纹理，这里主进程<code>Renderer</code>会将<code>GL_TEXTURE_EXTERNAL_OES</code>转换为<code>GL_TEXTURE_2D</code>纹理后给到直播推流编码器，完成推流过程。</p>
+<p>经过一番改造，上述方案成功地实现了将小游戏渲染在屏幕上的同时传递给主进程进行推流，但这真的是最优的方案吗？思考一番，发现上述方案中的<code>Renderer</code>过多了，小游戏进程中存在两个，一个用于渲染上屏，一个用于渲染到跨进程而来的<code>Surface</code>上，主进程中还存在一个用于转换纹理以及调用推流模块。如果要同时支持录屏，还需要在小游戏进程再起一个<code>Renderer</code>用于渲染到mp4编码器，过多的<code>Renderer</code>意味着过多的额外渲染开销，会影响小游戏运行性能。</p>
+<h2 id="跨进程渲染方案"><a href="#跨进程渲染方案" class="headerlink" title="跨进程渲染方案"></a>跨进程渲染方案</h2><p>纵观整个流程，其实只有主进程的<code>Renderer</code>是必要的，小游戏所使用的额外<code>Render</code>无非就是想同时满足渲染上屏和跨进程传输，让我们大开脑洞——<strong>既然<code>Surface</code>本身就不受进程的约束，那我们干脆把小游戏进程的在屏<code>Surface</code>传递到主进程进行渲染上屏吧！</strong><br><img src="/images/android_live_8.png"><br>最终我们大刀阔斧地砍掉了小游戏进程的两个冗余<code>Renderer</code>，<code>MagicBrush</code>直接渲染到了跨进程传递而来的<code>Surface</code>上，而主进程的<code>Renderer</code>在负责纹理类型转换的同时也负责将纹理渲染到跨进程传递而来的小游戏进程的在屏<code>Surface</code>上，实现画面的渲染上屏。最终所需要的<code>Renderer</code>数量从原来的3个减少到了必要的1个，在架构更加清晰的同时提升了性能。</p>
+<p>后续需要同时支持录屏时，只要稍作改动，将mp4编码器的输入<code>SurfaceTexture</code>也跨进程传递到主进程，再新增一个<code>Renderer</code>渲染纹理到它上面就行了：<br><img src="/images/android_live_9.png"></p>
+<h2 id="兼容性与性能"><a href="#兼容性与性能" class="headerlink" title="兼容性与性能"></a>兼容性与性能</h2><p>到这里，不禁有点担心，跨进程传输和渲染<code>Surface</code>的这套方案的兼容性会不会有问题呢？实际上，虽然并不常见，但是官方文档里面是有说明可以跨进程进行绘制的：</p>
+<blockquote>
+<p>SurfaceView combines a surface and a view. SurfaceView’s view components are composited by SurfaceFlinger (and not the app), enabling rendering from a separate thread/process and isolation from app UI rendering.<br><a target="_blank" rel="noopener" href="https://source.android.com/devices/graphics/architecture#high_level">来源</a></p>
+</blockquote>
+<p>并且Chrome以及Android O以后的系统<code>WebView</code>都有使用跨进程渲染的<a target="_blank" rel="noopener" href="https://android-developers.googleblog.com/2017/06/whats-new-in-webview-security.html">方案</a>。<br>在我们的兼容性测试中，覆盖了Android 5.1及以后的各个主流系统版本和机型，除了Android 5.x机型上出现了跨进程渲染黑屏的问题外，其余均可以正常渲染上屏和推流。</p>
+<p>性能方面，我们使用了webgl水族馆的Demo进行了性能测试，可以看到对于平均帧率的影响在15%左右，主进程的CPU因为渲染和推流有所升高，奇怪的是小游戏进程的CPU开销却出现了一些下降，这里下降的原因暂时还没有确认，怀疑与上屏操作移到主进程相关，也不排除是统计方法的影响。<br><img src="/images/android_live_10.jpg"></p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>为了实现不录制主播端的评论挂件，我们从小游戏渲染流程入手，借助于<code>Surface</code>跨进程渲染和传输图像的能力，把小游戏渲染上屏的过程移到了主进程，并同时生成纹理进行推流，在兼容性和性能上达到了要求。</p>
+<h1 id="音频采集推流"><a href="#音频采集推流" class="headerlink" title="音频采集推流"></a>音频采集推流</h1><h2 id="方案选择"><a href="#方案选择" class="headerlink" title="方案选择"></a>方案选择</h2><p>在音频采集方案中，我们注意到在Android 10及以上系统提供了<code>AudioPlaybackCapture</code>方案允许我们在一定的限制内对系统音频进行采集，当时预研的一些结论如下：</p>
+<p><strong>捕获方 - 进行捕获的条件</strong></p>
+<ul>
+<li>Android 10(api 29)及以上</li>
+<li>获取了<code>RECORD_AUDIO</code>权限</li>
+<li>通过<code>MediaProjectionManager.createScreenCaptureIntent()</code>进行<code>MediaProjection</code>权限的申请（和<code>MediaProjection</code>录屏共用）</li>
+<li>通过 <code>AudioPlaybackCaptureConfiguration.addMatchingUsage()/AudioPlaybackCaptureConfiguration.excludeUsage() </code>添加/排除要捕获的<code>MEDIA</code>类型</li>
+<li>通过 <code>AudioPlaybackCaptureConfiguration.addMatchingUid() /AudioPlaybackCaptureConfiguration.excludeUid()</code>添加/排除可以捕获的应用的<code>UID</code></li>
+</ul>
+<p><strong>被捕获方 - 可以被捕获的条件</strong></p>
+<ul>
+<li><code>Player</code>的<code>AudioAttributes</code>设置的<code>Usage</code>为<code>USAGE_UNKNOWN,USAGE_GAME</code>或<code>USAGE_MEDIA</code>（目前绝大部分用的都是默认值，可以被捕获）</li>
+<li>应用的<code>CapturePolicy</code>被设置为<code>AudioAttributes#ALLOW_CAPTURE_BY_ALL</code>，有三种办法可以设置（以最严格的为准，目前微信内没有配置，默认为可以捕获）</li>
+<li>通过<code>manifest.xml</code>设置<code>android:allowAudioPlaybackCapture=&quot;true&quot;</code>，其中，<code>TargetApi</code>为29及以上的应用默认为<code>true</code>，否则为<code>false</code></li>
+<li>api 29及以上可以通过<code>setAllowedCapturePolicy</code>方法运行时设置</li>
+<li>api 29及以上可以通过<code>AudioAttributes</code>针对每一个<code>Player</code>单独设置</li>
+</ul>
+<p>总的来说，Android 10及以上可以使用<code>AudioPlaybackCapture</code>方案进行音频捕获，但考虑到Android 10这个系统版本限制过高，最终我们选择了自己来采集并混合小游戏内播放的所有音频。</p>
+<h2 id="跨进程音频数据传输"><a href="#跨进程音频数据传输" class="headerlink" title="跨进程音频数据传输"></a>跨进程音频数据传输</h2><p>现在，老问题又摆在了我们眼前：小游戏混合后的音频数据在小游戏进程，而我们需要把数据传输到主进程进行推流。</p>
+<p>与一般的IPC跨进程通信用于方法调用不同，在这个场景下，我们需要频繁地（40毫秒一次）传输较大的数据块（16毫秒内的数据量在8k左右），同时，由于直播的特性，这个跨进程传输过程的<strong>延迟需要尽可能地低</strong>，否则就会出现音画不同步的情况。为了达到上述目标，我们对<code>Binder</code>、<code>LocalSocket</code>、<code>MMKV</code>、<code>SharedMemory</code>、<code>Pipe</code>这几种IPC方案进行了测试。在搭建的测试环境中，我们在小游戏进程模拟真实的音频传输的过程，每隔16毫秒发送一次序列化后的数据对象，数据对象大小分为3k/4M/10M三挡，在发送前储存时间戳在对象中；在主进程中<strong>接收到数据并完成反序列化为数据对象</strong>的时刻作为结束时间，计算传输延迟。最终得到了如下结果：</p>
+<p>注：其中<code>XIPCInvoker(Binder)</code>和<code>MMKV</code>在传输较大数据量时耗时过长，不在结果中展示。<br><img src="/images/android_live_11.png"><br>对于各个方案的分析如下（卡顿率表示延迟&gt;2倍平均延迟且&gt;10毫秒的数据占总数的比例）：<br><img src="/images/android_live_12.png"><br>可以看到<code>LocalSocket</code>方案在各个情况下的传输延迟表现都极为优异，差异的原因主要是因为裸二进制数据在跨进程传输到主进程后，仍需要进行一次数据拷贝操作来反序列化为数据对象，而使用<code>LocalSocket</code>时可以借助于<code>ObjectStream</code>和<code>Serializeable</code>来实现流式的拷贝，相比与其他方案的一次性接收数据后再拷贝节约了大量的时间（当然其他方案也可以设计成分块流式传输同时拷贝，但实现起来有一定成本，不如<code>ObjectStream</code>稳定易用）。</p>
+<p>我们也对<code>LocalSocket</code>进行了兼容性与性能测试，未出现不能传输或断开连接的情况，仅在三星S6上平均延迟超过了10毫秒，其余机型延迟均在1毫秒左右，可以满足我们的预期。</p>
+<h3 id="LocalSocket的安全性"><a href="#LocalSocket的安全性" class="headerlink" title="LocalSocket的安全性"></a><code>LocalSocket</code>的安全性</h3><p>常用的<code>Binder</code>的跨进程安全性有系统实现的鉴权机制来保证，<code>LocalSocket</code>作为<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Unix_domain_socket"><code>Unix domain socket</code></a>的封装，我们必须考虑它的安全性问题。<br>论文<a target="_blank" rel="noopener" href="https://jiayunhan.github.io/material/misuse_ccs16.pdf">The Misuse of Android Unix Domain Sockets and Security Implications</a>较为详细地分析了Android中使用<code>LocalSocket</code>所带来的安全风险，总结论文所述：由于<code>LocalSocket</code>本身缺乏鉴权机制，任意一个应用都可以进行连接，从而截取到数据或是向接收端传递非法数据引发异常。针对这个特点，我们可以做的防御方法有两种：</p>
+<ol>
+<li>随机化<code>LocalSocket</code>的命名，例如使用当前直播的小游戏的<code>AppId</code>和用户<code>uin</code>等信息计算md5作为<code>LocalSocket</code>的名字，使得攻击者无法通过固定或穷举名字的方法尝试建立连接</li>
+<li>引入鉴权机制，在连接成功后发送特定的随机信息来验证对方的真实性，然后才启动真正的数据传输</li>
+</ol>
+<h2 id="小结-1"><a href="#小结-1" class="headerlink" title="小结"></a>小结</h2><p>为了兼容Android 10以下的机型也能直播，我们选择自己处理小游戏音频的采集，并通过对比评测，选用了<code>LocalSocket</code>作为跨进程音频数据传输的方案，在延迟上满足了直播的需求。同时，通过一些对抗措施，可以有效规避<code>LocalSocket</code>的安全风险。</p>
+<h1 id="多进程带来的问题"><a href="#多进程带来的问题" class="headerlink" title="多进程带来的问题"></a>多进程带来的问题</h1><p>回头来看，虽然整个方案看起来比较通顺，但是在实现的过程中还是由于多进程的原因踩过不少坑，下面就分享其中两个比较主要的。</p>
+<h2 id="glFinish造成渲染推流帧率严重下降"><a href="#glFinish造成渲染推流帧率严重下降" class="headerlink" title="glFinish造成渲染推流帧率严重下降"></a><code>glFinish</code>造成渲染推流帧率严重下降</h2><p>在刚实现跨进程渲染推流的方案后，我们进行了一轮性能与兼容性测试，在测试中发现，部分中低端机型上帧率下降非常严重：<br><img src="/images/android_live_13.jpg" alt="#500px#auto"><br>复现后查看小游戏进程渲染的帧率（即小游戏进程绘制到跨进程而来的<code>Surface</code>上的帧率）发现可以达到不开直播时的帧率，而我们所用的测试软件<a target="_blank" rel="noopener" href="https://perfdog.qq.com/">PerfDog</a>所记录的是在屏<code>Surface</code>的绘制帧率，这就说明性能下降不是直播开销过高引起的小游戏代码执行效率下降，而是主进程上屏<code>Renderer</code>效率太低。</p>
+<p>于是我们对主进程直播时运行效率进行了<code>Profile</code>，发现耗时函数为<code>glFinish</code>，并且有两次调用，第一次调用是<code>Renderer</code>将外部纹理转2D纹理时，耗时会达到100多毫秒；第二次调用是腾讯云直播SDK内部，耗时10毫秒以内。如果将第一次调用去掉，直播SDK内部的这次则会耗时100多毫秒。为了弄清为什么这个GL指令耗时这么久，我们先看看它的描述：</p>
+<blockquote>
+<p><code>glFinish</code>  does not return until the effects of all previously called GL commands are complete.<br><a target="_blank" rel="noopener" href="https://www.khronos.org/registry/OpenGL-Refpages/gl4/html/glFinish.xhtml">来源</a></p>
+</blockquote>
+<p>描述很简单，它会阻塞直到之前调用的所有GL指令全部完成，这么看来是之前的GL指令太多了？但是GL指令队列是以线程为维度隔离的，在主进程的<code>Renderer</code>线程中，<code>glFinish</code>前只会执行纹理类型转换的非常少量的GL指令，和腾讯云的同学了解到推流接口也不会在本线程执行很多GL指令，如此少量的GL指令怎么会使<code>glFinish</code>阻塞这么久呢？等等，大量GL指令？小游戏进程此时不就正在执行大量GL指令吗，难道是小游戏进程的大量GL指令导致了主进程的<code>glFinsih</code>耗时过长？这样的猜测不无道理，虽然GL指令队列是按线程隔离的，但处理指令的GPU只有一个，一个进程的GL指令过多导致另一个进程在需要<code>glFinish</code>时阻塞过久。Google了一圈没找到有相关的描述，需要自己验证这个猜测。</p>
+<p>重新观察一遍上面的测试数据，发现直播前能达到60帧的情况下，直播后也能达到60帧左右，这是不是就说明在小游戏的GPU负载较低时<code>glFinish</code>的耗时也会下降呢？在性能下降严重的机型上，控制其他变量不变尝试运行低负载的小游戏，发现<code>glFinsih</code>的耗时成功下降到了10毫秒左右，这就印证了上面的猜测——确实是小游戏进程正在执行的大量GL指令阻塞了主进程<code>glFinish</code>的执行。</p>
+<p>该如何解决呢？小游戏进程的高负载无法改变，那能让小游戏在一帧渲染完成以后停住等主进程的<code>glFinish</code>完成后再渲染下一帧吗？这里经过了各种尝试，OpenGL的<code>glFence</code>同步机制无法跨进程使用；由于GL指令是异步执行的，通过跨进程通信加锁锁住小游戏的GL线程并不能保证主进程执行<code>glFinish</code>时小游戏进程的指令已经执行完，而能保证这点只有通过给小游戏进程加上<code>glFinish</code>，但这会使得双缓冲机制失效，导致小游戏渲染帧率的大幅下降。</p>
+<p>既然<code>glFinish</code>所带来的阻塞无法避免，那我们回到问题的开始——为什么需要<code>glFinish</code>？由于双缓冲机制的存在，一般来说并不需要<code>glFinish</code>来等待之前的绘制完成，否则双缓冲就失去了意义。两次<code>glFinish</code>中，第一次纹理处理的调用可以直接去掉，第二次腾讯云SDK的调用经过沟通，发现是为了解决一个历史问题引入的，可以尝试去掉。在腾讯云同学的帮助下，去掉<code>glFinish</code>后，渲染的帧率终于和小游戏输出的帧率一致，经过兼容性和性能测试，没有发现去掉<code>glFinish</code>带来的问题。</p>
+<p>这个问题最终的解法很简单，但分析问题原因的过程实际上做了非常多的实验，同一个应用中一个高GPU负载的进程会影响到另一个进程的<code>glFinish</code>耗时的这种场景确实也非常少见，能参考的资料不多。这个过程也让我深刻体会到了<code>glFinish</code>使得双缓冲机制失效所带来的性能影响是巨大的，在使用OpenGL进行渲染绘制时对于<code>glFinish</code>的使用应当非常谨慎。</p>
+<h2 id="后台进程优先级问题"><a href="#后台进程优先级问题" class="headerlink" title="后台进程优先级问题"></a>后台进程优先级问题</h2><p>在测试过程中，我们发现无论以多少的帧率向直播SDK发送画面，观众端看到的画面帧率始终只有16帧左右，排除后台原因后，发现是编码器编码的帧率不足导致的。经腾讯云同学测试同进程内编码的帧率是可以达到设定的30帧的，那么说明还是多进程带来的问题，这里编码是一个非常重的操作，需要消耗比较多的CPU资源，所以我们首先怀疑的就是后台进程优先级的问题。</p>
+<p>为了确认问题，我们找来了已经root的手机，通过<code>chrt</code>命令提高编码线程的优先级，观众端帧率立马上到了25帧；另一方面，经测试如果在小游戏进程上显示一个主进程的浮窗（使主进程具有前台优先级），帧率可以上到30帧。综上，可以确认帧率下降就是由于后台进程（以及其拥有的线程）的优先级过低导致的。</p>
+<p>提高线程优先级的做法在微信里比较常见，例如小程序的JS线程以及小游戏的渲染线程都会在运行时通过<code>android.os.Process.setThreadPriority</code>方法设置线程的优先级。腾讯云SDK的同学很快提供了接口供我们设置线程优先级，但当我们真正运行起来时，却发现编码的帧率仅从16帧提高到了18帧左右，是哪里出问题了呢？</p>
+<p>前面提到，我们通过<code>chrt</code>命令设置线程优先级是有效的，但<code>android.os.Process.setThreadPriority</code>这个方法设置的线程优先级对应的是<code>renice</code>这个命令设置的<code>nice</code>值。仔细阅读<code>chrt</code>的<a target="_blank" rel="noopener" href="https://man7.org/linux/man-pages/man1/chrt.1.html">manual</a>后，发现之前测试时的理解有误，之前直接用<code>chrt -p [pid] [priority]</code>的命令设置优先级，却没有设置调度策略这个参数，导致该线程的调度策略从Linux默认的<code>SCHED_OTHER</code>改为了命令缺省设置的<code>SCHED_RR</code>，而<code>SCHED_RR</code>是一种<a target="_blank" rel="noopener" href="https://stackoverflow.com/a/16730634/6915852">“实时策略”</a>，导致线程的调度优先级变得非常高。</p>
+<p>实际上，通过<code>renice</code>（也就是<code>android.os.Process.setThreadPriority</code>）设置的线程优先级，对于后台进程所拥有线程来说没有太大的帮助。其实早有人解释过这一点：</p>
+<blockquote>
+<p>To address this, Android also uses Linux cgroups in a simple way to create more strict foreground vs. background scheduling. The foreground/default cgroup allows thread scheduling as normal. The background cgroup however applies a limit of only some small percent of the total CPU time being available to all threads in that cgroup. Thus if that percentage is 5% and you have 10 background threads all wanting to run and one foreground thread, the 10 background threads together can only take at most 5% of the available CPU cycles from the foreground. (Of course if no foreground thread wants to run, the background threads can use all of the available CPU cycles.)<br><a target="_blank" rel="noopener" href="https://stackoverflow.com/a/8060413/6915852">来源</a></p>
+</blockquote>
+<p>最终，为了提高编码帧率并防止后台主进程被杀，我们最终还是决定直播时在主进程创建一个前台<code>Service</code>。</p>
+<h1 id="总结与展望"><a href="#总结与展望" class="headerlink" title="总结与展望"></a>总结与展望</h1><p>多进程是一把双刃剑，在给我们带来隔离性和性能优势的同时也带来了跨进程通信这一难题，所幸借助系统<code>Surface</code>的能力和多种多样的跨进程方案可以较好地解决小游戏直播中所遇到的问题。当然解决跨进程问题最好的方案是避免跨进程，我们也考虑了将视频号直播的推流模块运行在小游戏进程的方案，但出于改造成本的考虑而没有选择这一方案。</p>
+<p>同时，这次对于<code>SurfaceView</code>跨进程渲染的实践也对其他业务有一定参考价值：对于一些内存压力较大或是安全风险较高，又需要进行<code>SurfaceView</code>渲染绘制的场景，可以把逻辑放到独立的进程，再通过跨进程渲染的方式绘制到主进程的<code>View</code>上，在获得独立进程优势的同时又避免了进程间跳转所带来的体验的割裂。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="reward-container">
+  <div></div>
+  <button>
+    赞赏
+  </button>
+  <div class="post-reward">
+      <div>
+        <img src="/images/wechatpay.jpg" alt="viseator(吴迪) 微信">
+        <span>微信</span>
+      </div>
+      <div>
+        <img src="/images/alipay.jpg" alt="viseator(吴迪) 支付宝">
+        <span>支付宝</span>
+      </div>
+
+  </div>
+</div>
+
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>viseator(吴迪)
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="https://www.viseator.com/2022/06/08/android_live/" title="【微信小游戏直播】Android跨进程渲染推流实践">https://www.viseator.com/2022/06/08/android_live/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="followme">
+  <span>欢迎关注我的其它发布渠道</span>
+
+  <div class="social-list">
+
+      <div class="social-item">
+        <a target="_blank" class="social-link" href="/images/wechat_channel.jpg">
+          <span class="icon">
+            <i class="fab fa-weixin"></i>
+          </span>
+
+          <span class="label">微信公众号</span>
+        </a>
+      </div>
+  </div>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Android/" rel="tag"># Android</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/07/25/university_2/" rel="prev" title="从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长">
+                  <i class="fa fa-chevron-left"></i> 从开始到微信/支付宝/Airbnb/抖音Offer——我的大学客户端开发学习之路（二）过程——技术学习与个人成长
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="lv-container" data-id="city" data-uid="MTAyMC8yODYwMS81MTcy"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2016 – 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-rocket"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">viseator(吴迪)</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/algoliasearch/4.13.1/algoliasearch-lite.umd.js" integrity="sha256-g68T2rU86flpyzVWWCcZxWGWISTfOXVwEpZgyKOaZ1c=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/instantsearch.js/4.41.0/instantsearch.production.min.js" integrity="sha256-pcI4/FMJoWdUH2NCwYH6FZDY6z/UoWVAqsKjqTpcMx8=" crossorigin="anonymous"></script><script src="/js/third-party/search/algolia-search.js"></script>
+
+
+
+
+
+  
+
+
+  <script class="next-config" data-name="leancloud_visitors" type="application/json">{"enable":true,"app_id":"AAU0wN4LvPrxF8ldkUTOV1ly-gzGzoHsz","app_key":"shxNGHkps7WDMLyCkIKIKSSM","server_url":null,"security":false}</script>
+  <script src="/js/third-party/statistics/lean-analytics.js"></script>
+
+
+<script src="/js/third-party/comments/livere.js"></script>
+
+</body>
+</html>
